@@ -1,0 +1,10 @@
+# Mặc định: convert line endings về LF (Unix style) khi commit
+* text=auto eol=lf
+
+# Riêng cho file batch hoặc Windows-only (nếu có)
+*.bat text eol=crlf
+
+# Giữ binary file nguyên vẹn
+*.png binary
+*.jpg binary
+*.pdf binary
