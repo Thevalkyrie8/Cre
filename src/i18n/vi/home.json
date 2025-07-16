@@ -1,0 +1,160 @@
+{
+  "nav": {
+    "services": "Dịch vụ",
+    "process": "Quy trình",
+    "portfolio": "Portfolio",
+    "contact": "Liên hệ"
+  },
+  "hero": {
+    "location": "Quy Nhon, Vietnam",
+    "status": "Sẵn sàng nhận dự án",
+    "description": "Chuyên gia thiết kế đồ họa và video editor tự do, tạo ra những sản phẩm sáng tạo có tính ứng dụng cao cho thương hiệu và doanh nghiệp.",
+    "startProject": "Bắt đầu dự án",
+    "viewPortfolio": "Xem Portfolio"
+  },
+  "services": {
+    "badge": "Dịch vụ chuyên nghiệp",
+    "title": "Giải pháp sáng tạo toàn diện",
+    "description": "Từ thiết kế thương hiệu đến sản xuất video, tôi cung cấp dịch vụ chất lượng cao giúp doanh nghiệp phát triển và tạo ấn tượng mạnh mẽ",
+    "items": [
+      {
+        "icon": "palette",
+        "title": "Thiết kế ấn phẩm truyền thông",
+        "description": "Logo, bao bì, menu, banner, catalogue và các ấn phẩm marketing chuyên nghiệp",
+        "features": ["Thiết kế Logo", "Thiết kế In ấn", "Vật liệu Marketing"],
+        "color": "from-blue-500 to-cyan-500",
+        "bgColor": "bg-gradient-to-br from-blue-50 to-cyan-50"
+      },
+      {
+        "icon": "cube",
+        "title": "Bộ nhận diện thương hiệu",
+        "description": "Xây dựng hệ thống nhận diện thương hiệu hoàn chỉnh và nhất quán",
+        "features": [
+          "Nhận diện Thương hiệu",
+          "Hướng dẫn Phong cách",
+          "Thiết kế Mockup"
+        ],
+        "color": "from-purple-500 to-pink-500",
+        "bgColor": "bg-gradient-to-br from-purple-50 to-pink-50"
+      },
+      {
+        "icon": "phone",
+        "title": "Thiết kế Social Media",
+        "description": "Content visual thu hút cho các nền tảng mạng xã hội và quảng cáo",
+        "features": ["Bài đăng MXH", "Stories", "Quảng cáo Sáng tạo"],
+        "color": "from-pink-500 to-rose-500",
+        "bgColor": "bg-gradient-to-br from-pink-50 to-rose-50"
+      },
+      {
+        "icon": "video",
+        "title": "Chỉnh sửa video chuyên nghiệp",
+        "description": "Sản xuất video chất lượng cao cho mọi nền tảng và mục đích",
+        "features": ["Chỉnh sửa Video", "Motion Graphics", "Chỉnh màu"],
+        "color": "from-green-500 to-emerald-500",
+        "bgColor": "bg-gradient-to-br from-green-50 to-emerald-50"
+      },
+      {
+        "icon": "bullhorn",
+        "title": "Video thương hiệu & sản phẩm",
+        "description": "Storytelling qua video để xây dựng thương hiệu mạnh mẽ",
+        "features": [
+          "Video Thương hiệu",
+          "Giới thiệu Sản phẩm",
+          "Video Doanh nghiệp"
+        ],
+        "color": "from-orange-500 to-amber-500",
+        "bgColor": "bg-gradient-to-br from-orange-50 to-amber-50"
+      },
+      {
+        "icon": "bolt",
+        "title": "Công nghệ AI & Automation",
+        "description": "Ứng dụng AI trong sản xuất video và tối ưu hóa quy trình",
+        "features": ["Video AI", "Phụ đề Tự động", "Chỉnh màu S-Log"],
+        "color": "from-violet-500 to-purple-500",
+        "bgColor": "bg-gradient-to-br from-violet-50 to-purple-50"
+      }
+    ]
+  },
+  "process": {
+    "badge": "Quy trình làm việc",
+    "title": "Phương pháp chuyên nghiệp",
+    "description": "Quy trình làm việc được tối ưu hóa để đảm bảo chất lượng cao và sự hài lòng của khách hàng",
+    "steps": [
+      {
+        "step": "01",
+        "title": "Tư vấn",
+        "description": "Tìm hiểu chi tiết yêu cầu, mục tiêu và vision của khách hàng",
+        "icon": "users"
+      },
+      {
+        "step": "02",
+        "title": "Concept & Ý tưởng",
+        "description": "Phát triển ý tưởng sáng tạo phù hợp với thương hiệu",
+        "icon": "bolt"
+      },
+      {
+        "step": "03",
+        "title": "Thiết kế & Sản xuất",
+        "description": "Thực hiện dự án với chất lượng cao và attention to detail",
+        "icon": "palette"
+      },
+      {
+        "step": "04",
+        "title": "Review & Hoàn thiện",
+        "description": "Chỉnh sửa theo feedback và giao hàng đúng timeline",
+        "icon": "circle-check"
+      }
+    ]
+  },
+  "portfolio": {
+    "badge": "Portfolio",
+    "title": "Khám phá tác phẩm",
+    "description": "Xem các dự án và tác phẩm của tôi trên các nền tảng chuyên nghiệp",
+    "platforms": [
+      {
+        "platform": "Behance",
+        "desc": "Portfolio Thiết kế",
+        "icon": "arrow-up-right-from-square"
+      },
+      { "platform": "YouTube", "desc": "Showcase Video", "icon": "play" },
+      { "platform": "Vimeo", "desc": "Video Chất lượng cao", "icon": "video" },
+      { "platform": "Drive", "desc": "Tác phẩm Đầy đủ", "icon": "download" }
+    ]
+  },
+  "contact": {
+    "badge": "Liên hệ",
+    "title": "Sẵn sàng hợp tác",
+    "description": "Hãy liên hệ để thảo luận về dự án của bạn. Tôi luôn sẵn sàng lắng nghe và tạo ra những sản phẩm tuyệt vời cùng nhau.",
+    "button": "Bắt đầu dự án ngay",
+    "info": [
+      {
+        "src": "https://zalo.me/0364750316",
+        "title": "Zalo",
+        "info": "036475316",
+        "icon": "phone",
+        "color": "from-green-500 to-emerald-500",
+        "iconStyle": "solid"
+      },
+      {
+        "src": "mailto:info@unitrux.com",
+        "title": "Email",
+        "info": "info@unitrux.com",
+        "icon": "envelope",
+        "color": "from-blue-500 to-cyan-500",
+        "iconStyle": "solid"
+      },
+      {
+        "src": "https://www.facebook.com/share/19F13SCzY4/",
+        "title": "Facebook",
+        "info": "[Link profile]",
+        "icon": "facebook-f",
+        "color": "from-blue-600 to-indigo-600",
+        "iconStyle": "brands"
+      }
+    ]
+  },
+  "footer": {
+    "text": "Graphic Designer & Video Editor tại Quy Nhon.",
+    "subtext": "Tạo ra những sản phẩm sáng tạo, chất lượng cao."
+  }
+}

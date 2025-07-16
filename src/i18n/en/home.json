@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "services": "Services",
+    "process": "Process",
+    "portfolio": "Portfolio",
+    "contact": "Contact"
+  },
+  "hero": {
+    "location": "Quy Nhon, Vietnam",
+    "status": "Available for Projects",
+    "title": "Creative Designer & Video Editor",
+    "description": "Freelance graphic designer and video editor specializing in creating high-impact creative products for individuals, small brands, and medium-sized businesses.",
+    "startProject": "Start Project",
+    "viewPortfolio": "View Portfolio"
+  },
+  "services": {
+    "badge": "Professional Services",
+    "title": "Comprehensive Creative Solutions",
+    "description": "From brand design to video production, I provide high-quality services that help businesses grow and create strong impressions",
+    "items": [
+      {
+        "icon": "palette",
+        "title": "Print & Marketing Design",
+        "description": "Professional logo, packaging, menu, banner, catalogue and marketing materials design",
+        "features": ["Logo Design", "Print Design", "Marketing Materials"],
+        "color": "from-blue-500 to-cyan-500",
+        "bgColor": "bg-gradient-to-br from-blue-50 to-cyan-50"
+      },
+      {
+        "icon": "cube",
+        "title": "Brand Identity System",
+        "description": "Complete and consistent brand identity system development",
+        "features": ["Brand Identity", "Style Guide", "Mockup Design"],
+        "color": "from-purple-500 to-pink-500",
+        "bgColor": "bg-gradient-to-br from-purple-50 to-pink-50"
+      },
+      {
+        "icon": "phone",
+        "title": "Social Media Design",
+        "description": "Engaging visual content for social media platforms and advertising",
+        "features": ["Social Posts", "Stories", "Ad Creatives"],
+        "color": "from-pink-500 to-rose-500",
+        "bgColor": "bg-gradient-to-br from-pink-50 to-rose-50"
+      },
+      {
+        "icon": "video",
+        "title": "Professional Video Editing",
+        "description": "High-quality video production for all platforms and purposes",
+        "features": ["Video Editing", "Motion Graphics", "Color Grading"],
+        "color": "from-green-500 to-emerald-500",
+        "bgColor": "bg-gradient-to-br from-green-50 to-emerald-50"
+      },
+      {
+        "icon": "bullhorn",
+        "title": "Brand & Product Videos",
+        "description": "Storytelling through video to build strong brand presence",
+        "features": ["Brand Videos", "Product Showcase", "Corporate Videos"],
+        "color": "from-orange-500 to-amber-500",
+        "bgColor": "bg-gradient-to-br from-orange-50 to-amber-50"
+      },
+      {
+        "icon": "bold",
+        "title": "AI & Automation Services",
+        "description": "AI-powered video production and workflow optimization",
+        "features": ["AI Video", "Auto Subtitles", "S-Log Grading"],
+        "color": "from-violet-500 to-purple-500",
+        "bgColor": "bg-gradient-to-br from-violet-50 to-purple-50"
+      }
+    ]
+  },
+  "process": {
+    "badge": "Work Process",
+    "title": "Professional Methodology",
+    "description": "Optimized workflow to ensure high quality and client satisfaction",
+    "steps": [
+      {
+        "step": "01",
+        "title": "Consultation & Discovery",
+        "description": "Understanding client requirements, goals and vision in detail",
+        "icon": "users"
+      },
+      {
+        "step": "02",
+        "title": "Concept & Ideation",
+        "description": "Developing creative ideas that align with your brand",
+         "icon": "bolt"
+      },
+      {
+        "step": "03",
+        "title": "Design & Production",
+        "description": "Executing projects with high quality and attention to detail",
+        "icon": "palette"
+      },
+      {
+        "step": "04",
+        "title": "Review & Refinement",
+        "description": "Incorporating feedback and delivering on schedule",
+        "icon": "circle-check"
+      }
+    ]
+  },
+  "portfolio": {
+    "badge": "Portfolio",
+    "title": "Explore My Work",
+    "description": "View my projects and creative work across professional platforms",
+    "platforms": [
+      { "platform": "Behance", "desc": "Design Portfolio", "icon": "arrow-up-right-from-square" },
+      { "platform": "YouTube", "desc": "Video Showcase", "icon": "play" },
+      { "platform": "Vimeo", "desc": "Premium Videos", "icon": "video" },
+      { "platform": "Drive", "desc": "Complete Works", "icon": "download" }
+    ]
+  },
+  "contact": {
+    "badge": "Get In Touch",
+    "title": "Ready to Collaborate",
+    "description": "Let's discuss your project. I'm always ready to listen and create amazing products together.",
+    "button": "Start Project Now",
+    "info": [
+      { "title": "Zalo", "info": "036475-316", "icon": "phone", "color": "from-green-500 to-emerald-500"  },
+      { "title": "Email", "info": "info@unitrux.com", "icon": "envelope", "color": "from-blue-500 to-cyan-500" },
+      { "title": "Facebook", "info": "[Profile Link]", "icon": "facebook-f", "color": "from-blue-600 to-indigo-600" }
+    ]
+  },
+  "footer": {
+    "text": "Graphic Designer & Video Editor in Quy Nhon.",
+    "subtext": "Creating high-quality, innovative products."
+  }
+}
