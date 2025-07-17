@@ -104,13 +104,13 @@ const ReviewSection = () => {
                 ].map((src, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 select-none"
+                    className="flex-shrink-0 w-[calc(100vw-3rem)] sm:w-[560px] rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 select-none"
                   >
                     <img
                       src={src || "/placeholder.svg"}
                       alt={`Fiverr Review ${index + 1}`}
-                      width={320}
-                      height={240}
+                      width={560}
+                      height={300}
                       className="w-full h-auto"
                       draggable={false}
                     />

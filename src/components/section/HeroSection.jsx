@@ -1,6 +1,5 @@
 import { Button } from "../ui/Button";
 import Badge from "../ui/Badge";
-import { Link } from "react-router-dom";
 import CheckIcon from "../assets/image/check.png";
 import PlaceholderIcon from "../assets/image/placeholder.svg";
 import { useTranslation } from "react-i18next";
@@ -52,20 +51,20 @@ const HeroSection = () => {
                   size="lg"
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold"
                 >
-                  <Link href="#contact" className="flex items-center gap-2">
+                  <a href={t("hero.srcStartPro")} className="flex items-center gap-2">
                     {t("hero.startProject")}
                     <i className="fa-solid fa-arrow-right w-5 h-5 mt-2 text-white"></i>
-                  </Link>
+                  </a>
                 </Button>
                 <Button
                   variant="outline"
                   size="lg"
                   className="px-8 py-4 text-lg font-semibold border-2 bg-transparent"
                 >
-                  <Link href="#portfolio" className="flex items-center gap-2">
+                  <a href={t("hero.srcViewPo")} className="flex items-center gap-2">
                     <i className="fa-solid fa-circle-play w-5 h-5 mt-2"></i>
                     {t("hero.viewPortfolio")}
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>

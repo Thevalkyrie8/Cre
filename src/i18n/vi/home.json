@@ -10,7 +10,9 @@
     "status": "Sẵn sàng nhận dự án",
     "description": "Chuyên gia thiết kế đồ họa và video editor tự do, tạo ra những sản phẩm sáng tạo có tính ứng dụng cao cho thương hiệu và doanh nghiệp.",
     "startProject": "Bắt đầu dự án",
-    "viewPortfolio": "Xem Portfolio"
+    "viewPortfolio": "Xem Portfolio",
+    "srcStartPro": "mailto:info@unitrux.com",
+    "srcViewPo": "https://www.fiverr.com/trux_nguyen?public_mode=true"
   },
   "services": {
     "badge": "Dịch vụ chuyên nghiệp",
@@ -123,20 +125,20 @@
         "desc": "Portfolio Thiết kế",
         "icon": "arrow-up-right-from-square"
       },
-      { 
-        "platform": "YouTube", 
-        "desc": "Showcase Video", 
-        "icon": "play" 
+      {
+        "platform": "YouTube",
+        "desc": "Showcase Video",
+        "icon": "play"
       },
-      { 
-        "platform": "Vimeo", 
-        "desc": "Video Chất lượng cao", 
-        "icon": "video" 
+      {
+        "platform": "Vimeo",
+        "desc": "Video Chất lượng cao",
+        "icon": "video"
       },
-      { 
-        "platform": "Drive", 
-        "desc": "Tác phẩm Đầy đủ", 
-        "icon": "download" 
+      {
+        "platform": "Drive",
+        "desc": "Tác phẩm Đầy đủ",
+        "icon": "download"
       }
     ]
   },
