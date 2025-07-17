@@ -83,7 +83,7 @@
         "step": "02",
         "title": "Concept & Ideation",
         "description": "Developing creative ideas that align with your brand",
-         "icon": "bolt"
+        "icon": "bolt"
       },
       {
         "step": "03",
@@ -99,26 +99,66 @@
       }
     ]
   },
+  "testimonials": {
+    "scr": "https://www.fiverr.com/trux_nguyen?public_mode=true",
+    "badge": "Client Testimonials",
+    "title": "What Clients Say",
+    "subtitle": "Real reviews from clients on Fiverr",
+    "viewMore": "View full reviews on Fiverr"
+  },
   "portfolio": {
     "badge": "Portfolio",
     "title": "Explore My Work",
     "description": "View my projects and creative work across professional platforms",
     "platforms": [
-      { "platform": "Behance", "desc": "Design Portfolio", "icon": "arrow-up-right-from-square" },
-      { "platform": "YouTube", "desc": "Video Showcase", "icon": "play" },
-      { "platform": "Vimeo", "desc": "Premium Videos", "icon": "video" },
-      { "platform": "Drive", "desc": "Complete Works", "icon": "download" }
+      {
+        "src": "https://www.fiverr.com/trux_nguyen?public_mode=true",
+        "platform": "Fiverr",
+        "desc": "Design Portfolio",
+        "icon": "arrow-up-right-from-square"
+      },
+      { "platform": "YouTube", 
+        "desc": "Video Showcase", 
+        "icon": "play" 
+      },
+      { 
+        "platform": "Vimeo", 
+        "desc": "Premium Videos", 
+        "icon": "video" },
+      { "platform": "Drive", 
+        "desc": "Complete Works", 
+        "icon": "download" }
     ]
   },
   "contact": {
     "badge": "Get In Touch",
     "title": "Ready to Collaborate",
     "description": "Let's discuss your project. I'm always ready to listen and create amazing products together.",
-    "button": "Start Project Now",
     "info": [
-      { "title": "Zalo", "info": "036475-316", "icon": "phone", "color": "from-green-500 to-emerald-500"  },
-      { "title": "Email", "info": "info@unitrux.com", "icon": "envelope", "color": "from-blue-500 to-cyan-500" },
-      { "title": "Facebook", "info": "[Profile Link]", "icon": "facebook-f", "color": "from-blue-600 to-indigo-600" }
+      {
+        "src": "https://zalo.me/0364750316",
+        "title": "Zalo",
+        "info": "+84 364 756 316",
+        "icon": "phone",
+        "color": "from-green-500 to-emerald-500",
+        "iconStyle": "solid"
+      },
+      {
+        "src": "mailto:info@unitrux.com",
+        "title": "Email",
+        "info": "info@unitrux.com",
+        "icon": "envelope",
+        "color": "from-blue-500 to-cyan-500",
+        "iconStyle": "solid"
+      },
+      {
+        "src": "https://www.facebook.com/share/19F13SCzY4/",
+        "title": "Facebook",
+        "info": "FB: NG Nguyen",
+        "icon": "facebook-f",
+        "color": "from-blue-600 to-indigo-600",
+        "iconStyle": "brands"
+      }
     ]
   },
   "footer": {

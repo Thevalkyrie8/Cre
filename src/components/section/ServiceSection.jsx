@@ -16,7 +16,7 @@ const ServiceSection = () => {
 
     return (
         <>
-        <section id="services" className="py-24 px-6 bg-white">
+        <section id="services" className="scroll-mt-24 py-24 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-20">
             <Badge variant="outline" className="mb-4 px-4 py-2 text-blue-700 border-blue-200">

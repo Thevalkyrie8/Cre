@@ -1,4 +1,3 @@
-import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import Badge from "../ui/Badge";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ const ContactSection = () => {
 
   return (
     <>
-      <section id="contact" className="py-24 px-6 bg-white">
+      <section id="contact" className="scroll-mt-24 py-24 px-6 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <Badge
@@ -61,16 +60,6 @@ const ContactSection = () => {
                 </Card>
               </a>
             ))}
-          </div>
-
-          <div className="text-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 text-lg font-semibold"
-            >
-              {t("contact.button")}
-              <i className="fa-solid fa-arrow-right w-5 h-5 mt-2 text-white"></i>
-            </Button>
           </div>
         </div>
       </section>

@@ -82,7 +82,7 @@
     "steps": [
       {
         "step": "01",
-        "title": "Tư vấn",
+        "title": "Tư vấn & Lắng nghe",
         "description": "Tìm hiểu chi tiết yêu cầu, mục tiêu và vision của khách hàng",
         "icon": "users"
       },
@@ -106,31 +106,49 @@
       }
     ]
   },
+  "testimonials": {
+    "badge": "Khách hàng nói gì",
+    "title": "Phản hồi từ khách hàng",
+    "subtitle": "Review thực tế từ khách hàng trên Fiverr",
+    "viewMore": "Xem review đầy đủ trên Fiverr"
+  },
   "portfolio": {
     "badge": "Portfolio",
     "title": "Khám phá tác phẩm",
     "description": "Xem các dự án và tác phẩm của tôi trên các nền tảng chuyên nghiệp",
     "platforms": [
       {
-        "platform": "Behance",
+        "src": "https://www.fiverr.com/trux_nguyen?public_mode=true",
+        "platform": "Fiverr",
         "desc": "Portfolio Thiết kế",
         "icon": "arrow-up-right-from-square"
       },
-      { "platform": "YouTube", "desc": "Showcase Video", "icon": "play" },
-      { "platform": "Vimeo", "desc": "Video Chất lượng cao", "icon": "video" },
-      { "platform": "Drive", "desc": "Tác phẩm Đầy đủ", "icon": "download" }
+      { 
+        "platform": "YouTube", 
+        "desc": "Showcase Video", 
+        "icon": "play" 
+      },
+      { 
+        "platform": "Vimeo", 
+        "desc": "Video Chất lượng cao", 
+        "icon": "video" 
+      },
+      { 
+        "platform": "Drive", 
+        "desc": "Tác phẩm Đầy đủ", 
+        "icon": "download" 
+      }
     ]
   },
   "contact": {
     "badge": "Liên hệ",
     "title": "Sẵn sàng hợp tác",
     "description": "Hãy liên hệ để thảo luận về dự án của bạn. Tôi luôn sẵn sàng lắng nghe và tạo ra những sản phẩm tuyệt vời cùng nhau.",
-    "button": "Bắt đầu dự án ngay",
     "info": [
       {
         "src": "https://zalo.me/0364750316",
         "title": "Zalo",
-        "info": "036475316",
+        "info": "+84 364 756 316",
         "icon": "phone",
         "color": "from-green-500 to-emerald-500",
         "iconStyle": "solid"
@@ -146,7 +164,7 @@
       {
         "src": "https://www.facebook.com/share/19F13SCzY4/",
         "title": "Facebook",
-        "info": "[Link profile]",
+        "info": "FB: NG Nguyen",
         "icon": "facebook-f",
         "color": "from-blue-600 to-indigo-600",
         "iconStyle": "brands"

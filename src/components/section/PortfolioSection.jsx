@@ -16,7 +16,7 @@ const PortfolioSection = () => {
     <>
       <section
         id="portfolio"
-        className="py-24 px-6 bg-gradient-to-br from-gray-900 to-blue-900"
+        className="scroll-mt-24 py-24 px-6 bg-gradient-to-br from-gray-900 to-blue-900"
       >
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
@@ -39,24 +39,29 @@ const PortfolioSection = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {porPlatforms.map((link, index) => (
-              <Card
+              <a
                 key={index}
-                className="group bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer"
+                href={link.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                <CardHeader className="text-center p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                    <div className="text-white">
-                      <i className={`fa-solid fa-${link.icon}`}></i>
+                <Card className="group bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
+                  <CardHeader className="text-center p-8">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                      <div className="text-white">
+                        <i className={`fa-solid fa-${link.icon}`}></i>
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-xl text-white mb-2">
-                    {link.platform}
-                  </CardTitle>
-                  <CardDescription className="text-gray-300">
-                    {link.desc}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+                    <CardTitle className="text-xl text-white mb-2">
+                      {link.platform}
+                    </CardTitle>
+                    <CardDescription className="text-gray-300">
+                      {link.desc}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </a>
             ))}
           </div>
         </div>

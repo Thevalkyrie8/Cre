@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import DropdownMenu from "../ui/LanguageDropdown"
 import PaletteIcon from '../assets/image/palette-solid.svg';
@@ -20,21 +19,20 @@ const HeaderComp = () => {
             <span className="font-bold text-xl text-gray-900">Creative Studio</span>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="#services" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+            <a href="#services" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
               {t('nav.services')}
-            </Link>
-            <Link to="#process" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+            </a>
+            <a href="#process" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
               {t('nav.process')}
-            </Link>
-            <Link to="#portfolio" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+            </a>
+            <a href="#portfolio" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">
               {t('nav.portfolio')}
-            </Link>
+            </a>
 
             {/* Chuyển đổi ngôn ngữ */}
             <DropdownMenu />
-
             <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-              {t('nav.contact')}
+              <a href="#contact">{t('nav.contact')}</a>
             </Button>
           </div>
         </nav>

@@ -18,7 +18,7 @@ const HeroSection = () => {
                 <div className="flex items-center space-x-3">
                   <Badge
                     variant="outline"
-                    className="flex items-center px-4 py-2 text-sm font-medium border-blue-200 text-blue-700"
+                    className="flex items-center px-4 py-1 text-sm font-medium border-blue-200 text-blue-700"
                   >
                     <i className="fa-solid fa-globe w-4 h-4 mr-2 mt-2"></i>
                     {t("hero.location")}
