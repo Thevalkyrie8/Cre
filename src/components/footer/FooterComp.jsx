@@ -16,12 +16,12 @@ const FooterComp = () => {
                 <img src={PaletteIcon} alt="Palette Icon" className="w-5 h-5" />
               </div>
               <span className="font-bold text-xl text-white">
-                Creative Studio
+                Unitrux Solution
               </span>
             </div>
             <div className="text-gray-400 text-center md:text-right">
               <p>
-                &copy; 2024 Creative Studio. {t('footer.text')}
+                &copy; {t('footer.text')}
               </p>
               <p className="text-sm mt-1">
                 {t('footer.subtext')}

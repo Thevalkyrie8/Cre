@@ -152,19 +152,11 @@
         "icon": "envelope",
         "color": "from-blue-500 to-cyan-500",
         "iconStyle": "solid"
-      },
-      {
-        "src": "https://www.facebook.com/share/19F13SCzY4/",
-        "title": "Facebook",
-        "info": "FB: NG Nguyen",
-        "icon": "facebook-f",
-        "color": "from-blue-600 to-indigo-600",
-        "iconStyle": "brands"
       }
     ]
   },
   "footer": {
-    "text": "Graphic Designer & Video Editor in Quy Nhon.",
-    "subtext": "Creating high-quality, innovative products."
+    "text": "UNITRUX — All-in-One Solutions for Web, Apps, Marketing & E-Commerce.",
+    "subtext": ""
   }
 }
