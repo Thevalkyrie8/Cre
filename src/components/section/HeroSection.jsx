@@ -27,11 +27,11 @@ const HeroSection = () => {
             </Badge>
           </div>
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-            Creative{" "}
+           {" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-              Designer
+            All-in-One Solutions
             </span>
-            <br />& Video Editor
+            <br />for Web, App, Marketing & E-Commerce
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed max-w-xl mx-auto">{t("hero.description")}</p>
 

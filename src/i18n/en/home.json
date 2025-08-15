@@ -9,7 +9,7 @@
     "location": "Quy Nhon, Vietnam",
     "status": "Available for Projects",
     "title": "Creative Designer & Video Editor",
-    "description": "Freelance graphic designer and video editor specializing in creating high-impact creative products for individuals, small brands, and medium-sized businesses.",
+    "description": "One direction – One Team – Complete Digital Solutions to Boost Your Revenue. From platform development → branding → communication → advertising → orders → automation.",
     "startProject": "Start Project",
     "viewPortfolio": "View Portfolio",
     "srcStartPro": "mailto:info@unitrux.com",
@@ -17,87 +17,87 @@
   },
   "services": {
     "badge": "Professional Services",
-    "title": "Comprehensive Creative Solutions",
-    "description": "From brand design to video production, I provide high-quality services that help businesses grow and create strong impressions",
+    "title": "About UNITRUX",
+    "description": "Unitrux is a team specializing in providing comprehensive digital solutions for: \n Individual entrepreneurs and online sellers \n SMEs and startups looking to expand their market \n E-commerce sellers (Amazon, Etsy, Shopee, TikTok Shop, Tiki, and more) \n We combine technology, marketing, content, and operations to help you build a strong platform, establish a reputable brand, and achieve sustainable sales growth.",
     "items": [
       {
-        "icon": "palette",
-        "title": "Print & Marketing Design",
-        "description": "Professional logo, packaging, menu, banner, catalogue and marketing materials design",
-        "features": ["Logo Design", "Print Design", "Marketing Materials"],
+        "icon": "laptop",
+        "title": "Web Apps, Websites, and Operational Systems",
+        "description": "Custom-built solutions for online selling, business management, and automation tailored to your needs.",
+        "features": ["E-commerce & Service Websites", "Order, Customer & Internal Management Web Apps", "Payment, Chatbot & Email Automation Systems"],
         "color": "from-blue-500 to-cyan-500",
         "bgColor": "bg-gradient-to-br from-blue-50 to-cyan-50"
       },
       {
-        "icon": "cube",
-        "title": "Brand Identity System",
-        "description": "Complete and consistent brand identity system development",
-        "features": ["Brand Identity", "Style Guide", "Mockup Design"],
+        "icon": "video",
+        "title": "E-commerce Seller Services (Amazon, Etsy, Shopee, etc.)",
+        "description": "Comprehensive solutions to help sellers launch, grow, and scale their online business.",
+        "features": ["Product consulting, store setup, and brand building", "SEO optimization for listings: keywords, conversion-focused descriptions", "2D/3D product image design, professional studio photography", "Product videos: tutorials, reviews, viral content (TikTok, Reels)", "Amazon PPC, Sponsored Ads management", "Affiliate program setup to boost sales without ad costs"],
         "color": "from-purple-500 to-pink-500",
         "bgColor": "bg-gradient-to-br from-purple-50 to-pink-50"
       },
       {
-        "icon": "phone",
-        "title": "Social Media Design",
-        "description": "Engaging visual content for social media platforms and advertising",
-        "features": ["Social Posts", "Stories", "Ad Creatives"],
+        "icon": "rocket",
+        "title": "All-in-One Marketing for Individuals & Sellers",
+        "description": "End-to-end marketing solutions for brand presence and sales growth.",
+        "features": ["Fanpage, TikTok, Instagram, LinkedIn management", "Weekly/monthly content planning", "Visual design, sales-driven captions, hashtag optimization", "Scheduled posting, comment & inbox reply", "Product link integration for higher conversion", "Targeted advertising campaigns: Facebook, TikTok, Google, Amazon Ads", "Remarketing to engaged visitors/customers", "Campaigns driving traffic to websites, marketplaces, or lead forms", "Funnel-based cost optimization (Lead – Interest – Purchase)"],
         "color": "from-pink-500 to-rose-500",
         "bgColor": "bg-gradient-to-br from-pink-50 to-rose-50"
       },
       {
-        "icon": "video",
-        "title": "Professional Video Editing",
-        "description": "High-quality video production for all platforms and purposes",
-        "features": ["Video Editing", "Motion Graphics", "Color Grading"],
+        "icon": "camera",
+        "title": "Professional Content Production",
+        "description": "High-quality, conversion-driven media creation.",
+        "features": ["Sales videos, product reviews, 2D/3D animations", "Short-form ads (TikTok, Reels, Shorts)", "Ad-compliant formats for maximum conversion", "Concept & script development support"],
         "color": "from-green-500 to-emerald-500",
         "bgColor": "bg-gradient-to-br from-green-50 to-emerald-50"
       },
       {
-        "icon": "bullhorn",
-        "title": "Brand & Product Videos",
-        "description": "Storytelling through video to build strong brand presence",
-        "features": ["Brand Videos", "Product Showcase", "Corporate Videos"],
+        "icon": "mail-bulk",
+        "title": "CRM – Email – Chatbot – Automation Systems",
+        "description": "Streamline customer engagement and sales processes",
+        "features": ["Chatbot setup for consultation, support, and upselling", "Automated email funnels based on customer behavior", "CRM integration for lead storage, segmentation, and nurturing", "Mass messaging, automated quotes, and upsell triggers"],
         "color": "from-orange-500 to-amber-500",
         "bgColor": "bg-gradient-to-br from-orange-50 to-amber-50"
       },
       {
-        "icon": "bold",
-        "title": "AI & Automation Services",
-        "description": "AI-powered video production and workflow optimization",
-        "features": ["AI Video", "Auto Subtitles", "S-Log Grading"],
+        "icon": "download",
+        "title": "Affiliate Services for Sellers & Businesses",
+        "description": "Boost revenue through performance-based marketing.",
+        "features": ["Custom affiliate systems with tracking links and commission management"],
         "color": "from-violet-500 to-purple-500",
         "bgColor": "bg-gradient-to-br from-violet-50 to-purple-50"
       }
     ]
   },
   "process": {
-    "badge": "Work Process",
-    "title": "Professional Methodology",
-    "description": "Optimized workflow to ensure high quality and client satisfaction",
+    "badge": "Our Workflow",
+    "title": "How We Help You Succeed",
+    "description": "From campaign setup to full-scale operations — our step-by-step process ensures your brand reaches the right audience, effectively and sustainably.",
     "steps": [
       {
         "step": "01",
-        "title": "Consultation & Discovery",
-        "description": "Understanding client requirements, goals and vision in detail",
-        "icon": "users"
+        "icon": "bullhorn",
+        "title": "Campaign Setup",
+        "description": "Launch campaigns to invite affiliates, KOLs, reviewers, and publishers — tailored for your business goals."
       },
       {
         "step": "02",
-        "title": "Concept & Ideation",
-        "description": "Developing creative ideas that align with your brand",
-        "icon": "bolt"
+        "icon": "chart-line",
+        "title": "Performance Tracking",
+        "description": "Monitor key metrics in real-time with automated payout systems for smooth collaboration."
       },
       {
         "step": "03",
-        "title": "Design & Production",
-        "description": "Executing projects with high quality and attention to detail",
-        "icon": "palette"
+        "icon": "share-nodes",
+        "title": "Cross-Channel Promotion",
+        "description": "Promote across fanpages, social media platforms, and email marketing for maximum reach."
       },
       {
         "step": "04",
-        "title": "Review & Refinement",
-        "description": "Incorporating feedback and delivering on schedule",
-        "icon": "circle-check"
+        "icon": "cogs",
+        "title": "Full-Service Operation",
+        "description": "From system setup to marketing execution — we manage everything for growth and long-term success."
       }
     ]
   },
