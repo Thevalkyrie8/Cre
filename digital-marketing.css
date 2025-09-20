@@ -1,0 +1,697 @@
+/* Digital Marketing Content Styles */
+.digital-marketing-content {
+    padding: 80px 0;
+    background: var(--bg-primary);
+    margin: 0;
+    width: 100%;
+}
+
+.digital-marketing-content .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.digital-marketing-content .content-section {
+    margin-bottom: 60px;
+}
+
+.digital-marketing-content .content-section:last-child {
+    margin-bottom: 0;
+}
+
+.digital-marketing-content .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.digital-marketing-content .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+    align-items: start;
+}
+
+/* Special layout for 5 items: 3 on top, 2 on bottom */
+.digital-marketing-content .features-grid .feature-item:nth-child(4) {
+    grid-column: 1 / 2;
+    grid-row: 2;
+}
+
+.digital-marketing-content .features-grid .feature-item:nth-child(5) {
+    grid-column: 2 / 3;
+    grid-row: 2;
+}
+
+/* Ensure text is not truncated */
+.digital-marketing-content .feature-item p {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .digital-marketing-content .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .digital-marketing-content .features-grid .feature-item:nth-child(4),
+    .digital-marketing-content .features-grid .feature-item:nth-child(5) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+.digital-marketing-content .feature-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+}
+
+.digital-marketing-content .feature-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.digital-marketing-content .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.digital-marketing-content .feature-item h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.digital-marketing-content .feature-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    flex-grow: 1;
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+.digital-marketing-content .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.digital-marketing-content .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 30px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.digital-marketing-content .process-step:hover {
+    border-color: var(--accent-color);
+}
+
+.digital-marketing-content .step-number {
+    background: var(--accent-color);
+    color: var(--bg-primary);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.digital-marketing-content .step-content h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.digital-marketing-content .step-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.digital-marketing-content .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.digital-marketing-content .result-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.digital-marketing-content .result-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.digital-marketing-content .result-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.digital-marketing-content .result-item h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.digital-marketing-content .result-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.digital-marketing-content .cta-section {
+    text-align: center;
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin-top: 60px;
+}
+
+.digital-marketing-content .cta-section .section-title {
+    color: var(--bg-primary);
+    margin-bottom: 20px;
+}
+
+.digital-marketing-content .cta-description {
+    font-size: 1.125rem;
+    color: var(--bg-primary);
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.digital-marketing-content .cta-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.digital-marketing-content .btn-primary,
+.digital-marketing-content .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.digital-marketing-content .btn-primary {
+    background: var(--bg-primary);
+    color: var(--accent-color);
+}
+
+.digital-marketing-content .btn-primary:hover {
+    background: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.digital-marketing-content .btn-secondary {
+    background: transparent;
+    color: var(--bg-primary);
+    border: 2px solid var(--bg-primary);
+}
+
+.digital-marketing-content .btn-secondary:hover {
+    background: var(--bg-primary);
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* Additional styles for better integration */
+.digital-marketing-content .feature-item,
+.digital-marketing-content .result-item {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.digital-marketing-content .process-step {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.digital-marketing-content .cta-section {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix for language toggle button positioning */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.logo-unitrux {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.logo-unitrux::before {
+    content: 'U';
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: #94A3B8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #3B82F6;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #3B82F6;
+    border-radius: 1px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-contact {
+    color: #94A3B8;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-contact:hover {
+    color: #3B82F6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.language-toggle-btn {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    color: #3B82F6;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.language-toggle-btn:hover {
+    background: #3B82F6;
+    color: white;
+}
+
+.language-toggle-btn .lang-text {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Page Content */
+body {
+    padding-top: 80px;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #94A3B8;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Responsive Design for Digital Marketing Content */
+@media (max-width: 768px) {
+    .digital-marketing-content {
+        padding: 40px 0;
+    }
+    
+    .digital-marketing-content .content-wrapper {
+        padding: 0 10px;
+    }
+    
+    .digital-marketing-content .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 25px;
+        line-height: 1.3;
+    }
+    
+    .digital-marketing-content .features-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 25px;
+    }
+    
+    .digital-marketing-content .results-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .digital-marketing-content .feature-item {
+        min-height: auto;
+        height: auto;
+        padding: 20px;
+        justify-content: flex-start;
+        margin-bottom: 0;
+    }
+    
+    .digital-marketing-content .feature-item h4 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+    
+    .digital-marketing-content .feature-item p {
+        padding: 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        text-align: left;
+        display: block;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
+        overflow: visible;
+    }
+    
+    .digital-marketing-content .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .digital-marketing-content .process-steps {
+        gap: 20px;
+        margin-top: 25px;
+    }
+    
+    .digital-marketing-content .process-step {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    .digital-marketing-content .step-number {
+        margin: 0 auto 10px auto;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .digital-marketing-content .step-content h4 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .digital-marketing-content .step-content p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .digital-marketing-content .cta-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .digital-marketing-content .btn-primary,
+    .digital-marketing-content .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .digital-marketing-content .cta-section {
+        padding: 30px 15px;
+        margin-top: 40px;
+    }
+    
+    .digital-marketing-content .cta-description {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    
+    .navbar {
+        padding: 1rem;
+        position: relative;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        text-align: center;
+    }
+    
+    .nav-right {
+        gap: 8px;
+    }
+    
+    .language-toggle-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .nav-contact {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+    
+    body {
+        padding-top: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .digital-marketing-content {
+        padding: 30px 0;
+    }
+    
+    .digital-marketing-content .content-wrapper {
+        padding: 0 8px;
+    }
+    
+    .digital-marketing-content .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .digital-marketing-content .features-grid,
+    .digital-marketing-content .results-grid {
+        gap: 12px;
+    }
+    
+    .digital-marketing-content .feature-item,
+    .digital-marketing-content .result-item {
+        padding: 15px;
+        height: auto;
+        min-height: auto;
+    }
+    
+    .digital-marketing-content .feature-item h4,
+    .digital-marketing-content .result-item h4 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+    
+    .digital-marketing-content .feature-item p,
+    .digital-marketing-content .result-item p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
+        overflow: visible;
+    }
+    
+    .digital-marketing-content .feature-icon,
+    .digital-marketing-content .result-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+    
+    .digital-marketing-content .process-step {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .digital-marketing-content .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .digital-marketing-content .step-content h4 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+    
+    .digital-marketing-content .step-content p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+    
+    .digital-marketing-content .cta-section {
+        padding: 25px 12px;
+        margin-top: 30px;
+    }
+    
+    .digital-marketing-content .cta-description {
+        font-size: 0.9rem;
+        margin-bottom: 25px;
+    }
+    
+    .digital-marketing-content .btn-primary,
+    .digital-marketing-content .btn-secondary {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        max-width: 250px;
+    }
+    
+    .navbar {
+        padding: 0.8rem;
+    }
+    
+    .nav-links {
+        gap: 0.8rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+    }
+    
+    .nav-right {
+        gap: 6px;
+    }
+    
+    .language-toggle-btn {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .nav-contact {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+    }
+    
+    body {
+        padding-top: 60px;
+    }
+}
