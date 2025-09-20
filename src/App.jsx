@@ -11,24 +11,114 @@ import EcommerceService from './components/EcommerceService';
 import DigitalMarketingService from './components/DigitalMarketingService';
 import AutomationService from './components/AutomationService';
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ 
+          padding: '20px', 
+          textAlign: 'center', 
+          color: '#333',
+          fontFamily: 'Arial, sans-serif',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <h2>Something went wrong.</h2>
+          <p>Please refresh the page or try again later.</p>
+          <button 
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#007bff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Refresh Page
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 function App() {
-  return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/packages" element={<Packages />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/services/web-development" element={<WebDevelopmentService />} />
-          <Route path="/services/ecommerce-solutions" element={<EcommerceService />} />
-          <Route path="/services/digital-marketing" element={<DigitalMarketingService />} />
-          <Route path="/services/automation-systems" element={<AutomationService />} />
-        </Routes>
-      </Layout>
-    </Router>
-  );
+  // Add error handling for router
+  try {
+    return (
+      <ErrorBoundary>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/packages" element={<Packages />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/services/web-development" element={<WebDevelopmentService />} />
+              <Route path="/services/ecommerce-solutions" element={<EcommerceService />} />
+              <Route path="/services/digital-marketing" element={<DigitalMarketingService />} />
+              <Route path="/services/automation-systems" element={<AutomationService />} />
+              {/* Fallback route for SPA */}
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </ErrorBoundary>
+    );
+  } catch (error) {
+    console.error('App rendering error:', error);
+    return (
+      <div style={{ 
+        padding: '20px', 
+        textAlign: 'center', 
+        color: '#333',
+        fontFamily: 'Arial, sans-serif',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <h2>Application Error</h2>
+        <p>There was an error loading the application.</p>
+        <button 
+          onClick={() => window.location.reload()}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#dc3545',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Reload Page
+        </button>
+      </div>
+    );
+  }
 }
 
 export default App;

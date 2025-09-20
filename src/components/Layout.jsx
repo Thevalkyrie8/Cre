@@ -9,21 +9,28 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Load saved language and theme
-    const savedLanguage = localStorage.getItem('language') || 'en';
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setLanguage(savedLanguage);
-    setTheme(savedTheme);
-    
-    // Apply theme
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
+    try {
+      // Load saved language and theme
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      setLanguage(savedLanguage);
+      setTheme(savedTheme);
+      
+      // Apply theme
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+      
+      // Apply saved language immediately
+      applyLanguage(savedLanguage);
+    } catch (error) {
+      console.error('Error loading saved preferences:', error);
+      // Set defaults if localStorage fails
+      setLanguage('en');
+      setTheme('dark');
     }
-    
-    // Apply saved language immediately
-    applyLanguage(savedLanguage);
   }, []);
 
   useEffect(() => {
@@ -41,10 +48,14 @@ const Layout = ({ children }) => {
   }, [language]);
 
   const toggleLanguage = () => {
-    const newLanguage = language === 'vi' ? 'en' : 'vi';
-    setLanguage(newLanguage);
-    localStorage.setItem('language', newLanguage);
-    // Language will be applied automatically via useEffect
+    try {
+      const newLanguage = language === 'vi' ? 'en' : 'vi';
+      setLanguage(newLanguage);
+      localStorage.setItem('language', newLanguage);
+      // Language will be applied automatically via useEffect
+    } catch (error) {
+      console.error('Error toggling language:', error);
+    }
   };
 
   const applyLanguage = (lang) => {
@@ -74,14 +85,18 @@ const Layout = ({ children }) => {
   };
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    if (newTheme === 'dark') {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
+    try {
+      const newTheme = theme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      if (newTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    } catch (error) {
+      console.error('Error toggling theme:', error);
     }
   };
 

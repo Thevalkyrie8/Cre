@@ -8,7 +8,11 @@ const Home = () => {
 
   useEffect(() => {
     // Initialize testimonials
-    initializeTestimonialTabs();
+    try {
+      initializeTestimonialTabs();
+    } catch (error) {
+      console.error('Error initializing testimonials:', error);
+    }
   }, []);
 
   // Simplified initialization functions
