@@ -187,7 +187,8 @@ const Layout = ({ children }) => {
             <div className="footer-section">
               <h4 data-vi="Liên hệ" data-en="Contact" data-default="en">Contact</h4>
               <p>Email: info@unitrux.com</p>
-              <p>Phone: +84 123 456 789</p>
+              <p>Phone: +84 386 429 930</p>
+              <p>Phone: +84 365 073 837</p>
             </div>
           </div>
           <div className="footer-bottom">

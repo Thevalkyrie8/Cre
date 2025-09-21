@@ -460,20 +460,39 @@ const Home = () => {
             <div className="service-card">
               <div className="service-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8.5 11C10.7091 11 12.5 9.20914 12.5 7C12.5 4.79086 10.7091 3 8.5 3C6.29086 3 4.5 4.79086 4.5 7C4.5 9.20914 6.29086 11 8.5 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M17 11L19 13L23 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M23 19C23 19.5304 22.7893 20.0391 22.4142 20.4142C22.0391 20.7893 21.5304 21 21 21H3C2.46957 21 1.96086 20.7893 1.58579 20.4142C1.21071 20.0391 1 19.5304 1 19V5C1 4.46957 1.21071 3.96086 1.58579 3.58579C1.96086 3.21071 2.46957 3 3 3H7L9 5H21C21.5304 5 22.0391 5.21071 22.4142 5.58579C22.7893 5.96086 23 6.46957 23 7V19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div className="service-content">
-                <h3 className="service-title" data-en="Affiliate Programs" data-vi="Chương trình Liên kết">Affiliate Programs</h3>
-                <p className="service-description" data-en="Expand your reach and boost sales through strategic affiliate partnerships" data-vi="Mở rộng phạm vi tiếp cận và tăng doanh số thông qua các đối tác liên kết chiến lược">Expand your reach and boost sales through strategic affiliate partnerships</p>
+                <h3 className="service-title" data-en="Photography & Video" data-vi="Chụp ảnh & Video">Photography & Video</h3>
+                <p className="service-description" data-en="Professional photography and video services for websites, social media & e-commerce marketplaces" data-vi="Dịch vụ chụp ảnh và video chuyên nghiệp cho website, mạng xã hội & sàn TMĐT">Professional photography and video services for websites, social media & e-commerce marketplaces</p>
                 <ul className="service-features">
-                  <li>Custom Affiliate Systems</li>
-                  <li>Commission Management</li>
-                  <li>Performance Tracking</li>
-              </ul>
-                <Link to="/services" className="btn-learn-more">Learn More</Link>
+                  <li>Product Photography & Design</li>
+                  <li>Corporate & Product Videos</li>
+                  <li>Social Media Content</li>
+                </ul>
+                <Link to="/services/photography-video" className="btn-learn-more">Learn More</Link>
+              </div>
+            </div>
+
+            <div className="service-card">
+              <div className="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div className="service-content">
+                <h3 className="service-title" data-en="UI/UX Design" data-vi="Thiết kế UI/UX">UI/UX Design</h3>
+                <p className="service-description" data-en="Clear design that makes customers click right away and come back" data-vi="Thiết kế dễ hiểu để khách bấm ngay và quay lại">Clear design that makes customers click right away and come back</p>
+                <ul className="service-features">
+                  <li>User Interface Design</li>
+                  <li>User Experience Optimization</li>
+                  <li>Mobile-First Approach</li>
+                </ul>
+                <Link to="/services/ui-ux-design" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
           </div>
@@ -988,7 +1007,10 @@ const Home = () => {
                 <div className="contact-icon">📞</div>
                 <div className="contact-details">
                   <strong data-vi="Điện thoại" data-en="Phone">Điện thoại</strong>
-                  <span>+84 123 456 789</span>
+                  <div className="phone-numbers">
+                  <div>+84 386 429 930</div>
+                  <div>+84 365 073 837</div>
+                  </div>
                 </div>
               </div>
               <div className="contact-item">

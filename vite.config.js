@@ -19,7 +19,14 @@ export default defineConfig({
     },
   },
   server: {
-    historyApiFallback: true
+    port: 5173,
+    host: true,
+    hmr: {
+      port: 5173
+    },
+    watch: {
+      usePolling: true
+    }
   },
   esbuild: {
     loader: 'jsx',
@@ -27,6 +34,6 @@ export default defineConfig({
     exclude: []
   },
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
   }
 })
