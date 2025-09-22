@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 const Packages = () => {
-  const [pricingToggle, setPricingToggle] = useState('monthly');
   const [faqOpen, setFaqOpen] = useState(null);
+  const [showPhone, setShowPhone] = useState(false);
 
   useEffect(() => {
     // Initialize animations and effects
@@ -95,110 +95,61 @@ const Packages = () => {
     setFaqOpen(faqOpen === index ? null : index);
   };
 
-  const packages = {
-    monthly: [
-      {
-        name: 'Starter',
-        price: 299,
-        period: '/tháng',
-        features: [
-          'SEO cơ bản',
-          'Social Media Management',
-          'Content Marketing',
-          'Email Marketing',
-          'Báo cáo hàng tháng'
-        ],
-        popular: false
-      },
-      {
-        name: 'Professional',
-        price: 599,
-        period: '/tháng',
-        features: [
-          'Tất cả gói Starter',
-          'Google Ads',
-          'Facebook Ads',
-          'Email Marketing nâng cao',
-          'Báo cáo chi tiết',
-          'Hỗ trợ 24/7'
-        ],
-        popular: true
-      },
-      {
-        name: 'Enterprise',
-        price: 999,
-        period: '/tháng',
-        features: [
-          'Tất cả gói Professional',
-          'Dedicated Account Manager',
-          'Custom Solutions',
-          'Priority Support',
-          'Advanced Analytics',
-          'Unlimited Revisions'
-        ],
-        popular: false
-      }
-    ],
-    yearly: [
-      {
-        name: 'Starter',
-        price: 2999,
-        period: '/năm',
-        features: [
-          'SEO cơ bản',
-          'Social Media Management',
-          'Content Marketing',
-          'Email Marketing',
-          'Báo cáo hàng tháng',
-          'Tiết kiệm 2 tháng'
-        ],
-        popular: false
-      },
-      {
-        name: 'Professional',
-        price: 5999,
-        period: '/năm',
-        features: [
-          'Tất cả gói Starter',
-          'Google Ads',
-          'Facebook Ads',
-          'Email Marketing nâng cao',
-          'Báo cáo chi tiết',
-          'Hỗ trợ 24/7',
-          'Tiết kiệm 2 tháng'
-        ],
-        popular: true
-      },
-      {
-        name: 'Enterprise',
-        price: 9999,
-        period: '/năm',
-        features: [
-          'Tất cả gói Professional',
-          'Dedicated Account Manager',
-          'Custom Solutions',
-          'Priority Support',
-          'Advanced Analytics',
-          'Unlimited Revisions',
-          'Tiết kiệm 2 tháng'
-        ],
-        popular: false
-      }
-    ]
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
+
+  const showPhoneNumber = () => {
+    setShowPhone(true);
+    // Auto hide after 5 seconds
+    setTimeout(() => setShowPhone(false), 5000);
+  };
+
+  const packages = [
+    {
+      name: 'Starter',
+      features: [
+        'SEO cơ bản',
+        'Social Media Management',
+        'Content Marketing',
+        'Email Marketing',
+        'Báo cáo hàng tháng'
+      ],
+      popular: false
+    },
+    {
+      name: 'Professional',
+      features: [
+        'Tất cả gói Starter',
+        'Google Ads',
+        'Facebook Ads',
+        'Email Marketing nâng cao',
+        'Báo cáo chi tiết',
+        'Hỗ trợ 24/7'
+      ],
+      popular: true
+    },
+    {
+      name: 'Enterprise',
+      features: [
+        'Tất cả gói Professional',
+        'Dedicated Account Manager',
+        'Custom Solutions',
+        'Priority Support',
+        'Advanced Analytics',
+        'Unlimited Revisions'
+      ],
+      popular: false
+    }
+  ];
 
   const faqs = [
     {
       question: 'Tôi có thể thay đổi gói dịch vụ không?',
-      answer: 'Có, bạn có thể thay đổi gói dịch vụ bất kỳ lúc nào. Chúng tôi sẽ tính toán lại chi phí dựa trên thời gian sử dụng.'
-    },
-    {
-      question: 'Có phí setup không?',
-      answer: 'Không, chúng tôi không tính phí setup cho tất cả các gói dịch vụ.'
-    },
-    {
-      question: 'Tôi có thể hủy dịch vụ bất kỳ lúc nào không?',
-      answer: 'Có, bạn có thể hủy dịch vụ với thông báo trước 30 ngày.'
+      answer: 'Có, bạn có thể thay đổi gói dịch vụ bất kỳ lúc nào. Chúng tôi sẽ hỗ trợ chuyển đổi giữa các gói một cách linh hoạt.'
     },
     {
       question: 'Có hỗ trợ kỹ thuật không?',
@@ -207,6 +158,14 @@ const Packages = () => {
     {
       question: 'Tôi có thể yêu cầu tính năng tùy chỉnh không?',
       answer: 'Có, đặc biệt với gói Enterprise, chúng tôi có thể phát triển các tính năng tùy chỉnh theo yêu cầu.'
+    },
+    {
+      question: 'Thời gian triển khai dịch vụ là bao lâu?',
+      answer: 'Thời gian triển khai tùy thuộc vào gói dịch vụ, thường từ 1-4 tuần. Chúng tôi sẽ cung cấp timeline cụ thể sau khi tư vấn.'
+    },
+    {
+      question: 'Có báo cáo định kỳ không?',
+      answer: 'Có, chúng tôi cung cấp báo cáo chi tiết về hiệu quả dịch vụ theo định kỳ hàng tháng.'
     }
   ];
 
@@ -224,64 +183,7 @@ const Packages = () => {
         </div>
       </section>
 
-      {/* Pricing Toggle */}
-      <section className="pricing-toggle-section fade-in-section">
-        <div className="container">
-          <div className="pricing-toggle">
-            <button 
-              className={`toggle-btn ${pricingToggle === 'monthly' ? 'active' : ''}`}
-              onClick={() => setPricingToggle('monthly')}
-            >
-              <span data-vi="Hàng tháng" data-en="Monthly">Hàng tháng</span>
-            </button>
-            <button 
-              className={`toggle-btn ${pricingToggle === 'yearly' ? 'active' : ''}`}
-              onClick={() => setPricingToggle('yearly')}
-            >
-              <span data-vi="Hàng năm" data-en="Yearly">Hàng năm</span>
-              <span className="discount-badge" data-vi="Tiết kiệm 2 tháng" data-en="Save 2 months">Tiết kiệm 2 tháng</span>
-            </button>
-          </div>
-        </div>
-      </section>
 
-      {/* Pricing Cards */}
-      <section className="pricing-cards-section fade-in-section">
-        <div className="container">
-          <div className="pricing-cards">
-            {packages[pricingToggle].map((pkg, index) => (
-              <div key={index} className={`pricing-card ${pkg.popular ? 'featured' : ''}`}>
-                {pkg.popular && (
-                  <div className="popular-badge" data-vi="Phổ biến nhất" data-en="Most Popular">Phổ biến nhất</div>
-                )}
-                <div className="card-header">
-                  <h3>{pkg.name}</h3>
-                  <div className="price">
-                    <span className="currency">$</span>
-                    <span className="amount">{pkg.price.toLocaleString()}</span>
-                    <span className="period">{pkg.period}</span>
-                  </div>
-                </div>
-                <div className="card-body">
-                  <ul className="features-list">
-                    {pkg.features.map((feature, featureIndex) => (
-                      <li key={featureIndex}>
-                        <span className="check-icon">✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="card-footer">
-                  <button className="btn btn-primary">
-                    <span data-vi="Chọn gói" data-en="Choose Plan">Chọn gói</span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Add-on Services */}
       <section className="addon-services-section fade-in-section">
@@ -294,7 +196,6 @@ const Packages = () => {
               <p data-vi="Sản xuất video quảng cáo chuyên nghiệp" data-en="Professional video advertising production">
                 Sản xuất video quảng cáo chuyên nghiệp
               </p>
-              <div className="addon-price">$500 - $2000</div>
             </div>
             <div className="addon-card">
               <div className="addon-icon">📊</div>
@@ -302,7 +203,6 @@ const Packages = () => {
               <p data-vi="Phân tích dữ liệu nâng cao và báo cáo chi tiết" data-en="Advanced data analysis and detailed reporting">
                 Phân tích dữ liệu nâng cao và báo cáo chi tiết
               </p>
-              <div className="addon-price">$200/tháng</div>
             </div>
             <div className="addon-card">
               <div className="addon-icon">🌐</div>
@@ -310,7 +210,6 @@ const Packages = () => {
               <p data-vi="Hỗ trợ đa ngôn ngữ cho thị trường quốc tế" data-en="Multi-language support for international markets">
                 Hỗ trợ đa ngôn ngữ cho thị trường quốc tế
               </p>
-              <div className="addon-price">$300/tháng</div>
             </div>
             <div className="addon-card">
               <div className="addon-icon">🔧</div>
@@ -318,7 +217,6 @@ const Packages = () => {
               <p data-vi="Phát triển tính năng tùy chỉnh theo yêu cầu" data-en="Custom feature development on demand">
                 Phát triển tính năng tùy chỉnh theo yêu cầu
               </p>
-              <div className="addon-price">$100/giờ</div>
             </div>
           </div>
         </div>
@@ -358,16 +256,38 @@ const Packages = () => {
               Hãy liên hệ với chúng tôi để được tư vấn miễn phí và chọn gói dịch vụ phù hợp.
             </p>
             <div className="cta-buttons">
-              <a href="#contact" className="btn btn-primary">
-                <span data-vi="Liên hệ ngay" data-en="Contact Now">Liên hệ ngay</span>
-              </a>
-              <a href="/services" className="btn btn-secondary">
-                <span data-vi="Xem dịch vụ" data-en="View Services">Xem dịch vụ</span>
-              </a>
+              <button onClick={scrollToContact} className="btn btn-primary">
+                <span data-vi="Nhận tư vấn miễn phí" data-en="Get Free Consultation">Nhận tư vấn miễn phí</span>
+              </button>
+              <button onClick={showPhoneNumber} className="btn btn-secondary">
+                <span data-vi="Liên hệ" data-en="Contact">Liên hệ</span>
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Phone Number Display */}
+      {showPhone && (
+        <div className="phone-display-overlay" onClick={() => setShowPhone(false)}>
+          <div className="phone-display-modal" onClick={(e) => e.stopPropagation()}>
+            <h3 data-vi="Số điện thoại liên hệ" data-en="Contact Phone Number">Số điện thoại liên hệ</h3>
+            <div className="phone-number">+84 364 750 316</div>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.open('tel:+84364750316')}
+            >
+              <span data-vi="Gọi ngay" data-en="Call Now">Gọi ngay</span>
+            </button>
+            <button 
+              className="btn btn-secondary"
+              onClick={() => setShowPhone(false)}
+            >
+              <span data-vi="Đóng" data-en="Close">Đóng</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -149,7 +149,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Team Section
       <section className="team-section fade-in-section">
         <div className="container">
           <h2 data-vi="Đội ngũ của chúng tôi" data-en="Our Team">Đội ngũ của chúng tôi</h2>
@@ -196,7 +196,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Company Timeline */}
       <section className="timeline-section fade-in-section">

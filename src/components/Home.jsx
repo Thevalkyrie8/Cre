@@ -6,6 +6,14 @@ const Home = () => {
   const [testimonialTab, setTestimonialTab] = useState('web');
   const [testimonialCards, setTestimonialCards] = useState([]);
 
+  const initializeTestimonialTabs = useCallback(() => {
+    // Initialize with random 3 testimonials from web category
+    const allTestimonials = getAllTestimonials();
+    const webTestimonials = allTestimonials.filter(t => t.category === 'web');
+    const shuffled = webTestimonials.sort(() => 0.5 - Math.random());
+    setTestimonialCards(shuffled.slice(0, 3));
+  }, []);
+
   useEffect(() => {
     // Initialize testimonials
     try {
@@ -13,28 +21,8 @@ const Home = () => {
     } catch (error) {
       console.error('Error initializing testimonials:', error);
     }
-  }, []);
+  }, [initializeTestimonialTabs]);
 
-  // Simplified initialization functions
-  const initializeScrollEffects = () => {
-    // Basic scroll effects
-  };
-
-  const initializeAnimations = () => {
-    // Basic animations
-  };
-
-  const initializeButtons = () => {
-    // Basic button effects
-  };
-
-  const initializeParallax = () => {
-    // Basic parallax
-  };
-
-  const initializeLoadingAnimation = () => {
-    // Basic loading animation
-  };
 
   const getAllTestimonials = () => {
     return [
@@ -85,14 +73,6 @@ const Home = () => {
     ];
   };
 
-  const initializeTestimonialTabs = useCallback(() => {
-    // Initialize with random 3 testimonials from web category
-    const allTestimonials = getAllTestimonials();
-    const webTestimonials = allTestimonials.filter(t => t.category === 'web');
-    const shuffled = webTestimonials.sort(() => 0.5 - Math.random());
-    setTestimonialCards(shuffled.slice(0, 3));
-  }, []);
-
   const handleTestimonialTabChange = (category) => {
     setTestimonialTab(category);
     const allTestimonials = getAllTestimonials();
@@ -126,9 +106,14 @@ const Home = () => {
                 <Link  to="https://drive.google.com/drive/folders/1C-WjM-Y4mBzHvfX1Mpvo5Vmd_rgXK3MQ" className="btn btn-primary">
                   <span data-en="View Our Success Stories" data-vi="Xem Câu Chuyện Thành Công">View Our Success Stories</span>
                 </Link>
-                <Link to="#contact" className="btn btn-secondary">
+                <button onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }} className="btn btn-secondary">
                   <span data-en="Get Free Consultation" data-vi="Nhận Tư Vấn Miễn Phí">Get Free Consultation</span>
-                </Link>
+                </button>
               </div>
             </div>
             
@@ -392,7 +377,6 @@ const Home = () => {
                   <li>Management Web Applications</li>
                   <li>Automation Systems</li>
                 </ul>
-                <Link to="/services/web-development" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
             
@@ -414,7 +398,6 @@ const Home = () => {
                   <li>SEO & Listing Optimization</li>
                   <li>Product Photography & Design</li>
                 </ul>
-                <Link to="/services/ecommerce-solutions" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
             
@@ -434,7 +417,6 @@ const Home = () => {
                   <li>Targeted Ad Campaigns</li>
                   <li>Video Content Production</li>
               </ul>
-                <Link to="/services/digital-marketing" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
             
@@ -453,7 +435,6 @@ const Home = () => {
                   <li>Email Marketing Automation</li>
                   <li>Chatbot Development</li>
               </ul>
-                <Link to="/services/automation-systems" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
 
@@ -472,7 +453,6 @@ const Home = () => {
                   <li>Corporate & Product Videos</li>
                   <li>Social Media Content</li>
                 </ul>
-                <Link to="/services/photography-video" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
 
@@ -492,7 +472,6 @@ const Home = () => {
                   <li>User Experience Optimization</li>
                   <li>Mobile-First Approach</li>
                 </ul>
-                <Link to="/services/ui-ux-design" className="btn-learn-more">Learn More</Link>
               </div>
             </div>
           </div>
@@ -620,10 +599,6 @@ const Home = () => {
               <p>I create high-quality 3D animation videos that transform complex ideas and products into engaging, easy-to-understand visuals. My work is designed to elevate brands, boost marketing campaigns, and attract customers through cinematic motion and polished storytelling.</p>
               <div className="case-study-results">
                 <div className="result-item">
-                  <div className="result-number">Price</div>
-                  <div className="result-label">$800-$1000</div>
-                </div>
-                <div className="result-item">
                   <div className="result-number">Duration</div>
                   <div className="result-label">7-30 days</div>
                 </div>
@@ -658,10 +633,6 @@ const Home = () => {
               <p>This portfolio showcases my work in creating cinematic 3D product commercials designed to grab attention, highlight brand identity, and boost engagement. From sleek pickleball paddles to luxury cosmetics and everyday consumer goods, I transform ideas into eye-catching visuals that are perfect for social media ads, e-commerce, and brand campaigns.</p>
               <div className="case-study-results">
                 <div className="result-item">
-                  <div className="result-number">Price</div>
-                  <div className="result-label">$1000-$2500</div>
-                </div>
-                <div className="result-item">
                   <div className="result-number">Duration</div>
                   <div className="result-label">7-30 days</div>
                 </div>
@@ -695,10 +666,6 @@ const Home = () => {
               <h3>3D Product Animation – Shoes</h3>
               <p>A high-quality 3D animation showcasing modern shoes with realistic textures, smooth motion, and dynamic camera angles. This ad-style video highlights the shoe's design details, comfort features, and stylish appeal, making it perfect for commercials, e-commerce, and brand promotion.</p>
               <div className="case-study-results">
-                <div className="result-item">
-                  <div className="result-number">Price</div>
-                  <div className="result-label">$1000-$2500</div>
-                </div>
                 <div className="result-item">
                   <div className="result-number">Duration</div>
                   <div className="result-label">7-30 days</div>
@@ -745,10 +712,6 @@ const Home = () => {
               <p>A refreshing 3D animation presenting a fermented drink bottle with realistic glass textures, liquid motion, and vibrant lighting. The video highlights the drink's freshness, natural ingredients, and premium design, making it ideal for commercials, e-commerce listings, and beverage brand promotion.</p>
               <div className="case-study-results">
                 <div className="result-item">
-                  <div className="result-number">Price</div>
-                  <div className="result-label">$1000-$2500</div>
-                </div>
-                <div className="result-item">
                   <div className="result-number">Duration</div>
                   <div className="result-label">7-30 days</div>
                 </div>
@@ -762,8 +725,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Packages Section */}
-      <section className="packages-section fade-in-section">
+       {/* Packages Section */}
+       <section className="packages-section fade-in-section">
         <div className="packages-container">
           <div className="section-header">
             <div className="section-badge">
@@ -807,7 +770,6 @@ const Home = () => {
                   <span>Performance analytics & optimization</span>
                 </div>
               </div>
-              <a href="#contact-section" className="btn-package-cta">Learn More</a>
             </div>
 
             <div className="package-card">
@@ -835,7 +797,6 @@ const Home = () => {
                   <span>Basic SEO optimization</span>
                 </div>
               </div>
-              <a href="#contact-section" className="btn-package-cta secondary">Learn More</a>
             </div>
 
             <div className="package-card">
@@ -871,7 +832,6 @@ const Home = () => {
                   <span>Cross-platform inventory management</span>
                 </div>
               </div>
-              <a href="#contact-section" className="btn-package-cta secondary">Learn More</a>
             </div>
 
             <div className="package-card">
@@ -906,7 +866,6 @@ const Home = () => {
                   <span>Social media-optimized content</span>
                 </div>
               </div>
-              <a href="#contact-section" className="btn-package-cta secondary">Learn More</a>
             </div>
 
             <div className="package-card">
@@ -940,7 +899,6 @@ const Home = () => {
                   <span>Performance tracking & reports</span>
                 </div>
               </div>
-              <a href="#contact-section" className="btn-package-cta secondary">Learn More</a>
             </div>
 
             <div className="package-card">
@@ -975,11 +933,11 @@ const Home = () => {
                   <span>Custom roadmap development</span>
                 </div>
               </div>
-              <a href="#contact-section" className="btn-package-cta secondary">Learn More</a>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Contact Section */}
       <section id="contact" className="contact-section fade-in-section">

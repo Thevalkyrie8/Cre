@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import About from './components/About';
@@ -66,12 +66,9 @@ class ErrorBoundary extends React.Component {
 }
 
 function App() {
-  console.log('App component rendering...');
-  console.log('Current pathname:', window.location.pathname);
-  
   return (
     <ErrorBoundary>
-      <Router basename={process.env.NODE_ENV === 'production' ? '/unitrux' : '/'}>
+      <Router>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -79,14 +76,12 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/packages" element={<Packages />} />
             <Route path="/news" element={<News />} />
-            <Route path="/services/web-development" element={<WebDevelopmentService />} />
-            <Route path="/services/ecommerce-solutions" element={<EcommerceService />} />
-            <Route path="/services/digital-marketing" element={<DigitalMarketingService />} />
-            <Route path="/services/automation-systems" element={<AutomationService />} />
-            <Route path="/services/photography-video" element={<PhotographyVideoService />} />
-            <Route path="/services/ui-ux-design" element={<UIUXDesignService />} />
-            {/* Fallback route for SPA */}
-            <Route path="*" element={<Home />} />
+            <Route path="/web-development" element={<WebDevelopmentService />} />
+            <Route path="/ecommerce" element={<EcommerceService />} />
+            <Route path="/digital-marketing" element={<DigitalMarketingService />} />
+            <Route path="/automation" element={<AutomationService />} />
+            <Route path="/photography-video" element={<PhotographyVideoService />} />
+            <Route path="/ui-ux-design" element={<UIUXDesignService />} />
           </Routes>
         </Layout>
       </Router>
