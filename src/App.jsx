@@ -66,9 +66,12 @@ class ErrorBoundary extends React.Component {
 }
 
 function App() {
+  console.log('App component rendering...');
+  console.log('Current pathname:', window.location.pathname);
+  
   return (
     <ErrorBoundary>
-      <Router>
+      <Router basename="/">
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />

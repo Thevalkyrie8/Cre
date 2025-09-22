@@ -27,11 +27,23 @@ jobs:
           node-version: '20'
           cache: 'npm'
           
-      - name: Install dependencies
-        run: npm ci
+      - name: Clear cache and install dependencies
+        run: |
+          echo "Clearing npm cache..."
+          npm cache clean --force
+          echo "Installing dependencies..."
+          npm ci
         
       - name: Build
-        run: npm run build
+        run: |
+          echo "Starting build process..."
+          npm run build
+          echo "Build completed. Checking dist folder..."
+          ls -la dist/
+          echo "Checking if assets exist..."
+          ls -la dist/assets/ || echo "Assets folder not found"
+          echo "Checking index.html content..."
+          head -40 dist/index.html
         
       - name: Setup Pages
         uses: actions/configure-pages@v4

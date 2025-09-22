@@ -6,6 +6,8 @@ import App from './App.jsx'
 // Debug logging
 console.log('Main.jsx loaded');
 console.log('Root element:', document.getElementById('root'));
+console.log('Current URL:', window.location.href);
+console.log('Base URL:', window.location.origin);
 
 // Check if root element exists
 const rootElement = document.getElementById('root');
