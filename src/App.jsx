@@ -71,7 +71,7 @@ function App() {
   
   return (
     <ErrorBoundary>
-      <Router basename="/">
+      <Router basename={process.env.NODE_ENV === 'production' ? '/unitrux' : '/'}>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
