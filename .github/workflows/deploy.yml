@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "feat/init-project-react" ]
+    branches: [ "feat/init-project-react", "main", "master" ]
   workflow_dispatch:
 
 permissions:
@@ -50,4 +50,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@ 
+        uses: actions/deploy-pages@v4
