@@ -1,11 +1,13 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import About from './components/About';
 import Services from './components/Services';
 import Packages from './components/Packages';
 import News from './components/News';
+import NewsDetail from './components/NewsDetail';
+import ServiceDetail from './components/ServiceDetail';
 import WebDevelopmentService from './components/WebDevelopmentService';
 import EcommerceService from './components/EcommerceService';
 import DigitalMarketingService from './components/DigitalMarketingService';
@@ -31,9 +33,9 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ 
-          padding: '20px', 
-          textAlign: 'center', 
+        <div style={{
+          padding: '20px',
+          textAlign: 'center',
           color: '#333',
           fontFamily: 'Arial, sans-serif',
           minHeight: '100vh',
@@ -44,7 +46,7 @@ class ErrorBoundary extends React.Component {
         }}>
           <h2>Something went wrong.</h2>
           <p>Please refresh the page or try again later.</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             style={{
               padding: '10px 20px',
@@ -76,6 +78,8 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/packages" element={<Packages />} />
             <Route path="/news" element={<News />} />
+            <Route path="/news/:id" element={<NewsDetail />} />
+            <Route path="/services/:id" element={<ServiceDetail />} />
             <Route path="/web-development" element={<WebDevelopmentService />} />
             <Route path="/ecommerce" element={<EcommerceService />} />
             <Route path="/digital-marketing" element={<DigitalMarketingService />} />

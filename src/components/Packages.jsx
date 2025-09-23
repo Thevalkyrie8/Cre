@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getPackages, getPopularPackages } from '../api/client';
 
 const Packages = () => {
   const [faqOpen, setFaqOpen] = useState(null);
@@ -9,6 +10,8 @@ const Packages = () => {
     initializeScrollEffects();
     initializeAnimations();
     initializeButtons();
+    // Load dynamic packages
+    getPopularPackages().catch(() => null); // preload popular
   }, []);
 
   const initializeScrollEffects = () => {
@@ -108,43 +111,22 @@ const Packages = () => {
     setTimeout(() => setShowPhone(false), 5000);
   };
 
-  const packages = [
-    {
-      name: 'Starter',
-      features: [
-        'SEO cơ bản',
-        'Social Media Management',
-        'Content Marketing',
-        'Email Marketing',
-        'Báo cáo hàng tháng'
-      ],
-      popular: false
-    },
-    {
-      name: 'Professional',
-      features: [
-        'Tất cả gói Starter',
-        'Google Ads',
-        'Facebook Ads',
-        'Email Marketing nâng cao',
-        'Báo cáo chi tiết',
-        'Hỗ trợ 24/7'
-      ],
-      popular: true
-    },
-    {
-      name: 'Enterprise',
-      features: [
-        'Tất cả gói Professional',
-        'Dedicated Account Manager',
-        'Custom Solutions',
-        'Priority Support',
-        'Advanced Analytics',
-        'Unlimited Revisions'
-      ],
-      popular: false
-    }
-  ];
+  const [apiPackages, setApiPackages] = useState([]);
+  useEffect(() => {
+    let mounted = true;
+    getPackages()
+      .then((items) => {
+        if (!mounted) return;
+        const mapped = (Array.isArray(items) ? items : []).map((p) => ({
+          name: p.nameVi || p.name,
+          features: Array.isArray(p.featuresVi) && p.featuresVi.length ? p.featuresVi : (p.features || []),
+          popular: false
+        }));
+        setApiPackages(mapped.slice(0, 3));
+      })
+      .catch((e) => console.error('Failed to load packages:', e));
+    return () => { mounted = false; };
+  }, []);
 
   const faqs = [
     {
@@ -185,7 +167,7 @@ const Packages = () => {
 
 
 
-      {/* Add-on Services */}
+      {/* Add-on Services (static UI preserved) */}
       <section className="addon-services-section fade-in-section">
         <div className="container">
           <h2 data-vi="Dịch vụ bổ sung" data-en="Add-on Services">Dịch vụ bổ sung</h2>
@@ -218,6 +200,33 @@ const Packages = () => {
                 Phát triển tính năng tùy chỉnh theo yêu cầu
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dynamic Packages Grid (texts from API, same visuals) */}
+      <section className="packages-grid-section fade-in-section">
+        <div className="container">
+          <h2 data-vi="Gói đề xuất" data-en="Recommended Packages">Gói đề xuất</h2>
+          <div className="packages-grid">
+            {(apiPackages.length ? apiPackages : []).map((pkg, idx) => (
+              <div key={idx} className={`package-card ${idx === 0 ? 'featured-package' : ''}`}>
+                {idx === 0 && <div className="popular-badge">Most Popular</div>}
+                <div className="package-header">
+                  <div className="crown-icon"></div>
+                  <div className="package-badge">On demand</div>
+                </div>
+                <h3 className="package-title">{pkg.name}</h3>
+                <div className="package-features">
+                  {(pkg.features || []).slice(0, 6).map((f, i) => (
+                    <div key={i} className="feature-item">
+                      <div className="feature-icon">✓</div>
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

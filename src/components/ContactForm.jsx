@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { createContact } from '../api/client';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -24,21 +24,16 @@ const ContactForm = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post('https://be-unitrux.onrender.com/send-email', formData);
-      
-      if (response.data.success) {
-        setSubmitStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
-      } else {
-        setSubmitStatus('error');
-      }
+      await createContact({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error creating contact:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { getProducts } from '../api/client';
 import { Link } from 'react-router-dom';
 import ContactForm from './ContactForm';
 
 const Home = () => {
   const [testimonialTab, setTestimonialTab] = useState('web');
   const [testimonialCards, setTestimonialCards] = useState([]);
+  const [caseStudyProducts, setCaseStudyProducts] = useState([]);
 
   const initializeTestimonialTabs = useCallback(() => {
     // Initialize with random 3 testimonials from web category
@@ -22,6 +24,23 @@ const Home = () => {
       console.error('Error initializing testimonials:', error);
     }
   }, [initializeTestimonialTabs]);
+
+  // Load dynamic case studies from products API but keep visuals
+  useEffect(() => {
+    let isMounted = true;
+    getProducts({ category: '3d-animation' })
+      .then((data) => {
+        if (!isMounted) return;
+        const items = Array.isArray(data) ? data : [];
+        const sorted = items.sort((a, b) => (a?.sortOrder || 0) - (b?.sortOrder || 0));
+        setCaseStudyProducts(sorted.slice(0, 3));
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        console.error('Failed to load case study products:', err);
+      });
+    return () => { isMounted = false; };
+  }, []);
 
 
   const getAllTestimonials = () => {
@@ -377,6 +396,9 @@ const Home = () => {
                   <li>Management Web Applications</li>
                   <li>Automation Systems</li>
                 </ul>
+                <Link to="/web-development" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
               </div>
             </div>
             
@@ -398,6 +420,9 @@ const Home = () => {
                   <li>SEO & Listing Optimization</li>
                   <li>Product Photography & Design</li>
                 </ul>
+                <Link to="/ecommerce" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
               </div>
             </div>
             
@@ -416,7 +441,10 @@ const Home = () => {
                   <li>Social Media Management</li>
                   <li>Targeted Ad Campaigns</li>
                   <li>Video Content Production</li>
-              </ul>
+                </ul>
+                <Link to="/digital-marketing" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
               </div>
             </div>
             
@@ -434,7 +462,10 @@ const Home = () => {
                   <li>CRM Integration & Setup</li>
                   <li>Email Marketing Automation</li>
                   <li>Chatbot Development</li>
-              </ul>
+                </ul>
+                <Link to="/automation" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
               </div>
             </div>
 
@@ -453,6 +484,9 @@ const Home = () => {
                   <li>Corporate & Product Videos</li>
                   <li>Social Media Content</li>
                 </ul>
+                <Link to="/photography-video" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
               </div>
             </div>
 
@@ -472,6 +506,9 @@ const Home = () => {
                   <li>User Experience Optimization</li>
                   <li>Mobile-First Approach</li>
                 </ul>
+                <Link to="/ui-ux-design" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -566,14 +603,14 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Case Studies Section */}
+      {/* Case Studies Section (texts from API, visuals preserved) */}
       <section className="testimonials-section">
           <div className="section-header">
             <div className="section-badge">
             <span>Case Studies</span>
           </div>
-          <h2 className="section-title">3D Product Animation Showcase</h2>
-          <p className="section-subtitle">Explore our recent works demonstrating creativity, realism, and impactful storytelling across industries.</p>
+          <h2 className="section-title">{caseStudyProducts[0]?.nameVi || caseStudyProducts[0]?.name || '3D Product Animation Showcase'}</h2>
+          <p className="section-subtitle">{caseStudyProducts[0]?.descriptionVi || caseStudyProducts[0]?.description || 'Explore our recent works demonstrating creativity, realism, and impactful storytelling across industries.'}</p>
           </div>
           <div className="case-studies-grid">
           <div className="case-study-card">
@@ -595,16 +632,16 @@ const Home = () => {
                 </video>
               </div>
               <div className="case-study-content">
-              <h3>Professional 3D Animation Explainer, Commercial Ad</h3>
-              <p>I create high-quality 3D animation videos that transform complex ideas and products into engaging, easy-to-understand visuals. My work is designed to elevate brands, boost marketing campaigns, and attract customers through cinematic motion and polished storytelling.</p>
+              <h3>{caseStudyProducts[0]?.nameVi || caseStudyProducts[0]?.name || 'Professional 3D Animation Explainer, Commercial Ad'}</h3>
+              <p>{caseStudyProducts[0]?.descriptionVi || caseStudyProducts[0]?.description || 'I create high-quality 3D animation videos that transform complex ideas and products into engaging, easy-to-understand visuals. My work is designed to elevate brands, boost marketing campaigns, and attract customers through cinematic motion and polished storytelling.'}</p>
               <div className="case-study-results">
                 <div className="result-item">
-                  <div className="result-number">Duration</div>
-                  <div className="result-label">7-30 days</div>
+                  <div className="result-number">{caseStudyProducts[0]?.results?.[0]?.label || 'Duration'}</div>
+                  <div className="result-label">{caseStudyProducts[0]?.results?.[0]?.value || '7-30 days'}</div>
                 </div>
                 <div className="result-item">
-                  <div className="result-number">Industries</div>
-                  <div className="result-label">Diseño 3D +5</div>
+                  <div className="result-number">{caseStudyProducts[0]?.results?.[1]?.label || 'Industries'}</div>
+                  <div className="result-label">{caseStudyProducts[0]?.results?.[1]?.value || '3D Design +5'}</div>
                 </div>
               </div>
             </div>
@@ -629,16 +666,16 @@ const Home = () => {
                 </video>
               </div>
               <div className="case-study-content">
-              <h3>3D Product Commercial Ads Portfolio</h3>
-              <p>This portfolio showcases my work in creating cinematic 3D product commercials designed to grab attention, highlight brand identity, and boost engagement. From sleek pickleball paddles to luxury cosmetics and everyday consumer goods, I transform ideas into eye-catching visuals that are perfect for social media ads, e-commerce, and brand campaigns.</p>
+              <h3>{caseStudyProducts[1]?.nameVi || caseStudyProducts[1]?.name || '3D Product Commercial Ads Portfolio'}</h3>
+              <p>{caseStudyProducts[1]?.descriptionVi || caseStudyProducts[1]?.description || 'This portfolio showcases my work in creating cinematic 3D product commercials designed to grab attention, highlight brand identity, and boost engagement. From sleek pickleball paddles to luxury cosmetics and everyday consumer goods, I transform ideas into eye-catching visuals that are perfect for social media ads, e-commerce, and brand campaigns.'}</p>
               <div className="case-study-results">
                 <div className="result-item">
-                  <div className="result-number">Duration</div>
-                  <div className="result-label">7-30 days</div>
+                  <div className="result-number">{caseStudyProducts[1]?.results?.[0]?.label || 'Duration'}</div>
+                  <div className="result-label">{caseStudyProducts[1]?.results?.[0]?.value || '7-30 days'}</div>
                 </div>
                 <div className="result-item">
-                  <div className="result-number">Industries</div>
-                  <div className="result-label">3D Design +5</div>
+                  <div className="result-number">{caseStudyProducts[1]?.results?.[1]?.label || 'Industries'}</div>
+                  <div className="result-label">{caseStudyProducts[1]?.results?.[1]?.value || '3D Design +5'}</div>
                 </div>
               </div>
             </div>
@@ -657,22 +694,23 @@ const Home = () => {
                 controls
                 onError={(e) => console.error('Video error:', e)}
               >
-                  <source src="/President.mp4" type="video/mp4" />
-                <source src="./President.mp4" type="video/mp4" />
+                  <source src="/Ls-ad.mp4" type="video/mp4" />
+                <source src="./Ls-ad.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
                 </video>
               </div>
               <div className="case-study-content">
-              <h3>3D Product Animation – Shoes</h3>
-              <p>A high-quality 3D animation showcasing modern shoes with realistic textures, smooth motion, and dynamic camera angles. This ad-style video highlights the shoe's design details, comfort features, and stylish appeal, making it perfect for commercials, e-commerce, and brand promotion.</p>
+              <h3>{caseStudyProducts[2]?.nameVi || caseStudyProducts[2]?.name || '3D product animation ads created for shoe insoles.'}</h3>
+              <p>{caseStudyProducts[2]?.descriptionVi || caseStudyProducts[2]?.description || 'This video highlights key features such as arch support, cushioning, and AEROSPACE-GRACE PREMIUM CARBON FIBER through dynamic visuals and lifestyle scenes. Designed for use in social media campaigns and e-commerce promotions.'}
+              </p>
               <div className="case-study-results">
                 <div className="result-item">
-                  <div className="result-number">Duration</div>
-                  <div className="result-label">7-30 days</div>
+                  <div className="result-number">{caseStudyProducts[2]?.results?.[0]?.label || 'Duration'}</div>
+                  <div className="result-label">{caseStudyProducts[2]?.results?.[0]?.value || '7-30 days'}</div>
                 </div>
                 <div className="result-item">
-                  <div className="result-number">Industries</div>
-                  <div className="result-label">3D Design +5</div>
+                  <div className="result-number">{caseStudyProducts[2]?.results?.[1]?.label || 'Industries'}</div>
+                  <div className="result-label">{caseStudyProducts[2]?.results?.[1]?.value || '3D Design +5'}</div>
                 </div>
               </div>
             </div>
@@ -701,15 +739,15 @@ const Home = () => {
                   e.target.parentNode.appendChild(img);
                 }}
               >
-                  <source src="/drink-f.mp4" type="video/mp4" />
-                <source src="./drink-f.mp4" type="video/mp4" />
-                <source src="drink-f.mp4" type="video/mp4" />
+                  <source src="/fan.mp4" type="video/mp4" />
+                <source src="./fan.mp4" type="video/mp4" />
+                <source src="fan.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
                 </video>
               </div>
               <div className="case-study-content">
-              <h3>3D Product Animation – Fermented Drink</h3>
-              <p>A refreshing 3D animation presenting a fermented drink bottle with realistic glass textures, liquid motion, and vibrant lighting. The video highlights the drink's freshness, natural ingredients, and premium design, making it ideal for commercials, e-commerce listings, and beverage brand promotion.</p>
+              <h3>Portable Travel Fan</h3>
+              <p>Stay cool and comfortable on the go with this ultra-portable travel fan. Designed for maximum convenience and performance, this fan is your perfect companion for hot days, travel, outdoor events, or simply for personal use at your desk.</p>
               <div className="case-study-results">
                 <div className="result-item">
                   <div className="result-number">Duration</div>
@@ -717,11 +755,14 @@ const Home = () => {
                 </div>
                 <div className="result-item">
                   <div className="result-number">Industries</div>
-                  <div className="result-label">3D Design +5</div>
+                  <div className="result-label">Motion design & Animation +5</div>
                 </div>
               </div>
             </div>
           </div>
+
+
+
         </div>
       </section>
 
@@ -966,8 +1007,8 @@ const Home = () => {
                 <div className="contact-details">
                   <strong data-vi="Điện thoại" data-en="Phone">Điện thoại</strong>
                   <div className="phone-numbers">
-                  <div>+84 386 429 930</div>
-                  <div>+84 365 073 837</div>
+                  <div>+84 938 695 186</div>
+                  <div>+84 364 750 316</div>
                   </div>
                 </div>
               </div>

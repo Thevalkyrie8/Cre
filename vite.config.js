@@ -26,6 +26,15 @@ export default defineConfig({
     },
     watch: {
       usePolling: true
+    },
+    proxy: {
+      '/api': {
+        target: 'https://unitrux-api.up.railway.app',
+        changeOrigin: true,
+        secure: true,
+        timeout: 10000, // 10 second timeout
+        proxyTimeout: 10000
+      }
     }
   },
   esbuild: {
@@ -34,6 +43,6 @@ export default defineConfig({
     exclude: []
   },
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    'process.env.NODE_ENV': JSON.stringify('development')
   }
 })
