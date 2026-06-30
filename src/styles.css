@@ -167,6 +167,117 @@ body:not(.dark-mode) .earth-color {
     z-index: 5;
 }
 
+.privacy-policy {
+    padding: 120px 0 80px;
+    min-height: 100vh;
+    background: transparent;
+}
+
+.privacy-policy.container {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-secondary);
+    border-radius: 30px;
+    padding: 60px 50px;
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(20px);
+}
+
+.privacy-policy h1,
+.privacy-policy h2,
+.privacy-policy h3,
+.privacy-policy h4,
+.privacy-policy h5 {
+    color: var(--text-primary);
+}
+
+.privacy-policy h1 {
+    font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+}
+
+.privacy-policy h2 {
+    font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+    margin-top: 2.6rem;
+    margin-bottom: 1rem;
+}
+
+.privacy-policy h3,
+.privacy-policy h4,
+.privacy-policy h5 {
+    font-size: 1.14rem;
+    margin-top: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.privacy-policy p,
+.privacy-policy li {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+.privacy-policy ul {
+    margin: 0.9rem 0 0 1.4rem;
+    padding-left: 0;
+    list-style: disc;
+}
+
+.privacy-policy ul ul {
+    list-style: circle;
+    margin-top: 0.65rem;
+}
+
+.privacy-policy li {
+    margin-bottom: 0.75rem;
+}
+
+.privacy-policy a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.privacy-policy a:hover {
+    color: var(--accent-hover);
+}
+
+.privacy-policy p strong,
+.privacy-policy li strong {
+    color: var(--text-primary);
+}
+
+.privacy-policy .policy-back {
+    margin-top: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-color);
+}
+
+.privacy-policy .policy-back:hover {
+    color: var(--accent-hover);
+}
+
+@media (max-width: 900px) {
+    .privacy-policy.container {
+        padding: 40px 28px;
+    }
+}
+
+@media (max-width: 640px) {
+    .privacy-policy {
+        padding: 90px 0 50px;
+    }
+    .privacy-policy.container {
+        padding: 30px 20px;
+        border-radius: 24px;
+    }
+    .privacy-policy h1 {
+        font-size: 2.4rem;
+    }
+}
+
 /* Navbar */
 .navbar {
     display: flex;
