@@ -138,6 +138,9 @@ const Layout = ({ children }) => {
             <Link to="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>
               <span data-vi="Liên hệ" data-en="Contact" data-default="en">Contact</span>
             </Link>
+            <Link to="/privacy-policy" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Chính sách bảo mật" data-en="Privacy Policy" data-default="en">Privacy Policy</span>
+            </Link>
           </div>
 
           <div className="nav-actions">

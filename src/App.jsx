@@ -14,6 +14,7 @@ import DigitalMarketingService from './components/DigitalMarketingService';
 import AutomationService from './components/AutomationService';
 import PhotographyVideoService from './components/PhotographyVideoService';
 import UIUXDesignService from './components/UIUXDesignService';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -86,6 +87,7 @@ function App() {
             <Route path="/automation" element={<AutomationService />} />
             <Route path="/photography-video" element={<PhotographyVideoService />} />
             <Route path="/ui-ux-design" element={<UIUXDesignService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Routes>
         </Layout>
       </Router>
