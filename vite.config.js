@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   // Deploying to a root custom domain like https://unitrux.com
   // so assets should be loaded from the root path.
-  base: '/',
+  base: './',
   plugins: [react()],
   build: {
     outDir: 'dist',
