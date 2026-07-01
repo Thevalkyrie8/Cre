@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="privacy-policy container" style={{ padding: '40px 20px', maxWidth: '960px', margin: '0 auto' }}>
+    <div className="privacy-policy container" style={{ padding: '100px 20px', maxWidth: '960px', margin: '0 auto' }}>
       <h1>Privacy Policy</h1>
       <p><strong>Last updated:</strong> June 30, 2026</p>
 
