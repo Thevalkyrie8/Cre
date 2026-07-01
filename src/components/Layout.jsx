@@ -141,6 +141,12 @@ const Layout = ({ children }) => {
             <Link to="/privacy-policy" className="nav-link" onClick={() => setIsMenuOpen(false)}>
               <span data-vi="Chính sách bảo mật" data-en="Privacy Policy" data-default="en">Privacy Policy</span>
             </Link>
+            <Link to="/terms" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Điều khoản dịch vụ" data-en="Terms of Service" data-default="en">Terms of Service</span>
+            </Link>
+            <Link to="/delete-data" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Xóa dữ liệu" data-en="Delete Data" data-default="en">Delete Data</span>
+            </Link>
           </div>
 
           <div className="nav-actions">
@@ -185,6 +191,14 @@ const Layout = ({ children }) => {
                 <li><Link to="/services">Web Development</Link></li>
                 <li><Link to="/services">SEO</Link></li>
                 <li><Link to="/services">E-commerce</Link></li>
+              </ul>
+            </div>
+            <div className="footer-section">
+              <h4 data-vi="Thông tin pháp lý" data-en="Legal" data-default="en">Legal</h4>
+              <ul>
+                <li><Link to="/terms">Terms of Service</Link></li>
+                <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+                <li><Link to="/delete-data">Delete Data</Link></li>
               </ul>
             </div>
             <div className="footer-section">
