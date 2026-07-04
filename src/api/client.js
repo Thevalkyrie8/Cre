@@ -62,12 +62,16 @@ export function getCategories(params = {}) {
 	return fetchJson(`/categories${qs}`);
 }
 
-export function getNewsById(id) {
-	return fetchJson(`/news/${id}`);
+export function getNewsById(id, params = {}) {
+	const query = new URLSearchParams(params).toString();
+	const qs = query ? `?${query}` : '';
+	return fetchJson(`/news/${id}${qs}`);
 }
 
-export function getFeaturedNews() {
-	return fetchJson('/news/featured');
+export function getFeaturedNews(params = {}) {
+	const query = new URLSearchParams(params).toString();
+	const qs = query ? `?${query}` : '';
+	return fetchJson(`/news/featured${qs}`);
 }
 
 export function getPackages(params = {}) {
@@ -98,4 +102,8 @@ export function listMedia(params = {}) {
 
 export function createContact(payload) {
 	return fetchJson('/contacts', { method: 'POST', body: JSON.stringify(payload) });
+}
+
+export function sendUnitruxChat(payload) {
+	return fetchJson('/chat/unitrux', { method: 'POST', body: JSON.stringify(payload) });
 }

@@ -45,6 +45,7 @@ const shareOnSocial = (platform, url, title) => {
 
 const News = () => {
   const navigate = useNavigate();
+  const [language, setLanguage] = useState(getCurrentLanguage());
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   // No local cache needed; we render from filteredNews directly
@@ -58,8 +59,27 @@ const News = () => {
     initializeScrollEffects();
     initializeAnimations();
     initializeButtons();
-    initializeNews();
   }, []); // initialize animations once
+
+  useEffect(() => {
+    const handleLanguageChange = (event) => {
+      setLanguage(event.detail?.language || getCurrentLanguage());
+    };
+
+    const handleStorageChange = (event) => {
+      if (event.key === 'language') {
+        setLanguage(event.newValue || 'en');
+      }
+    };
+
+    window.addEventListener('languageChange', handleLanguageChange);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('languageChange', handleLanguageChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const initializeScrollEffects = () => {
     const observerOptions = {
@@ -140,10 +160,8 @@ const News = () => {
   };
 
   const initializeNews = useCallback(() => {
-    const lang = getCurrentLanguage();
-
     // Load featured and list from API, fallback to current static layout if fails
-    getFeaturedNews({ lang })
+    getFeaturedNews({ lang: language })
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) setFeatured(data[0]);
       })
@@ -151,7 +169,7 @@ const News = () => {
 
     // initial load
     setLoading(true);
-    getNews({ lang })
+    getNews({ lang: language })
       .then((list) => {
         const mapped = (Array.isArray(list) ? list : []).map(mapNewsItem);
         setFilteredNews(mapped);
@@ -168,7 +186,7 @@ const News = () => {
       })
       .catch((e) => console.error('Failed to load news:', e))
       .finally(() => setLoading(false));
-  }, []);
+  }, [language]);
 
   // Kick off API loads once
   useEffect(() => {
@@ -199,7 +217,7 @@ const News = () => {
     const controller = new AbortController();
     const timeout = setTimeout(() => {
       setLoading(true);
-      const params = { lang: getCurrentLanguage() };
+      const params = { lang: language };
       if (searchTerm.trim()) params.search = searchTerm.trim();
       if (selectedCategory !== 'all') params.category = selectedCategory;
       getNews(params)
@@ -211,7 +229,7 @@ const News = () => {
         .finally(() => setLoading(false));
     }, 300); // Reduced debounce time for faster response
     return () => { clearTimeout(timeout); controller.abort(); };
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, language]);
 
 
 
@@ -793,7 +811,9 @@ const News = () => {
             <input 
               type="text" 
               className="news-search-input"
-              placeholder="Tìm kiếm bài viết, chủ đề..." 
+              placeholder={language === 'vi' ? 'Tìm kiếm bài viết, chủ đề...' : 'Search articles, topics...'}
+              data-placeholder-vi="Tìm kiếm bài viết, chủ đề..."
+              data-placeholder-en="Search articles, topics..."
               value={searchTerm}
               onChange={handleSearch}
             />
@@ -804,7 +824,9 @@ const News = () => {
                   className={`category-tab ${selectedCategory === category.id ? 'active' : ''}`}
                   onClick={() => handleCategoryFilter(category.id)}
                 >
-                  <span data-vi={category.name} data-en={category.nameEn}>{category.name}</span>
+                  <span data-vi={category.name} data-en={category.nameEn}>
+                    {language === 'vi' ? category.name : category.nameEn}
+                  </span>
                 </button>
               ))}
             </div>
@@ -861,7 +883,13 @@ const News = () => {
               Nhận những tin tức và insights mới nhất từ Unitrux
             </p>
             <form className="newsletter-form">
-              <input type="email" placeholder="Email của bạn" required />
+              <input
+                type="email"
+                placeholder={language === 'vi' ? 'Email của bạn' : 'Your email'}
+                data-placeholder-vi="Email của bạn"
+                data-placeholder-en="Your email"
+                required
+              />
               <button type="submit" className="btn btn-primary">
                 <span data-vi="Đăng ký" data-en="Subscribe">Đăng ký</span>
               </button>

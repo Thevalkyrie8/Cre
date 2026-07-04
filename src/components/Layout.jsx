@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import ChatBox from './ChatBox';
 
 const Layout = ({ children }) => {
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [language, setLanguage] = useState('en');
@@ -44,14 +46,16 @@ const Layout = ({ children }) => {
   // Apply language when language state changes
   useEffect(() => {
     applyLanguage(language);
-  }, [language]);
+  }, [language, location.pathname]);
 
   const toggleLanguage = () => {
     try {
       const newLanguage = language === 'vi' ? 'en' : 'vi';
       setLanguage(newLanguage);
       localStorage.setItem('language', newLanguage);
-      // Language will be applied automatically via useEffect
+      window.dispatchEvent(new CustomEvent('languageChange', {
+        detail: { language: newLanguage }
+      }));
     } catch (error) {
       console.error('Error toggling language:', error);
     }
@@ -60,6 +64,8 @@ const Layout = ({ children }) => {
   const applyLanguage = (lang) => {
     // Small delay to ensure DOM is ready
     setTimeout(() => {
+      document.documentElement.lang = lang;
+
       // Translate page content
       const elements = document.querySelectorAll('[data-vi], [data-en]');
       elements.forEach(element => {
@@ -78,6 +84,17 @@ const Layout = ({ children }) => {
         } else if (enText) {
           // Fallback to English if no default is set
           element.textContent = enText;
+        }
+      });
+
+      const placeholderElements = document.querySelectorAll('[data-placeholder-vi], [data-placeholder-en]');
+      placeholderElements.forEach(element => {
+        const viPlaceholder = element.getAttribute('data-placeholder-vi');
+        const enPlaceholder = element.getAttribute('data-placeholder-en');
+        const nextPlaceholder = lang === 'vi' ? viPlaceholder : enPlaceholder;
+
+        if (nextPlaceholder) {
+          element.setAttribute('placeholder', nextPlaceholder);
         }
       });
     }, 50);
@@ -260,9 +277,9 @@ const Layout = ({ children }) => {
           </div>
         </div>
       </footer>
-
       {/* Floating Buttons */}
       <div className="floating-buttons">
+        <ChatBox />
         <button className="scroll-to-top" onClick={scrollToTop} title="Scroll to top">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -284,3 +301,5 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+
+
