@@ -83,7 +83,7 @@ const NewsDetail = () => {
           }
           .loading-progress-fill {
             height: 100%;
-            background: #99EA48;
+            background: #0B63FF;
             width: 30%;
             animation: loadingProgress 1.5s ease-in-out infinite;
           }
@@ -95,7 +95,7 @@ const NewsDetail = () => {
             width: 40px;
             height: 40px;
             border: 4px solid #333;
-            border-top: 4px solid #99EA48;
+            border-top: 4px solid #0B63FF;
             border-radius: 50%;
             animation: spin 1s linear infinite;
           }
@@ -119,7 +119,7 @@ const NewsDetail = () => {
             style={{
               marginTop: '20px',
               padding: '10px 20px',
-              background: '#99EA48',
+              background: '#0B63FF',
               color: '#0b0b0b',
               border: 'none',
               borderRadius: '5px',
@@ -174,12 +174,12 @@ const NewsDetail = () => {
           color: #ccc;
         }
         .breadcrumb-link {
-          color: #99EA48;
+          color: #0B63FF;
           text-decoration: none;
           transition: color 0.3s ease;
         }
         .breadcrumb-link:hover {
-          color: #7BCF3A;
+          color: #19D9FF;
         }
         .breadcrumb-separator {
           color: #666;
@@ -198,7 +198,7 @@ const NewsDetail = () => {
           font-size: 42px;
           line-height: 1.2;
           margin: 0 0 20px;
-          background: linear-gradient(135deg, #99EA48 0%, #7BCF3A 100%);
+          background: linear-gradient(135deg, #0B63FF 0%, #19D9FF 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -237,13 +237,13 @@ const NewsDetail = () => {
           color: #e0e0e0;
         }
         .news-detail-content h2 {
-          color: #99EA48;
+          color: #0B63FF;
           margin: 40px 0 20px;
           font-size: 28px;
           font-weight: 600;
         }
         .news-detail-content h3 {
-          color: #99EA48;
+          color: #0B63FF;
           margin: 30px 0 15px;
           font-size: 24px;
           font-weight: 600;
@@ -262,7 +262,7 @@ const NewsDetail = () => {
           display: inline-block;
           margin-bottom: 40px;
           padding: 12px 24px;
-          background: linear-gradient(135deg, #99EA48, #7BCF3A);
+          background: linear-gradient(135deg, #0B63FF, #19D9FF);
           color: #0b0b0b;
           text-decoration: none;
           border-radius: 8px;
@@ -271,7 +271,7 @@ const NewsDetail = () => {
         }
         .back-button:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(153,234,72,0.3);
+          box-shadow: 0 8px 25px rgba(11, 99, 255, 0.3);
         }
         @media (max-width: 768px) {
           .news-detail-title {

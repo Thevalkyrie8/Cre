@@ -3,6 +3,80 @@ import { getProducts } from '../api/client';
 import { Link } from 'react-router-dom';
 import ContactForm from './ContactForm';
 
+const NeonIcon = ({ type }) => {
+  const paths = {
+    web: (
+      <>
+        <rect x="4" y="6" width="40" height="28" rx="4" />
+        <path d="M8 14h32M18 42h12M15 42h18M14 22h8M14 28h16" />
+      </>
+    ),
+    mobile: (
+      <>
+        <rect x="15" y="4" width="18" height="40" rx="5" />
+        <path d="M21 10h6M23.5 38h1" />
+      </>
+    ),
+    design: (
+      <>
+        <path d="M10 34l4 4 22-22-4-4L10 34z" />
+        <path d="M30 14l4 4M12 36l-2 8 8-2M30 8l10 10" />
+      </>
+    ),
+    growth: (
+      <>
+        <path d="M8 36h32M12 32V22M22 32V16M33 32V10" />
+        <path d="M10 18l9-7 8 5 11-12M38 4v9h-9" />
+      </>
+    ),
+    rocket: (
+      <>
+        <path d="M25 5c8 3 13 11 14 22l-9 9c-11-1-19-6-22-14l9-2 6-6 2-9z" />
+        <path d="M18 30l-6 6M28 14h.1M13 35l-5 5" />
+      </>
+    ),
+    idea: (
+      <>
+        <path d="M24 6a13 13 0 0 0-8 23v5h16v-5A13 13 0 0 0 24 6z" />
+        <path d="M18 40h12M20 45h8M24 1v3M8 9l3 3M40 9l-3 3" />
+      </>
+    ),
+    target: (
+      <>
+        <circle cx="24" cy="24" r="17" />
+        <circle cx="24" cy="24" r="9" />
+        <circle cx="24" cy="24" r="2" />
+        <path d="M34 14l7-7M37 7h4v4" />
+      </>
+    ),
+    chart: (
+      <>
+        <path d="M8 38h32M13 32v-9M23 32V14M33 32V20" />
+        <path d="M12 16l10-7 8 8 9-11" />
+      </>
+    ),
+    support: (
+      <>
+        <path d="M10 28v-5a14 14 0 0 1 28 0v5" />
+        <path d="M10 28a5 5 0 0 0 5 5h2V21h-2a5 5 0 0 0-5 5v2zM38 28a5 5 0 0 1-5 5h-2V21h2a5 5 0 0 1 5 5v2z" />
+        <path d="M30 38c-2 2-4 3-7 3" />
+      </>
+    ),
+    cost: (
+      <>
+        <circle cx="24" cy="24" r="17" />
+        <path d="M24 13v22M30 17c-2-2-10-3-11 2-1 4 4 5 8 6 6 2 5 9-1 10-4 1-8-1-10-3" />
+      </>
+    )
+  };
+
+  return (
+    <svg className="neon-icon-svg" viewBox="0 0 48 48" aria-hidden="true">
+      {paths[type]}
+    </svg>
+  );
+};
+
 const Home = () => {
   const [testimonialTab, setTestimonialTab] = useState('web');
   const [testimonialCards, setTestimonialCards] = useState([]);
@@ -137,21 +211,26 @@ const Home = () => {
             </div>
             
             <div className="services-hero-visual">
+              <div className="poster-panel" aria-hidden="true">
+                <div className="poster-panel-top"><span></span><span></span><span></span></div>
+                <div className="poster-panel-grid"><i></i><i></i><i></i><i></i></div>
+                <div className="poster-panel-chart"><span></span><span></span><span></span><span></span></div>
+              </div>
               <div className="floating-cards">
                 <div className="floating-card card-1">
-                  <div className="card-icon">💻</div>
+                  <div className="card-icon"><NeonIcon type="web" /></div>
                   <span data-en="Web Development" data-vi="Phát triển Web">Web Development</span>
                 </div>
                 <div className="floating-card card-2">
-                  <div className="card-icon">📱</div>
+                  <div className="card-icon"><NeonIcon type="mobile" /></div>
                   <span data-en="Mobile Apps" data-vi="Ứng dụng Di động">Mobile Apps</span>
                 </div>
                 <div className="floating-card card-3">
-                  <div className="card-icon">🎨</div>
+                  <div className="card-icon"><NeonIcon type="design" /></div>
                   <span data-en="UI/UX Design" data-vi="Thiết kế UI/UX">UI/UX Design</span>
                 </div>
                 <div className="floating-card card-4">
-                  <div className="card-icon">📈</div>
+                  <div className="card-icon"><NeonIcon type="growth" /></div>
                   <span data-en="Digital Marketing" data-vi="Tiếp thị Số">Digital Marketing</span>
                 </div>
               </div>
@@ -174,42 +253,42 @@ const Home = () => {
           </div>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">🚀</div>
+              <div className="feature-icon"><NeonIcon type="rocket" /></div>
               <h3 data-en="Rapid Growth" data-vi="Tăng trưởng nhanh chóng">Rapid Growth</h3>
               <p data-en="We help businesses grow revenue by 300% in the first 6 months through optimized marketing strategies." data-vi="Chúng tôi giúp doanh nghiệp tăng trưởng doanh thu 300% trong 6 tháng đầu tiên thông qua các chiến lược marketing được tối ưu hóa.">
                 We help businesses grow revenue by 300% in the first 6 months through optimized marketing strategies.
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">💡</div>
+              <div className="feature-icon"><NeonIcon type="idea" /></div>
               <h3 data-en="Creative & Unique" data-vi="Sáng tạo và độc đáo">Creative & Unique</h3>
               <p data-en="Each of our marketing strategies is uniquely designed to fit the characteristics and goals of each business." data-vi="Mỗi chiến lược marketing của chúng tôi đều được thiết kế riêng biệt, phù hợp với đặc thù và mục tiêu của từng doanh nghiệp.">
                 Each of our marketing strategies is uniquely designed to fit the characteristics and goals of each business.
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🎯</div>
+              <div className="feature-icon"><NeonIcon type="target" /></div>
               <h3 data-en="Precise Targeting" data-vi="Targeting chính xác">Precise Targeting</h3>
               <p data-en="Using data and deep analysis to accurately identify target customers, maximizing advertising effectiveness." data-vi="Sử dụng dữ liệu và phân tích sâu để xác định chính xác đối tượng khách hàng mục tiêu, tối đa hóa hiệu quả quảng cáo.">
                 Using data and deep analysis to accurately identify target customers, maximizing advertising effectiveness.
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">📊</div>
+              <div className="feature-icon"><NeonIcon type="chart" /></div>
               <h3 data-en="Transparent Reporting" data-vi="Báo cáo minh bạch">Transparent Reporting</h3>
               <p data-en="Provide detailed and transparent reports on the effectiveness of each marketing campaign, helping you track ROI clearly." data-vi="Cung cấp báo cáo chi tiết và minh bạch về hiệu quả của từng chiến dịch marketing, giúp bạn theo dõi ROI một cách rõ ràng.">
                 Provide detailed and transparent reports on the effectiveness of each marketing campaign, helping you track ROI clearly.
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🛠️</div>
+              <div className="feature-icon"><NeonIcon type="support" /></div>
               <h3 data-en="24/7 Support" data-vi="Hỗ trợ 24/7">24/7 Support</h3>
               <p data-en="Our team of experts is always ready to support you 24/7, ensuring all issues are resolved quickly." data-vi="Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7, đảm bảo mọi vấn đề được giải quyết nhanh chóng.">
                 Our team of experts is always ready to support you 24/7, ensuring all issues are resolved quickly.
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">💰</div>
+              <div className="feature-icon"><NeonIcon type="cost" /></div>
               <h3 data-en="Reasonable Cost" data-vi="Chi phí hợp lý">Reasonable Cost</h3>
               <p data-en="Provide service packages at competitive prices, suitable for businesses of all sizes." data-vi="Cung cấp các gói dịch vụ với mức giá cạnh tranh, phù hợp với ngân sách của mọi quy mô doanh nghiệp.">
                 Provide service packages at competitive prices, suitable for businesses of all sizes.

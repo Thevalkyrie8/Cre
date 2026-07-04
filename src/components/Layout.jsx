@@ -138,31 +138,31 @@ const Layout = ({ children }) => {
           
           <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
             <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Trang chủ" data-en="Home" data-default="en">Home</span>
+              <span data-vi={"\u0054\u0072\u0061\u006e\u0067\u0020\u0063\u0068\u1ee7"} data-en="Home" data-default="en">Home</span>
             </Link>
             <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Dịch vụ" data-en="Services" data-default="en">Services</span>
+              <span data-vi={"\u0044\u1ecb\u0063\u0068\u0020\u0076\u1ee5"} data-en="Services" data-default="en">Services</span>
             </Link>
             <Link to="/packages" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Gói dịch vụ" data-en="Packages" data-default="en">Packages</span>
+              <span data-vi={"\u0047\u00f3\u0069"} data-en="Packages" data-default="en">Packages</span>
             </Link>
             <Link to="/about" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Về chúng tôi" data-en="About" data-default="en">About</span>
+              <span data-vi={"\u0056\u1ec1"} data-en="About" data-default="en">About</span>
             </Link>
             <Link to="/news" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Tin tức" data-en="News" data-default="en">News</span>
+              <span data-vi={"\u0054\u0069\u006e\u0020\u0074\u1ee9\u0063"} data-en="News" data-default="en">News</span>
             </Link>
             <Link to="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Liên hệ" data-en="Contact" data-default="en">Contact</span>
+              <span data-vi={"\u004c\u0069\u00ea\u006e\u0020\u0068\u1ec7"} data-en="Contact" data-default="en">Contact</span>
             </Link>
             <Link to="/privacy-policy" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Chính sách bảo mật" data-en="Privacy Policy" data-default="en">Privacy Policy</span>
+              <span data-vi={"\u0042\u1ea3\u006f\u0020\u006d\u1ead\u0074"} data-en="Privacy" data-default="en">Privacy</span>
             </Link>
             <Link to="/terms" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Điều khoản dịch vụ" data-en="Terms of Service" data-default="en">Terms of Service</span>
+              <span data-vi={"\u0110\u0069\u1ec1\u0075\u0020\u006b\u0068\u006f\u1ea3\u006e"} data-en="Terms" data-default="en">Terms</span>
             </Link>
             <Link to="/delete-data" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi="Xóa dữ liệu" data-en="Delete Data" data-default="en">Delete Data</span>
+              <span data-vi={"\u0058\u00f3\u0061"} data-en="Delete" data-default="en">Delete</span>
             </Link>
           </div>
 

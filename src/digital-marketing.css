@@ -291,7 +291,7 @@
 .logo-unitrux {
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+    background: linear-gradient(135deg, #0B63FF, #1D4ED8);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -321,7 +321,7 @@
 
 .nav-link:hover,
 .nav-link.active {
-    color: #3B82F6;
+    color: #0B63FF;
 }
 
 .nav-link.active::after {
@@ -331,7 +331,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: #3B82F6;
+    background: #0B63FF;
     border-radius: 1px;
 }
 
@@ -350,23 +350,23 @@
 }
 
 .nav-contact:hover {
-    color: #3B82F6;
-    background: rgba(59, 130, 246, 0.1);
+    color: #0B63FF;
+    background: rgba(11, 99, 255, 0.1);
 }
 
 .language-toggle-btn {
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(11, 99, 255, 0.1);
+    border: 1px solid rgba(11, 99, 255, 0.3);
     border-radius: 6px;
     padding: 0.5rem 1rem;
-    color: #3B82F6;
+    color: #0B63FF;
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 600;
 }
 
 .language-toggle-btn:hover {
-    background: #3B82F6;
+    background: #0B63FF;
     color: white;
 }
 

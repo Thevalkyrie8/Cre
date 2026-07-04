@@ -265,12 +265,12 @@ const News = () => {
           color: #ccc;
         }
         .breadcrumb-link {
-          color: #99EA48;
+          color: #0B63FF;
           text-decoration: none;
           transition: color 0.3s ease;
         }
         .breadcrumb-link:hover {
-          color: #7BCF3A;
+          color: #19D9FF;
         }
         .breadcrumb-separator {
           color: #666;
@@ -283,7 +283,7 @@ const News = () => {
         }
         .news-hero .glow {
           position: absolute; inset: -30% -20% auto -20%; height: 80%;
-          background: radial-gradient(800px 400px at 20% 10%, rgba(153,234,72,0.2), rgba(153,234,72,0.05) 40%, transparent 70%);
+          background: radial-gradient(800px 400px at 20% 10%, rgba(11, 99, 255, 0.2), rgba(11, 99, 255, 0.05) 40%, transparent 70%);
           filter: blur(30px);
           pointer-events: none;
           animation: pulse 4s ease-in-out infinite;
@@ -296,12 +296,12 @@ const News = () => {
           font-size: 42px;
           line-height: 1.1;
           margin: 0 0 16px;
-          background: linear-gradient(135deg, #99EA48 0%, #7BCF3A 100%);
+          background: linear-gradient(135deg, #0B63FF 0%, #19D9FF 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           font-weight: 700;
-          text-shadow: 0 0 30px rgba(153,234,72,0.3);
+          text-shadow: 0 0 30px rgba(11, 99, 255, 0.3);
         }
         .news-hero-sub {
           opacity: .9;
@@ -330,8 +330,8 @@ const News = () => {
           backdrop-filter: blur(10px);
         }
         .news-search-input:focus {
-          border-color: #99EA48;
-          box-shadow: 0 0 20px rgba(153,234,72,0.3);
+          border-color: #0B63FF;
+          box-shadow: 0 0 20px rgba(11, 99, 255, 0.3);
           outline: none;
         }
         .news-search-input::placeholder { color: #888; }
@@ -347,16 +347,16 @@ const News = () => {
           backdrop-filter: blur(10px);
         }
         .category-tab:hover {
-          border-color: #99EA48;
-          background: linear-gradient(135deg, rgba(153,234,72,0.1), rgba(153,234,72,0.05));
+          border-color: #0B63FF;
+          background: linear-gradient(135deg, rgba(11, 99, 255, 0.1), rgba(11, 99, 255, 0.05));
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(153,234,72,0.2);
+          box-shadow: 0 8px 25px rgba(11, 99, 255, 0.2);
         }
         .category-tab.active {
-          background: linear-gradient(135deg, #99EA48, #7BCF3A);
+          background: linear-gradient(135deg, #0B63FF, #19D9FF);
           color:#0b0b0b;
-          border-color:#99EA48;
-          box-shadow: 0 0 20px rgba(153,234,72,0.4);
+          border-color:#0B63FF;
+          box-shadow: 0 0 20px rgba(11, 99, 255, 0.4);
         }
         .featured-wrap {
           display:grid;
@@ -377,8 +377,8 @@ const News = () => {
         }
         .featured-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 20px 40px rgba(153,234,72,0.3), 0 0 30px rgba(153,234,72,0.2);
-          border-color: rgba(153,234,72,0.5);
+          box-shadow: 0 20px 40px rgba(11, 99, 255, 0.3), 0 0 30px rgba(11, 99, 255, 0.2);
+          border-color: rgba(11, 99, 255, 0.5);
         }
         .featured-media {
           height: 280px;
@@ -405,7 +405,7 @@ const News = () => {
           align-items: center;
           margin-bottom: 12px;
           font-size: 14px;
-          color: #99EA48;
+          color: #0B63FF;
         }
         .featured-author {
           display: flex;
@@ -480,8 +480,8 @@ const News = () => {
         }
         .news-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 15px 35px rgba(153,234,72,0.25), 0 0 25px rgba(153,234,72,0.15);
-          border-color: rgba(153,234,72,0.4);
+          box-shadow: 0 15px 35px rgba(11, 99, 255, 0.25), 0 0 25px rgba(11, 99, 255, 0.15);
+          border-color: rgba(11, 99, 255, 0.4);
         }
         .news-card::before {
           content: '';
@@ -490,7 +490,7 @@ const News = () => {
           left: -100%;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(153,234,72,0.1), transparent);
+          background: linear-gradient(90deg, transparent, rgba(11, 99, 255, 0.1), transparent);
           transition: left 0.5s ease;
         }
         .news-card:hover::before {
@@ -522,7 +522,7 @@ const News = () => {
           font-size:13px;
           opacity:.8;
           margin-bottom:12px;
-          color: #99EA48;
+          color: #0B63FF;
           font-weight: 500;
         }
         .news-meta-left {
@@ -604,7 +604,7 @@ const News = () => {
         }
         .trending-meta {
           font-size: 12px;
-          color: #99EA48;
+          color: #0B63FF;
           margin-bottom: 4px;
         }
         .trending-title {
@@ -619,18 +619,18 @@ const News = () => {
           margin: 40px auto 0;
           padding: 16px 32px;
           border-radius: 12px;
-          border: 2px solid #99EA48;
+          border: 2px solid #0B63FF;
           background: transparent;
-          color: #99EA48;
+          color: #0B63FF;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.3s ease;
         }
         .load-more-btn:hover {
-          background: #99EA48;
+          background: #0B63FF;
           color: #0b0b0b;
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(153,234,72,0.3);
+          box-shadow: 0 8px 25px rgba(11, 99, 255, 0.3);
         }
         .dm-grid {
           display: grid;
@@ -649,9 +649,9 @@ const News = () => {
         }
         .dm-item:hover {
           transform: translateY(-6px);
-          box-shadow: 0 12px 30px rgba(153,234,72,0.2);
-          border-color: rgba(153,234,72,0.4);
-          background: linear-gradient(135deg, rgba(153,234,72,0.1), rgba(153,234,72,0.05));
+          box-shadow: 0 12px 30px rgba(11, 99, 255, 0.2);
+          border-color: rgba(11, 99, 255, 0.4);
+          background: linear-gradient(135deg, rgba(11, 99, 255, 0.1), rgba(11, 99, 255, 0.05));
         }
         .dm-icon {
           font-size: 48px;
@@ -682,7 +682,7 @@ const News = () => {
         .newsletter-content h2 {
           font-size: 32px;
           margin: 0 0 16px;
-          background: linear-gradient(135deg, #99EA48 0%, #7BCF3A 100%);
+          background: linear-gradient(135deg, #0B63FF 0%, #19D9FF 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -714,8 +714,8 @@ const News = () => {
           backdrop-filter: blur(10px);
         }
         .newsletter-form input:focus {
-          border-color: #99EA48;
-          box-shadow: 0 0 20px rgba(153,234,72,0.3);
+          border-color: #0B63FF;
+          box-shadow: 0 0 20px rgba(11, 99, 255, 0.3);
           outline: none;
         }
         .newsletter-form input::placeholder { color: #888; }
@@ -723,16 +723,16 @@ const News = () => {
           padding: 16px 24px;
           border-radius: 12px;
           border: none;
-          background: linear-gradient(135deg, #99EA48, #7BCF3A);
+          background: linear-gradient(135deg, #0B63FF, #19D9FF);
           color: #0b0b0b;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 15px rgba(153,234,72,0.3);
+          box-shadow: 0 4px 15px rgba(11, 99, 255, 0.3);
         }
         .newsletter-form button:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(153,234,72,0.4);
+          box-shadow: 0 8px 25px rgba(11, 99, 255, 0.4);
         }
         .container {
           max-width: 1200px;
@@ -742,7 +742,7 @@ const News = () => {
         h2 {
           font-size: 32px;
           margin: 0 0 20px;
-          background: linear-gradient(135deg, #99EA48 0%, #7BCF3A 100%);
+          background: linear-gradient(135deg, #0B63FF 0%, #19D9FF 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -762,7 +762,7 @@ const News = () => {
           width: 40px;
           height: 40px;
           border: 4px solid #333;
-          border-top: 4px solid #99EA48;
+          border-top: 4px solid #0B63FF;
           border-radius: 50%;
           animation: spin 1s linear infinite;
         }

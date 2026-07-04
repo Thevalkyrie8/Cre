@@ -3,6 +3,8 @@ const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env && i
 	? '/api' // dev: use Vite proxy to avoid CORS
 	: 'https://unitrux-api.up.railway.app/api';
 
+const CHAT_API_BASE_URL = 'https://api.unitrux.site';
+
 // Simple in-memory cache for GET requests
 const cache = new Map();
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes for better performance
@@ -105,5 +107,19 @@ export function createContact(payload) {
 }
 
 export function sendUnitruxChat(payload) {
-	return fetchJson('/chat/unitrux', { method: 'POST', body: JSON.stringify(payload) });
+	return fetch(`${CHAT_API_BASE_URL}/chat/unitrux`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(payload)
+	}).then(async (response) => {
+		if (!response.ok) {
+			const text = await response.text().catch(() => '');
+			throw new Error(`Request failed ${response.status}: ${text || response.statusText}`);
+		}
+
+		return response.json();
+	});
 }
