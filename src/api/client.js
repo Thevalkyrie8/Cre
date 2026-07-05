@@ -1,7 +1,8 @@
 // Lightweight API client for Unitrux frontend
+const API_ORIGIN = 'https://be.unitrux.site';
 const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV)
 	? '/api' // dev: use Vite proxy to avoid CORS
-	: 'https://be.unitrux.site/api';
+	: `${API_ORIGIN}/api`;
 
 const CHAT_API_BASE_URL = 'https://api.unitrux.site';
 
@@ -68,6 +69,22 @@ export function getNewsById(id, params = {}) {
 	const query = new URLSearchParams(params).toString();
 	const qs = query ? `?${query}` : '';
 	return fetchJson(`/news/${id}${qs}`);
+}
+
+export function resolveAssetUrl(value, fallback = '/logo-unitrux.jpg') {
+	if (!value) return fallback;
+
+	const url = String(value).trim();
+	if (!url) return fallback;
+	if (/^https?:\/\//i.test(url) || url.startsWith('data:') || url.startsWith('blob:')) return url;
+	if (url.startsWith('/api/')) return `${API_ORIGIN}${url}`;
+	if (url.startsWith('api/')) return `${API_ORIGIN}/${url}`;
+	if (url.startsWith('/uploads/')) return `${API_ORIGIN}${url}`;
+	if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(url)) {
+		return `${API_ORIGIN}/api/media/file/${url}`;
+	}
+
+	return url;
 }
 
 export function getFeaturedNews(params = {}) {

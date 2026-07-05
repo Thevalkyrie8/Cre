@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getNews, getFeaturedNews } from '../api/client';
+import { getNews, getFeaturedNews, resolveAssetUrl } from '../api/client';
 
 const getCurrentLanguage = () => {
   try {
@@ -96,7 +96,7 @@ const normalizeNewsItem = (item, language) => {
     : (item.excerpt || item.excerptVi || content);
   const excerpt = stripMarkdown(excerptSource).slice(0, 170);
 
-  const image = item.image || '/logo-unitrux.jpg';
+  const image = resolveAssetUrl(item.image);
 
   return {
     id: item.id,

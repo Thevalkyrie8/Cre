@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getNews, getNewsById } from '../api/client';
+import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -76,7 +76,7 @@ const normalizeArticle = (article, language) => {
     ? (article.excerptVi || article.excerpt || '')
     : (article.excerpt || article.excerptVi || '');
 
-  const image = article.image || '/logo-unitrux.jpg';
+  const image = resolveAssetUrl(article.image);
 
   return {
     id: article.id,
