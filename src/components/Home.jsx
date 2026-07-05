@@ -192,8 +192,8 @@ const Home = () => {
               <h1 data-en="Innovative Solutions Exceptional Results" data-vi="Giải Pháp Sáng Tạo Kết Quả Vượt Trội">
               Innovative Solutions Exceptional Results
               </h1>
-              <p data-en="Web & App Development – Building fast, secure, and user-friendly digital platforms. Digital Marketing – Driving brand visibility with data-driven strategies and creative content. E-commerce Support – Delivering scalable solutions to optimize online sales and operations. With tailored strategies and cutting-edge technology, Unitrux transforms ideas into measurable success." data-vi="Phát triển Web & Ứng dụng – Xây dựng các nền tảng số nhanh chóng, an toàn và thân thiện với người dùng. Tiếp thị Kỹ thuật số – Nâng cao khả năng hiển thị thương hiệu với các chiến lược dựa trên dữ liệu và nội dung sáng tạo. Hỗ trợ Thương mại Điện tử – Cung cấp các giải pháp có khả năng mở rộng để tối ưu hóa doanh số và vận hành trực tuyến. Với các chiến lược phù hợp và công nghệ tiên tiến, Unitrux biến ý tưởng thành những thành công đo lường được">
-              Web & App Development – Building fast, secure, and user-friendly digital platforms. Digital Marketing – Driving brand visibility with data-driven strategies and creative content. E-commerce Support – Delivering scalable solutions to optimize online sales and operations. With tailored strategies and cutting-edge technology, Unitrux transforms ideas into measurable success.
+              <p data-en="We build websites, e-commerce systems, content assets, and marketing campaigns that help businesses launch faster, sell better, and measure what is working." data-vi="Chúng tôi xây dựng website, hệ thống thương mại điện tử, nội dung và chiến dịch marketing giúp doanh nghiệp ra mắt nhanh hơn, bán tốt hơn và đo lường rõ hơn.">
+              We build websites, e-commerce systems, content assets, and marketing campaigns that help businesses launch faster, sell better, and measure what is working.
               </p>
               <div className="hero-buttons">
                 <Link  to="https://drive.google.com/drive/folders/1C-WjM-Y4mBzHvfX1Mpvo5Vmd_rgXK3MQ" className="btn btn-primary">
@@ -343,7 +343,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Seamless Multi-chain Integration</span>
+              <span className="feature-text">Conversion-focused websites</span>
             </div>
             
             <div className="feature-item">
@@ -352,7 +352,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Cutting-edge Features</span>
+              <span className="feature-text">E-commerce operations</span>
             </div>
             
             <div className="feature-item">
@@ -361,7 +361,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Enhanced User Experience</span>
+              <span className="feature-text">Campaign reporting</span>
             </div>
             
             <div className="feature-item">
@@ -370,7 +370,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">On-chain Trading</span>
+              <span className="feature-text">Product photo and video</span>
             </div>
             
             <div className="feature-item">
@@ -379,7 +379,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Industry-leading Partners</span>
+              <span className="feature-text">Automation support</span>
             </div>
             
             {/* Duplicate content for seamless loop */}
@@ -389,7 +389,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Seamless Multi-chain Integration</span>
+              <span className="feature-text">Conversion-focused websites</span>
             </div>
             
             <div className="feature-item">
@@ -398,7 +398,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Cutting-edge Features</span>
+              <span className="feature-text">E-commerce operations</span>
             </div>
             
             <div className="feature-item">
@@ -407,7 +407,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Enhanced User Experience</span>
+              <span className="feature-text">Campaign reporting</span>
             </div>
             
             <div className="feature-item">
@@ -416,7 +416,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">On-chain Trading</span>
+              <span className="feature-text">Product photo and video</span>
             </div>
             
             <div className="feature-item">
@@ -425,7 +425,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">Industry-leading Partners</span>
+              <span className="feature-text">Automation support</span>
             </div>
             
             <div className="feature-item">
@@ -434,7 +434,7 @@ const Home = () => {
                   <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#99EA48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="feature-text">On-chain Trading</span>
+              <span className="feature-text">Product photo and video</span>
             </div>
           </div>
         </div>

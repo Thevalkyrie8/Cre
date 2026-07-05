@@ -7662,3 +7662,321 @@ html[lang="vi"] .nav-link {
         height: 42px !important;
     }
 }
+
+/* Chat quick replies: visible horizontal scroll for many options */
+.chatbox-suggestions {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+    max-width: 100% !important;
+    padding: 12px 14px 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(32, 232, 255, 0.55) rgba(255, 255, 255, 0.08) !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.chatbox-suggestions::-webkit-scrollbar {
+    display: block !important;
+    height: 7px !important;
+}
+
+.chatbox-suggestions::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 999px !important;
+}
+
+.chatbox-suggestions::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #087BFF, #20E8FF) !important;
+    border-radius: 999px !important;
+}
+
+.chatbox-suggestions button {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+}
+
+/* Taste-skill light polish: keep the current neon identity, tighten the finish */
+:root {
+    --polish-ink: #020713;
+    --polish-panel: rgba(5, 18, 43, 0.72);
+    --polish-panel-strong: rgba(8, 24, 56, 0.88);
+    --polish-line: rgba(103, 203, 255, 0.22);
+    --polish-line-soft: rgba(103, 203, 255, 0.12);
+    --polish-cyan: #20E8FF;
+    --polish-blue: #087BFF;
+    --polish-text-soft: rgba(231, 244, 255, 0.78);
+}
+
+.navbar,
+.navbar.scrolled {
+    background: rgba(2, 8, 22, 0.86) !important;
+    border-bottom-color: rgba(103, 203, 255, 0.16) !important;
+    box-shadow: 0 16px 42px rgba(0, 8, 28, 0.22) !important;
+}
+
+.nav-link {
+    color: rgba(237, 247, 255, 0.78) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    text-shadow: none !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #FFFFFF !important;
+}
+
+.nav-link::after {
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, var(--polish-cyan), transparent) !important;
+}
+
+.hero {
+    min-height: 100dvh !important;
+    padding-top: 76px !important;
+    background:
+        radial-gradient(circle at 78% 28%, rgba(8, 123, 255, 0.16), transparent 28rem),
+        linear-gradient(100deg, #020713 0%, #031127 48%, #041834 100%) !important;
+}
+
+.hero::before {
+    opacity: 0.36 !important;
+}
+
+.hero::after {
+    opacity: 0.54 !important;
+    box-shadow: 0 -10px 28px rgba(0, 136, 255, 0.12), inset 0 10px 24px rgba(18, 216, 255, 0.06) !important;
+}
+
+.hero-content-wrapper {
+    min-height: calc(100dvh - 120px) !important;
+    gap: clamp(42px, 5vw, 68px) !important;
+    padding: 28px 0 52px !important;
+}
+
+.hero h1,
+.hero-content h1 {
+    max-width: 780px !important;
+    font-size: clamp(2.75rem, 4.7vw, 4.95rem) !important;
+    line-height: 1.03 !important;
+    text-shadow: 0 10px 34px rgba(0, 0, 0, 0.32) !important;
+}
+
+.hero p,
+.hero-content p {
+    max-width: 610px !important;
+    color: var(--polish-text-soft) !important;
+    font-size: clamp(0.96rem, 1vw, 1.08rem) !important;
+    line-height: 1.72 !important;
+}
+
+.hero-badge,
+.section-badge,
+.about-badge,
+.package-badge,
+.popular-badge,
+.category-tab {
+    border-radius: 999px !important;
+    border-color: rgba(72, 198, 255, 0.34) !important;
+    background: rgba(2, 14, 34, 0.52) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035), 0 10px 28px rgba(0, 8, 28, 0.22) !important;
+}
+
+.hero-badge span,
+.section-badge span,
+.about-badge span,
+.package-badge,
+.popular-badge,
+.category-tab {
+    color: #8DEEFF !important;
+    letter-spacing: 0.09em !important;
+}
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-learn-more,
+.btn-package-cta,
+.contact-form .btn-full {
+    min-height: 52px !important;
+    border-radius: 999px !important;
+    letter-spacing: 0 !important;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
+}
+
+.btn-primary,
+.btn-package-cta,
+.contact-form .btn-full {
+    background: linear-gradient(100deg, #087BFF 0%, #18BFFF 100%) !important;
+    border-color: rgba(139, 235, 255, 0.72) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 18px 38px rgba(8, 123, 255, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+.btn-secondary,
+.btn-learn-more,
+.btn-package-cta.secondary {
+    background: rgba(3, 16, 39, 0.54) !important;
+    border-color: rgba(103, 203, 255, 0.28) !important;
+    color: rgba(244, 250, 255, 0.92) !important;
+}
+
+.btn:hover,
+.btn-learn-more:hover,
+.btn-package-cta:hover,
+.contact-form .btn-full:hover {
+    transform: translateY(-2px) !important;
+}
+
+.btn:active,
+.btn-learn-more:active,
+.btn-package-cta:active,
+.contact-form .btn-full:active {
+    transform: translateY(1px) !important;
+}
+
+.hero-buttons {
+    align-items: center !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.hero-buttons .btn {
+    width: auto !important;
+    min-height: 48px !important;
+    padding: 0 18px !important;
+    font-size: 0.92rem !important;
+    white-space: nowrap !important;
+}
+
+.poster-panel,
+.floating-card,
+.feature-card,
+.service-card,
+.package-card,
+.case-study-card,
+.testimonial-card,
+.contact-info,
+.contact-form-container,
+.footer-section {
+    border-color: var(--polish-line) !important;
+    background:
+        linear-gradient(145deg, rgba(7, 23, 52, 0.84), rgba(2, 10, 26, 0.78)) !important;
+    box-shadow: 0 22px 58px rgba(0, 8, 28, 0.34), inset 0 0 20px rgba(32, 232, 255, 0.035) !important;
+}
+
+.feature-card,
+.service-card,
+.package-card,
+.case-study-card,
+.testimonial-card {
+    border-radius: 18px !important;
+}
+
+.feature-card::before,
+.service-card::before,
+.package-card::before,
+.case-study-card::before,
+.testimonial-card::before {
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(32, 232, 255, 0.72), transparent) !important;
+    box-shadow: none !important;
+}
+
+.feature-card:hover,
+.service-card:hover,
+.package-card:hover,
+.case-study-card:hover,
+.testimonial-card:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(112, 218, 255, 0.46) !important;
+    box-shadow: 0 28px 68px rgba(0, 8, 28, 0.42), 0 0 26px rgba(32, 232, 255, 0.1) !important;
+}
+
+.card-icon,
+.feature-icon,
+.service-icon,
+.contact-icon,
+.crown-icon,
+.feature-check-icon {
+    border-color: rgba(105, 210, 255, 0.42) !important;
+    background: rgba(6, 31, 72, 0.74) !important;
+    box-shadow: inset 0 0 14px rgba(32, 232, 255, 0.06) !important;
+}
+
+.section-header {
+    margin-bottom: clamp(34px, 4.6vw, 56px) !important;
+}
+
+.section-header h2,
+.about-title,
+.packages-section .section-title {
+    line-height: 1.05 !important;
+    text-shadow: 0 12px 34px rgba(0, 8, 28, 0.24) !important;
+}
+
+.section-header p,
+.service-card p,
+.feature-card p,
+.package-card p,
+.case-study-content p,
+.testimonial-card p,
+.footer-section p {
+    color: var(--polish-text-soft) !important;
+}
+
+.features-grid,
+.services-grid,
+.packages-grid,
+.case-studies-grid {
+    gap: clamp(18px, 2vw, 26px) !important;
+}
+
+.case-study-image,
+.case-study-image .hero-video {
+    border-radius: 16px !important;
+}
+
+.contact-form input,
+.contact-form textarea {
+    border-color: rgba(103, 203, 255, 0.18) !important;
+    background: rgba(1, 8, 22, 0.62) !important;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: rgba(139, 235, 255, 0.62) !important;
+    box-shadow: 0 0 0 3px rgba(32, 232, 255, 0.11) !important;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 92px !important;
+    }
+
+    .hero-content {
+        min-height: auto !important;
+    }
+
+    .hero h1,
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 12vw, 3.65rem) !important;
+    }
+
+    .hero-buttons {
+        gap: 12px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .hero-buttons .btn {
+        width: 100% !important;
+    }
+
+    .floating-card {
+        max-width: calc(100vw - 44px) !important;
+    }
+}

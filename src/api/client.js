@@ -1,7 +1,7 @@
 // Lightweight API client for Unitrux frontend
 const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV)
 	? '/api' // dev: use Vite proxy to avoid CORS
-	: 'https://unitrux-api.up.railway.app/api';
+	: 'https://be.unitrux.site/api';
 
 const CHAT_API_BASE_URL = 'https://api.unitrux.site';
 

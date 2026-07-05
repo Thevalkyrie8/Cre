@@ -31,7 +31,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'https://unitrux-api.up.railway.app',
+        target: 'https://be.unitrux.site',
         changeOrigin: true,
         secure: true,
         timeout: 10000, // 10 second timeout
