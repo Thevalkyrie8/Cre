@@ -140,7 +140,7 @@ const getPayloadMessage = (payload) => {
 };
 
 const readApiReply = (data) => ({
-  text: data?.message || data?.reply || data?.response || data?.answer || '',
+  text: data?.reply || data?.answer || data?.response || data?.message || '',
   quickReplies: data?.quickReplies || data?.quick_replies || []
 });
 
