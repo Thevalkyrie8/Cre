@@ -71,6 +71,13 @@ export function getNewsById(id, params = {}) {
 	return fetchJson(`/news/${id}${qs}`);
 }
 
+// Public news pages use the canonical slug returned by the backend.
+export function getNewsBySlug(slug, params = {}) {
+	const query = new URLSearchParams(params).toString();
+	const qs = query ? `?${query}` : '';
+	return fetchJson(`/news/slug/${encodeURIComponent(slug)}${qs}`);
+}
+
 export function resolveAssetUrl(value, fallback = '/logo-unitrux.jpg') {
 	if (!value) return fallback;
 

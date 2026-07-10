@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
+import { getNews, getNewsBySlug, resolveAssetUrl } from '../api/client';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -80,6 +80,7 @@ const normalizeArticle = (article, language) => {
 
   return {
     id: article.id,
+    slug: article.slug,
     title,
     content,
     excerpt,
@@ -93,7 +94,7 @@ const normalizeArticle = (article, language) => {
 };
 
 const NewsDetail = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [rawNews, setRawNews] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
@@ -130,7 +131,7 @@ const NewsDetail = () => {
       setRelatedArticles([]);
 
       try {
-        const data = await getNewsById(id, { lang: language });
+        const data = await getNewsBySlug(slug, { lang: language });
         if (!ignore) setRawNews(data);
 
         const relatedParams = { lang: language };
@@ -140,7 +141,7 @@ const NewsDetail = () => {
           .then((list) => {
             if (ignore) return;
             const related = (Array.isArray(list) ? list : [])
-              .filter((item) => item.id !== id)
+              .filter((item) => item.id !== data.id)
               .slice(0, 3)
               .map((item) => normalizeArticle(item, language));
             setRelatedArticles(related);
@@ -154,12 +155,12 @@ const NewsDetail = () => {
       }
     };
 
-    if (id) fetchNews();
+    if (slug) fetchNews();
 
     return () => {
       ignore = true;
     };
-  }, [id, language, t.error]);
+  }, [slug, language, t.error]);
 
   return (
     <div className="news-detail-page article-page">
@@ -645,7 +646,7 @@ const NewsDetail = () => {
                   <article
                     key={article.id}
                     className={`article-related-card ${article.isLogoImage ? 'is-logo' : ''}`}
-                    onClick={() => navigate(`/news/${article.id}`)}
+                    onClick={() => navigate(`/news/${encodeURIComponent(article.slug)}`)}
                   >
                     <img src={article.image} alt={article.title} loading="lazy" />
                     <div>
