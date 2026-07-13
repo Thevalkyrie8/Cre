@@ -147,3 +147,21 @@ export function sendUnitruxChat(payload) {
 		return response.json();
 	});
 }
+
+export function submitWebsiteContactLead(payload) {
+	return fetch(`${CHAT_API_BASE_URL}/chat/unitrux/website-contact`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(payload)
+	}).then(async (response) => {
+		if (!response.ok) {
+			const text = await response.text().catch(() => '');
+			throw new Error(`Request failed ${response.status}: ${text || response.statusText}`);
+		}
+
+		return response.json();
+	});
+}

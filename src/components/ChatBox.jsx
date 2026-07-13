@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { sendUnitruxChat } from '../api/client';
+import { sendUnitruxChat, submitWebsiteContactLead } from '../api/client';
+import { extractWebsiteContactLead } from '../utils/chatLeadParser';
 
 const QUICK_REPLIES = {
   MENU_MAIN: [
@@ -252,11 +253,16 @@ const ChatBox = () => {
     setIsLoading(true);
 
     const localReply = getLocalFlowResponse(trimmed, leadState);
+    const leadPayload = extractWebsiteContactLead(trimmed, { sessionId });
 
     try {
       const apiReply = readApiReply(await sendUnitruxChat({ sessionId, message: trimmed }));
       const finalReply = apiReply.text ? apiReply : localReply;
       addBotMessage(finalReply);
+
+      if (leadPayload.shouldSubmit) {
+        await submitWebsiteContactLead(leadPayload);
+      }
     } catch (error) {
       console.warn('Unitrux chat API fallback:', error);
       addBotMessage(localReply);
