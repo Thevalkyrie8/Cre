@@ -2,6 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { getProducts } from '../api/client';
 import { Link } from 'react-router-dom';
 import ContactForm from './ContactForm';
+import NewsSection from './NewsSection';
+import HeroShowcase from './HeroShowcase';
+import WhyChooseUs from './WhyChooseUs';
 
 const NeonIcon = ({ type }) => {
   const paths = {
@@ -176,6 +179,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      <HeroShowcase />
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-background parallax">
@@ -238,6 +242,10 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <NewsSection />
+
+      <WhyChooseUs />
 
       {/* Why Choose Us Section */}
       <section className="why-choose-us fade-in-section">

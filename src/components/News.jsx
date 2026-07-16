@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getNews, getFeaturedNews, resolveAssetUrl } from '../api/client';
+import { getNewsSlug } from '../utils/newsSlug';
 
 const getCurrentLanguage = () => {
   try {
@@ -100,6 +101,7 @@ const normalizeNewsItem = (item, language) => {
 
   return {
     id: item.id,
+    slug: getNewsSlug(item),
     title,
     category: item.category || 'news',
     excerpt: excerpt.length === 170 ? `${excerpt}...` : excerpt,
@@ -117,7 +119,7 @@ const NewsCard = ({ article, language, onOpen }) => {
   const t = copy[language];
 
   return (
-    <article className="journal-card" onClick={() => onOpen(article.id)}>
+    <article className="journal-card" onClick={() => onOpen(article.slug)}>
       <div className={`journal-card-image ${article.isLogoImage ? 'is-logo' : ''}`}>
         <img src={article.image} alt={article.title} loading="lazy" />
       </div>
@@ -901,7 +903,7 @@ const News = () => {
                 {leadArticle.dateLabel && <span>{leadArticle.dateLabel}</span>}
                 <span>{leadArticle.readingTime} {t.minRead}</span>
               </div>
-              <button type="button" onClick={() => navigate(`/news/${leadArticle.id}`)}>
+              <button type="button" onClick={() => navigate(`/news/${leadArticle.slug}`)}>
                 {t.read}
               </button>
             </div>
@@ -928,7 +930,7 @@ const News = () => {
                     key={article.id}
                     article={article}
                     language={language}
-                    onOpen={(id) => navigate(`/news/${id}`)}
+                    onOpen={(slug) => navigate(`/news/${slug}`)}
                   />
                 ))}
               </div>

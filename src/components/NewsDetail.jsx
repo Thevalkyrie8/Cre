@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { getNewsSlug, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 
 const getCurrentLanguage = () => {
   try {
@@ -80,6 +81,7 @@ const normalizeArticle = (article, language) => {
 
   return {
     id: article.id,
+    slug: getNewsSlug(article),
     title,
     content,
     excerpt,
@@ -93,7 +95,7 @@ const normalizeArticle = (article, language) => {
 };
 
 const NewsDetail = () => {
-  const { id } = useParams();
+  const { id: newsSlug } = useParams();
   const navigate = useNavigate();
   const [rawNews, setRawNews] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
@@ -130,17 +132,38 @@ const NewsDetail = () => {
       setRelatedArticles([]);
 
       try {
-        const data = await getNewsById(id, { lang: language });
+        let data;
+        let availableNews = [];
+
+        if (isNewsUuid(newsSlug)) {
+          data = await getNewsById(newsSlug, { lang: language });
+        } else {
+          const listPayload = await getNews({ lang: language });
+          availableNews = unwrapNewsList(listPayload);
+          data = availableNews.find((item) => getNewsSlug(item) === newsSlug);
+
+          if (!data) {
+            data = await getNewsById(newsSlug, { lang: language });
+          }
+        }
+
+        if (!data) throw new Error('Article not found');
         if (!ignore) setRawNews(data);
+
+        const canonicalSlug = getNewsSlug(data);
+        if (!ignore && newsSlug !== canonicalSlug) {
+          navigate(`/news/${canonicalSlug}`, { replace: true });
+        }
 
         const relatedParams = { lang: language };
         if (data.category) relatedParams.category = data.category;
 
-        getNews(relatedParams)
-          .then((list) => {
+        const relatedRequest = availableNews.length ? Promise.resolve(availableNews) : getNews(relatedParams);
+        relatedRequest
+          .then((payload) => {
             if (ignore) return;
-            const related = (Array.isArray(list) ? list : [])
-              .filter((item) => item.id !== id)
+            const related = unwrapNewsList(payload)
+              .filter((item) => item.id !== data.id)
               .slice(0, 3)
               .map((item) => normalizeArticle(item, language));
             setRelatedArticles(related);
@@ -154,12 +177,12 @@ const NewsDetail = () => {
       }
     };
 
-    if (id) fetchNews();
+    if (newsSlug) fetchNews();
 
     return () => {
       ignore = true;
     };
-  }, [id, language, t.error]);
+  }, [newsSlug, language, t.error, navigate]);
 
   return (
     <div className="news-detail-page article-page">
@@ -645,7 +668,7 @@ const NewsDetail = () => {
                   <article
                     key={article.id}
                     className={`article-related-card ${article.isLogoImage ? 'is-logo' : ''}`}
-                    onClick={() => navigate(`/news/${article.id}`)}
+                    onClick={() => navigate(`/news/${article.slug}`)}
                   >
                     <img src={article.image} alt={article.title} loading="lazy" />
                     <div>

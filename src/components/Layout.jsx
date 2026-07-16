@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ChatBox from './ChatBox';
+import useMasterInteractions from '../hooks/useMasterInteractions';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -8,6 +9,7 @@ const Layout = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [language, setLanguage] = useState('en');
   const [theme, setTheme] = useState('dark');
+  useMasterInteractions(`${location.pathname}:${theme}`);
 
   useEffect(() => {
     try {
@@ -42,6 +44,10 @@ const Layout = ({ children }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
 
   // Apply language when language state changes
   useEffect(() => {
@@ -105,6 +111,9 @@ const Layout = ({ children }) => {
       const newTheme = theme === 'light' ? 'dark' : 'light';
       setTheme(newTheme);
       localStorage.setItem('theme', newTheme);
+      window.dispatchEvent(new CustomEvent('themeChange', {
+        detail: { theme: newTheme }
+      }));
       
       if (newTheme === 'dark') {
         document.body.classList.add('dark-mode');
@@ -130,14 +139,14 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Navigation */}
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${location.pathname === '/' ? 'homepage-navbar' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <Link to="/" className="nav-logo">
             <div className="logo-unitrux"></div>
           </Link>
           
           <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-            <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
               <span data-vi={"\u0054\u0072\u0061\u006e\u0067\u0020\u0063\u0068\u1ee7"} data-en="Home" data-default="en">Home</span>
             </Link>
             <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>
@@ -152,7 +161,7 @@ const Layout = ({ children }) => {
             <Link to="/news" className="nav-link" onClick={() => setIsMenuOpen(false)}>
               <span data-vi={"\u0054\u0069\u006e\u0020\u0074\u1ee9\u0063"} data-en="News" data-default="en">News</span>
             </Link>
-            <Link to="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
               <span data-vi={"\u004c\u0069\u00ea\u006e\u0020\u0068\u1ec7"} data-en="Contact" data-default="en">Contact</span>
             </Link>
             <Link to="/privacy-policy" className="nav-link" onClick={() => setIsMenuOpen(false)}>
@@ -167,8 +176,8 @@ const Layout = ({ children }) => {
           </div>
 
           <div className="nav-actions">
-            <button className="theme-toggle" onClick={toggleTheme}>
-              {theme === 'light' ? '🌙' : '☀️'}
+            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle color theme">
+              {theme === 'light' ? '◐' : '@'}
             </button>
             <button className="language-toggle" onClick={toggleLanguage}>
               {language === 'vi' ? 'EN' : 'VI'}

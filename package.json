@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "serve": "vite preview --port 4173",
-     "deploy": "npm run build && git add dist && git commit -m 'Deploy to GitHub Pages' && git push origin main"
+    "deploy": "npm run build && git add dist && git commit -m 'Deploy to GitHub Pages' && git push origin main"
   },
   "dependencies": {
     "axios": "^1.12.2",
@@ -25,10 +25,13 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.5.3",
     "eslint": "^9.35.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.4.0",
+    "postcss": "^8.5.19",
+    "tailwindcss": "^3.4.19",
     "vite": "^5.4.10"
   }
 }

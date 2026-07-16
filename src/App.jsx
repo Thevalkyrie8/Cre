@@ -2,21 +2,20 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './components/Home';
-import About from './components/About';
-import Services from './components/Services';
-import Packages from './components/Packages';
-import News from './components/News';
-import NewsDetail from './components/NewsDetail';
+import ThemedAbout from './components/ThemedAbout';
+import ThemedServices from './components/ThemedServices';
+import ThemedPackages from './components/ThemedPackages';
+import ThemedNews from './components/ThemedNews';
+import ThemedNewsDetail from './components/ThemedNewsDetail';
 import ServiceDetail from './components/ServiceDetail';
-import WebDevelopmentService from './components/WebDevelopmentService';
-import EcommerceService from './components/EcommerceService';
-import DigitalMarketingService from './components/DigitalMarketingService';
+import ThemedServiceDetail from './components/ThemedServiceDetail';
 import AutomationService from './components/AutomationService';
 import PhotographyVideoService from './components/PhotographyVideoService';
 import UIUXDesignService from './components/UIUXDesignService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import DeleteData from './components/DeleteData';
+import ThemedContact from './components/ThemedContact';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -77,21 +76,22 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/packages" element={<Packages />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/news/:id" element={<NewsDetail />} />
+            <Route path="/about" element={<ThemedAbout />} />
+            <Route path="/services" element={<ThemedServices />} />
+            <Route path="/packages" element={<ThemedPackages />} />
+            <Route path="/news" element={<ThemedNews />} />
+            <Route path="/news/:id" element={<ThemedNewsDetail />} />
             <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/web-development" element={<WebDevelopmentService />} />
-            <Route path="/ecommerce" element={<EcommerceService />} />
-            <Route path="/digital-marketing" element={<DigitalMarketingService />} />
+            <Route path="/web-development" element={<ThemedServiceDetail type="web" />} />
+            <Route path="/ecommerce" element={<ThemedServiceDetail type="ecommerce" />} />
+            <Route path="/digital-marketing" element={<ThemedServiceDetail type="marketing" />} />
             <Route path="/automation" element={<AutomationService />} />
             <Route path="/photography-video" element={<PhotographyVideoService />} />
             <Route path="/ui-ux-design" element={<UIUXDesignService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/delete-data" element={<DeleteData />} />
+            <Route path="/contact" element={<ThemedContact />} />
           </Routes>
         </Layout>
       </Router>
