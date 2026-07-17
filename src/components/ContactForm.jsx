@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createContact } from '../api/client';
+import { trackEvent } from '../analytics/tracking';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,7 @@ const ContactForm = () => {
         phone: formData.phone,
         message: formData.message,
       });
+      trackEvent('generate_lead', { method: 'contact_form', form_name: 'legacy_contact' });
       setSubmitStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (error) {

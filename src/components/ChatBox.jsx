@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { sendUnitruxChat } from '../api/client';
+import { trackEvent } from '../analytics/tracking';
 
 const QUICK_REPLIES = {
   MENU_MAIN: [
@@ -202,6 +203,8 @@ const ChatBox = () => {
   const [leadState, setLeadState] = useState({ awaitingContact: false, awaitingNeed: false });
   const sessionId = useMemo(getSessionId, []);
   const endRef = useRef(null);
+  const chatStartedRef = useRef(false);
+  const leadTrackedRef = useRef(false);
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
@@ -248,6 +251,15 @@ const ChatBox = () => {
   const sendMessage = async (message, options = {}) => {
     const trimmed = message.trim();
     if (!trimmed || isLoading) return;
+
+    if (!chatStartedRef.current) {
+      chatStartedRef.current = true;
+      trackEvent('chat_start', { method: 'website_chatbox' });
+    }
+    if (hasContact(trimmed) && !leadTrackedRef.current) {
+      leadTrackedRef.current = true;
+      trackEvent('generate_lead', { method: 'website_chatbox' });
+    }
 
     setMessages((current) => [
       ...current,
@@ -373,8 +385,9 @@ const ChatBox = () => {
         onClick={() => {
           setShowNudge(false);
           setIsOpen((value) => !value);
+          if (!isOpen) trackEvent('chat_open', { placement: 'floating_launcher' });
         }}
-        aria-label="Open chat"
+        aria-label={!isOpen && showNudge ? 'Can I help you? Open chat' : (isOpen ? 'Close chat' : 'Open chat')}
         aria-expanded={isOpen}
       >
         {!isOpen && showNudge && <span className="chatbox-nudge">Can I help you?</span>}

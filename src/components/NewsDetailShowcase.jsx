@@ -4,14 +4,15 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import { getNewsSlug, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
+import { trackEvent } from '../analytics/tracking';
 
 const getLanguage = () => {
   try { return localStorage.getItem('language') || 'en'; } catch { return 'en'; }
 };
 
 const copy = {
-  en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'Editor’s Note', noteBody: 'Save the practical parts, then return to the strategy layer when planning your next campaign.', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
-  vi: { home: 'Trang chủ', news: 'Tin tức', back: 'Quay lại tin tức', loading: 'Đang chuẩn bị bài viết…', error: 'Không thể tải bài viết này.', note: 'Ghi chú biên tập', noteBody: 'Lưu lại những phần thực tiễn, sau đó quay lại lớp chiến lược khi lập kế hoạch cho chiến dịch tiếp theo.', min: 'phút đọc', keep: 'Đọc tiếp', trend: 'Theo dõi xu hướng' }
+  en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: 'Unitrux publishes practical content for readers first. See who is responsible, how we edit, and how to request a correction.', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
+  vi: { home: 'Trang chủ', news: 'Tin tức', back: 'Quay lại tin tức', loading: 'Đang chuẩn bị bài viết…', error: 'Không thể tải bài viết này.', note: 'Về bài viết này', noteBody: 'Unitrux xuất bản nội dung thực tiễn cho người đọc trước tiên. Xem người chịu trách nhiệm, cách biên tập và cách yêu cầu sửa lỗi.', standards: 'Tiêu chuẩn biên tập', published: 'Xuất bản', updated: 'Cập nhật', min: 'phút đọc', keep: 'Đọc tiếp', trend: 'Theo dõi xu hướng' }
 };
 
 const stripMarkdown = (value = '') => String(value).replace(/[#*_>`~[\]()]/g, '').replace(/\s+/g, ' ').trim();
@@ -22,6 +23,11 @@ const formatDate = (value, language) => {
   return date.toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 };
 
+const toIsoDate = (value) => {
+  const date = new Date(value || '');
+  return Number.isNaN(date.getTime()) ? '' : date.toISOString();
+};
+
 const normalizeArticle = (article, language) => {
   const title = language === 'vi' ? article.titleVi || article.title : article.title || article.titleVi;
   const content = language === 'vi' ? article.contentVi || article.content : article.content || article.contentVi;
@@ -30,6 +36,8 @@ const normalizeArticle = (article, language) => {
     ...article, title: title || 'Untitled', content: content || '', excerpt: stripMarkdown(excerpt || ''),
     slug: getNewsSlug(article), category: article.category || 'Business', author: article.author || 'Unitrux Team',
     image: resolveAssetUrl(article.image, '/logo.jpg'), dateLabel: formatDate(article.createdAt || article.updatedAt, language),
+    publishedLabel: formatDate(article.createdAt, language), updatedLabel: formatDate(article.updatedAt, language),
+    datePublished: toIsoDate(article.createdAt), dateModified: toIsoDate(article.updatedAt || article.createdAt),
     minutes: readingTime(content || excerpt), number: String(article.sortOrder || article.viewCount || 1).padStart(3, '0')
   };
 };
@@ -89,6 +97,24 @@ const NewsDetailShowcase = () => {
     return () => { active = false; };
   }, [routeId, language, navigate, t.error]);
 
+  useEffect(() => {
+    if (!article) return;
+    trackEvent('view_content', { content_type: 'article', content_id: article.slug, content_name: article.title });
+    window.dispatchEvent(new CustomEvent('seo:article', {
+      detail: {
+        path: `/news/${article.slug}`,
+        title: article.title,
+        description: (article.excerpt || stripMarkdown(article.content)).slice(0, 180),
+        image: article.image,
+        author: article.author,
+        articleSection: article.category,
+        datePublished: article.datePublished,
+        dateModified: article.dateModified,
+        language,
+      },
+    }));
+  }, [article, language]);
+
   if (loading) return <div className="tw-min-h-screen tw-bg-[#FAF8F5] tw-px-4 tw-pb-24 tw-pt-40"><div className="tw-mx-auto tw-w-[min(74rem,100%)] tw-space-y-7"><div className="tw-h-10 tw-w-48 tw-animate-pulse tw-rounded-full tw-bg-[#E9E1D5]"/><div className="tw-h-44 tw-max-w-4xl tw-animate-pulse tw-rounded-[2rem] tw-bg-[#E9E1D5]"/><div className="tw-h-[34rem] tw-animate-pulse tw-rounded-[2rem] tw-bg-[#E9E1D5]"/><p className="tw-text-sm tw-text-[#61756F]">{t.loading}</p></div></div>;
   if (error || !article) return <div className="tw-grid tw-min-h-screen tw-place-items-center tw-bg-[#FAF8F5] tw-p-6"><div className="tw-rounded-[2rem] tw-border tw-border-[#0D5E4D]/15 tw-bg-[#FEF7EA] tw-p-10 tw-text-center"><h1 className="tw-font-editorial tw-text-5xl tw-text-[#0D5E4D]">{error || t.error}</h1><Link to="/news" className="tw-mt-5 tw-inline-block tw-rounded-full tw-bg-[#0D5E4D] tw-px-6 tw-py-3 tw-font-bold tw-text-[#FFF9F1] tw-no-underline">{t.back}</Link></div></div>;
 
@@ -102,28 +128,29 @@ const NewsDetailShowcase = () => {
             <div className="tw-mt-12 tw-flex tw-items-center tw-gap-3 tw-text-[.7rem] tw-font-black tw-uppercase tw-tracking-[.2em] tw-text-[#C5751E]"><span>{article.category}</span><span>•</span><span>{article.dateLabel}</span></div>
             <h1 data-title-reveal className="master-title tw-mb-0 tw-mt-7 tw-max-w-[68rem] tw-font-editorial tw-text-[clamp(4.4rem,9vw,9.2rem)] tw-font-medium tw-leading-[.76] tw-tracking-[-.057em] tw-text-[#0D4537]">{article.title}</h1>
             {article.excerpt && <p className="tw-mb-0 tw-mt-8 tw-max-w-3xl tw-text-lg tw-leading-8 tw-text-[#536A61]">{article.excerpt}</p>}
-            <div className="tw-mt-7 tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-sm tw-text-[#315248]"><span className="tw-grid tw-h-8 tw-w-8 tw-place-items-center tw-rounded-full tw-bg-[#0D5E4D] tw-font-editorial tw-text-[#F5BC72]">U.</span><strong>{article.author}</strong><span className="tw-h-5 tw-w-px tw-bg-[#0D5E4D]/25"/><span>◷&nbsp; {article.minutes} {t.min}</span></div>
+            <div className="tw-mt-7 tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-sm tw-text-[#315248]"><span className="tw-grid tw-h-8 tw-w-8 tw-place-items-center tw-rounded-full tw-bg-[#0D5E4D] tw-font-editorial tw-text-[#F5BC72]">U.</span><Link to="/content-standards#editorial-process" className="tw-font-bold tw-text-[#315248] tw-underline-offset-4 hover:tw-underline">{article.author}</Link><span className="tw-h-5 tw-w-px tw-bg-[#0D5E4D]/25"/><span>◷&nbsp; {article.minutes} {t.min}</span></div>
           </div>
           <aside className="tw-relative tw-hidden lg:tw-col-span-2 lg:tw-block"><div className="tw-absolute -tw-right-[8rem] -tw-top-44 tw-h-[34rem] tw-w-[15rem] tw-bg-[#0D4537] tw-px-8 tw-pt-40 tw-text-[#F5BC72]"><span className="tw-text-[.6rem] tw-font-black tw-uppercase tw-tracking-[.2em]">Article No.</span><strong className="tw-mt-4 tw-block tw-font-editorial tw-text-5xl tw-font-medium">{article.number}</strong><i className="tw-mt-4 tw-block tw-h-px tw-w-12 tw-bg-[#F5BC72]"/></div><div className="tw-absolute -tw-left-14 tw-top-0 tw-h-72 tw-w-72 tw-opacity-80"><BotanicalDrawing/></div></aside>
         </div>
       </header>
 
       <section className="tw-relative tw-z-10 tw-mx-auto tw-w-[min(70rem,calc(100%_-_2rem))]" data-reveal>
-        <div className="tw-relative tw-overflow-hidden tw-rounded-[.35rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#EFE6D8] tw-shadow-[0_40px_90px_-52px_rgba(13,69,55,.55)]"><img src={article.image} alt={article.title} className="tw-aspect-[16/9] tw-h-full tw-w-full tw-object-cover"/></div>
+        <div className="tw-relative tw-overflow-hidden tw-rounded-[.35rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#EFE6D8] tw-shadow-[0_40px_90px_-52px_rgba(13,69,55,.55)]"><img src={article.image} alt={article.title} width="1600" height="900" fetchPriority="high" decoding="async" className="tw-aspect-[16/9] tw-h-full tw-w-full tw-object-cover"/></div>
       </section>
 
       <section className="tw-relative tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-8 tw-pb-28 lg:tw-grid-cols-12">
         <aside className="editor-note-paper tw-relative tw-z-20 -tw-mt-12 tw-self-start tw-bg-[#FEF7EA] tw-p-7 tw-shadow-[0_30px_65px_-45px_rgba(13,69,55,.6)] lg:tw-col-span-3 lg:-tw-mt-28" data-reveal>
           <span className="tw-absolute -tw-top-5 tw-left-7 tw-h-12 tw-w-3 tw-rotate-[-8deg] tw-rounded-full tw-border-2 tw-border-[#C58A2F]"/>
           <h2 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-3xl tw-font-medium tw-italic tw-text-[#0D4537]">{t.note}</h2><i className="tw-mt-5 tw-block tw-h-0.5 tw-w-8 tw-bg-[#E68C23]"/><p className="tw-mb-0 tw-mt-6 tw-font-editorial tw-text-lg tw-leading-8 tw-text-[#4D625A]">{t.noteBody}</p>
-          <dl className="tw-mb-0 tw-mt-9 tw-space-y-4 tw-text-xs tw-text-[#526860]"><div className="tw-flex tw-gap-3"><dt>▱</dt><dd className="tw-m-0">{article.category}</dd></div><div className="tw-flex tw-gap-3"><dt>▦</dt><dd className="tw-m-0">{article.dateLabel}</dd></div><div className="tw-flex tw-gap-3"><dt>◷</dt><dd className="tw-m-0">{article.minutes} {t.min}</dd></div></dl>
+          <dl className="tw-mb-0 tw-mt-9 tw-space-y-4 tw-text-xs tw-text-[#526860]"><div className="tw-flex tw-gap-3"><dt>▱</dt><dd className="tw-m-0">{article.category}</dd></div>{article.publishedLabel && <div className="tw-flex tw-gap-3"><dt>▦</dt><dd className="tw-m-0">{t.published}: <time dateTime={article.datePublished}>{article.publishedLabel}</time></dd></div>}{article.updatedLabel && article.dateModified !== article.datePublished && <div className="tw-flex tw-gap-3"><dt>↻</dt><dd className="tw-m-0">{t.updated}: <time dateTime={article.dateModified}>{article.updatedLabel}</time></dd></div>}<div className="tw-flex tw-gap-3"><dt>◷</dt><dd className="tw-m-0">{article.minutes} {t.min}</dd></div></dl>
+          <Link to="/content-standards#editorial-process" className="tw-mt-7 tw-inline-flex tw-font-bold tw-text-[#0D5E4D] tw-underline-offset-4 hover:tw-underline">{t.standards} →</Link>
           <Link to="/news" className="tw-mt-9 tw-inline-flex tw-items-center tw-gap-3 tw-font-bold tw-text-[#C5751E] tw-no-underline">← {t.back}</Link>
         </aside>
         <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body"><ReactMarkdown remarkPlugins={[remarkGfm]}>{article.content}</ReactMarkdown></div></div>
         <aside className="tw-hidden tw-pt-20 lg:tw-col-span-2 lg:tw-block"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.18em] tw-text-[#C5751E]">{t.trend}</span><div className="tw-mt-4 tw-grid tw-h-28 tw-w-28 tw-place-items-center tw-rounded-full tw-border tw-border-[#C58A2F] tw-font-editorial tw-text-xl tw-text-[#0D4537]">{new Date(article.createdAt || Date.now()).getFullYear()} →</div></aside>
       </section>
 
-      {related.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#F1EBE2] tw-py-20"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-medium tw-text-[#0D4537]">{t.keep}</h2><div className="tw-mt-9 tw-grid tw-gap-5 md:tw-grid-cols-3">{related.map((item) => <Link key={item.id} to={`/news/${item.slug}`} className="tw-group tw-overflow-hidden tw-rounded-[1.4rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#FEF7EA] tw-text-inherit tw-no-underline"><img src={item.image} alt={item.title} className="tw-h-48 tw-w-full tw-object-cover tw-transition tw-duration-700 group-hover:tw-scale-105"/><div className="tw-p-5"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.15em] tw-text-[#E68C23]">{item.category}</span><h3 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-2xl tw-font-medium tw-leading-none tw-text-[#0D4537]">{item.title}</h3></div></Link>)}</div></div></section>}
+      {related.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#F1EBE2] tw-py-20"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-medium tw-text-[#0D4537]">{t.keep}</h2><div className="tw-mt-9 tw-grid tw-gap-5 md:tw-grid-cols-3">{related.map((item) => <Link key={item.id} to={`/news/${item.slug}`} className="tw-group tw-overflow-hidden tw-rounded-[1.4rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#FEF7EA] tw-text-inherit tw-no-underline"><img src={item.image} alt={item.title} width="800" height="450" loading="lazy" decoding="async" className="tw-h-48 tw-w-full tw-object-cover tw-transition tw-duration-700 group-hover:tw-scale-105"/><div className="tw-p-5"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.15em] tw-text-[#E68C23]">{item.category}</span><h3 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-2xl tw-font-medium tw-leading-none tw-text-[#0D4537]">{item.title}</h3></div></Link>)}</div></div></section>}
     </article>
   );
 };

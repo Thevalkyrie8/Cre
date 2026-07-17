@@ -131,6 +131,21 @@ export const seoPages = {
     summary: 'Chia sẻ mục tiêu và thách thức của bạn để nhận đề xuất giải pháp cùng bước triển khai phù hợp.',
     type: 'ContactPage',
   },
+  '/content-standards': {
+    title: 'Tiêu chuẩn nội dung hữu ích và đáng tin cậy | Unitrux',
+    description: 'Cách Unitrux xác định tác giả, kiểm tra nguồn, cập nhật, sửa lỗi và sử dụng AI để tạo nội dung hữu ích, đáng tin cậy cho người đọc.',
+    heading: 'Tiêu chuẩn nội dung của Unitrux',
+    summary: 'Cam kết về người chịu trách nhiệm, quy trình biên tập, nguồn thông tin, ngày cập nhật, sửa lỗi và việc sử dụng công cụ tự động trong nội dung.',
+    bullets: [
+      'Xác định tác giả hoặc nhóm biên tập chịu trách nhiệm',
+      'Ưu tiên kinh nghiệm thực tế và nguồn thông tin gốc',
+      'Kiểm tra dữ kiện, ghi ngày xuất bản và ngày cập nhật rõ ràng',
+      'Công khai việc sử dụng AI khi cần thiết để người đọc hiểu cách nội dung được tạo ra',
+      'Sửa lỗi minh bạch qua kênh liên hệ công khai',
+      'Tối ưu AI Search bằng nền tảng SEO, không dùng llms.txt hoặc đánh dấu AI không được hỗ trợ',
+    ],
+    type: 'WebPage',
+  },
   '/privacy-policy': {
     title: 'Chính sách bảo mật | Unitrux',
     description: 'Chính sách bảo mật và cách Unitrux thu thập, sử dụng và bảo vệ dữ liệu cá nhân.',
@@ -196,9 +211,23 @@ export const buildStructuredData = (pathname) => {
       '@id': `${SITE_URL}/#organization`,
       name: SITE_NAME,
       url: `${SITE_URL}/`,
-      logo: DEFAULT_OG_IMAGE,
+      description: 'Unitrux cung cấp giải pháp website, Digital Marketing, E-commerce, nội dung sáng tạo và tự động hóa AI cho doanh nghiệp.',
+      logo: {
+        '@type': 'ImageObject',
+        url: DEFAULT_OG_IMAGE,
+        width: 1000,
+        height: 1000,
+      },
+      image: DEFAULT_OG_IMAGE,
       email: 'info@unitrux.com',
       telephone: ['+84 938 695 186', '+84 364 750 316'],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Ho Chi Minh City',
+        addressCountry: 'VN',
+      },
+      areaServed: ['VN', 'Worldwide'],
+      knowsAbout: ['Website Development', 'Digital Marketing', 'Search Engine Optimization', 'E-commerce', 'UI/UX Design', 'Marketing Automation', 'AI Chatbox'],
       sameAs: [
         'https://www.facebook.com/UnitruxCreativeStudio',
         'https://www.linkedin.com/company/unitrux',
@@ -211,6 +240,12 @@ export const buildStructuredData = (pathname) => {
         email: 'info@unitrux.com',
         telephone: '+84 938 695 186',
         availableLanguage: ['Vietnamese', 'English'],
+        hoursAvailable: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '08:00',
+          closes: '17:30',
+        },
       },
     },
     {
@@ -270,4 +305,68 @@ export const buildStructuredData = (pathname) => {
   }
 
   return { '@context': 'https://schema.org', '@graph': graph };
+};
+
+export const buildArticleStructuredData = ({
+  path,
+  title,
+  description,
+  image,
+  author,
+  datePublished,
+  dateModified,
+  articleSection,
+  language = 'vi',
+}) => {
+  const canonical = getCanonicalUrl(path);
+  const base = buildStructuredData(path);
+  const authorName = author || `${SITE_NAME} Team`;
+  const isOrganizationAuthor = /unitrux|team|đội ngũ|ban biên tập/i.test(authorName);
+  const article = {
+    '@type': 'BlogPosting',
+    '@id': `${canonical}#article`,
+    mainEntityOfPage: { '@id': `${canonical}#webpage` },
+    headline: title,
+    description,
+    image: [image || DEFAULT_OG_IMAGE],
+    thumbnailUrl: image || DEFAULT_OG_IMAGE,
+    author: isOrganizationAuthor
+      ? { '@type': 'Organization', name: authorName, url: `${SITE_URL}/` }
+      : { '@type': 'Person', name: authorName },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: language,
+  };
+
+  if (datePublished) article.datePublished = datePublished;
+  if (dateModified) article.dateModified = dateModified;
+  if (articleSection) article.articleSection = articleSection;
+
+  const articleGraph = base['@graph'].map((item) => {
+    if (item['@id'] === `${canonical}#webpage`) {
+      return {
+        ...item,
+        '@type': 'WebPage',
+        name: title,
+        description,
+        primaryImageOfPage: { '@id': `${canonical}#primaryimage` },
+      };
+    }
+    if (item['@type'] === 'BreadcrumbList') {
+      return {
+        ...item,
+        itemListElement: item.itemListElement.map((listItem) => (
+          listItem.position === 2 ? { ...listItem, name: title } : listItem
+        )),
+      };
+    }
+    return item;
+  });
+  articleGraph.push({
+    '@type': 'ImageObject',
+    '@id': `${canonical}#primaryimage`,
+    url: image || DEFAULT_OG_IMAGE,
+    contentUrl: image || DEFAULT_OG_IMAGE,
+  });
+
+  return { ...base, '@graph': [...articleGraph, article] };
 };

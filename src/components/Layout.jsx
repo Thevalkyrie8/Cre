@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import ChatBox from './ChatBox';
 import useMasterInteractions from '../hooks/useMasterInteractions';
 import SEO from './SEO';
+import AnalyticsTracker from './AnalyticsTracker';
+
+const ChatBox = lazy(() => import('./ChatBox'));
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -133,6 +135,7 @@ const Layout = ({ children }) => {
   return (
     <div className="app">
       <SEO />
+      <AnalyticsTracker />
       {/* Background */}
       <div className="bg-container">
         <div className="earth-bg"></div>
@@ -147,7 +150,7 @@ const Layout = ({ children }) => {
             <div className="logo-unitrux"></div>
           </Link>
           
-          <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
+          <div id="primary-navigation" className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
             <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
               <span data-vi={"\u0054\u0072\u0061\u006e\u0067\u0020\u0063\u0068\u1ee7"} data-en="Home" data-default="en">Home</span>
             </Link>
@@ -206,6 +209,9 @@ const Layout = ({ children }) => {
             <button 
               className="nav-toggle" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? 'Đóng menu điều hướng' : 'Mở menu điều hướng'}
+              aria-expanded={isMenuOpen}
+              aria-controls="primary-navigation"
             >
               <span></span>
               <span></span>
@@ -243,6 +249,7 @@ const Layout = ({ children }) => {
             <div className="footer-section">
               <h4 data-vi="Thông tin pháp lý" data-en="Legal" data-default="en">Legal</h4>
               <ul>
+                <li><Link to="/content-standards">Content Standards</Link></li>
                 <li><Link to="/terms">Terms of Service</Link></li>
                 <li><Link to="/privacy-policy">Privacy Policy</Link></li>
                 <li><Link to="/delete-data">Delete Data</Link></li>
@@ -309,7 +316,7 @@ const Layout = ({ children }) => {
       </footer>
       {/* Floating Buttons */}
       <div className="floating-buttons">
-        <ChatBox />
+        <Suspense fallback={null}><ChatBox /></Suspense>
         <button className="scroll-to-top" onClick={scrollToTop} title="Scroll to top">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

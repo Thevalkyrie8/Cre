@@ -1,10 +1,60 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { getProducts } from '../api/client';
 import { Link } from 'react-router-dom';
 import ContactForm from './ContactForm';
 import NewsSection from './NewsSection';
 import HeroShowcase from './HeroShowcase';
 import WhyChooseUs from './WhyChooseUs';
+
+const DeferredVideo = ({ src, label, fallbackImage = '/logo.jpg' }) => {
+  const containerRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element || !('IntersectionObserver' in window)) {
+      setShouldLoad(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setShouldLoad(true);
+      observer.disconnect();
+    }, { rootMargin: '240px 0px' });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  const reduceMotion = typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  return (
+    <div ref={containerRef} className="case-study-video-shell">
+      {hasError ? (
+        <img src={fallbackImage} alt={`${label} – hình xem trước`} loading="lazy" />
+      ) : (
+        <video
+          src={shouldLoad ? src : undefined}
+          poster="/logo.jpg"
+          muted
+          loop
+          playsInline
+          autoPlay={shouldLoad && !reduceMotion}
+          className="hero-video"
+          preload="none"
+          controls
+          aria-label={label}
+          onError={() => setHasError(true)}
+        >
+          Your browser does not support the video tag.
+        </video>
+      )}
+    </div>
+  );
+};
 
 const NeonIcon = ({ type }) => {
   const paths = {
@@ -481,8 +531,8 @@ const Home = () => {
                   <li data-en="Zalo OA Automation" data-vi="Tự động hóa Zalo OA">Zalo OA Automation</li>
                   <li data-en="Website AI Assistant" data-vi="Trợ lý AI trên website">Website AI Assistant</li>
                 </ul>
-                <Link to="/chatbox-ai" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                <Link to="/chatbox-ai" className="btn-learn-more" aria-label="Learn more about Chatbox AI Integration">
+                  <span data-en="Learn More: Chatbox AI" data-vi="Tìm hiểu thêm: Chatbox AI">Learn More: Chatbox AI</span>
                 </Link>
               </div>
             </div>
@@ -504,8 +554,8 @@ const Home = () => {
                   <li>Management Web Applications</li>
                   <li>Automation Systems</li>
                 </ul>
-                <Link to="/web-development" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                <Link to="/web-development" className="btn-learn-more" aria-label="Learn more about Web Development">
+                  <span data-en="Learn More: Web Development" data-vi="Tìm hiểu thêm: Phát triển web">Learn More: Web Development</span>
                 </Link>
               </div>
             </div>
@@ -528,8 +578,8 @@ const Home = () => {
                   <li>SEO & Listing Optimization</li>
                   <li>Product Photography & Design</li>
                 </ul>
-                <Link to="/ecommerce" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                <Link to="/ecommerce" className="btn-learn-more" aria-label="Learn more about E-commerce Solutions">
+                  <span data-en="Learn More: E-commerce" data-vi="Tìm hiểu thêm: Thương mại điện tử">Learn More: E-commerce</span>
                 </Link>
               </div>
             </div>
@@ -550,8 +600,8 @@ const Home = () => {
                   <li>Targeted Ad Campaigns</li>
                   <li>Video Content Production</li>
                 </ul>
-                <Link to="/digital-marketing" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                <Link to="/digital-marketing" className="btn-learn-more" aria-label="Learn more about Digital Marketing">
+                  <span data-en="Learn More: Digital Marketing" data-vi="Tìm hiểu thêm: Digital Marketing">Learn More: Digital Marketing</span>
                 </Link>
               </div>
             </div>
@@ -571,8 +621,8 @@ const Home = () => {
                   <li>Email Marketing Automation</li>
                   <li>Chatbot Development</li>
                 </ul>
-                <Link to="/automation" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                <Link to="/automation" className="btn-learn-more" aria-label="Learn more about Automation Systems">
+                  <span data-en="Learn More: Automation" data-vi="Tìm hiểu thêm: Tự động hóa">Learn More: Automation</span>
                 </Link>
               </div>
             </div>
@@ -592,8 +642,8 @@ const Home = () => {
                   <li>Corporate & Product Videos</li>
                   <li>Social Media Content</li>
                 </ul>
-                <Link to="/photography-video" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                <Link to="/photography-video" className="btn-learn-more" aria-label="Learn more about Photography and Video services">
+                  <span data-en="Learn More: Photography &amp; Video" data-vi="Tìm hiểu thêm: Chụp ảnh &amp; Video">Learn More: Photography &amp; Video</span>
                 </Link>
               </div>
             </div>
@@ -702,21 +752,10 @@ const Home = () => {
           <div className="case-studies-grid">
           <div className="case-study-card">
             <div className="case-study-image">
-              <video 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="hero-video"
-                preload="auto"
-                webkit-playsinline="true"
-                controls
-                onError={(e) => console.error('Video error:', e)}
-              >
-                  <source src="/product-commercial-ads.mp4" type="video/mp4" />
-                <source src="./product-commercial-ads.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-                </video>
+              <DeferredVideo
+                src="/product-commercial-ads.mp4"
+                label="Video case study quảng cáo hoạt hình sản phẩm 3D"
+              />
               </div>
               <div className="case-study-content">
               <h3>{caseStudyProducts[0]?.nameVi || caseStudyProducts[0]?.name || 'Professional 3D Animation Explainer, Commercial Ad'}</h3>
@@ -736,21 +775,10 @@ const Home = () => {
 
           <div className="case-study-card">
             <div className="case-study-image">
-              <video 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="hero-video"
-                preload="auto"
-                webkit-playsinline="true"
-                controls
-                onError={(e) => console.error('Video error:', e)}
-              >
-                  <source src="/video-commercial.mp4" type="video/mp4" />
-                <source src="./video-commercial.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-                </video>
+              <DeferredVideo
+                src="/video-commercial.mp4"
+                label="Video case study quảng cáo thương mại sản phẩm 3D"
+              />
               </div>
               <div className="case-study-content">
               <h3>{caseStudyProducts[1]?.nameVi || caseStudyProducts[1]?.name || '3D Product Commercial Ads Portfolio'}</h3>
@@ -770,21 +798,10 @@ const Home = () => {
           
           <div className="case-study-card">
             <div className="case-study-image">
-              <video 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="hero-video"
-                preload="auto"
-                webkit-playsinline="true"
-                controls
-                onError={(e) => console.error('Video error:', e)}
-              >
-                  <source src="/Ls-ad.mp4" type="video/mp4" />
-                <source src="./Ls-ad.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-                </video>
+              <DeferredVideo
+                src="/Ls-ad.mp4"
+                label="Video case study quảng cáo hoạt hình lót giày 3D"
+              />
               </div>
               <div className="case-study-content">
               <h3>{caseStudyProducts[2]?.nameVi || caseStudyProducts[2]?.name || '3D product animation ads created for shoe insoles.'}</h3>
@@ -805,32 +822,11 @@ const Home = () => {
 
           <div className="case-study-card">
             <div className="case-study-image">
-              <video 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="hero-video"
-                preload="auto"
-                webkit-playsinline="true"
-                controls
-                onError={(e) => {
-                  console.error('Video error:', e);
-                  // Fallback to image if video fails
-                  e.target.style.display = 'none';
-                  const img = document.createElement('img');
-                  img.src = '/Anh-Trai-Dat-2.jpeg';
-                  img.style.width = '100%';
-                  img.style.height = '100%';
-                  img.style.objectFit = 'cover';
-                  e.target.parentNode.appendChild(img);
-                }}
-              >
-                  <source src="/fan.mp4" type="video/mp4" />
-                <source src="./fan.mp4" type="video/mp4" />
-                <source src="fan.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-                </video>
+              <DeferredVideo
+                src="/fan.mp4"
+                label="Video case study quạt du lịch cầm tay"
+                fallbackImage="/Anh-Trai-Dat-2.jpeg"
+              />
               </div>
               <div className="case-study-content">
               <h3>Portable Travel Fan</h3>

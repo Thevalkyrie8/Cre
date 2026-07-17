@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createContact } from '../api/client';
+import { trackEvent } from '../analytics/tracking';
 
 const initialForm = { name: '', email: '', phone: '', company: '', service: 'Website & Web App', message: '' };
 
@@ -36,6 +37,7 @@ const ContactShowcase = () => {
     try {
       const context = [`Service: ${form.service}`, form.company.trim() && `Company: ${form.company.trim()}`].filter(Boolean).join(' | ');
       await createContact({ name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim(), message: `${context}\n\n${form.message.trim()}` });
+      trackEvent('generate_lead', { method: 'contact_form', service: form.service, form_name: 'primary_contact' });
       setForm(initialForm);
       setStatus('success');
     } catch {
