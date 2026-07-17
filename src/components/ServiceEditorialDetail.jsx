@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { chatboxFaqs } from '../seo/seoConfig';
 
 const serviceDetails = {
   web: {
@@ -187,6 +188,26 @@ const ServiceEditorialDetail = ({ type }) => {
         <div className="tw-grid tw-gap-4 sm:tw-grid-cols-2">{service.deliverables.map((item, index) => <div key={item} className="tw-rounded-2xl tw-border tw-border-[#0D5E4D]/14 tw-bg-[#FEF7EA] tw-p-5"><span className="tw-text-xs tw-font-bold tw-text-[#E68C23]">0{index + 1}</span><p className="tw-mb-0 tw-mt-5 tw-font-semibold tw-text-[#315248]">{item}</p></div>)}</div>
       </div>
     </section>
+
+    {type === 'chatbox' && (
+      <section data-reveal className="tw-bg-[#F2EDE5] tw-py-24" aria-labelledby="chatbox-faq-title">
+        <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.7fr_1.3fr]">
+          <div>
+            <p className="tw-m-0 tw-text-[.68rem] tw-font-black tw-uppercase tw-tracking-[.24em] tw-text-[#E68C23]" data-en="Frequently asked questions" data-vi="Câu hỏi thường gặp">Frequently asked questions</p>
+            <h2 id="chatbox-faq-title" className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-none tw-text-[#0D5E4D]" data-en="AI chatbox integration, explained clearly." data-vi="Giải đáp về tích hợp Chatbox AI.">AI chatbox integration, explained clearly.</h2>
+            <p className="tw-mb-0 tw-mt-6 tw-max-w-md tw-text-sm tw-leading-7 tw-text-[#50675F]" data-en="Practical answers about Facebook Fanpage, Zalo OA, website deployment, handover, data, and project scope." data-vi="Thông tin thực tế về triển khai trên Facebook Fanpage, Zalo OA, website, chuyển nhân viên, dữ liệu và phạm vi dự án.">Practical answers about Facebook Fanpage, Zalo OA, website deployment, handover, data, and project scope.</p>
+          </div>
+          <div className="tw-space-y-3">
+            {chatboxFaqs.map((faq) => (
+              <details key={faq.question} className="tw-group tw-rounded-2xl tw-border tw-border-[#0D5E4D]/14 tw-bg-[#FEF7EA] tw-px-5 tw-py-4">
+                <summary className="tw-cursor-pointer tw-list-none tw-pr-8 tw-font-editorial tw-text-xl tw-font-semibold tw-text-[#0D5E4D]" data-en={faq.questionEn} data-vi={faq.question}>{faq.questionEn}</summary>
+                <p className="tw-mb-1 tw-mt-4 tw-text-sm tw-leading-7 tw-text-[#50675F]" data-en={faq.answerEn} data-vi={faq.answer}>{faq.answerEn}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
 
     <section className="tw-pb-28">
       <div className="tw-mx-auto tw-flex tw-w-[min(76rem,calc(100%_-_2rem))] tw-flex-col tw-items-start tw-justify-between tw-gap-8 tw-rounded-[2rem] tw-bg-[#0D5E4D] tw-p-8 sm:tw-p-12 lg:tw-flex-row lg:tw-items-end">

@@ -3,6 +3,33 @@ export const SITE_NAME = 'Unitrux';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
 export const SEO_LAST_MODIFIED = '2026-07-17';
 
+export const chatboxFaqs = [
+  {
+    question: 'Chatbox AI có thể tích hợp với những kênh nào?',
+    answer: 'Unitrux triển khai Chatbox AI trên Facebook Fanpage, Zalo OA và website, tùy theo quyền truy cập và API mà từng nền tảng cung cấp.',
+    questionEn: 'Which channels can the AI chatbox connect to?',
+    answerEn: 'Unitrux can deploy the AI chatbox on Facebook Fanpage, Zalo OA, and your website, subject to the access permissions and APIs available on each platform.',
+  },
+  {
+    question: 'Chatbox AI có chuyển cuộc trò chuyện cho nhân viên được không?',
+    answer: 'Có. Hệ thống có thể thu thập thông tin khách hàng, nhận diện trường hợp cần hỗ trợ chuyên sâu và chuyển cuộc trò chuyện cho nhân viên theo quy tắc đã thiết lập.',
+    questionEn: 'Can the AI chatbox transfer a conversation to a human advisor?',
+    answerEn: 'Yes. It can collect lead information, recognize conversations that need specialist support, and transfer them to your team using agreed escalation rules.',
+  },
+  {
+    question: 'Chatbox AI được huấn luyện bằng dữ liệu nào?',
+    answer: 'Nội dung trả lời được xây dựng từ thông tin doanh nghiệp cung cấp như sản phẩm, dịch vụ, bảng giá, chính sách và câu hỏi thường gặp, kèm các nguyên tắc giới hạn câu trả lời.',
+    questionEn: 'What information is used to prepare the AI chatbox?',
+    answerEn: 'Its answers are prepared from business-provided information such as products, services, pricing, policies, and FAQs, together with clear response guardrails.',
+  },
+  {
+    question: 'Chi phí tích hợp Chatbox AI được tính như thế nào?',
+    answer: 'Chi phí phụ thuộc vào số kênh cần kết nối, quy mô kho kiến thức, luồng tư vấn và các tích hợp như CRM. Unitrux sẽ khảo sát nhu cầu trước khi đề xuất phạm vi phù hợp.',
+    questionEn: 'How is AI chatbox integration priced?',
+    answerEn: 'Pricing depends on the number of connected channels, knowledge-base size, consultation flows, and integrations such as CRM. Unitrux scopes the requirements before proposing a suitable plan.',
+  },
+];
+
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
@@ -31,6 +58,7 @@ export const seoPages = {
     heading: 'Chatbox AI tích hợp Fanpage, Zalo OA và Website',
     summary: 'Một trợ lý AI thống nhất giúp trả lời khách hàng, tư vấn sản phẩm, thu thập thông tin và chuyển hội thoại cho nhân viên đúng lúc.',
     bullets: ['Chatbot AI cho Facebook Fanpage', 'Tự động hóa Zalo OA', 'Trợ lý AI trên website', 'Thu lead và đồng bộ quy trình chăm sóc khách hàng'],
+    faqs: chatboxFaqs,
     type: 'Service',
     serviceName: 'Tích hợp Chatbox AI đa kênh',
   },
@@ -186,6 +214,18 @@ export const buildStructuredData = (pathname) => {
       provider: { '@id': `${SITE_URL}/#organization` },
       areaServed: ['VN', 'Worldwide'],
       serviceType: page.serviceName,
+    });
+  }
+
+  if (page.faqs?.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: page.faqs.map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
     });
   }
 

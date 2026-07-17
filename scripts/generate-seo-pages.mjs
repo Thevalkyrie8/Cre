@@ -45,7 +45,10 @@ const buildStaticContent = (page) => {
   const bullets = page.bullets?.length
     ? `<ul>${page.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
     : '';
-  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}<p><a href="/contact">Liên hệ Unitrux để được tư vấn</a></p></main></div>`;
+  const faqs = page.faqs?.length
+    ? `<section><h2>Câu hỏi thường gặp</h2>${page.faqs.map(({ question, answer }) => `<article><h3>${escapeHtml(question)}</h3><p>${escapeHtml(answer)}</p></article>`).join('')}</section>`
+    : '';
+  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${faqs}<p><a href="/contact/">Liên hệ Unitrux để được tư vấn</a></p></main></div>`;
 };
 
 for (const [path, page] of Object.entries(seoPages)) {

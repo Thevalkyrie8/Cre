@@ -233,11 +233,11 @@ const Layout = ({ children }) => {
             <div className="footer-section">
               <h4 data-vi="Dịch vụ" data-en="Services" data-default="en">Services</h4>
               <ul>
-                <li><Link to="/services">Digital Marketing</Link></li>
-                <li><Link to="/services">Branding</Link></li>
-                <li><Link to="/services">Web Development</Link></li>
-                <li><Link to="/services">SEO</Link></li>
-                <li><Link to="/services">E-commerce</Link></li>
+                <li><Link to="/chatbox-ai">Chatbox AI</Link></li>
+                <li><Link to="/digital-marketing">Digital Marketing & SEO</Link></li>
+                <li><Link to="/web-development">Web Development</Link></li>
+                <li><Link to="/ecommerce">E-commerce</Link></li>
+                <li><Link to="/automation">Automation</Link></li>
               </ul>
             </div>
             <div className="footer-section">
