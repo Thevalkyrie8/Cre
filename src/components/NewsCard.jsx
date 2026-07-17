@@ -49,7 +49,7 @@ const NewsCard = ({ article, index = 0 }) => {
           {imageUrl ? (
             <img
               src={imageUrl}
-              alt=""
+              alt={article.title}
               className="tw-h-full tw-w-full tw-object-cover tw-transition tw-duration-700 group-hover:tw-scale-[1.035]"
               loading={isLead ? 'eager' : 'lazy'}
             />
@@ -81,7 +81,7 @@ const NewsCard = ({ article, index = 0 }) => {
             {avatarUrl ? (
               <img
                 src={avatarUrl}
-                alt=""
+                alt={`Ảnh đại diện ${article.author?.name || 'Unitrux'}`}
                 className="tw-h-9 tw-w-9 tw-shrink-0 tw-rounded-full tw-border tw-border-white/15 tw-object-cover"
                 loading="lazy"
               />

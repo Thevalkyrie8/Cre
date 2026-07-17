@@ -20,12 +20,18 @@ const SEO = () => {
     document.title = page.title;
 
     ensureMeta('meta[name="description"]', { name: 'description', content: page.description });
+    ensureMeta('meta[name="robots"]', {
+      name: 'robots',
+      content: page.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large',
+    });
     ensureMeta('meta[property="og:title"]', { property: 'og:title', content: page.title });
     ensureMeta('meta[property="og:description"]', { property: 'og:description', content: page.description });
     ensureMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
     ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
     ensureMeta('meta[property="og:image"]', { property: 'og:image', content: DEFAULT_OG_IMAGE });
     ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: SITE_NAME });
+    ensureMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'vi_VN' });
+    ensureMeta('meta[property="og:locale:alternate"]', { property: 'og:locale:alternate', content: 'en_US' });
     ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: page.title });
     ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: page.description });

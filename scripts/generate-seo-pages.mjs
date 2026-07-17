@@ -25,6 +25,7 @@ const buildSeoBlock = (path, page) => {
   return `<!-- SEO:START -->
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeHtml(page.description)}" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="${canonical}" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
@@ -32,6 +33,8 @@ const buildSeoBlock = (path, page) => {
     <meta property="og:url" content="${canonical}" />
     <meta property="og:image" content="${DEFAULT_OG_IMAGE}" />
     <meta property="og:site_name" content="${SITE_NAME}" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(page.title)}" />
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />
@@ -48,7 +51,19 @@ const buildStaticContent = (page) => {
   const faqs = page.faqs?.length
     ? `<section><h2>Câu hỏi thường gặp</h2>${page.faqs.map(({ question, answer }) => `<article><h3>${escapeHtml(question)}</h3><p>${escapeHtml(answer)}</p></article>`).join('')}</section>`
     : '';
-  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${faqs}<p><a href="/contact/">Liên hệ Unitrux để được tư vấn</a></p></main></div>`;
+  const primaryLinks = [
+    ['/', 'Trang chủ'],
+    ['/services/', 'Dịch vụ Digital'],
+    ['/chatbox-ai/', 'Chatbot AI cho Fanpage, Zalo OA và website'],
+    ['/web-development/', 'Thiết kế website chuẩn SEO'],
+    ['/digital-marketing/', 'Digital Marketing'],
+    ['/ecommerce/', 'Giải pháp E-commerce'],
+    ['/automation/', 'Tự động hóa doanh nghiệp'],
+    ['/news/', 'Kiến thức Digital'],
+    ['/contact/', 'Liên hệ tư vấn'],
+  ];
+  const navigation = `<nav aria-label="Dịch vụ và nội dung chính"><h2>Khám phá Unitrux</h2><ul>${primaryLinks.map(([href, label]) => `<li><a href="${href}">${label}</a></li>`).join('')}</ul></nav>`;
+  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${faqs}${navigation}</main></div>`;
 };
 
 for (const [path, page] of Object.entries(seoPages)) {

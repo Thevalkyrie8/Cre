@@ -156,7 +156,7 @@ const About = () => {
           <div className="team-grid">
             <div className="team-member">
               <div className="member-photo">
-                <img src="/logo-unitrux.jpg" alt="Team Member" />
+                <img src="/logo-unitrux.jpg" alt="" loading="lazy" />
               </div>
               <h3>Nguyễn Văn A</h3>
               <p data-vi="CEO & Founder" data-en="CEO & Founder">CEO & Founder</p>
@@ -166,7 +166,7 @@ const About = () => {
             </div>
             <div className="team-member">
               <div className="member-photo">
-                <img src="/logo-unitrux.jpg" alt="Team Member" />
+                <img src="/logo-unitrux.jpg" alt="" loading="lazy" />
               </div>
               <h3>Trần Thị B</h3>
               <p data-vi="Creative Director" data-en="Creative Director">Creative Director</p>
@@ -176,7 +176,7 @@ const About = () => {
             </div>
             <div className="team-member">
               <div className="member-photo">
-                <img src="/logo-unitrux.jpg" alt="Team Member" />
+                <img src="/logo-unitrux.jpg" alt="" loading="lazy" />
               </div>
               <h3>Lê Văn C</h3>
               <p data-vi="Technical Lead" data-en="Technical Lead">Technical Lead</p>
@@ -186,7 +186,7 @@ const About = () => {
             </div>
             <div className="team-member">
               <div className="member-photo">
-                <img src="/logo-unitrux.jpg" alt="Team Member" />
+                <img src="/logo-unitrux.jpg" alt="" loading="lazy" />
               </div>
               <h3>Phạm Thị D</h3>
               <p data-vi="Marketing Manager" data-en="Marketing Manager">Marketing Manager</p>

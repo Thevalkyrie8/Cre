@@ -88,6 +88,29 @@ const serviceDetails = {
   },
 };
 
+const relatedServices = {
+  web: [
+    ['/digital-marketing', 'Digital Marketing tăng trưởng'],
+    ['/ecommerce', 'Giải pháp E-commerce'],
+    ['/chatbox-ai', 'Tích hợp Chatbot AI'],
+  ],
+  ecommerce: [
+    ['/web-development', 'Thiết kế website bán hàng'],
+    ['/digital-marketing', 'Digital Marketing'],
+    ['/automation', 'Tự động hóa vận hành'],
+  ],
+  marketing: [
+    ['/web-development', 'Thiết kế website chuẩn SEO'],
+    ['/chatbox-ai', 'Chatbot AI đa kênh'],
+    ['/photography-video', 'Sản xuất hình ảnh và video'],
+  ],
+  chatbox: [
+    ['/automation', 'Tự động hóa chăm sóc khách hàng'],
+    ['/web-development', 'Tích hợp Chatbot vào website'],
+    ['/digital-marketing', 'Digital Marketing và thu lead'],
+  ],
+};
+
 const DetailIcon = () => (
   <svg viewBox="0 0 64 64" className="tw-h-16 tw-w-16" fill="none" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" aria-hidden="true">
     <circle cx="32" cy="32" r="23" /><circle cx="32" cy="32" r="13" /><path d="M32 2v8M32 54v8M2 32h8M54 32h8" /><path d="m23 33 6 6 13-15" />
@@ -186,6 +209,17 @@ const ServiceEditorialDetail = ({ type }) => {
       <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.8fr_1.2fr]">
         <h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-none tw-text-[#0D5E4D]">What you leave with</h2>
         <div className="tw-grid tw-gap-4 sm:tw-grid-cols-2">{service.deliverables.map((item, index) => <div key={item} className="tw-rounded-2xl tw-border tw-border-[#0D5E4D]/14 tw-bg-[#FEF7EA] tw-p-5"><span className="tw-text-xs tw-font-bold tw-text-[#E68C23]">0{index + 1}</span><p className="tw-mb-0 tw-mt-5 tw-font-semibold tw-text-[#315248]">{item}</p></div>)}</div>
+      </div>
+    </section>
+
+    <section className="tw-pb-24" aria-labelledby="related-services-title">
+      <div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))] tw-rounded-[2rem] tw-border tw-border-[#0D5E4D]/14 tw-bg-[#E7EFE9] tw-p-7 sm:tw-p-10">
+        <h2 id="related-services-title" className="tw-m-0 tw-font-editorial tw-text-4xl tw-font-semibold tw-text-[#0D5E4D]" data-en="Related services" data-vi="Dịch vụ liên quan">Related services</h2>
+        <nav className="tw-mt-6 tw-flex tw-flex-wrap tw-gap-3" aria-label="Related services">
+          {relatedServices[type].map(([to, label]) => (
+            <Link key={to} to={to} className="tw-rounded-full tw-border tw-border-[#0D5E4D]/20 tw-bg-[#FEF7EA] tw-px-5 tw-py-3 tw-text-sm tw-font-bold tw-text-[#0D5E4D] tw-no-underline tw-transition hover:tw-border-[#E68C23] hover:tw-text-[#C5751E]">{label}</Link>
+          ))}
+        </nav>
       </div>
     </section>
 

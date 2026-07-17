@@ -16,6 +16,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import DeleteData from './components/DeleteData';
 import ThemedContact from './components/ThemedContact';
+import NotFound from './components/NotFound';
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -93,6 +94,7 @@ function App() {
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/delete-data" element={<DeleteData />} />
             <Route path="/contact" element={<ThemedContact />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </Router>

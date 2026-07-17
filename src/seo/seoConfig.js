@@ -163,7 +163,23 @@ export const getSeoForPath = (pathname) => {
   const path = normalizePath(pathname);
   if (seoPages[path]) return { path, ...seoPages[path] };
   if (path.startsWith('/news/')) return { path, ...seoPages['/news'], title: `Bài viết chuyên môn | ${SITE_NAME}` };
-  return { path, ...seoPages['/'] };
+  if (path.startsWith('/services/')) {
+    return {
+      path,
+      ...seoPages['/services'],
+      title: `Chi tiết dịch vụ | ${SITE_NAME}`,
+      noindex: true,
+    };
+  }
+  return {
+    path,
+    title: `Không tìm thấy trang | ${SITE_NAME}`,
+    description: 'Đường dẫn bạn truy cập không tồn tại hoặc đã được chuyển sang địa chỉ khác.',
+    heading: 'Không tìm thấy trang',
+    summary: 'Quay lại trang chủ hoặc khám phá các dịch vụ chính của Unitrux.',
+    type: 'WebPage',
+    noindex: true,
+  };
 };
 
 export const getCanonicalUrl = (pathname) => {
@@ -183,6 +199,19 @@ export const buildStructuredData = (pathname) => {
       logo: DEFAULT_OG_IMAGE,
       email: 'info@unitrux.com',
       telephone: ['+84 938 695 186', '+84 364 750 316'],
+      sameAs: [
+        'https://www.facebook.com/UnitruxCreativeStudio',
+        'https://www.linkedin.com/company/unitrux',
+        'https://www.youtube.com/@UnitruxDigitalMarketing',
+        'https://www.tiktok.com/@unitruxmarketing',
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'info@unitrux.com',
+        telephone: '+84 938 695 186',
+        availableLanguage: ['Vietnamese', 'English'],
+      },
     },
     {
       '@type': 'WebSite',

@@ -143,7 +143,7 @@ const Layout = ({ children }) => {
       {/* Navigation */}
       <nav className={`navbar ${location.pathname === '/' ? 'homepage-navbar' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
-          <Link to="/" className="nav-logo">
+          <Link to="/" className="nav-logo" aria-label="Unitrux - Trang chủ">
             <div className="logo-unitrux"></div>
           </Link>
           
