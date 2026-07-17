@@ -16,6 +16,7 @@ const copy = {
 };
 
 const stripMarkdown = (value = '') => String(value).replace(/[#*_>`~[\]()]/g, '').replace(/\s+/g, ' ').trim();
+const normalizeUnicode = (value = '') => String(value).normalize('NFC');
 const readingTime = (value = '') => Math.max(1, Math.ceil(stripMarkdown(value).split(' ').filter(Boolean).length / 200));
 const formatDate = (value, language) => {
   const date = new Date(value || '');
@@ -29,9 +30,9 @@ const toIsoDate = (value) => {
 };
 
 const normalizeArticle = (article, language) => {
-  const title = language === 'vi' ? article.titleVi || article.title : article.title || article.titleVi;
-  const content = language === 'vi' ? article.contentVi || article.content : article.content || article.contentVi;
-  const excerpt = language === 'vi' ? article.excerptVi || article.excerpt : article.excerpt || article.excerptVi;
+  const title = normalizeUnicode(language === 'vi' ? article.titleVi || article.title : article.title || article.titleVi);
+  const content = normalizeUnicode(language === 'vi' ? article.contentVi || article.content : article.content || article.contentVi);
+  const excerpt = normalizeUnicode(language === 'vi' ? article.excerptVi || article.excerpt : article.excerpt || article.excerptVi);
   return {
     ...article, title: title || 'Untitled', content: content || '', excerpt: stripMarkdown(excerpt || ''),
     slug: getNewsSlug(article), category: article.category || 'Business', author: article.author || 'Unitrux Team',
@@ -126,7 +127,7 @@ const NewsDetailShowcase = () => {
           <div className="lg:tw-col-span-10" data-reveal>
             <nav className="tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-xs tw-font-semibold tw-text-[#61756F]"><Link to="/" className="tw-text-[#0D5E4D] tw-no-underline">{t.home}</Link><span>/</span><Link to="/news" className="tw-text-[#0D5E4D] tw-no-underline">{t.news}</Link><span>/</span><span>{article.category}</span></nav>
             <div className="tw-mt-12 tw-flex tw-items-center tw-gap-3 tw-text-[.7rem] tw-font-black tw-uppercase tw-tracking-[.2em] tw-text-[#C5751E]"><span>{article.category}</span><span>•</span><span>{article.dateLabel}</span></div>
-            <h1 data-title-reveal className="master-title tw-mb-0 tw-mt-7 tw-max-w-[68rem] tw-font-editorial tw-text-[clamp(4.4rem,9vw,9.2rem)] tw-font-medium tw-leading-[.76] tw-tracking-[-.057em] tw-text-[#0D4537]">{article.title}</h1>
+            <h1 data-title-reveal className="master-title news-detail-title tw-mb-0 tw-mt-7 tw-max-w-[68rem] tw-text-[#0D4537]">{article.title}</h1>
             {article.excerpt && <p className="tw-mb-0 tw-mt-8 tw-max-w-3xl tw-text-lg tw-leading-8 tw-text-[#536A61]">{article.excerpt}</p>}
             <div className="tw-mt-7 tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-sm tw-text-[#315248]"><span className="tw-grid tw-h-8 tw-w-8 tw-place-items-center tw-rounded-full tw-bg-[#0D5E4D] tw-font-editorial tw-text-[#F5BC72]">U.</span><Link to="/content-standards#editorial-process" className="tw-font-bold tw-text-[#315248] tw-underline-offset-4 hover:tw-underline">{article.author}</Link><span className="tw-h-5 tw-w-px tw-bg-[#0D5E4D]/25"/><span>◷&nbsp; {article.minutes} {t.min}</span></div>
           </div>
@@ -134,12 +135,8 @@ const NewsDetailShowcase = () => {
         </div>
       </header>
 
-      <section className="tw-relative tw-z-10 tw-mx-auto tw-w-[min(70rem,calc(100%_-_2rem))]" data-reveal>
-        <div className="tw-relative tw-overflow-hidden tw-rounded-[.35rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#EFE6D8] tw-shadow-[0_40px_90px_-52px_rgba(13,69,55,.55)]"><img src={article.image} alt={article.title} width="1600" height="900" fetchPriority="high" decoding="async" className="tw-aspect-[16/9] tw-h-full tw-w-full tw-object-cover"/></div>
-      </section>
-
       <section className="tw-relative tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-8 tw-pb-28 lg:tw-grid-cols-12">
-        <aside className="editor-note-paper tw-relative tw-z-20 -tw-mt-12 tw-self-start tw-bg-[#FEF7EA] tw-p-7 tw-shadow-[0_30px_65px_-45px_rgba(13,69,55,.6)] lg:tw-col-span-3 lg:-tw-mt-28" data-reveal>
+        <aside className="editor-note-paper tw-relative tw-z-20 tw-self-start tw-bg-[#FEF7EA] tw-p-7 tw-shadow-[0_30px_65px_-45px_rgba(13,69,55,.6)] lg:tw-col-span-3" data-reveal>
           <span className="tw-absolute -tw-top-5 tw-left-7 tw-h-12 tw-w-3 tw-rotate-[-8deg] tw-rounded-full tw-border-2 tw-border-[#C58A2F]"/>
           <h2 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-3xl tw-font-medium tw-italic tw-text-[#0D4537]">{t.note}</h2><i className="tw-mt-5 tw-block tw-h-0.5 tw-w-8 tw-bg-[#E68C23]"/><p className="tw-mb-0 tw-mt-6 tw-font-editorial tw-text-lg tw-leading-8 tw-text-[#4D625A]">{t.noteBody}</p>
           <dl className="tw-mb-0 tw-mt-9 tw-space-y-4 tw-text-xs tw-text-[#526860]"><div className="tw-flex tw-gap-3"><dt>▱</dt><dd className="tw-m-0">{article.category}</dd></div>{article.publishedLabel && <div className="tw-flex tw-gap-3"><dt>▦</dt><dd className="tw-m-0">{t.published}: <time dateTime={article.datePublished}>{article.publishedLabel}</time></dd></div>}{article.updatedLabel && article.dateModified !== article.datePublished && <div className="tw-flex tw-gap-3"><dt>↻</dt><dd className="tw-m-0">{t.updated}: <time dateTime={article.dateModified}>{article.updatedLabel}</time></dd></div>}<div className="tw-flex tw-gap-3"><dt>◷</dt><dd className="tw-m-0">{article.minutes} {t.min}</dd></div></dl>

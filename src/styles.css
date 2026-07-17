@@ -1497,6 +1497,36 @@ body:not(.dark-mode) .journal-card-image,
 body:not(.dark-mode) .journal-featured-media { background: #E7EFE9 !important; }
 
 /* News detail */
+.news-detail-title {
+    /* A UI font keeps Vietnamese diacritics clear and avoids the very tight
+       display-serif metrics that previously clipped/overlapped the title. */
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+    font-size: clamp(2.8rem, 5.2vw, 6rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.06 !important;
+    letter-spacing: -0.025em !important;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+}
+
+/* The global light-theme h1 rule has higher specificity. Keep the News title
+   on a Vietnamese-safe font in both themes instead of falling back to Georgia. */
+body:not(.dark-mode) .news-detail-light .news-detail-title {
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+    font-size: clamp(2.8rem, 5.2vw, 6rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.06 !important;
+    letter-spacing: -0.025em !important;
+}
+
+@media (max-width: 640px) {
+    .news-detail-title {
+        font-size: clamp(2.45rem, 12vw, 3.65rem) !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.015em !important;
+    }
+}
+
 body:not(.dark-mode) .article-page {
     --article-bg: #FAF8F5 !important;
     --article-panel: #FEF7EA !important;
@@ -9093,20 +9123,28 @@ body:not(.dark-mode) .packages-light-page .pricing-card--standard {
 
 .article-editorial-body {
     color: #314E45;
-    font: 400 1.15rem/1.9 'Lora', Georgia, serif;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: normal;
+    font-kerning: normal;
 }
 
 .article-editorial-body > :first-child::first-letter {
     float: left;
     margin: .05em .12em 0 0;
     color: #0D4537;
-    font: 500 6.7rem/.72 'Lora', Georgia, serif;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 6.7rem;
+    font-weight: 600;
+    line-height: .72;
 }
 
 .article-editorial-body h2,
 .article-editorial-body h3 {
     color: #0D4537;
-    font-family: 'Lora', Georgia, serif;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
     font-weight: 500;
     line-height: 1;
 }
