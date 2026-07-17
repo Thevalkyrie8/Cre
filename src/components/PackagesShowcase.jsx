@@ -129,7 +129,7 @@ const PackagesShowcase = () => {
   });
 
   return (
-    <main className="packages-light-page tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
+    <main className="theme-synced-page packages-light-page tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
       <section className="tw-relative tw-pb-24 tw-pt-36 sm:tw-pb-32 sm:tw-pt-44">
         <div className="tw-pointer-events-none tw-absolute tw-inset-0 tw-bg-[radial-gradient(circle_at_9%_10%,rgba(13,94,77,.10),transparent_25%),radial-gradient(circle_at_91%_18%,rgba(230,140,35,.10),transparent_20%)]" />
         <div className="tw-relative tw-mx-auto tw-w-[min(78rem,calc(100%_-_2rem))]">

@@ -85,6 +85,7 @@ function App() {
             <Route path="/web-development" element={<ThemedServiceDetail type="web" />} />
             <Route path="/ecommerce" element={<ThemedServiceDetail type="ecommerce" />} />
             <Route path="/digital-marketing" element={<ThemedServiceDetail type="marketing" />} />
+            <Route path="/chatbox-ai" element={<ThemedServiceDetail type="chatbox" />} />
             <Route path="/automation" element={<AutomationService />} />
             <Route path="/photography-video" element={<PhotographyVideoService />} />
             <Route path="/ui-ux-design" element={<UIUXDesignService />} />

@@ -9126,3 +9126,410 @@ body:not(.dark-mode) .packages-light-page .pricing-card--standard {
     .master-magnetic { transform: none !important; transition: none; }
     .master-ripple { display: none; }
 }
+
+/* Shared page composition: the light-mode layouts are the single source of truth.
+   Dark mode keeps its own established blue/cyan palette. */
+.theme-synced-page {
+    transition: background-color 260ms ease, color 260ms ease;
+}
+
+body.dark-mode .theme-synced-page,
+body.dark-mode .theme-synced-page[class*="tw-bg-[#FAF8F5]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#FAF8F5]"] {
+    color: #FFFFFF !important;
+    background-color: #020B1F !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#FEF7EA]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#FFF9F1]"] {
+    background-color: rgba(6, 21, 52, 0.92) !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#E7EFE9]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#E8F0EB]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#E8E0D2]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#E9E1D5]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#EFE6D8]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#EFE8DB]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F1EBE2]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F2EBDD]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F2EDE5]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F5ECDE]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F6EDDF]"] {
+    background-color: rgba(9, 34, 78, 0.78) !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D3F32]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D4537]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D5E4D]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#263B35]"] {
+    background-color: #0B63FF !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#E68C23]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F5BC72]"] {
+    background-color: #19D9FF !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#8B6541]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#B4A58E]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#C9BDA9]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#D8CCBA]"] {
+    background-color: #173A66 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[radial-gradient"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[linear-gradient"] {
+    background-image:
+        radial-gradient(circle at 12% 12%, rgba(11, 99, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 88% 28%, rgba(25, 217, 255, 0.14), transparent 25%) !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#0D"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#12"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#17"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#24"] {
+    color: #67B8F3 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#26"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#31"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#3F"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#40"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#49"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#4B"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#4D"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#50"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#52"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#53"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#54"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#59"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#5A"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#61"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#70"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#71"] {
+    color: #C9D7F2 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#E68C23]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#F5BC72]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#F6BD73]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#A94F21]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#C5751E]"] {
+    color: #19D9FF !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-border-[#0D5E4D]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#263B35]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#EFE8DB]"] {
+    border-color: rgba(103, 184, 243, 0.28) !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-border-[#E68C23]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#F5BC72]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#A94F21]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#C58A2F]"] {
+    border-color: rgba(25, 217, 255, 0.58) !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-ring-[#FAF8F5]"] {
+    --tw-ring-color: #020B1F !important;
+}
+
+body.dark-mode .theme-synced-page svg [stroke="#0D5E4D"],
+body.dark-mode .theme-synced-page svg [stroke="#0D4537"] { stroke: #67B8F3; }
+body.dark-mode .theme-synced-page svg [fill="#0D5E4D"],
+body.dark-mode .theme-synced-page svg [fill="#0D4537"] { fill: #0B63FF; }
+body.dark-mode .theme-synced-page svg [stroke="#E68C23"],
+body.dark-mode .theme-synced-page svg [stroke="#F5BC72"] { stroke: #19D9FF; }
+body.dark-mode .theme-synced-page svg [fill="#E68C23"],
+body.dark-mode .theme-synced-page svg [fill="#F5BC72"] { fill: #19D9FF; }
+
+body.dark-mode .theme-synced-page .about-brand-image {
+    background-blend-mode: screen;
+    mix-blend-mode: screen;
+    filter: grayscale(1) brightness(1.7);
+}
+
+body.dark-mode .theme-synced-page .contact-field { color: #67B8F3; }
+body.dark-mode .theme-synced-page .contact-field input,
+body.dark-mode .theme-synced-page .contact-field select,
+body.dark-mode .theme-synced-page .contact-field textarea {
+    color: #FFFFFF;
+    background: rgba(3, 18, 48, 0.82);
+    border-color: rgba(103, 184, 243, 0.28);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+body.dark-mode .theme-synced-page .contact-field input:focus,
+body.dark-mode .theme-synced-page .contact-field select:focus,
+body.dark-mode .theme-synced-page .contact-field textarea:focus {
+    border-color: #19D9FF;
+    box-shadow: 0 0 0 4px rgba(25, 217, 255, 0.12);
+}
+
+body.dark-mode .theme-synced-page .article-editorial-body,
+body.dark-mode .theme-synced-page .article-editorial-body p { color: #C9D7F2 !important; }
+body.dark-mode .theme-synced-page .article-editorial-body h2,
+body.dark-mode .theme-synced-page .article-editorial-body h3,
+body.dark-mode .theme-synced-page .article-editorial-body > :first-child::first-letter { color: #67B8F3 !important; }
+body.dark-mode .theme-synced-page .article-editorial-body a,
+body.dark-mode .theme-synced-page .article-editorial-body blockquote { color: #19D9FF !important; }
+
+/* Home service icons need an explicit foreground in dark mode. The shared icon
+   polish changes their background late in the cascade, but the older rule left
+   the SVG inheriting the near-black page background. */
+body.dark-mode .home .services-section .service-icon {
+    color: #67B8F3 !important;
+    background: linear-gradient(145deg, rgba(11, 99, 255, 0.24), rgba(25, 217, 255, 0.12)) !important;
+    border: 1px solid rgba(103, 184, 243, 0.42) !important;
+    box-shadow:
+        0 10px 28px rgba(0, 8, 28, 0.28),
+        0 0 22px rgba(25, 217, 255, 0.12),
+        inset 0 0 18px rgba(103, 184, 243, 0.08) !important;
+}
+
+body.dark-mode .home .services-section .service-icon svg,
+body.dark-mode .home .services-section .service-icon svg path,
+body.dark-mode .home .services-section .service-icon svg circle {
+    color: #67B8F3 !important;
+    stroke: #67B8F3 !important;
+    opacity: 1 !important;
+    filter: drop-shadow(0 0 5px rgba(25, 217, 255, 0.36));
+}
+
+body.dark-mode .home .services-section .service-card:hover .service-icon {
+    color: #19D9FF !important;
+    border-color: rgba(25, 217, 255, 0.72) !important;
+    box-shadow:
+        0 12px 30px rgba(0, 8, 28, 0.34),
+        0 0 28px rgba(25, 217, 255, 0.22) !important;
+}
+
+body.dark-mode .home .services-section .service-card:hover .service-icon svg,
+body.dark-mode .home .services-section .service-card:hover .service-icon svg path,
+body.dark-mode .home .services-section .service-card:hover .service-icon svg circle {
+    color: #19D9FF !important;
+    stroke: #19D9FF !important;
+}
+
+/* Theme switch uses SVGs instead of font glyphs so it stays consistent across
+   encodings, browsers, and operating systems. */
+.theme-toggle-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 220ms ease, filter 220ms ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+    transform: rotate(10deg) scale(1.06);
+}
+
+body.dark-mode .theme-toggle {
+    color: #F6B84B !important;
+}
+
+body.dark-mode .theme-toggle-icon {
+    filter: drop-shadow(0 0 6px rgba(246, 184, 75, 0.28));
+}
+
+body:not(.dark-mode) .theme-toggle {
+    color: #0D5E4D !important;
+}
+
+body:not(.dark-mode) .theme-toggle-icon {
+    filter: drop-shadow(0 0 5px rgba(13, 94, 77, 0.14));
+}
+
+/* Slightly firmer light-mode typography while preserving explicit display
+   weights on headings, badges, and editorial elements. */
+body:not(.dark-mode) {
+    font-weight: 500;
+}
+
+body:not(.dark-mode) .nav-link {
+    font-weight: 600 !important;
+}
+
+/* Compact, polished header controls. */
+.nav-actions {
+    gap: 8px !important;
+}
+
+.theme-toggle,
+.language-toggle {
+    position: relative;
+    display: inline-grid !important;
+    place-items: center;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    border-radius: 999px !important;
+    backdrop-filter: blur(14px);
+    transform: translateZ(0);
+    transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease !important;
+}
+
+.theme-toggle {
+    width: 42px !important;
+    min-width: 42px !important;
+}
+
+.language-toggle {
+    width: 50px !important;
+    min-width: 50px !important;
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em;
+}
+
+body.dark-mode .theme-toggle,
+body.dark-mode .language-toggle {
+    background: rgba(10, 25, 52, 0.82) !important;
+    border: 1px solid rgba(103, 184, 243, 0.24) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 24px rgba(0, 5, 18, 0.22) !important;
+}
+
+body.dark-mode .language-toggle {
+    color: #EAF4FF !important;
+}
+
+body.dark-mode .theme-toggle:hover,
+body.dark-mode .language-toggle:hover {
+    color: #FFFFFF !important;
+    background: rgba(11, 99, 255, 0.28) !important;
+    border-color: rgba(25, 217, 255, 0.58) !important;
+    box-shadow: 0 10px 26px rgba(0, 8, 28, 0.3), 0 0 18px rgba(25, 217, 255, 0.12) !important;
+    transform: translateY(-1px) !important;
+}
+
+body:not(.dark-mode) .theme-toggle,
+body:not(.dark-mode) .language-toggle {
+    background: rgba(255, 251, 244, 0.88) !important;
+    border: 1px solid rgba(13, 94, 77, 0.16) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 22px rgba(38, 59, 53, 0.08) !important;
+}
+
+body:not(.dark-mode) .language-toggle {
+    color: #0D5E4D !important;
+}
+
+body:not(.dark-mode) .theme-toggle:hover,
+body:not(.dark-mode) .language-toggle:hover {
+    color: #FFF9F1 !important;
+    background: #0D5E4D !important;
+    border-color: #0D5E4D !important;
+    box-shadow: 0 10px 24px rgba(13, 94, 77, 0.18) !important;
+    transform: translateY(-1px) !important;
+}
+
+.theme-toggle:focus-visible,
+.language-toggle:focus-visible {
+    outline: 3px solid rgba(25, 217, 255, 0.28);
+    outline-offset: 3px;
+}
+
+/* Dark-mode calm pass: retain the blue identity with lower saturation and
+   quieter glow so large surfaces stay comfortable to read. */
+body.dark-mode {
+    --accent-hover: #69AFC8;
+    --accent-secondary: #5EA5BB;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#0D"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#12"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#17"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#24"] {
+    color: #7FA9C2 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#E68C23]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#F5BC72]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#F6BD73]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#A94F21]"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#C5751E]"] {
+    color: #69AFC3 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#E68C23]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#F5BC72]"] {
+    background-color: #397F99 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D3F32]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D4537]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D5E4D]"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#263B35]"] {
+    background-color: #174F89 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-border-[#E68C23]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#F5BC72]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#A94F21]"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#C58A2F]"] {
+    border-color: rgba(105, 175, 195, 0.42) !important;
+}
+
+body.dark-mode .theme-synced-page svg [stroke="#0D5E4D"],
+body.dark-mode .theme-synced-page svg [stroke="#0D4537"] { stroke: #7FA9C2; }
+body.dark-mode .theme-synced-page svg [fill="#0D5E4D"],
+body.dark-mode .theme-synced-page svg [fill="#0D4537"] { fill: #174F89; }
+body.dark-mode .theme-synced-page svg [stroke="#E68C23"],
+body.dark-mode .theme-synced-page svg [stroke="#F5BC72"] { stroke: #69AFC3; }
+body.dark-mode .theme-synced-page svg [fill="#E68C23"],
+body.dark-mode .theme-synced-page svg [fill="#F5BC72"] { fill: #69AFC3; }
+
+body.dark-mode .home .services-section .service-icon,
+body.dark-mode .card-icon,
+body.dark-mode .feature-icon,
+body.dark-mode .contact-icon,
+body.dark-mode .crown-icon,
+body.dark-mode .feature-check-icon {
+    color: #78A7C0 !important;
+    border-color: rgba(120, 167, 192, 0.3) !important;
+    box-shadow: inset 0 0 14px rgba(105, 175, 195, 0.04) !important;
+}
+
+body.dark-mode .home .services-section .service-icon svg,
+body.dark-mode .home .services-section .service-icon svg path,
+body.dark-mode .home .services-section .service-icon svg circle {
+    color: #78A7C0 !important;
+    stroke: #78A7C0 !important;
+    filter: drop-shadow(0 0 3px rgba(105, 175, 195, 0.18));
+}
+
+body.dark-mode .home .services-section .service-card:hover .service-icon,
+body.dark-mode .home .services-section .service-card:hover .service-icon svg,
+body.dark-mode .home .services-section .service-card:hover .service-icon svg path,
+body.dark-mode .home .services-section .service-card:hover .service-icon svg circle {
+    color: #8AB8CB !important;
+    stroke: #8AB8CB !important;
+    border-color: rgba(138, 184, 203, 0.45) !important;
+}
+
+body.dark-mode .section-badge,
+body.dark-mode .hero-badge,
+body.dark-mode .about-badge,
+body.dark-mode .package-badge {
+    box-shadow: none !important;
+}
+
+body.dark-mode .section-badge span,
+body.dark-mode .hero-badge span,
+body.dark-mode .about-badge span,
+body.dark-mode .package-badge {
+    color: #79A9C0 !important;
+}
+
+body.dark-mode .theme-toggle:hover,
+body.dark-mode .language-toggle:hover {
+    background: rgba(24, 79, 137, 0.32) !important;
+    border-color: rgba(105, 175, 195, 0.4) !important;
+    box-shadow: 0 9px 22px rgba(0, 8, 28, 0.24) !important;
+}

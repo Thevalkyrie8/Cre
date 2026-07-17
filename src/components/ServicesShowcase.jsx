@@ -85,7 +85,7 @@ const ServiceCard = ({ service }) => (
 );
 
 const ServicesShowcase = () => (
-  <div className="services-light-page tw-bg-[#FAF8F5] tw-text-[#263B35]">
+  <div className="theme-synced-page services-light-page tw-bg-[#FAF8F5] tw-text-[#263B35]">
     <section className="tw-relative tw-isolate tw-overflow-hidden tw-pb-28 tw-pt-36 sm:tw-pt-44">
       <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_12%_12%,rgba(13,94,77,.10),transparent_26%),radial-gradient(circle_at_88%_34%,rgba(230,140,35,.10),transparent_24%)]" />
       <div className="tw-mx-auto tw-w-[min(78rem,calc(100%_-_2rem))]">

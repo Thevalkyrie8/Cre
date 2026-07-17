@@ -101,19 +101,19 @@ const About = () => {
           </div>
           <div className="about-stats">
             <div className="stat-item">
-              <h3>500+</h3>
+              <h3>10+</h3>
               <p data-vi="Dự án thành công" data-en="Successful Projects">Dự án thành công</p>
             </div>
             <div className="stat-item">
-              <h3>200+</h3>
+              <h3>20+</h3>
               <p data-vi="Khách hàng hài lòng" data-en="Satisfied Clients">Khách hàng hài lòng</p>
             </div>
             <div className="stat-item">
-              <h3>5+</h3>
+              <h3>3+</h3>
               <p data-vi="Năm kinh nghiệm" data-en="Years Experience">Năm kinh nghiệm</p>
             </div>
             <div className="stat-item">
-              <h3>50+</h3>
+              <h3>15+</h3>
               <p data-vi="Nhân viên chuyên nghiệp" data-en="Professional Staff">Nhân viên chuyên nghiệp</p>
             </div>
           </div>
@@ -216,17 +216,17 @@ const About = () => {
               <div className="timeline-year">2020</div>
               <div className="timeline-content">
                 <h3 data-vi="Mở rộng dịch vụ" data-en="Service Expansion">Mở rộng dịch vụ</h3>
-                <p data-vi="Bắt đầu cung cấp dịch vụ web development và mở rộng team lên 15 người." data-en="Started providing web development services and expanded team to 15 people.">
-                  Bắt đầu cung cấp dịch vụ web development và mở rộng team lên 15 người.
+                <p data-vi="Bắt đầu cung cấp dịch vụ web development và mở rộng team lên 10 người." data-en="Started providing web development services and expanded team to 15 people.">
+                  Bắt đầu cung cấp dịch vụ web development và mở rộng team lên 10 người.
                 </p>
               </div>
             </div>
             <div className="timeline-item">
               <div className="timeline-year">2021</div>
               <div className="timeline-content">
-                <h3 data-vi="Đạt 100 dự án" data-en="100 Projects Milestone">Đạt 100 dự án</h3>
-                <p data-vi="Hoàn thành 100 dự án thành công và được khách hàng đánh giá cao." data-en="Completed 100 successful projects and received high customer ratings.">
-                  Hoàn thành 100 dự án thành công và được khách hàng đánh giá cao.
+                <h3 data-vi="Đạt 10 dự án" data-en="100 Projects Milestone">Đạt 10 dự án</h3>
+                <p data-vi="Hoàn thành 10 dự án thành công và được khách hàng đánh giá cao." data-en="Completed 100 successful projects and received high customer ratings.">
+                  Hoàn thành 10 dự án thành công và được khách hàng đánh giá cao.
                 </p>
               </div>
             </div>
@@ -242,9 +242,9 @@ const About = () => {
             <div className="timeline-item">
               <div className="timeline-year">2023</div>
               <div className="timeline-content">
-                <h3 data-vi="Đạt 500 dự án" data-en="500 Projects Milestone">Đạt 500 dự án</h3>
-                <p data-vi="Hoàn thành 500 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn." data-en="Completed 500 successful projects and became a trusted partner of many large businesses.">
-                  Hoàn thành 500 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn.
+                <h3 data-vi="Đạt 15 dự án" data-en="15 Projects Milestone">Đạt 10 dự án</h3>
+                <p data-vi="Hoàn thành 15 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn." data-en="Completed 500 successful projects and became a trusted partner of many large businesses.">
+                  Hoàn thành 15 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn.
                 </p>
               </div>
             </div>

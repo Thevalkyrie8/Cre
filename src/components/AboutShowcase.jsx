@@ -73,7 +73,7 @@ const AboutShowcase = () => {
   }, []);
 
   return (
-    <div className="about-light-page tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
+    <div className="theme-synced-page about-light-page tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
       <section className="tw-relative tw-isolate tw-pb-24 tw-pt-36 sm:tw-pb-32 sm:tw-pt-44">
         <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_10%_12%,rgba(13,94,77,.10),transparent_27%),radial-gradient(circle_at_88%_28%,rgba(230,140,35,.09),transparent_23%)]" />
         <div className="tw-mx-auto tw-w-[min(78rem,calc(100%_-_2rem))]">

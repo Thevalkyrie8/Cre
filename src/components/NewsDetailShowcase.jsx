@@ -93,7 +93,7 @@ const NewsDetailShowcase = () => {
   if (error || !article) return <div className="tw-grid tw-min-h-screen tw-place-items-center tw-bg-[#FAF8F5] tw-p-6"><div className="tw-rounded-[2rem] tw-border tw-border-[#0D5E4D]/15 tw-bg-[#FEF7EA] tw-p-10 tw-text-center"><h1 className="tw-font-editorial tw-text-5xl tw-text-[#0D5E4D]">{error || t.error}</h1><Link to="/news" className="tw-mt-5 tw-inline-block tw-rounded-full tw-bg-[#0D5E4D] tw-px-6 tw-py-3 tw-font-bold tw-text-[#FFF9F1] tw-no-underline">{t.back}</Link></div></div>;
 
   return (
-    <article className="news-detail-light tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
+    <article className="theme-synced-page news-detail-light tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
       <header className="tw-relative tw-isolate tw-pb-14 tw-pt-36 sm:tw-pt-44">
         <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_12%_12%,rgba(230,140,35,.07),transparent_24%),radial-gradient(circle_at_80%_26%,rgba(13,94,77,.07),transparent_22%)]"/>
         <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-8 lg:tw-grid-cols-12">

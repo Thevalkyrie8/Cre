@@ -114,7 +114,7 @@ const NewsShowcase = () => {
   };
 
   return (
-    <div className="journal-light-page tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
+    <div className="theme-synced-page journal-light-page tw-overflow-hidden tw-bg-[#FAF8F5] tw-text-[#263B35]">
       <section className="tw-relative tw-pb-16 tw-pt-32 sm:tw-pt-40">
         <div className="tw-pointer-events-none tw-absolute tw-inset-0 tw-bg-[radial-gradient(circle_at_12%_16%,rgba(230,140,35,.08),transparent_24%),radial-gradient(circle_at_82%_18%,rgba(13,94,77,.08),transparent_25%)]" />
         <div className="tw-relative tw-mx-auto tw-w-[min(78rem,calc(100%_-_2rem))]">

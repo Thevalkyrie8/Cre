@@ -466,6 +466,27 @@ const Home = () => {
           </div>
           
           <div className="services-grid">
+            <div className="service-card service-card--chatbox">
+              <div className="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 14.5C20 17.54 16.42 20 12 20c-1.02 0-2-.13-2.9-.38L4 21l1.48-3.7C4.55 16.5 4 15.54 4 14.5 4 11.46 7.58 9 12 9s8 2.46 8 5.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M9 14.5h.01M12 14.5h.01M15 14.5h.01M15.5 3l.55 1.45L17.5 5l-1.45.55L15.5 7l-.55-1.45L13.5 5l1.45-.55L15.5 3ZM20 5.5l.32.82.82.32-.82.32L20 7.8l-.32-.84-.82-.32.82-.32L20 5.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div className="service-content">
+                <h3 className="service-title" data-en="Chatbox AI Integration" data-vi="Tích hợp Chatbox AI">Chatbox AI Integration</h3>
+                <p className="service-description" data-en="AI-powered customer support connected across Fanpage, Zalo, and your website" data-vi="Trợ lý AI chăm sóc khách hàng được kết nối đồng bộ trên Fanpage, Zalo và website">AI-powered customer support connected across Fanpage, Zalo, and your website</p>
+                <ul className="service-features">
+                  <li data-en="Facebook Fanpage Integration" data-vi="Tích hợp Facebook Fanpage">Facebook Fanpage Integration</li>
+                  <li data-en="Zalo OA Automation" data-vi="Tự động hóa Zalo OA">Zalo OA Automation</li>
+                  <li data-en="Website AI Assistant" data-vi="Trợ lý AI trên website">Website AI Assistant</li>
+                </ul>
+                <Link to="/chatbox-ai" className="btn-learn-more">
+                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
+                </Link>
+              </div>
+            </div>
+
             <div className="service-card">
               <div className="service-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -577,27 +598,6 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="service-card">
-              <div className="service-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className="service-content">
-                <h3 className="service-title" data-en="UI/UX Design" data-vi="Thiết kế UI/UX">UI/UX Design</h3>
-                <p className="service-description" data-en="Clear design that makes customers click right away and come back" data-vi="Thiết kế dễ hiểu để khách bấm ngay và quay lại">Clear design that makes customers click right away and come back</p>
-                <ul className="service-features">
-                  <li>User Interface Design</li>
-                  <li>User Experience Optimization</li>
-                  <li>Mobile-First Approach</li>
-                </ul>
-                <Link to="/ui-ux-design" className="btn-learn-more">
-                  <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>

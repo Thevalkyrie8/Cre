@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ChatBox from './ChatBox';
 import useMasterInteractions from '../hooks/useMasterInteractions';
+import SEO from './SEO';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -131,6 +132,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="app">
+      <SEO />
       {/* Background */}
       <div className="bg-container">
         <div className="earth-bg"></div>
@@ -176,10 +178,29 @@ const Layout = ({ children }) => {
           </div>
 
           <div className="nav-actions">
-            <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle color theme">
-              {theme === 'light' ? '◐' : '@'}
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            >
+              {theme === 'dark' ? (
+                <svg className="theme-toggle-icon theme-toggle-icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3.75" />
+                  <path d="M12 2.25v2M12 19.75v2M2.25 12h2M19.75 12h2M5.1 5.1l1.42 1.42M17.48 17.48l1.42 1.42M18.9 5.1l-1.42 1.42M6.52 17.48 5.1 18.9" />
+                </svg>
+              ) : (
+                <svg className="theme-toggle-icon theme-toggle-icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.2 15.35A8.65 8.65 0 0 1 8.65 3.8 8.7 8.7 0 1 0 20.2 15.35Z" />
+                </svg>
+              )}
             </button>
-            <button className="language-toggle" onClick={toggleLanguage}>
+            <button
+              className="language-toggle"
+              onClick={toggleLanguage}
+              aria-label={language === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt'}
+              title={language === 'vi' ? 'English' : 'Tiếng Việt'}
+            >
               {language === 'vi' ? 'EN' : 'VI'}
             </button>
             <button 

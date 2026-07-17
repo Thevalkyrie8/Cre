@@ -64,6 +64,27 @@ const serviceDetails = {
     process: ['Audit the signals', 'Shape the strategy', 'Launch & learn', 'Scale what works'],
     deliverables: ['30–60–90 day roadmap', 'Campaign and content system', 'Tracking and live dashboard', 'Optimization cadence'],
   },
+  chatbox: {
+    index: '06',
+    eyebrow: 'Chatbox AI Integration',
+    eyebrowVi: 'Tích hợp Chatbox AI',
+    title: 'One AI assistant for every customer conversation.',
+    titleVi: 'Một trợ lý AI cho mọi cuộc trò chuyện với khách hàng.',
+    intro: 'We connect an AI-powered chatbox to Facebook Fanpage, Zalo OA, and your website so customers receive fast, consistent support on every channel.',
+    introVi: 'Chúng tôi kết nối Chatbox AI với Facebook Fanpage, Zalo OA và website để khách hàng luôn nhận được hỗ trợ nhanh chóng, nhất quán trên mọi kênh.',
+    promise: 'Answer common questions, qualify leads, collect customer information, and hand complex conversations to your team at the right moment.',
+    metrics: [['24/7', 'Instant support'], ['3-in-1', 'Connected channels'], ['AI', 'Smart qualification']],
+    challengeTitle: 'The challenge',
+    challenge: 'Customers message businesses across different channels and expect an immediate answer. Disconnected inboxes create slow responses, repeated work, and lost sales opportunities.',
+    capabilities: [
+      ['Facebook Fanpage', 'Automated Messenger responses, lead capture, product guidance, and seamless transfer to a human advisor.'],
+      ['Zalo OA', 'Structured consultation flows, customer information collection, reminders, and Vietnamese-first support.'],
+      ['Website assistant', 'A branded AI chat experience trained around your services, policies, FAQs, and conversion goals.'],
+      ['Unified automation', 'Shared conversation logic, CRM-ready data, reporting, and escalation rules across all connected channels.'],
+    ],
+    process: ['Map conversations', 'Prepare knowledge', 'Connect channels', 'Train & optimize'],
+    deliverables: ['Conversation and lead-flow design', 'Fanpage, Zalo OA, and website setup', 'AI knowledge base and guardrails', 'Analytics, training, and handover'],
+  },
 };
 
 const DetailIcon = () => (
@@ -76,7 +97,7 @@ const ServiceEditorialDetail = ({ type }) => {
   const service = serviceDetails[type];
 
   return (
-  <div className="service-editorial-detail tw-bg-[#FAF8F5] tw-text-[#263B35]">
+  <div className="theme-synced-page service-editorial-detail tw-bg-[#FAF8F5] tw-text-[#263B35]">
     <section data-reveal className="tw-relative tw-isolate tw-overflow-hidden tw-pb-20 tw-pt-36 sm:tw-pb-28 sm:tw-pt-44">
       <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_12%_10%,rgba(13,94,77,.11),transparent_27%),radial-gradient(circle_at_90%_35%,rgba(230,140,35,.10),transparent_24%)]" />
       <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-14 lg:tw-grid-cols-[1.45fr_.55fr] lg:tw-items-end">
