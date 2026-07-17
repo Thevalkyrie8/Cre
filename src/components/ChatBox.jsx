@@ -144,6 +144,15 @@ const readApiReply = (data) => ({
   quickReplies: data?.quickReplies || data?.quick_replies || []
 });
 
+const renderMessageText = (text = '') => text
+  .split(/(\*\*[^*]+\*\*)/g)
+  .filter(Boolean)
+  .map((part, index) => (
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={`${part}-${index}`}>{part.slice(2, -2)}</strong>
+      : part
+  ));
+
 const BotMascotIcon = ({ size = 30 }) => (
   <svg
     width={size}
@@ -320,7 +329,7 @@ const ChatBox = () => {
         <div className="chatbox-body">
           {messages.map((message) => (
             <div key={message.id} className={`chat-message ${message.role}`}>
-              <p>{message.text}</p>
+              <p>{renderMessageText(message.text)}</p>
             </div>
           ))}
           {isLoading && (

@@ -9533,3 +9533,47 @@ body.dark-mode .language-toggle:hover {
     border-color: rgba(105, 175, 195, 0.4) !important;
     box-shadow: 0 9px 22px rgba(0, 8, 28, 0.24) !important;
 }
+
+/* Chatbox light mode: softer reading weight and clearer message contrast. */
+body:not(.dark-mode) .chatbox-agent h3 {
+    color: #28594D !important;
+    font-weight: 700 !important;
+}
+
+body:not(.dark-mode) .chatbox-agent p {
+    color: #60766E !important;
+    font-weight: 400 !important;
+}
+
+body:not(.dark-mode) .chat-message p {
+    color: #496159 !important;
+    font-weight: 400 !important;
+}
+
+body:not(.dark-mode) .chat-message p strong {
+    color: #315E52 !important;
+    font-weight: 600 !important;
+}
+
+body:not(.dark-mode) .chat-message.bot p {
+    background: #FFFDFA !important;
+    border-color: rgba(40, 89, 77, 0.14) !important;
+}
+
+body:not(.dark-mode) .chat-message.user p {
+    background: linear-gradient(135deg, #356C5D 0%, #B7792E 100%) !important;
+    color: #FFFDF8 !important;
+    font-weight: 500 !important;
+}
+
+body:not(.dark-mode) .chatbox-suggestions button {
+    background: #F2F7F3 !important;
+    border-color: rgba(40, 89, 77, 0.16) !important;
+    color: #28594D !important;
+    font-weight: 600 !important;
+}
+
+body:not(.dark-mode) .chatbox-composer input {
+    color: #3F5750 !important;
+    font-weight: 400 !important;
+}
