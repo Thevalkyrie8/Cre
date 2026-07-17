@@ -138,7 +138,10 @@ export const getSeoForPath = (pathname) => {
   return { path, ...seoPages['/'] };
 };
 
-export const getCanonicalUrl = (pathname) => `${SITE_URL}${normalizePath(pathname) === '/' ? '/' : normalizePath(pathname)}`;
+export const getCanonicalUrl = (pathname) => {
+  const path = normalizePath(pathname);
+  return path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}/`;
+};
 
 export const buildStructuredData = (pathname) => {
   const page = getSeoForPath(pathname);
