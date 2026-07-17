@@ -9157,6 +9157,40 @@ body:not(.dark-mode) .packages-light-page .pricing-card--standard {
 .article-editorial-body h2 { margin: 2.2em 0 .6em; font-size: 2.6rem; }
 .article-editorial-body h3 { margin: 1.8em 0 .5em; font-size: 1.9rem; }
 .article-editorial-body p { margin: 0 0 1.45em; }
+.article-editorial-body ul,
+.article-editorial-body ol {
+    margin: 1.25rem 0 1.8rem;
+    padding-left: 1.8rem;
+}
+
+.article-editorial-body ul { list-style-type: disc; }
+.article-editorial-body ol { list-style-type: decimal; }
+
+.article-editorial-body li {
+    margin: 0 0 .8rem;
+    padding-left: .45rem;
+    line-height: 1.8;
+}
+
+.article-editorial-body li::marker {
+    color: #C5751E;
+    font-weight: 700;
+}
+
+.article-editorial-body li > p {
+    margin: .35rem 0;
+}
+
+.article-editorial-body ul ul,
+.article-editorial-body ul ol,
+.article-editorial-body ol ul,
+.article-editorial-body ol ol {
+    margin: .65rem 0;
+}
+
+.article-editorial-body ul ul { list-style-type: circle; }
+.article-editorial-body ol ol { list-style-type: lower-alpha; }
+.article-editorial-body strong { font-weight: 700; }
 .article-editorial-body a { color: #C5751E; }
 .article-editorial-body blockquote { margin: 2em 0; border-left: 2px solid #E68C23; padding: .5em 0 .5em 1.4em; color: #0D4537; font-size: 1.35rem; font-style: italic; }
 .article-editorial-body img { width: 100%; border-radius: 1.25rem; }
@@ -9327,6 +9361,7 @@ body.dark-mode .theme-synced-page .article-editorial-body h3,
 body.dark-mode .theme-synced-page .article-editorial-body > :first-child::first-letter { color: #67B8F3 !important; }
 body.dark-mode .theme-synced-page .article-editorial-body a,
 body.dark-mode .theme-synced-page .article-editorial-body blockquote { color: #19D9FF !important; }
+body.dark-mode .theme-synced-page .article-editorial-body li::marker { color: #67B8F3; }
 
 /* Home service icons need an explicit foreground in dark mode. The shared icon
    polish changes their background late in the cascade, but the older rule left
