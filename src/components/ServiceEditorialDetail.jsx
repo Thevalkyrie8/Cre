@@ -67,12 +67,12 @@ const serviceDetails = {
   },
   chatbox: {
     index: '06',
-    eyebrow: 'Chatbox AI Integration',
-    eyebrowVi: 'Tích hợp Chatbox AI',
-    title: 'One AI assistant for every customer conversation.',
-    titleVi: 'Một trợ lý AI cho mọi cuộc trò chuyện với khách hàng.',
-    intro: 'We connect an AI-powered chatbox to Facebook Fanpage, Zalo OA, and your website so customers receive fast, consistent support on every channel.',
-    introVi: 'Chúng tôi kết nối Chatbox AI với Facebook Fanpage, Zalo OA và website để khách hàng luôn nhận được hỗ trợ nhanh chóng, nhất quán trên mọi kênh.',
+    eyebrow: 'AI Chatbot Integration',
+    eyebrowVi: 'Tích hợp Chatbot AI',
+    title: 'AI chatbot for Facebook Fanpage, Zalo OA, and your website.',
+    titleVi: 'Chatbot AI cho Fanpage, Zalo OA và website.',
+    intro: 'We connect an AI chatbot to Facebook Fanpage, Zalo OA, and your website to answer questions, guide customers, capture leads, and transfer conversations to staff.',
+    introVi: 'Chatbot AI dùng dữ liệu doanh nghiệp để trả lời câu hỏi, tư vấn sản phẩm, thu thông tin lead và chuyển hội thoại cho nhân viên trên Facebook Fanpage, Zalo OA và website.',
     promise: 'Answer common questions, qualify leads, collect customer information, and hand complex conversations to your team at the right moment.',
     metrics: [['24/7', 'Instant support'], ['3-in-1', 'Connected channels'], ['AI', 'Smart qualification']],
     challengeTitle: 'The challenge',
@@ -144,6 +144,31 @@ const ServiceEditorialDetail = ({ type }) => {
         {service.metrics.map(([value, label]) => <div key={label} className="tw-border-l tw-border-[#0D5E4D]/20 tw-pl-5"><strong className="tw-block tw-font-editorial tw-text-4xl tw-font-semibold tw-text-[#0D5E4D]">{value}</strong><span className="tw-text-xs tw-font-bold tw-uppercase tw-tracking-[.12em] tw-text-[#61756F]">{label}</span></div>)}
       </div>
     </section>
+
+    {type === 'chatbox' && (
+      <section data-reveal className="tw-py-20 sm:tw-py-24" aria-labelledby="chatbot-ai-definition">
+        <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-10 lg:tw-grid-cols-[.8fr_1.2fr] lg:tw-gap-16">
+          <div>
+            <p className="tw-m-0 tw-text-[.68rem] tw-font-black tw-uppercase tw-tracking-[.24em] tw-text-[#E68C23]" data-en="Quick answer" data-vi="Câu trả lời ngắn">Quick answer</p>
+            <h2 id="chatbot-ai-definition" className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-[clamp(2.35rem,5vw,4.25rem)] tw-font-semibold tw-leading-[.95] tw-text-[#0D5E4D]" data-en="What is an AI chatbot for Facebook Fanpage?" data-vi="Chatbot AI cho Fanpage là gì?">What is an AI chatbot for Facebook Fanpage?</h2>
+            <p className="tw-mb-0 tw-mt-6 tw-text-lg tw-leading-8 tw-text-[#49635A]" data-en="It is an automated Messenger assistant that uses approved business information to answer questions, guide product discovery, collect lead details, and transfer conversations to staff when needed." data-vi="Đây là trợ lý tự động trong Messenger, dùng dữ liệu đã được doanh nghiệp duyệt để trả lời câu hỏi, tư vấn sản phẩm, thu thông tin khách hàng và chuyển hội thoại cho nhân viên khi cần.">It is an automated Messenger assistant that uses approved business information to answer questions, guide product discovery, collect lead details, and transfer conversations to staff when needed.</p>
+          </div>
+          <dl className="tw-m-0 tw-grid tw-gap-3 sm:tw-grid-cols-2">
+            {[
+              ['Service', 'Dịch vụ', 'Multi-channel AI chatbot integration', 'Tích hợp Chatbot AI đa kênh'],
+              ['Supported channels', 'Kênh hỗ trợ', 'Facebook Fanpage, Zalo OA, and website', 'Facebook Fanpage, Zalo OA và website'],
+              ['Core functions', 'Chức năng chính', 'Automated answers, consultation, lead capture, and staff handover', 'Tự động trả lời, tư vấn, thu lead và chuyển nhân viên'],
+              ['Knowledge source', 'Dữ liệu chuẩn bị', 'Products, services, pricing, policies, and FAQs', 'Sản phẩm, dịch vụ, bảng giá, chính sách và câu hỏi thường gặp'],
+            ].map(([labelEn, labelVi, valueEn, valueVi]) => (
+              <div key={labelEn} className="tw-rounded-2xl tw-border tw-border-[#0D5E4D]/14 tw-bg-[#FEF7EA] tw-p-5">
+                <dt className="tw-text-xs tw-font-black tw-uppercase tw-tracking-[.12em] tw-text-[#E68C23]" data-en={labelEn} data-vi={labelVi}>{labelEn}</dt>
+                <dd className="tw-m-0 tw-mt-3 tw-text-sm tw-font-semibold tw-leading-6 tw-text-[#315248]" data-en={valueEn} data-vi={valueVi}>{valueEn}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )}
 
     <section data-reveal className="tw-py-24 sm:tw-py-32">
       <div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]">
@@ -228,7 +253,7 @@ const ServiceEditorialDetail = ({ type }) => {
         <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.7fr_1.3fr]">
           <div>
             <p className="tw-m-0 tw-text-[.68rem] tw-font-black tw-uppercase tw-tracking-[.24em] tw-text-[#E68C23]" data-en="Frequently asked questions" data-vi="Câu hỏi thường gặp">Frequently asked questions</p>
-            <h2 id="chatbox-faq-title" className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-none tw-text-[#0D5E4D]" data-en="AI chatbox integration, explained clearly." data-vi="Giải đáp về tích hợp Chatbox AI.">AI chatbox integration, explained clearly.</h2>
+            <h2 id="chatbox-faq-title" className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-none tw-text-[#0D5E4D]" data-en="AI chatbot integration, explained clearly." data-vi="Giải đáp về Chatbot AI cho Fanpage.">AI chatbot integration, explained clearly.</h2>
             <p className="tw-mb-0 tw-mt-6 tw-max-w-md tw-text-sm tw-leading-7 tw-text-[#50675F]" data-en="Practical answers about Facebook Fanpage, Zalo OA, website deployment, handover, data, and project scope." data-vi="Thông tin thực tế về triển khai trên Facebook Fanpage, Zalo OA, website, chuyển nhân viên, dữ liệu và phạm vi dự án.">Practical answers about Facebook Fanpage, Zalo OA, website deployment, handover, data, and project scope.</p>
           </div>
           <div className="tw-space-y-3">

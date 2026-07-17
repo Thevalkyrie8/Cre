@@ -153,6 +153,9 @@ const buildStaticContent = (page, path) => {
   const bullets = page.bullets?.length
     ? `<ul>${page.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
     : '';
+  const facts = page.facts?.length
+    ? `<section><h2>Thông tin dịch vụ</h2><dl>${page.facts.map(([label, value]) => `<dt><strong>${escapeHtml(label)}</strong></dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl></section>`
+    : '';
   const faqs = page.faqs?.length
     ? `<section><h2>Câu hỏi thường gặp</h2>${page.faqs.map(({ question, answer }) => `<article><h3>${escapeHtml(question)}</h3><p>${escapeHtml(answer)}</p></article>`).join('')}</section>`
     : '';
@@ -172,7 +175,7 @@ const buildStaticContent = (page, path) => {
   const newsLinks = path === '/news' && newsArticles.length
     ? `<section><h2>Bài viết mới</h2><ul>${newsArticles.map((article) => `<li><a href="/news/${encodeURIComponent(article.slug)}/">${escapeHtml(article.title)}</a></li>`).join('')}</ul></section>`
     : '';
-  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${faqs}${newsLinks}${navigation}</main></div>`;
+  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${facts}${faqs}${newsLinks}${navigation}</main></div>`;
 };
 
 for (const [path, page] of Object.entries(seoPages)) {

@@ -9098,6 +9098,27 @@ body:not(.dark-mode) .packages-light-page .pricing-card--standard {
     background: linear-gradient(145deg, #F0E9DE, #FAF8F5 60%, #E7EFE9);
 }
 
+/* Vietnamese article titles need a complete Unicode font and relaxed metrics. */
+.journal-light-page .journal-article-title,
+body:not(.dark-mode) .journal-light-page .journal-article-title,
+body.dark-mode .journal-light-page .journal-article-title {
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    font-size-adjust: none;
+    font-synthesis: none;
+    font-weight: 500 !important;
+    line-height: 1.16 !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: anywhere;
+}
+
+.journal-featured-image-frame {
+    background: #07152f;
+}
+
+body:not(.dark-mode) .journal-featured-image-frame {
+    background: #E7EFE9;
+}
+
 .journal-newsletter::before {
     content: '';
     position: absolute;
@@ -9663,4 +9684,209 @@ body:not(.dark-mode) .chatbox-suggestions button {
 body:not(.dark-mode) .chatbox-composer input {
     color: #3F5750 !important;
     font-weight: 400 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Global readability system
+   Keep Vietnamese diacritics stable and replace the old neon/serif treatment
+   with a calm, high-contrast type and colour system in both themes.
+   -------------------------------------------------------------------------- */
+:root {
+    --font-ui: "Segoe UI Variable", "Segoe UI", Inter, Arial, sans-serif;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-ui) !important;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body h1,
+body h2,
+body h3,
+body h4,
+body .tw-font-editorial,
+body:not(.dark-mode) h1,
+body:not(.dark-mode) h2,
+body:not(.dark-mode) .section-title,
+body:not(.dark-mode) .about-title {
+    font-family: var(--font-ui) !important;
+    font-synthesis: none;
+    letter-spacing: -0.018em !important;
+    text-wrap: balance;
+}
+
+body h1,
+body .master-title {
+    font-weight: 650 !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.025em !important;
+}
+
+body h2 {
+    font-weight: 650 !important;
+    line-height: 1.08 !important;
+}
+
+body h3,
+body h4 {
+    font-weight: 600 !important;
+    line-height: 1.18 !important;
+}
+
+body p,
+body li,
+body dd,
+body summary {
+    font-family: var(--font-ui) !important;
+    letter-spacing: 0 !important;
+}
+
+body p,
+body li,
+body dd {
+    line-height: 1.72;
+}
+
+@media (min-width: 769px) {
+    body .master-title {
+        font-size: clamp(3rem, 6.1vw, 6.8rem) !important;
+    }
+}
+
+/* Light theme: dark ink instead of thin decorative serif text. */
+body:not(.dark-mode) {
+    --text-primary: #18322B !important;
+    --text-secondary: #50665F !important;
+}
+
+body:not(.dark-mode) h1,
+body:not(.dark-mode) h2,
+body:not(.dark-mode) h3,
+body:not(.dark-mode) h4 {
+    color: #183F35 !important;
+    text-shadow: none !important;
+}
+
+body:not(.dark-mode) p,
+body:not(.dark-mode) li,
+body:not(.dark-mode) dd {
+    color: #4B625A !important;
+}
+
+/* Dark theme: neutral contrast, no electric cyan type or glow. */
+body.dark-mode {
+    --bg-primary: #0A0F15 !important;
+    --bg-secondary: #111821 !important;
+    --bg-tertiary: #18212B !important;
+    --text-primary: #F2F4F6 !important;
+    --text-secondary: #C7CED6 !important;
+    --text-gradient-start: #F2F4F6 !important;
+    --text-gradient-end: #D8DEE5 !important;
+    --accent-color: #A7B8C7 !important;
+    --accent-hover: #D4B47C !important;
+    --accent-secondary: #D4B47C !important;
+    --border-color: rgba(199, 206, 214, 0.22) !important;
+    --border-secondary: rgba(212, 180, 124, 0.22) !important;
+    --card-bg: rgba(18, 25, 34, 0.94) !important;
+    --card-border: rgba(199, 206, 214, 0.18) !important;
+    --overlay-bg: rgba(255, 255, 255, 0.025) !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode .theme-synced-page h1,
+body.dark-mode .theme-synced-page h2,
+body.dark-mode .theme-synced-page h3,
+body.dark-mode .theme-synced-page h4 {
+    color: #F2F4F6 !important;
+    background: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    -webkit-text-fill-color: currentColor !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode dd,
+body.dark-mode summary,
+body.dark-mode .theme-synced-page p,
+body.dark-mode .theme-synced-page li,
+body.dark-mode .theme-synced-page dd,
+body.dark-mode .theme-synced-page summary {
+    color: #C7CED6 !important;
+    text-shadow: none !important;
+}
+
+body.dark-mode a:not(.btn-primary):not(.cta-button):not(.master-magnetic) {
+    text-shadow: none !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#0D"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#12"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#17"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#24"] {
+    color: #E9EDF1 !important;
+    text-shadow: none !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#26"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#31"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#40"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#49"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#50"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#53"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#5A"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#61"] {
+    color: #C7CED6 !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-text-[#E68C23"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#F5BC72"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#F6BD73"],
+body.dark-mode .theme-synced-page [class*="tw-text-[#C5751E"] {
+    color: #D4B47C !important;
+    text-shadow: none !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D3F32"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D4537"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#0D5E4D"],
+body.dark-mode .theme-synced-page [class*="tw-bg-[#263B35"] {
+    background-color: #18232D !important;
+}
+
+body.dark-mode .theme-synced-page [class*="tw-border-[#0D5E4D"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#E68C23"],
+body.dark-mode .theme-synced-page [class*="tw-border-[#F5BC72"] {
+    border-color: rgba(199, 206, 214, 0.22) !important;
+}
+
+body.dark-mode .neon-icon-svg,
+body.dark-mode .theme-synced-page svg {
+    filter: none !important;
+}
+
+body.dark-mode .home .services-section .service-icon,
+body.dark-mode .home .services-section .service-icon:hover {
+    box-shadow: none !important;
+}
+
+body.dark-mode .home .services-section .service-icon svg,
+body.dark-mode .home .services-section .service-icon svg path,
+body.dark-mode .home .services-section .service-icon svg circle {
+    color: #A7B8C7 !important;
+    stroke: #A7B8C7 !important;
+    filter: none !important;
 }
