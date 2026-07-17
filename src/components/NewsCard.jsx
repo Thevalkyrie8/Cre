@@ -64,8 +64,8 @@ const NewsCard = ({ article, index = 0 }) => {
 
         <div className={`tw-flex tw-flex-1 tw-flex-col ${isLead ? 'tw-p-6 sm:tw-p-7' : 'tw-p-5'}`}>
           <h3
-            className={`tw-m-0 tw-font-editorial tw-font-semibold tw-leading-[1.04] tw-tracking-[-0.025em] tw-text-white tw-transition-colors group-hover:tw-text-sky-100 ${
-              isLead ? 'tw-text-[2rem] sm:tw-text-[2.45rem]' : 'tw-text-[1.55rem]'
+            className={`home-news-card-title tw-m-0 tw-font-sans tw-font-medium tw-leading-[1.2] tw-tracking-normal tw-text-white tw-transition-colors group-hover:tw-text-sky-100 ${
+              isLead ? 'tw-text-[1.55rem] sm:tw-text-[1.85rem]' : 'tw-text-[1.3rem]'
             }`}
           >
             {article.title}

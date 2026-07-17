@@ -5,6 +5,7 @@ import { getNewsSlug, unwrapNewsList } from '../utils/newsSlug';
 
 const stripMarkup = (value = '') =>
   String(value)
+    .normalize('NFC')
     .replace(/<[^>]*>/g, ' ')
     .replace(/[#*_>`~[\]()]/g, '')
     .replace(/\s+/g, ' ')
@@ -40,11 +41,11 @@ const normalizeArticle = (item, index) => {
   return {
     id: item?.id || item?.slug || `news-${index}`,
     slug: getNewsSlug(item),
-    category: item?.category?.name || item?.category || item?.type || 'Insights',
-    title: item?.title || item?.name || 'Untitled article',
+    category: String(item?.category?.name || item?.category || item?.type || 'Insights').normalize('NFC'),
+    title: String(item?.title || item?.name || 'Untitled article').normalize('NFC'),
     excerpt: excerpt.length === 210 ? `${excerpt}…` : excerpt,
     author: {
-      name: author.name || 'Unitrux Editorial',
+      name: String(author.name || 'Unitrux Editorial').normalize('NFC'),
       avatar: author.avatar || author.avatarUrl || item?.authorAvatar || '',
     },
     image: item?.image?.url || item?.image || item?.coverImage || item?.thumbnail || '',

@@ -1338,6 +1338,11 @@ body:not(.dark-mode) .news-insights-card {
     box-shadow: 0 24px 60px -42px rgba(13,94,77,.42) !important;
 }
 body:not(.dark-mode) .news-insights-card h3 { color: #0D5E4D !important; }
+.home-news-card-title {
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+    letter-spacing: normal !important;
+    overflow-wrap: anywhere;
+}
 body:not(.dark-mode) .news-insights-card p,
 body:not(.dark-mode) .news-insights-card footer span,
 body:not(.dark-mode) .news-insights-card time { color: #536B63 !important; }
