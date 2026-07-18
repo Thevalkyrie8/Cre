@@ -10018,3 +10018,69 @@ body.dark-mode .home .services-section .service-icon svg circle {
         font-size: 1.35rem !important;
     }
 }
+
+/* News article hero: compact, readable and safe on narrow screens. This must
+   stay after the global .master-title scale so article titles are not enlarged
+   again by the shared hero rule. */
+body .news-detail-light .news-detail-title,
+body:not(.dark-mode) .news-detail-light .news-detail-title,
+body.dark-mode .news-detail-light .news-detail-title {
+    width: 100%;
+    max-width: 58rem !important;
+    font-family: var(--font-ui) !important;
+    font-size: clamp(1.9rem, 2.7vw, 3rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.018em !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
+    text-wrap: pretty;
+}
+
+@media (max-width: 1024px) {
+    body .news-detail-light .news-detail-title,
+    body:not(.dark-mode) .news-detail-light .news-detail-title,
+    body.dark-mode .news-detail-light .news-detail-title {
+        max-width: 48rem !important;
+        font-size: clamp(1.7rem, 4vw, 2.4rem) !important;
+        line-height: 1.14 !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .news-detail-light > header {
+        padding-top: 7.5rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+
+    .news-detail-light > header > div:last-child {
+        width: min(100% - 1.25rem, 76rem) !important;
+    }
+
+    body .news-detail-light .news-detail-title,
+    body:not(.dark-mode) .news-detail-light .news-detail-title,
+    body.dark-mode .news-detail-light .news-detail-title {
+        max-width: 100% !important;
+        margin-top: 1rem !important;
+        font-size: clamp(1.4rem, 6.2vw, 1.85rem) !important;
+        font-weight: 600 !important;
+        line-height: 1.18 !important;
+        letter-spacing: -0.01em !important;
+    }
+
+    .news-detail-light .news-detail-title + p {
+        margin-top: 1.25rem !important;
+        font-size: .95rem !important;
+        line-height: 1.7 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    body .news-detail-light .news-detail-title,
+    body:not(.dark-mode) .news-detail-light .news-detail-title,
+    body.dark-mode .news-detail-light .news-detail-title {
+        font-size: 1.35rem !important;
+        line-height: 1.2 !important;
+    }
+}
