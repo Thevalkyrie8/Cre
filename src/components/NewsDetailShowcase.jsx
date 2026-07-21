@@ -3,12 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
-import { getNewsSlug, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
+import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { trackEvent } from '../analytics/tracking';
-
-const getLanguage = () => {
-  try { return localStorage.getItem('language') || 'en'; } catch { return 'en'; }
-};
 
 const copy = {
   en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: 'Unitrux publishes practical content for readers first. See who is responsible, how we edit, and how to request a correction.', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
@@ -30,9 +26,10 @@ const toIsoDate = (value) => {
 };
 
 const normalizeArticle = (article, language) => {
-  const title = normalizeUnicode(language === 'vi' ? article.titleVi || article.title : article.title || article.titleVi);
-  const content = normalizeUnicode(language === 'vi' ? article.contentVi || article.content : article.content || article.contentVi);
-  const excerpt = normalizeUnicode(language === 'vi' ? article.excerptVi || article.excerpt : article.excerpt || article.excerptVi);
+  const localized = getLocalizedNewsFields(article, language);
+  const title = normalizeUnicode(localized.title);
+  const content = normalizeUnicode(localized.content);
+  const excerpt = normalizeUnicode(localized.excerpt);
   return {
     ...article, title: title || 'Untitled', content: content || '', excerpt: stripMarkdown(excerpt || ''),
     slug: getNewsSlug(article), category: article.category || 'Business', author: article.author || 'Unitrux Team',
@@ -54,7 +51,7 @@ const BotanicalDrawing = () => (
 const NewsDetailShowcase = () => {
   const { id: routeId } = useParams();
   const navigate = useNavigate();
-  const [language, setLanguage] = useState(getLanguage);
+  const [language, setLanguage] = useState(getStoredLanguage);
   const [rawArticle, setRawArticle] = useState(null);
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,9 +60,16 @@ const NewsDetailShowcase = () => {
   const article = useMemo(() => rawArticle ? normalizeArticle(rawArticle, language) : null, [rawArticle, language]);
 
   useEffect(() => {
-    const change = (event) => setLanguage(event.detail?.language || getLanguage());
+    const change = (event) => setLanguage(event.detail?.language === 'vi' ? 'vi' : 'en');
+    const syncAcrossTabs = (event) => {
+      if (event.key === 'language') setLanguage(event.newValue === 'vi' ? 'vi' : 'en');
+    };
     window.addEventListener('languageChange', change);
-    return () => window.removeEventListener('languageChange', change);
+    window.addEventListener('storage', syncAcrossTabs);
+    return () => {
+      window.removeEventListener('languageChange', change);
+      window.removeEventListener('storage', syncAcrossTabs);
+    };
   }, []);
 
   useEffect(() => {

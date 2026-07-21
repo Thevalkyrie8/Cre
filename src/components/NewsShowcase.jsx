@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getFeaturedNews, getNews, resolveAssetUrl } from '../api/client';
-import { getNewsSlug, unwrapNewsList } from '../utils/newsSlug';
-
-const getLanguage = () => {
-  try { return localStorage.getItem('language') || 'en'; } catch { return 'en'; }
-};
+import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, unwrapNewsList } from '../utils/newsSlug';
 
 const text = {
   en: {
@@ -31,9 +27,7 @@ const formatDate = (value, language) => {
 };
 
 const normalizeArticle = (item, language) => {
-  const title = language === 'vi' ? item.titleVi || item.title : item.title || item.titleVi;
-  const content = language === 'vi' ? item.contentVi || item.content : item.content || item.contentVi;
-  const excerptSource = language === 'vi' ? item.excerptVi || item.excerpt || content : item.excerpt || item.excerptVi || content;
+  const { title, content, excerpt: excerptSource } = getLocalizedNewsFields(item, language);
   const excerpt = stripText(excerptSource).slice(0, 180);
   return {
     id: item.id || getNewsSlug(item), slug: getNewsSlug(item), title: normalizeText(title || 'Untitled'),
@@ -63,7 +57,7 @@ const NewsSkeleton = () => <div className="tw-space-y-6"><div className="tw-h-[3
 
 const NewsShowcase = () => {
   const navigate = useNavigate();
-  const [language, setLanguage] = useState(getLanguage);
+  const [language, setLanguage] = useState(getStoredLanguage);
   const [articles, setArticles] = useState([]);
   const [featured, setFeatured] = useState(null);
   const [query, setQuery] = useState('');
@@ -74,9 +68,16 @@ const NewsShowcase = () => {
   const t = text[language] || text.en;
 
   useEffect(() => {
-    const change = (event) => setLanguage(event.detail?.language || getLanguage());
+    const change = (event) => setLanguage(event.detail?.language === 'vi' ? 'vi' : 'en');
+    const syncAcrossTabs = (event) => {
+      if (event.key === 'language') setLanguage(event.newValue === 'vi' ? 'vi' : 'en');
+    };
     window.addEventListener('languageChange', change);
-    return () => window.removeEventListener('languageChange', change);
+    window.addEventListener('storage', syncAcrossTabs);
+    return () => {
+      window.removeEventListener('languageChange', change);
+      window.removeEventListener('storage', syncAcrossTabs);
+    };
   }, []);
 
   useEffect(() => {

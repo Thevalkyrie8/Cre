@@ -10,6 +10,29 @@ export const slugifyNewsTitle = (value = '') =>
 export const getNewsSlug = (article = {}) =>
   slugifyNewsTitle(article.slug || article.title || article.titleVi || 'article');
 
+export const getStoredLanguage = () => {
+  try {
+    return localStorage.getItem('language') === 'vi' ? 'vi' : 'en';
+  } catch {
+    return 'en';
+  }
+};
+
+export const getLocalizedNewsFields = (article = {}, language = 'en') => {
+  const isVietnamese = language === 'vi';
+  const title = isVietnamese
+    ? article.titleVi || article.title
+    : article.title || article.titleVi;
+  const content = isVietnamese
+    ? article.contentVi || article.content
+    : article.content || article.contentVi;
+  const excerpt = isVietnamese
+    ? article.excerptVi || article.excerpt || content
+    : article.excerpt || article.excerptVi || content;
+
+  return { title: title || '', excerpt: excerpt || '', content: content || '' };
+};
+
 export const unwrapNewsList = (payload) => {
   if (Array.isArray(payload)) return payload;
   const candidates = [
