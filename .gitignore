@@ -12,6 +12,27 @@ dist
 dist-ssr
 *.local
 
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# Build and tooling caches
+.vite/
+.cache/
+coverage/
+*.tsbuildinfo
+.eslintcache
+
+# Local Codex / Impeccable workspace files
+.agents/
+.codex/
+.impeccable/
+.github/hooks/
+.github/skills/
+DESIGN.md
+PRODUCT.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -33,14 +33,14 @@ const NewsCard = ({ article, index = 0 }) => {
       <Link
         to={articleUrl}
         className={`tw-flex tw-w-full tw-flex-col tw-text-inherit tw-no-underline ${
-          isLead ? 'lg:tw-grid lg:tw-grid-rows-[minmax(19rem,1.3fr)_auto]' : ''
+          isLead ? 'lg:tw-grid lg:tw-grid-rows-[auto_1fr]' : ''
         }`}
         aria-label={`Read: ${article.title}`}
       >
         <div
           className={`tw-relative tw-overflow-hidden tw-bg-slate-950 ${
             isLead
-              ? 'tw-aspect-[16/10] lg:tw-aspect-auto lg:tw-min-h-[19rem]'
+              ? 'tw-aspect-[16/10]'
               : index === 3
                 ? 'tw-aspect-[16/8]'
                 : 'tw-aspect-[4/3]'
@@ -50,7 +50,7 @@ const NewsCard = ({ article, index = 0 }) => {
             <img
               src={imageUrl}
               alt={article.title}
-              className="tw-h-full tw-w-full tw-object-cover tw-transition tw-duration-700 group-hover:tw-scale-[1.035]"
+              className={`tw-h-full tw-w-full tw-transition tw-duration-700 group-hover:tw-scale-[1.025] ${isLead ? 'tw-object-contain' : 'tw-object-cover'}`}
               loading={isLead ? 'eager' : 'lazy'}
             />
           ) : (

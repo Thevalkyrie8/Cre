@@ -92,7 +92,7 @@ const NewsSkeleton = ({ label }) => (
   </div>
 );
 
-const NewsSection = () => {
+const NewsSection = ({ compact = false }) => {
   const [language, setLanguage] = useState(getStoredLanguage);
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,14 +145,15 @@ const NewsSection = () => {
 
   return (
     <section
-      aria-labelledby="news-insights-title"
+      aria-labelledby={compact ? undefined : 'news-insights-title'}
+      aria-label={compact ? t.title : undefined}
       className="news-insights-section tw-relative tw-isolate tw-overflow-hidden tw-bg-[#090b10] tw-pb-24 tw-pt-8 sm:tw-pb-28 sm:tw-pt-10"
     >
       <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_14%_18%,rgba(56,189,248,0.10),transparent_28%),radial-gradient(circle_at_88%_76%,rgba(99,102,241,0.10),transparent_31%)]" />
       <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-opacity-[0.025] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:64px_64px]" />
 
       <div className="tw-mx-auto tw-w-[min(100%-2rem,76rem)]">
-        <header className="tw-mb-9 tw-flex tw-items-end tw-justify-between tw-gap-6">
+        {!compact && <header className="tw-mb-9 tw-flex tw-items-end tw-justify-between tw-gap-6">
           <div>
             <p className="tw-mb-3 tw-text-[0.68rem] tw-font-bold tw-uppercase tw-tracking-[0.28em] tw-text-sky-300/90">
               {t.eyebrow}
@@ -164,7 +165,7 @@ const NewsSection = () => {
           <a href="/news" className="tw-hidden tw-items-center tw-gap-2 tw-text-sm tw-font-semibold tw-text-slate-300 tw-no-underline tw-transition-colors hover:tw-text-sky-200 sm:tw-flex">
             {t.viewAll} <span aria-hidden="true">↗</span>
           </a>
-        </header>
+        </header>}
 
         {loading ? (
           <NewsSkeleton label={t.loading} />
