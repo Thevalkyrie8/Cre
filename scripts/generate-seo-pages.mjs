@@ -15,7 +15,6 @@ import {
   SITE_URL,
 } from '../src/seo/seoConfig.js';
 import { getNewsSlug } from '../src/utils/newsSlug.js';
-import { mergeStaticNews } from '../src/data/staticNews.js';
 
 const distDir = join(process.cwd(), 'dist');
 const template = await readFile(join(distDir, 'index.html'), 'utf8');
@@ -62,7 +61,7 @@ const loadNewsArticles = async () => {
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const items = unwrapNews(await response.json());
-    return mergeStaticNews(items).map((item) => {
+    return items.map((item) => {
       const title = item.titleVi || item.title || '';
       const content = item.contentVi || item.content || '';
       const excerpt = stripMarkdown(item.excerptVi || item.excerpt || content).slice(0, 180);
@@ -79,17 +78,8 @@ const loadNewsArticles = async () => {
       };
     }).filter((item) => item.slug && item.title && item.content);
   } catch (error) {
-    console.warn(`News API unavailable; prerendering bundled articles only: ${error.message}`);
-    return mergeStaticNews([]).map((item) => ({
-      ...item,
-      slug: getNewsSlug(item),
-      title: item.titleVi || item.title || '',
-      content: item.contentVi || item.content || '',
-      excerpt: stripMarkdown(item.excerptVi || item.excerpt || item.contentVi || item.content || '').slice(0, 180),
-      author: item.author || `${SITE_NAME} Team`,
-      category: item.category || 'Kiến thức Digital',
-      image: resolveAssetUrl(item.image),
-    }));
+    console.warn(`News API unavailable; no news pages will be prerendered: ${error.message}`);
+    return [];
   }
 };
 

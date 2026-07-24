@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
-import { findStaticNews, mergeStaticNews } from '../data/staticNews';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { trackEvent } from '../analytics/tracking';
 
@@ -79,17 +78,10 @@ const NewsDetailShowcase = () => {
     const load = async () => {
       try {
         let list = [];
-        let result = findStaticNews(routeId);
-        if (result) {
-          try {
-            list = unwrapNewsList(await getNews({ lang: language }));
-          } catch {
-            list = [];
-          }
-          list = mergeStaticNews(list);
-        } else if (isNewsUuid(routeId)) result = await getNewsById(routeId, { lang: language });
+        let result;
+        if (isNewsUuid(routeId)) result = await getNewsById(routeId, { lang: language });
         else {
-          list = mergeStaticNews(unwrapNewsList(await getNews({ lang: language })));
+          list = unwrapNewsList(await getNews({ lang: language }));
           result = list.find((item) => getNewsSlug(item) === routeId);
           if (!result) result = await getNewsById(routeId, { lang: language });
         }
@@ -98,7 +90,7 @@ const NewsDetailShowcase = () => {
         setRawArticle(result);
         const canonical = getNewsSlug(result);
         if (canonical !== routeId) navigate(`/news/${canonical}`, { replace: true });
-        if (!list.length) list = mergeStaticNews(unwrapNewsList(await getNews({ lang: language, category: result.category })));
+        if (!list.length) list = unwrapNewsList(await getNews({ lang: language, category: result.category }));
         if (active) setRelated(list.filter((item) => item.id !== result.id).slice(0, 3).map((item) => normalizeArticle(item, language)));
       } catch {
         if (active) setError(t.error);

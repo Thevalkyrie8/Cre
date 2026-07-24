@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getFeaturedNews, getNews, resolveAssetUrl } from '../api/client';
-import { mergeStaticNews } from '../data/staticNews';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, unwrapNewsList } from '../utils/newsSlug';
 
 const copy = {
@@ -104,8 +103,7 @@ const NewsShowcase = () => {
     Promise.allSettled([getNews({ lang: language }), getFeaturedNews({ lang: language })]).then(([listResult, featuredResult]) => {
       if (!active) return;
       const apiList = listResult.status === 'fulfilled' ? unwrapNewsList(listResult.value) : [];
-      const rawList = mergeStaticNews(apiList);
-      const mapped = rawList.map((item) => normalizeArticle(item, language));
+      const mapped = apiList.map((item) => normalizeArticle(item, language));
       let rawFeatured = null;
       if (featuredResult.status === 'fulfilled') {
         const payload = featuredResult.value;
