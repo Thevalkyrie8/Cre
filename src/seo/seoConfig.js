@@ -54,6 +54,44 @@ export const chatboxFaqs = [
   },
 ];
 
+const marketingFaqs = [
+  {
+    question: 'Unitrux triển khai quảng cáo trên những nền tảng nào?',
+    answer: 'Unitrux triển khai Google Ads, Facebook Ads, Instagram Ads, TikTok Ads, YouTube và remarketing liên kết. Tổ hợp kênh phù hợp phụ thuộc vào khách hàng, sản phẩm, chu kỳ bán hàng, khả năng sản xuất nội dung và ngân sách.',
+  },
+  {
+    question: 'Unitrux có sản xuất video quảng cáo không?',
+    answer: 'Có. Phạm vi có thể gồm định hướng sáng tạo, kịch bản, quay, dựng, phiên bản video ngắn và định dạng riêng cho Facebook, Instagram, TikTok, YouTube và landing page.',
+  },
+  {
+    question: 'Ngân sách chạy quảng cáo có nằm trong phí dịch vụ không?',
+    answer: 'Ngân sách trả cho nền tảng và phí dịch vụ thường được tách riêng để minh bạch. Báo giá sẽ ghi rõ phạm vi vận hành, sản xuất nội dung, thiết lập đo lường và ngân sách truyền thông dự kiến.',
+  },
+  {
+    question: 'Unitrux có cam kết chắc chắn doanh thu hoặc ROAS không?',
+    answer: 'Không thể bảo đảm một kết quả kinh doanh cố định trước khi thử nghiệm vì hiệu quả còn phụ thuộc sản phẩm, giá, thị trường, website, quy trình bán hàng và cạnh tranh. Unitrux cam kết triển khai, đo lường, thử nghiệm và tối ưu minh bạch.',
+  },
+];
+
+const productionFaqs = [
+  {
+    question: 'Chưa có ý tưởng video quảng cáo thì có bắt đầu được không?',
+    answer: 'Có. Doanh nghiệp chỉ cần chia sẻ sản phẩm, mục tiêu, kênh dự kiến và khoảng ngân sách. Unitrux sẽ đề xuất concept, định dạng và phạm vi sản xuất để cùng duyệt trước ngày quay.',
+  },
+  {
+    question: 'Unitrux có thể quay tại cửa hàng hoặc nhà máy không?',
+    answer: 'Có. Sau khi khảo sát ánh sáng, âm thanh, không gian và hoạt động vận hành, Unitrux sẽ đề xuất thiết bị, nhân sự và lịch quay phù hợp.',
+  },
+  {
+    question: 'Một lần quay có thể tạo video cho nhiều nền tảng không?',
+    answer: 'Có thể dùng chung nguồn quay, nhưng mỗi nền tảng cần tỷ lệ khung hình, nhịp dựng, thời lượng và vùng chữ riêng. Các phiên bản 9:16, 4:5, 1:1 hoặc 16:9 sẽ được xác định trong phạm vi bàn giao.',
+  },
+  {
+    question: 'Chi phí sản xuất video quảng cáo được tính như thế nào?',
+    answer: 'Chi phí phụ thuộc vào số ngày quay, bối cảnh, thiết bị, nhân sự, người mẫu, đạo cụ, số phiên bản và mức độ hậu kỳ. Báo giá của Unitrux sẽ tách rõ từng phạm vi.',
+  },
+];
+
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
@@ -70,10 +108,11 @@ export const seoPages = {
     type: 'AboutPage',
   },
   '/services': {
-    title: 'Dịch vụ Digital cho doanh nghiệp | Unitrux',
-    description: 'Dịch vụ website, E-commerce, Digital Marketing, tự động hóa và Chatbox AI giúp doanh nghiệp thu hút khách hàng và tăng trưởng.',
-    heading: 'Dịch vụ Digital của Unitrux',
-    summary: 'Các giải pháp số tập trung vào trải nghiệm khách hàng, hiệu quả vận hành và kết quả kinh doanh có thể đo lường.',
+    title: 'Dịch vụ Website, Quảng cáo, AI & Automation | Unitrux',
+    description: 'Khám phá dịch vụ Website, UI/UX, E-commerce, quảng cáo đa nền tảng, sản xuất video, Chatbot AI và Automation của Unitrux.',
+    heading: 'Hệ thống dịch vụ tăng trưởng số của Unitrux',
+    summary: 'Bảy năng lực được kết nối quanh hành trình thu hút nhu cầu, tạo trải nghiệm, bắt đầu hội thoại và tối ưu vận hành.',
+    bullets: ['Quảng cáo đa nền tảng', 'Sản xuất Video và hình ảnh', 'Website và UI/UX', 'E-commerce và marketplace', 'Chatbot AI đa kênh', 'Automation và CRM'],
     type: 'CollectionPage',
   },
   '/chatbox-ai': {
@@ -110,12 +149,13 @@ export const seoPages = {
     serviceName: 'Giải pháp E-commerce',
   },
   '/digital-marketing': {
-    title: 'Dịch vụ Digital Marketing tăng trưởng | Unitrux',
-    description: 'Chiến lược SEO, quảng cáo, nội dung, social media và đo lường giúp doanh nghiệp tăng trưởng bền vững.',
-    heading: 'Digital Marketing hướng đến tăng trưởng',
-    summary: 'SEO, quảng cáo, nội dung và dữ liệu được kết nối quanh cùng một mục tiêu kinh doanh.',
+    title: 'Dịch vụ chạy quảng cáo đa nền tảng | Unitrux',
+    description: 'Unitrux triển khai Google Ads, Facebook Ads, Instagram Ads, TikTok Ads, sản xuất video, landing page và đo lường chuyển đổi cho doanh nghiệp.',
+    heading: 'Quảng cáo đa nền tảng cho doanh nghiệp',
+    summary: 'Google, Meta và TikTok Ads được kết nối với nội dung, video, landing page, chat và đo lường thành một hệ thống thu hút khách hàng.',
+    faqs: marketingFaqs,
     type: 'Service',
-    serviceName: 'Digital Marketing',
+    serviceName: 'Dịch vụ chạy quảng cáo đa nền tảng',
   },
   '/automation': {
     title: 'Tự động hóa quy trình doanh nghiệp | Unitrux',
@@ -126,12 +166,13 @@ export const seoPages = {
     serviceName: 'Tự động hóa doanh nghiệp',
   },
   '/photography-video': {
-    title: 'Chụp ảnh & Video sản phẩm chuyên nghiệp | Unitrux',
-    description: 'Dịch vụ chụp ảnh, quay video và sản xuất nội dung hình ảnh cho website, social media và sàn thương mại điện tử.',
-    heading: 'Chụp ảnh và sản xuất Video',
-    summary: 'Nội dung hình ảnh chất lượng cao giúp sản phẩm dễ hiểu, đáng tin và nổi bật trên các kênh bán hàng.',
+    title: 'Dịch vụ quay Video quảng cáo & chụp ảnh sản phẩm | Unitrux',
+    description: 'Sản xuất video quảng cáo, Reels, TikTok, video sản phẩm và chụp ảnh thương mại cho Facebook, YouTube, website và sàn thương mại điện tử.',
+    heading: 'Sản xuất Video quảng cáo và hình ảnh thương mại',
+    summary: 'Từ concept, quay dựng đến bàn giao đa định dạng cho quảng cáo, mạng xã hội, website và thương mại điện tử.',
+    faqs: productionFaqs,
     type: 'Service',
-    serviceName: 'Chụp ảnh và sản xuất Video',
+    serviceName: 'Sản xuất Video quảng cáo và chụp ảnh sản phẩm',
   },
   '/ui-ux-design': {
     title: 'Thiết kế UI/UX tối ưu chuyển đổi | Unitrux',

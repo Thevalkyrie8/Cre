@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
+import { findStaticNews, mergeStaticNews } from '../data/staticNews';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { trackEvent } from '../analytics/tracking';
 
@@ -78,10 +79,17 @@ const NewsDetailShowcase = () => {
     const load = async () => {
       try {
         let list = [];
-        let result;
-        if (isNewsUuid(routeId)) result = await getNewsById(routeId, { lang: language });
+        let result = findStaticNews(routeId);
+        if (result) {
+          try {
+            list = unwrapNewsList(await getNews({ lang: language }));
+          } catch {
+            list = [];
+          }
+          list = mergeStaticNews(list);
+        } else if (isNewsUuid(routeId)) result = await getNewsById(routeId, { lang: language });
         else {
-          list = unwrapNewsList(await getNews({ lang: language }));
+          list = mergeStaticNews(unwrapNewsList(await getNews({ lang: language })));
           result = list.find((item) => getNewsSlug(item) === routeId);
           if (!result) result = await getNewsById(routeId, { lang: language });
         }
@@ -90,7 +98,7 @@ const NewsDetailShowcase = () => {
         setRawArticle(result);
         const canonical = getNewsSlug(result);
         if (canonical !== routeId) navigate(`/news/${canonical}`, { replace: true });
-        if (!list.length) list = unwrapNewsList(await getNews({ lang: language, category: result.category }));
+        if (!list.length) list = mergeStaticNews(unwrapNewsList(await getNews({ lang: language, category: result.category })));
         if (active) setRelated(list.filter((item) => item.id !== result.id).slice(0, 3).map((item) => normalizeArticle(item, language)));
       } catch {
         if (active) setError(t.error);
@@ -138,6 +146,18 @@ const NewsDetailShowcase = () => {
           <aside className="tw-relative tw-hidden lg:tw-col-span-2 lg:tw-block"><div className="tw-absolute -tw-right-[8rem] -tw-top-44 tw-h-[34rem] tw-w-[15rem] tw-bg-[#0D4537] tw-px-8 tw-pt-40 tw-text-[#F5BC72]"><span className="tw-text-[.6rem] tw-font-black tw-uppercase tw-tracking-[.2em]">Article No.</span><strong className="tw-mt-4 tw-block tw-font-editorial tw-text-5xl tw-font-medium">{article.number}</strong><i className="tw-mt-4 tw-block tw-h-px tw-w-12 tw-bg-[#F5BC72]"/></div><div className="tw-absolute -tw-left-14 tw-top-0 tw-h-72 tw-w-72 tw-opacity-80"><BotanicalDrawing/></div></aside>
         </div>
       </header>
+
+      <figure className="tw-mx-auto tw-mb-14 tw-mt-0 tw-w-[min(76rem,calc(100%_-_2rem))] tw-overflow-hidden tw-rounded-2xl tw-bg-[#0B2035]" data-reveal>
+        <img
+          src={article.image}
+          alt={article.title}
+          width="1600"
+          height="900"
+          fetchPriority="high"
+          decoding="async"
+          className="tw-block tw-h-auto tw-w-full"
+        />
+      </figure>
 
       <section className="tw-relative tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-8 tw-pb-28 lg:tw-grid-cols-12">
         <aside className="editor-note-paper tw-relative tw-z-20 tw-self-start tw-bg-[#FEF7EA] tw-p-7 tw-shadow-[0_30px_65px_-45px_rgba(13,69,55,.6)] lg:tw-col-span-3" data-reveal>

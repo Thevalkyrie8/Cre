@@ -1,0 +1,135 @@
+.service-editorial-detail--chatbox {
+  --chatbox-page-bg: #f8fafc;
+  --chatbox-surface: #ffffff;
+  --chatbox-ink: #0f172a;
+  --chatbox-muted: #475569;
+  --chatbox-border: #e2e8f0;
+  --chatbox-accent: #0284c7;
+  --chatbox-accent-ink: #ffffff;
+  --chatbox-dark: #0f172a;
+  --chatbox-dark-copy: #cbd5e1;
+  --chatbox-highlight: #fbbf24;
+
+  background-color: var(--chatbox-page-bg) !important;
+  color: var(--chatbox-ink) !important;
+  color-scheme: light;
+}
+
+body.dark-mode .service-editorial-detail--chatbox {
+  --chatbox-page-bg: #0f172a;
+  --chatbox-surface: #1e293b;
+  --chatbox-ink: #ffffff;
+  --chatbox-muted: #94a3b8;
+  --chatbox-border: #334155;
+  --chatbox-accent: #22d3ee;
+  --chatbox-accent-ink: #0f172a;
+  --chatbox-dark: #080f1e;
+  --chatbox-dark-copy: #94a3b8;
+
+  color-scheme: dark;
+}
+
+.service-editorial-detail--chatbox > section {
+  background-color: var(--chatbox-page-bg) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-bg-[#FEF7EA]"],
+  [class*="tw-bg-[#E7EFE9]"],
+  [class*="tw-bg-[#E8F0EB]"],
+  [class*="tw-bg-[#F2EDE5]"]
+) {
+  background-color: var(--chatbox-surface) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-border-[#0D5E4D]"],
+  [class*="tw-border-[#FFF9F1]"]
+) {
+  border-color: var(--chatbox-border) !important;
+}
+
+.service-editorial-detail--chatbox :is(h1, h2, h3, strong, summary, dt, dd) {
+  color: var(--chatbox-ink) !important;
+}
+
+.service-editorial-detail--chatbox :is(p, li) {
+  color: var(--chatbox-muted) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-text-[#0D5E4D]"],
+  [class*="tw-text-[#263B35]"]
+) {
+  color: var(--chatbox-ink) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-text-[#315248]"],
+  [class*="tw-text-[#49635A]"],
+  [class*="tw-text-[#50675F]"],
+  [class*="tw-text-[#61756F]"]
+) {
+  color: var(--chatbox-muted) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-text-[#E68C23]"],
+  [class*="tw-text-[#C5751E]"]
+) {
+  color: var(--chatbox-accent) !important;
+}
+
+.service-editorial-detail--chatbox [class*="tw-bg-[#E68C23]"] {
+  background-color: var(--chatbox-accent) !important;
+  color: var(--chatbox-accent-ink) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface {
+  background-color: var(--chatbox-dark) !important;
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(h1, h2, h3, strong, summary, dt, dd) {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(p, li) {
+  color: var(--chatbox-dark-copy) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(
+  [class*="tw-text-[#F5BC72]"],
+  [class*="tw-text-[#F6BD73]"],
+  [class*="tw-text-[#E68C23]"]
+) {
+  color: var(--chatbox-highlight) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[#FFF9F1]"] {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[#D8E6DF]"] {
+  color: var(--chatbox-dark-copy) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [stroke="#F5BC72"] {
+  stroke: var(--chatbox-highlight);
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [fill="#0D5E4D"] {
+  fill: var(--chatbox-dark);
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface a[href="/packages"] {
+  background-color: transparent !important;
+  border-color: color-mix(in srgb, #ffffff 36%, transparent) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 767px) {
+  .service-editorial-detail--chatbox > section {
+    border-color: var(--chatbox-border) !important;
+  }
+}

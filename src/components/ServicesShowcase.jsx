@@ -1,114 +1,257 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import './ServicesShowcase.css';
 
-const services = [
+const serviceStages = [
   {
     number: '01',
-    type: 'web',
-    title: 'Web Development',
-    titleVi: 'Phát triển Web',
-    description: 'Fast, conversion-minded websites and custom systems shaped around the way your business actually works.',
-    descriptionVi: 'Website tốc độ cao, tối ưu chuyển đổi và hệ thống tùy chỉnh được thiết kế theo đúng cách doanh nghiệp của bạn vận hành.',
-    features: ['Conversion architecture', 'Custom web applications', 'SEO-ready foundations'],
-    featuresVi: ['Kiến trúc tối ưu chuyển đổi', 'Ứng dụng web tùy chỉnh', 'Nền tảng sẵn sàng cho SEO'],
-    to: '/web-development',
-    layout: 'lg:tw-col-span-7 lg:tw-min-h-[27rem]',
-    tone: 'tw-bg-[#FEF7EA]',
+    title: 'Attract the right demand',
+    titleVi: 'Thu hút đúng nhu cầu',
+    description: 'Reach people with a clear message, platform-aware creative, and measurement that follows the journey beyond the click.',
+    descriptionVi: 'Tiếp cận khách hàng bằng thông điệp rõ, nội dung đúng nền tảng và hệ thống đo lường theo sát hành trình sau lượt nhấp.',
+    services: [
+      {
+        to: '/digital-marketing',
+        title: 'Multi-platform advertising',
+        titleVi: 'Quảng cáo đa nền tảng',
+        description: 'Google, Facebook, Instagram, TikTok and YouTube campaigns connected to landing pages, chat and conversion tracking.',
+        descriptionVi: 'Chiến dịch Google, Facebook, Instagram, TikTok và YouTube được kết nối với landing page, chat và đo lường chuyển đổi.',
+        tags: ['Google Ads', 'Meta Ads', 'TikTok Ads', 'Measurement'],
+      },
+      {
+        to: '/photography-video',
+        title: 'Advertising film & photography',
+        titleVi: 'Video quảng cáo & chụp ảnh',
+        description: 'Concept, production and multi-format delivery for social ads, product pages, websites and marketplaces.',
+        descriptionVi: 'Concept, quay chụp, hậu kỳ và bàn giao đa định dạng cho quảng cáo, trang sản phẩm, website và sàn thương mại điện tử.',
+        tags: ['Reels', 'TikTok', 'Product film', 'Photography'],
+      },
+    ],
   },
   {
     number: '02',
-    type: 'commerce',
-    title: 'E-commerce',
-    titleVi: 'Thương mại điện tử',
-    description: 'Connected storefronts, marketplace operations, and product experiences built to reduce friction at every step.',
-    descriptionVi: 'Cửa hàng kết nối, vận hành marketplace và trải nghiệm sản phẩm giúp giảm ma sát trong từng bước mua hàng.',
-    features: ['Store & marketplace setup', 'Listing optimization', 'Order-flow automation'],
-    featuresVi: ['Thiết lập cửa hàng và marketplace', 'Tối ưu listing sản phẩm', 'Tự động hóa luồng đơn hàng'],
-    to: '/ecommerce',
-    layout: 'lg:tw-col-span-5 lg:tw-mt-16 lg:tw-min-h-[23rem]',
-    tone: 'tw-bg-[#E8F0EB]',
+    title: 'Turn attention into action',
+    titleVi: 'Biến sự chú ý thành hành động',
+    description: 'Shape the digital experience people use to understand, trust, compare and buy from the business.',
+    descriptionVi: 'Xây trải nghiệm số giúp khách hàng hiểu, tin tưởng, so sánh và mua hàng thuận lợi hơn.',
+    services: [
+      {
+        to: '/web-development',
+        title: 'Website & web development',
+        titleVi: 'Website & phát triển web',
+        description: 'Fast, SEO-ready websites and custom web systems built around customer intent and operational requirements.',
+        descriptionVi: 'Website tốc độ cao, sẵn sàng cho SEO và hệ thống web tùy chỉnh theo nhu cầu khách hàng lẫn vận hành doanh nghiệp.',
+        tags: ['Corporate website', 'Landing page', 'Web app', 'SEO foundation'],
+      },
+      {
+        to: '/ui-ux-design',
+        title: 'UI/UX design',
+        titleVi: 'Thiết kế UI/UX',
+        description: 'Information architecture, interface systems and responsive journeys that make the next step easy to understand.',
+        descriptionVi: 'Kiến trúc thông tin, hệ thống giao diện và hành trình responsive giúp người dùng luôn hiểu bước tiếp theo.',
+        tags: ['UX research', 'Wireframe', 'UI system', 'Prototype'],
+      },
+      {
+        to: '/ecommerce',
+        title: 'E-commerce & marketplace',
+        titleVi: 'E-commerce & marketplace',
+        description: 'Storefronts, catalog structure, product content and order flows connected into one coherent buying experience.',
+        descriptionVi: 'Storefront, cấu trúc danh mục, nội dung sản phẩm và luồng đơn hàng được kết nối thành một trải nghiệm mua thống nhất.',
+        tags: ['Storefront', 'Product listing', 'Marketplace', 'Order flow'],
+      },
+    ],
   },
   {
     number: '03',
-    type: 'marketing',
-    title: 'Digital Marketing',
-    titleVi: 'Tiếp thị số',
-    description: 'A measurable growth system connecting search, paid media, content, and retention around one commercial goal.',
-    descriptionVi: 'Hệ thống tăng trưởng có thể đo lường, kết nối tìm kiếm, quảng cáo, nội dung và chăm sóc khách hàng quanh một mục tiêu kinh doanh.',
-    features: ['SEO & performance media', 'Content systems', 'Transparent reporting'],
-    featuresVi: ['SEO và quảng cáo hiệu suất', 'Hệ thống nội dung', 'Báo cáo minh bạch'],
-    to: '/digital-marketing',
-    layout: 'lg:tw-col-span-8 lg:tw-col-start-4 lg:-tw-mt-2 lg:tw-min-h-[24rem]',
-    tone: 'tw-bg-[#F6EDDF]',
+    title: 'Respond and operate at scale',
+    titleVi: 'Phản hồi và vận hành ở quy mô lớn hơn',
+    description: 'Connect conversations, lead handling and recurring workflows so the team can respond faster without losing control.',
+    descriptionVi: 'Kết nối hội thoại, xử lý lead và các quy trình lặp lại để đội ngũ phản hồi nhanh hơn mà vẫn kiểm soát được vận hành.',
+    services: [
+      {
+        to: '/chatbox-ai',
+        title: 'Multi-channel AI chatbot',
+        titleVi: 'Chatbot AI đa kênh',
+        description: 'AI-assisted consultation, lead capture and human handover across Facebook Fanpage, Zalo OA and the website.',
+        descriptionVi: 'Tư vấn tự động, thu lead và chuyển nhân viên trên Facebook Fanpage, Zalo OA và website.',
+        tags: ['Facebook', 'Zalo OA', 'Website chat', 'Lead capture'],
+      },
+      {
+        to: '/automation',
+        title: 'Business automation',
+        titleVi: 'Tự động hóa doanh nghiệp',
+        description: 'Connect CRM, marketing, customer care and internal workflows to reduce repetitive work and delayed follow-up.',
+        descriptionVi: 'Kết nối CRM, marketing, chăm sóc khách hàng và quy trình nội bộ để giảm thao tác lặp lại và phản hồi chậm.',
+        tags: ['CRM', 'Lead routing', 'Notifications', 'Operations'],
+      },
+    ],
   },
 ];
 
-const ServiceGlyph = ({ type }) => {
-  const paths = {
-    web: <><rect x="5" y="8" width="38" height="27" rx="4" /><path d="M5 15h38M17 41h14M24 35v6M11 20h10M11 25h17" /></>,
-    commerce: <><path d="M8 13h5l4 20h20l4-14H15" /><path d="M20 13c0-5 3-8 8-8s8 3 8 8" /><circle cx="20" cy="40" r="2" /><circle cx="35" cy="40" r="2" /></>,
-    marketing: <><path d="M7 38h35M12 33V22M22 33V15M32 33V8" /><path d="m9 18 11-8 8 4 13-10M35 4h6v6" /></>,
-  };
+const orderedServiceStages = [
+  serviceStages[2],
+  serviceStages[0],
+  serviceStages[1],
+].map((stage, index) => ({
+  ...stage,
+  number: `0${index + 1}`,
+}));
+
+const ServiceReel = () => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotion.matches) {
+      video.pause();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    }, { threshold: 0.2 });
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <span className="tw-relative tw-grid tw-h-20 tw-w-20 tw-place-items-center tw-rounded-[1.6rem] tw-border tw-border-[#0D5E4D]/20 tw-bg-[#FAF8F5]/75 tw-text-[#0D5E4D] tw-shadow-[5px_6px_0_rgba(13,94,77,.09)] tw-transition tw-duration-500 group-hover:-tw-translate-y-1 group-hover:tw-rotate-[-4deg] group-hover:tw-shadow-[7px_8px_0_rgba(230,140,35,.18)]">
-      <svg viewBox="0 0 48 48" className="tw-h-11 tw-w-11" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[type]}</svg>
-      <i className="tw-absolute -tw-right-1 -tw-top-1 tw-h-3 tw-w-3 tw-rounded-full tw-bg-[#E68C23] tw-ring-4 tw-ring-[#FAF8F5] tw-transition-transform tw-duration-500 group-hover:tw-scale-125" />
-    </span>
+    <video
+      ref={videoRef}
+      className="services-map__video"
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label="Unitrux advertising and production work"
+      data-aria-label-vi="Video quảng cáo và sản xuất nội dung của Unitrux"
+      data-aria-label-en="Unitrux advertising and production work"
+    >
+      <source src="/Ls-ad.mp4" type="video/mp4" />
+    </video>
   );
 };
 
-const ServiceCard = ({ service }) => (
-  <article className={`tw-group tw-relative tw-isolate tw-flex tw-flex-col tw-overflow-hidden tw-rounded-[2rem] tw-border tw-border-[#0D5E4D]/15 tw-p-7 tw-shadow-[0_30px_75px_-52px_rgba(13,94,77,.48)] tw-transition tw-duration-500 hover:-tw-translate-y-2 hover:tw-border-[#E68C23]/50 hover:tw-shadow-[0_38px_85px_-46px_rgba(13,94,77,.42)] sm:tw-p-9 ${service.layout} ${service.tone}`}>
-    <span className="tw-pointer-events-none tw-absolute -tw-right-20 -tw-top-20 -tw-z-10 tw-h-64 tw-w-64 tw-rounded-full tw-border tw-border-[#0D5E4D]/[0.07] tw-transition-transform tw-duration-700 group-hover:tw-scale-125" />
-    <span className="tw-absolute tw-right-8 tw-top-7 tw-font-editorial tw-text-7xl tw-font-semibold tw-leading-none tw-text-[#0D5E4D]/[0.075]">{service.number}</span>
-    <ServiceGlyph type={service.type} />
-    <div className="tw-mt-auto tw-pt-12">
-      <h2 className="tw-m-0 tw-font-editorial tw-text-[clamp(2.5rem,5vw,4.7rem)] tw-font-semibold tw-leading-[0.86] tw-tracking-[-0.055em] tw-text-[#0D5E4D]">
-        <span data-en={service.title} data-vi={service.titleVi}>{service.title}</span>
-      </h2>
-      <p className="tw-mt-6 tw-max-w-[42rem] tw-text-[0.96rem] tw-leading-7 tw-text-[#3F5A51]/80">
-        <span data-en={service.description} data-vi={service.descriptionVi}>{service.description}</span>
-      </p>
-      <ul className="tw-mt-7 tw-grid tw-list-none tw-gap-2 tw-p-0 sm:tw-grid-cols-3">
-        {service.features.map((feature, index) => (
-          <li key={feature} className="tw-flex tw-items-start tw-gap-2 tw-text-xs tw-font-semibold tw-leading-5 tw-text-[#315248]">
-            <span className="tw-mt-1.5 tw-h-1.5 tw-w-1.5 tw-shrink-0 tw-rounded-full tw-bg-[#E68C23]" />
-            <span data-en={feature} data-vi={service.featuresVi[index]}>{feature}</span>
-          </li>
-        ))}
+const ServiceLink = ({ service }) => (
+  <Link className="services-map__link" to={service.to}>
+    <div className="services-map__link-copy">
+      <h3 data-vi={service.titleVi} data-en={service.title}>{service.title}</h3>
+      <p data-vi={service.descriptionVi} data-en={service.description}>{service.description}</p>
+      <ul
+        aria-label="Service capabilities"
+        data-aria-label-vi="Năng lực dịch vụ"
+        data-aria-label-en="Service capabilities"
+      >
+        {service.tags.map((tag) => <li key={tag}>{tag}</li>)}
       </ul>
-      <Link to={service.to} className="tw-mt-8 tw-inline-flex tw-items-center tw-gap-3 tw-rounded-full tw-border tw-border-[#0D5E4D]/30 tw-px-5 tw-py-3 tw-text-sm tw-font-extrabold tw-text-[#0D5E4D] tw-no-underline tw-transition tw-duration-300 hover:tw-border-[#E68C23] hover:tw-bg-[#E68C23] hover:tw-text-[#FFF9F1]">
-        <span data-en="Learn More" data-vi="Tìm hiểu thêm">Learn More</span>
-        <span className="tw-transition-transform tw-duration-300 group-hover:tw-translate-x-1" aria-hidden="true">↗</span>
-      </Link>
     </div>
-  </article>
+    <span className="services-map__arrow" aria-hidden="true">↗</span>
+  </Link>
 );
 
 const ServicesShowcase = () => (
-  <div className="theme-synced-page services-light-page tw-bg-[#FAF8F5] tw-text-[#263B35]">
-    <section className="tw-relative tw-isolate tw-overflow-hidden tw-pb-28 tw-pt-36 sm:tw-pt-44">
-      <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_12%_12%,rgba(13,94,77,.10),transparent_26%),radial-gradient(circle_at_88%_34%,rgba(230,140,35,.10),transparent_24%)]" />
-      <div className="tw-mx-auto tw-w-[min(78rem,calc(100%_-_2rem))]">
-        <header className="tw-mb-16 tw-grid tw-items-end tw-gap-8 md:tw-grid-cols-[.68fr_1.45fr] md:tw-gap-16 lg:tw-mb-24">
-          <div className="tw-flex tw-items-center tw-gap-4 md:tw-pb-3"><span className="tw-h-px tw-w-12 tw-bg-[#E68C23]" /><p className="tw-m-0 tw-text-[0.68rem] tw-font-extrabold tw-uppercase tw-tracking-[0.28em] tw-text-[#0D5E4D]" data-en="Digital solutions" data-vi="Giải pháp số">Digital solutions</p></div>
-          <div>
-            <h1 className="tw-m-0 tw-max-w-[54rem] tw-font-editorial tw-text-[clamp(3.7rem,7vw,7.4rem)] tw-font-semibold tw-leading-[0.82] tw-tracking-[-0.065em] tw-text-[#0D5E4D]" data-en="Built for the way growth really happens." data-vi="Được kiến tạo theo cách tăng trưởng thực sự diễn ra.">Built for the way growth really happens.</h1>
-            <p className="tw-mt-8 tw-max-w-[42rem] tw-text-base tw-leading-8 tw-text-[#49635A]" data-en="Not isolated deliverables. Three connected disciplines that turn attention into useful digital experiences—and useful experiences into measurable business momentum." data-vi="Không phải những hạng mục rời rạc. Ba năng lực kết nối giúp biến sự chú ý thành trải nghiệm số hữu ích, rồi chuyển trải nghiệm thành động lực kinh doanh có thể đo lường.">Not isolated deliverables. Three connected disciplines that turn attention into useful digital experiences—and useful experiences into measurable business momentum.</p>
+  <div className="services-map theme-synced-page">
+    <section className="services-map__hero" aria-labelledby="services-map-title">
+      <div className="services-map__shell services-map__hero-layout">
+        <div className="services-map__hero-copy">
+          <p className="services-map__kicker">The connected growth system</p>
+          <h1
+            id="services-map-title"
+            data-vi="Không phải bảy dịch vụ rời rạc. Là một hệ thống tăng trưởng được kết nối."
+            data-en="Not seven isolated services. One connected growth system."
+          >
+            Not seven isolated services. One connected growth system.
+          </h1>
+          <p
+            className="services-map__lead"
+            data-vi="Unitrux kết nối quảng cáo, nội dung, website, thương mại điện tử, chatbot và automation quanh cùng một hành trình khách hàng. Bạn có thể bắt đầu từ một điểm nghẽn cụ thể rồi mở rộng khi hệ thống sẵn sàng."
+            data-en="Unitrux connects advertising, content, websites, commerce, chat and automation around one customer journey. Start with one clear bottleneck, then expand when the system is ready."
+          >
+            Unitrux connects advertising, content, websites, commerce, chat and automation around one customer journey. Start with one clear bottleneck, then expand when the system is ready.
+          </p>
+          <div className="services-map__actions">
+            <a className="services-map__button services-map__button--primary" href="https://zalo.me/3299309778518905129">
+              <span data-vi="Chia sẻ bài toán" data-en="Share your challenge">Share your challenge</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <Link className="services-map__button services-map__button--secondary" to="/packages">
+              <span data-vi="Xem gói dịch vụ" data-en="View service plans">View service plans</span>
+            </Link>
           </div>
-        </header>
-
-        <div className="tw-grid tw-grid-cols-1 tw-gap-6 lg:tw-grid-cols-12 lg:tw-gap-7">
-          {services.map((service) => <ServiceCard key={service.number} service={service} />)}
         </div>
+
+        <figure className="services-map__media">
+          <ServiceReel />
+          <figcaption>
+            <strong data-vi="Một hành trình, nhiều năng lực" data-en="One journey, multiple capabilities">One journey, multiple capabilities</strong>
+            <span>Attention → Experience → Conversation → Operations</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
-    <section className="tw-border-y tw-border-[#0D5E4D]/10 tw-bg-[#E7EFE9] tw-py-16">
-      <div className="tw-mx-auto tw-grid tw-w-[min(78rem,calc(100%_-_2rem))] tw-gap-9 md:tw-grid-cols-[1fr_2fr] md:tw-items-center">
-        <h2 className="tw-m-0 tw-font-editorial tw-text-4xl tw-font-semibold tw-leading-none tw-text-[#0D5E4D]" data-en="One connected working rhythm." data-vi="Một nhịp làm việc xuyên suốt.">One connected working rhythm.</h2>
-        <ol className="tw-grid tw-list-none tw-grid-cols-2 tw-gap-5 tw-p-0 sm:tw-grid-cols-4">
-          {['Discover', 'Shape', 'Build', 'Improve'].map((step, index) => <li key={step} className="tw-border-l tw-border-[#0D5E4D]/20 tw-pl-4"><span className="tw-block tw-text-[0.65rem] tw-font-bold tw-text-[#E68C23]">0{index + 1}</span><strong className="tw-mt-1 tw-block tw-font-editorial tw-text-2xl tw-font-semibold tw-text-[#0D5E4D]">{step}</strong></li>)}
-        </ol>
+    <section className="services-map__flow" aria-label="Connected service journey">
+      <div className="services-map__shell">
+        <span data-vi="Thu hút nhu cầu" data-en="Attract demand">Attract demand</span>
+        <b aria-hidden="true">→</b>
+        <span data-vi="Tạo trải nghiệm" data-en="Shape the experience">Shape the experience</span>
+        <b aria-hidden="true">→</b>
+        <span data-vi="Bắt đầu hội thoại" data-en="Start conversations">Start conversations</span>
+        <b aria-hidden="true">→</b>
+        <span data-vi="Kết nối vận hành" data-en="Connect operations">Connect operations</span>
+      </div>
+    </section>
+
+    <div className="services-map__stages">
+      {orderedServiceStages.map((stage) => (
+        <section className="services-map__stage" key={stage.number} aria-labelledby={`service-stage-${stage.number}`}>
+          <div className="services-map__shell services-map__stage-layout">
+            <header className="services-map__stage-heading">
+              <span className="services-map__stage-number">{stage.number}</span>
+              <h2 id={`service-stage-${stage.number}`} data-vi={stage.titleVi} data-en={stage.title}>{stage.title}</h2>
+              <p data-vi={stage.descriptionVi} data-en={stage.description}>{stage.description}</p>
+            </header>
+            <div className="services-map__links">
+              {stage.services.map((service) => <ServiceLink service={service} key={service.to} />)}
+            </div>
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <section className="services-map__decision" aria-labelledby="services-decision-title">
+      <div className="services-map__shell services-map__decision-layout">
+        <div>
+          <h2
+            id="services-decision-title"
+            data-vi="Không chắc nên bắt đầu từ dịch vụ nào?"
+            data-en="Not sure which service should come first?"
+          >
+            Not sure which service should come first?
+          </h2>
+          <p
+            data-vi="Bắt đầu bằng điểm nghẽn đang ảnh hưởng trực tiếp đến khách hàng hoặc đội ngũ. Unitrux sẽ giúp xác định bước đầu tiên đủ nhỏ để triển khai và đủ quan trọng để tạo thay đổi."
+            data-en="Start with the bottleneck affecting customers or the team most directly. Unitrux will help define a first step that is small enough to deliver and important enough to matter."
+          >
+            Start with the bottleneck affecting customers or the team most directly. Unitrux will help define a first step that is small enough to deliver and important enough to matter.
+          </p>
+        </div>
+        <div className="services-map__decision-actions">
+          <Link className="services-map__button services-map__button--primary" to="/contact">
+            <span data-vi="Nhận đề xuất phù hợp" data-en="Request a recommendation">Request a recommendation</span>
+          </Link>
+          <a className="services-map__text-link" href="https://zalo.me/3299309778518905129">
+            <span data-vi="Trao đổi nhanh qua Zalo" data-en="Talk on Zalo">Talk on Zalo</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     </section>
   </div>

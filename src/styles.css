@@ -14440,6 +14440,339 @@ html body .floating-buttons .chatbox-suggestions:has(button:nth-child(3))::-webk
   background: #22d3ee !important;
 }
 
+/* Navigation shell — content-led marketing header, not an app toolbar. */
+body .navbar,
+body .navbar.scrolled,
+body .navbar.homepage-navbar {
+  height: 84px !important;
+  min-height: 84px !important;
+  padding: 0 20px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--engine-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(16px) saturate(120%) !important;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .navbar.scrolled,
+body.dark-mode .navbar.homepage-navbar {
+  background: rgba(10, 18, 35, 0.94) !important;
+}
+
+body:not(.dark-mode) .navbar,
+body:not(.dark-mode) .navbar.scrolled,
+body:not(.dark-mode) .navbar.homepage-navbar {
+  background: rgba(255, 255, 255, 0.94) !important;
+}
+
+body .navbar .nav-container {
+  width: min(1280px, 100%) !important;
+  max-width: 1280px !important;
+  min-height: 84px !important;
+  height: 84px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  gap: clamp(1.5rem, 3vw, 3.5rem) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+body .navbar.scrolled .nav-container {
+  border-color: transparent !important;
+}
+
+body .navbar .nav-logo {
+  display: inline-flex !important;
+  min-width: 0 !important;
+  align-items: center !important;
+  padding: 0.25rem 0 !important;
+  border-radius: 8px !important;
+}
+
+body .navbar .logo-unitrux {
+  width: 148px !important;
+  height: 42px !important;
+}
+
+body .navbar .nav-menu,
+body .navbar.homepage-navbar .nav-menu {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: clamp(0.25rem, 0.8vw, 0.7rem) !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+body .navbar .nav-link,
+body .navbar.homepage-navbar .nav-link,
+html[lang="vi"] body .navbar .nav-link {
+  position: relative !important;
+  display: inline-flex !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 44px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.7rem 0.75rem !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-size: clamp(0.82rem, 0.76vw, 0.9rem) !important;
+  font-weight: 620 !important;
+  line-height: 1 !important;
+  letter-spacing: -0.01em !important;
+  overflow: visible !important;
+  transition: color 180ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+body .navbar .nav-link span {
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+body .navbar .nav-link::after {
+  position: absolute !important;
+  right: 0.75rem !important;
+  bottom: 4px !important;
+  left: 0.75rem !important;
+  height: 2px !important;
+  border-radius: 2px !important;
+  background: var(--engine-action) !important;
+  content: "" !important;
+  opacity: 0 !important;
+  transform: scaleX(0.35) !important;
+  transition: opacity 180ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+body.dark-mode .navbar .nav-link:hover {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
+body:not(.dark-mode) .navbar .nav-link:hover {
+  color: #0f172a !important;
+  background: transparent !important;
+}
+
+body .navbar .nav-link.active {
+  color: var(--engine-action) !important;
+  background: transparent !important;
+}
+
+body .navbar .nav-link:hover::after,
+body .navbar .nav-link.active::after {
+  opacity: 1 !important;
+  transform: scaleX(1) !important;
+}
+
+body .navbar .nav-link:active {
+  transform: translateY(1px) !important;
+}
+
+body .navbar .nav-actions {
+  position: relative !important;
+  flex: 0 0 auto !important;
+  gap: 8px !important;
+  padding-left: 0 !important;
+}
+
+body .navbar .nav-actions::before {
+  content: none !important;
+}
+
+body .navbar :is(.theme-toggle, .language-toggle, .nav-toggle) {
+  min-height: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+body .navbar .theme-toggle {
+  width: 40px !important;
+  min-width: 40px !important;
+}
+
+body .navbar .language-toggle {
+  width: 46px !important;
+  min-width: 46px !important;
+}
+
+body .navbar .nav-contact-cta {
+  display: inline-flex !important;
+  min-height: 44px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  margin-left: 6px !important;
+  padding: 0 17px !important;
+  border: 1px solid var(--engine-action) !important;
+  border-radius: 10px !important;
+  color: #06202a !important;
+  background: var(--engine-action) !important;
+  box-shadow: none !important;
+  font-size: 0.84rem !important;
+  font-weight: 750 !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+body .navbar .nav-contact-cta svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  stroke-width: 1.8 !important;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+body .navbar .nav-contact-cta:hover {
+  color: var(--engine-action) !important;
+  background: transparent !important;
+}
+
+body .navbar .nav-contact-cta:hover svg {
+  transform: translateX(3px) !important;
+}
+
+body .navbar .nav-contact-cta:active {
+  transform: translateY(1px) !important;
+}
+
+html[lang] body .navbar .nav-link--mobile-cta {
+  display: none !important;
+}
+
+@media (max-width: 1240px) {
+  body .navbar,
+  body .navbar.scrolled,
+  body .navbar.homepage-navbar {
+    height: 76px !important;
+    min-height: 76px !important;
+    padding: 0 14px !important;
+  }
+
+  body .navbar .nav-container {
+    min-height: 60px !important;
+    height: 76px !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  body .navbar .logo-unitrux {
+    width: 136px !important;
+    height: 40px !important;
+  }
+
+  body .navbar .nav-menu,
+  body .navbar.homepage-navbar .nav-menu {
+    position: fixed !important;
+    top: 76px !important;
+    left: 14px !important;
+    right: 14px !important;
+    display: flex !important;
+    width: auto !important;
+    max-height: calc(100dvh - 88px) !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 3px !important;
+    padding: 10px !important;
+    overflow-y: auto !important;
+    border: 1px solid var(--engine-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 8px rgba(15, 23, 42, 0.12) !important;
+    backdrop-filter: blur(18px) saturate(130%) !important;
+  }
+
+  body.dark-mode .navbar .nav-menu {
+    background: rgba(15, 23, 42, 0.97) !important;
+  }
+
+  body:not(.dark-mode) .navbar .nav-menu {
+    background: rgba(255, 255, 255, 0.98) !important;
+  }
+
+  body .navbar .nav-link,
+  body .navbar.homepage-navbar .nav-link,
+  html[lang="vi"] body .navbar .nav-link {
+    width: 100% !important;
+    min-height: 46px !important;
+    justify-content: flex-start !important;
+    padding: 0.85rem 0.95rem !important;
+    border: 0 !important;
+    font-size: 0.92rem !important;
+  }
+
+  body .navbar .nav-link::after {
+    top: 10px !important;
+    right: auto !important;
+    bottom: 10px !important;
+    left: 0 !important;
+    width: 2px !important;
+    height: auto !important;
+    transform: scaleY(0.35) !important;
+  }
+
+  body .navbar .nav-link:hover::after,
+  body .navbar .nav-link.active::after {
+    transform: scaleY(1) !important;
+  }
+
+  html[lang] body .navbar .nav-link--mobile-cta {
+    display: inline-flex !important;
+    margin-top: 4px !important;
+    color: #06202a !important;
+    background: var(--engine-action) !important;
+    font-weight: 750 !important;
+  }
+
+  body .navbar .nav-link--mobile-cta::after {
+    content: none !important;
+  }
+
+  body .navbar .nav-contact-cta {
+    display: none !important;
+  }
+
+  body .navbar .nav-toggle {
+    display: flex !important;
+    width: 40px !important;
+    min-width: 40px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  body .navbar .logo-unitrux {
+    width: 118px !important;
+    height: 36px !important;
+  }
+
+  body .navbar .nav-actions {
+    gap: 4px !important;
+    padding-left: 9px !important;
+  }
+
+  body .navbar .language-toggle {
+    width: 42px !important;
+    min-width: 42px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body .navbar :is(.nav-link, .nav-contact-cta, .nav-contact-cta svg),
+  body .navbar .nav-link::after {
+    transition: none !important;
+  }
+}
+
 body:not(.dark-mode) .floating-buttons .chatbox-suggestions:has(button:nth-child(3)) {
   scrollbar-color: #0284c7 transparent !important;
 }
@@ -14501,4 +14834,55 @@ html body .engine-main .theme-synced-page.about-engine-page .about-final-cta__pa
 html body .engine-main .theme-synced-page.about-engine-page .about-final-cta__panel .about-engine-button--secondary {
   border-color: #64748b !important;
   color: #ffffff !important;
+}
+
+/* Mobile floating controls must remain discoverable even when browser chrome
+   reduces the visual viewport height below the legacy hide thresholds. */
+@media (max-width: 768px) {
+  html body .floating-buttons {
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    gap: 8px !important;
+  }
+
+  html body .floating-buttons .floating-buttons__utility,
+  html body .floating-buttons .floating-buttons__social {
+    display: flex !important;
+  }
+
+  html body .floating-buttons :is(
+    .floating-buttons__utility,
+    .floating-buttons__social,
+    .floating-buttons__conversion
+  ) {
+    gap: 6px !important;
+  }
+
+  html body .floating-buttons .floating-buttons__conversion {
+    margin-top: 2px !important;
+  }
+}
+
+@media (max-width: 768px) and (max-height: 560px) {
+  html body .floating-buttons {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: calc(8px + env(safe-area-inset-bottom)) !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+  }
+
+  html body .floating-buttons :is(
+    .floating-buttons__utility,
+    .floating-buttons__social,
+    .floating-buttons__conversion
+  ) {
+    flex-direction: row !important;
+    margin-top: 0 !important;
+  }
+
+  html body .floating-buttons {
+    --fab-size: 40px;
+  }
 }

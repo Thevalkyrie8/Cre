@@ -6,8 +6,26 @@ import AnalyticsTracker from './AnalyticsTracker';
 
 const ChatBox = lazy(() => import('./ChatBox'));
 
+const PRIMARY_SERVICE_PATHS = [
+  '/web-development',
+  '/ecommerce',
+  '/digital-marketing',
+  '/chatbox-ai',
+  '/automation',
+  '/photography-video',
+  '/ui-ux-design',
+];
+
 const Layout = ({ children }) => {
   const location = useLocation();
+  const currentPath = location.pathname.replace(/\/+$/, '') || '/';
+  const isActivePath = (path) => (
+    path === '/'
+      ? currentPath === '/'
+      : currentPath === path
+        || currentPath.startsWith(`${path}/`)
+        || (path === '/services' && PRIMARY_SERVICE_PATHS.some((servicePath) => currentPath === servicePath))
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [language, setLanguage] = useState('en');
@@ -55,6 +73,20 @@ const Layout = ({ children }) => {
   // Apply language when language state changes
   useEffect(() => {
     applyLanguage(language);
+
+    const contentRoot = document.querySelector('.engine-main');
+    if (!contentRoot) return undefined;
+
+    const observer = new MutationObserver(() => {
+      applyLanguage(language);
+    });
+
+    observer.observe(contentRoot, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
   }, [language, location.pathname]);
 
   const toggleLanguage = () => {
@@ -71,42 +103,37 @@ const Layout = ({ children }) => {
   };
 
   const applyLanguage = (lang) => {
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
+    if (document.documentElement.lang !== lang) {
       document.documentElement.lang = lang;
+    }
 
-      // Translate page content
-      const elements = document.querySelectorAll('[data-vi], [data-en]');
-      elements.forEach(element => {
-        const viText = element.getAttribute('data-vi');
-        const enText = element.getAttribute('data-en');
-        const defaultLang = element.getAttribute('data-default') || 'en';
-        
-        if (lang === 'vi' && viText) {
-          element.textContent = viText;
-        } else if (lang === 'en' && enText) {
-          element.textContent = enText;
-        } else if (defaultLang === 'vi' && viText) {
-          element.textContent = viText;
-        } else if (defaultLang === 'en' && enText) {
-          element.textContent = enText;
-        } else if (enText) {
-          // Fallback to English if no default is set
-          element.textContent = enText;
+    const elements = document.querySelectorAll('[data-vi], [data-en]');
+    elements.forEach(element => {
+      const viText = element.getAttribute('data-vi');
+      const enText = element.getAttribute('data-en');
+      const defaultLang = element.getAttribute('data-default') || 'en';
+      const nextText = lang === 'vi'
+        ? viText || (defaultLang === 'en' ? enText : viText)
+        : enText || (defaultLang === 'vi' ? viText : enText);
+
+      if (nextText && element.textContent !== nextText) {
+        element.textContent = nextText;
+      }
+    });
+
+    const localizedAttributes = [
+      ['placeholder', 'data-placeholder-vi', 'data-placeholder-en'],
+      ['aria-label', 'data-aria-label-vi', 'data-aria-label-en'],
+    ];
+
+    localizedAttributes.forEach(([attribute, viAttribute, enAttribute]) => {
+      document.querySelectorAll(`[${viAttribute}], [${enAttribute}]`).forEach(element => {
+        const nextValue = element.getAttribute(lang === 'vi' ? viAttribute : enAttribute);
+        if (nextValue && element.getAttribute(attribute) !== nextValue) {
+          element.setAttribute(attribute, nextValue);
         }
       });
-
-      const placeholderElements = document.querySelectorAll('[data-placeholder-vi], [data-placeholder-en]');
-      placeholderElements.forEach(element => {
-        const viPlaceholder = element.getAttribute('data-placeholder-vi');
-        const enPlaceholder = element.getAttribute('data-placeholder-en');
-        const nextPlaceholder = lang === 'vi' ? viPlaceholder : enPlaceholder;
-
-        if (nextPlaceholder) {
-          element.setAttribute('placeholder', nextPlaceholder);
-        }
-      });
-    }, 50);
+    });
   };
 
   const toggleTheme = () => {
@@ -151,32 +178,20 @@ const Layout = ({ children }) => {
           </Link>
           
           <div id="primary-navigation" className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0054\u0072\u0061\u006e\u0067\u0020\u0063\u0068\u1ee7"} data-en="Home" data-default="en">Home</span>
+            <Link to="/services" className={`nav-link ${isActivePath('/services') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Giải pháp" data-en="Solutions" data-default="en">Solutions</span>
             </Link>
-            <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0044\u1ecb\u0063\u0068\u0020\u0076\u1ee5"} data-en="Services" data-default="en">Services</span>
+            <Link to="/packages" className={`nav-link ${isActivePath('/packages') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Gói dịch vụ" data-en="Service plans" data-default="en">Service plans</span>
             </Link>
-            <Link to="/packages" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0047\u00f3\u0069"} data-en="Packages" data-default="en">Packages</span>
+            <Link to="/about" className={`nav-link ${isActivePath('/about') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Về Unitrux" data-en="About Unitrux" data-default="en">About Unitrux</span>
             </Link>
-            <Link to="/about" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0056\u1ec1"} data-en="About" data-default="en">About</span>
+            <Link to="/news" className={`nav-link ${isActivePath('/news') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Góc tăng trưởng" data-en="Growth insights" data-default="en">Growth insights</span>
             </Link>
-            <Link to="/news" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0054\u0069\u006e\u0020\u0074\u1ee9\u0063"} data-en="News" data-default="en">News</span>
-            </Link>
-            <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u004c\u0069\u00ea\u006e\u0020\u0068\u1ec7"} data-en="Contact" data-default="en">Contact</span>
-            </Link>
-            <Link to="/privacy-policy" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0042\u1ea3\u006f\u0020\u006d\u1ead\u0074"} data-en="Privacy" data-default="en">Privacy</span>
-            </Link>
-            <Link to="/terms" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0110\u0069\u1ec1\u0075\u0020\u006b\u0068\u006f\u1ea3\u006e"} data-en="Terms" data-default="en">Terms</span>
-            </Link>
-            <Link to="/delete-data" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0058\u00f3\u0061"} data-en="Delete" data-default="en">Delete</span>
+            <Link to="/contact" className={`nav-link nav-link--mobile-cta ${isActivePath('/contact') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Bắt đầu dự án" data-en="Start a project" data-default="en">Start a project</span>
             </Link>
           </div>
 
@@ -206,6 +221,16 @@ const Layout = ({ children }) => {
             >
               {language === 'vi' ? 'EN' : 'VI'}
             </button>
+            <Link
+              to="/contact"
+              className={`nav-contact-cta ${isActivePath('/contact') ? 'active' : ''}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span data-vi="Bắt đầu dự án" data-en="Start a project" data-default="en">Start a project</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h11M11 6l4 4-4 4" />
+              </svg>
+            </Link>
             <button 
               className="nav-toggle" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}

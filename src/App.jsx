@@ -10,6 +10,7 @@ const ThemedNews = lazy(() => import('./components/ThemedNews'));
 const ThemedNewsDetail = lazy(() => import('./components/ThemedNewsDetail'));
 const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
 const ThemedServiceDetail = lazy(() => import('./components/ThemedServiceDetail'));
+const DigitalMarketingLanding = lazy(() => import('./components/DigitalMarketingLanding'));
 const AutomationService = lazy(() => import('./components/AutomationService'));
 const PhotographyVideoService = lazy(() => import('./components/PhotographyVideoService'));
 const UIUXDesignService = lazy(() => import('./components/UIUXDesignService'));
@@ -91,7 +92,7 @@ function App() {
               <Route path="/services/:id" element={<ServiceDetail />} />
               <Route path="/web-development" element={<ThemedServiceDetail type="web" />} />
               <Route path="/ecommerce" element={<ThemedServiceDetail type="ecommerce" />} />
-              <Route path="/digital-marketing" element={<ThemedServiceDetail type="marketing" />} />
+              <Route path="/digital-marketing" element={<DigitalMarketingLanding />} />
               <Route path="/chatbox-ai" element={<ThemedServiceDetail type="chatbox" />} />
               <Route path="/automation" element={<AutomationService />} />
               <Route path="/photography-video" element={<PhotographyVideoService />} />

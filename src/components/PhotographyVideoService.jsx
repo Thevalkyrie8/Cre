@@ -1,248 +1,371 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import './PhotographyVideoService.css';
 
-const PhotographyVideoService = () => {
+const CHANNELS = ['TikTok & Reels', 'Facebook Ads', 'YouTube', 'Website', 'E-commerce'];
+
+const WORKS = [
+  {
+    src: '/drink-f.mp4',
+    labelVi: 'F&B · Video social',
+    labelEn: 'F&B · Social film',
+    className: 'production-work production-work--wide',
+  },
+  {
+    src: '/fan.mp4',
+    labelVi: 'Sản phẩm · Demo công dụng',
+    labelEn: 'Product · Feature demo',
+    className: 'production-work production-work--portrait',
+  },
+  {
+    src: '/Ls-ad.mp4',
+    labelVi: 'Chiến dịch · Video quảng cáo',
+    labelEn: 'Campaign · Advertising film',
+    className: 'production-work',
+  },
+  {
+    src: '/President.mp4',
+    labelVi: 'Thương hiệu · Câu chuyện doanh nghiệp',
+    labelEn: 'Brand · Corporate story',
+    className: 'production-work',
+  },
+];
+
+const AutoVideo = ({ src, className, labelVi, labelEn, eager = false }) => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotion.matches) {
+      video.pause();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    }, { threshold: 0.2 });
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="service-detail-page">
-      <div className="service-hero">
-        <div className="container">
-          <div className="service-hero-content">
-            <div className="service-badge">
-              <span data-vi="Dịch vụ" data-en="Service">Service</span>
-            </div>
-            <h1 className="service-title" data-vi="Chụp ảnh & Video – Hình ảnh biết bán hàng cho web, mạng xã hội & sàn TMĐT" data-en="Photography & Video – Images that sell for websites, social media & e-commerce marketplaces">
-              Photography & Video – Images that sell for websites, social media & e-commerce marketplaces
-            </h1>
-            <p className="service-subtitle" data-vi="Bạn cần hình ảnh đẹp – đúng – đủ để khách hiểu sản phẩm trong vài giây và muốn mua ngay? Dịch vụ Nhiếp ảnh & Video của Unitrux tạo ra bộ ảnh/video dễ xem – dễ tin – dễ chia sẻ, dùng tốt trên website, Facebook/TikTok/YouTube và các sàn thương mại điện tử." data-en="Do you need visuals that are beautiful – accurate – sufficient so customers understand the product in a few seconds and want to buy immediately? Unitrux's Photography & Video service creates photo/video sets that are easy to view – easy to trust – easy to share, working well on websites, Facebook/TikTok/YouTube, and e-commerce marketplaces.">
-              Do you need visuals that are beautiful – accurate – sufficient so customers understand the product in a few seconds and want to buy immediately? Unitrux's Photography & Video service creates photo/video sets that are easy to view – easy to trust – easy to share, working well on websites, Facebook/TikTok/YouTube, and e-commerce marketplaces.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Why visuals matter */}
-      <section className="why-choose-section">
-        <div className="container">
-          <h2 data-vi="Vì sao hình ảnh quyết định chuyển đổi?" data-en="Why do visuals determine conversion?">Why do visuals determine conversion?</h2>
-          <div className="reasons-grid">
-            <div className="reason-card">
-              <div className="reason-icon">👁️</div>
-              <h3 data-vi="Khách tin vào mắt" data-en="Customers trust their eyes">Customers trust their eyes</h3>
-              <p data-vi="ảnh rõ ràng, video ngắn gọn giúp hiểu nhanh giá trị sản phẩm." data-en="clear photos and concise videos help them quickly grasp the product's value.">
-                clear photos and concise videos help them quickly grasp the product's value.
-              </p>
-            </div>
-            <div className="reason-card">
-              <div className="reason-icon">🛒</div>
-              <h3 data-vi="Trang sản phẩm thuyết phục" data-en="Persuasive product pages">Persuasive product pages</h3>
-              <p data-vi="khi ảnh, mô tả, đánh giá nói cùng đồng bộ, tỷ lệ thêm vào giỏ tăng lên rõ rệt." data-en="when photos, descriptions, and reviews 'speak the same language,' the add-to-cart rate rises significantly.">
-                when photos, descriptions, and reviews "speak the same language," the add-to-cart rate rises significantly.
-              </p>
-            </div>
-            <div className="reason-card">
-              <div className="reason-icon">📈</div>
-              <h3 data-vi="Quảng cáo hiệu quả hơn" data-en="More effective ads">More effective ads</h3>
-              <p data-vi="nội dung đúng, đỡ tốn tiền thử đi thử lại." data-en="the right content reduces wasted budget on repeated trial and error.">
-                the right content reduces wasted budget on repeated trial and error.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What Unitrux does */}
-      <section className="what-we-do-section">
-        <div className="container">
-          <h2 data-vi="Unitrux làm gì cho bạn?" data-en="What does Unitrux do for you?">What does Unitrux do for you?</h2>
-          <div className="services-list">
-            <div className="service-item">
-              <h3 data-vi="Chụp ảnh sản phẩm" data-en="Product photography">Product photography</h3>
-              <p data-vi="ảnh rõ từng chi tiết và ảnh bối cảnh gần gũi đời thường." data-en="'clear down to every detail' and lifestyle/context shots close to everyday use.">
-                "clear down to every detail" and lifestyle/context shots close to everyday use.
-              </p>
-            </div>
-            <div className="service-item">
-              <h3 data-vi="Video doanh nghiệp & sản phẩm" data-en="Corporate & product videos">Corporate & product videos</h3>
-              <p data-vi="video 15–30 giây (giới thiệu, cách dùng, review), clip ngắn cho mạng xã hội." data-en="15–30 second videos (introduction, how-to, reviews), short clips for social media.">
-                15–30 second videos (introduction, how-to, reviews), short clips for social media.
-              </p>
-            </div>
-            <div className="service-item">
-              <h3 data-vi="Nội dung truyền thông xã hội" data-en="Social media content">Social media content</h3>
-              <p data-vi="bộ ảnh/đoạn clip sẵn mẫu chữ, dễ đăng, đồng nhất phong cách." data-en="photo/clip sets with ready text templates, easy to post, consistent in style.">
-                photo/clip sets with ready text templates, easy to post, consistent in style.
-              </p>
-            </div>
-            <div className="service-item">
-              <h3 data-vi="Kết xuất 3D" data-en="3D rendering">3D rendering</h3>
-              <p data-vi="mô phỏng sản phẩm 3 chiều khi khó chụp (nhiều màu, nhiều góc), thay đổi mẫu mã nhanh." data-en="simulate products in 3D when they're hard to shoot (many colors, many angles), quickly change variants.">
-                simulate products in 3D when they're hard to shoot (many colors, many angles), quickly change variants.
-              </p>
-            </div>
-          </div>
-          <p className="note" data-vi="Tất cả đều được tối ưu tải nhanh (dung lượng nhẹ), đặt tên file – chú thích ảnh rõ ràng để hỗ trợ SEO khi lên website." data-en="Everything is optimized for fast loading (light file sizes), with clear file names and image captions to support SEO when published on the website.">
-            Everything is optimized for fast loading (light file sizes), with clear file names and image captions to support SEO when published on the website.
-          </p>
-        </div>
-      </section>
-
-      {/* 6-step process */}
-      <section className="process-section">
-        <div className="container">
-          <h2 data-vi="Quy trình 6 bước" data-en="6-step process">6-step process</h2>
-          <div className="process-steps">
-            <div className="process-step">
-              <div className="step-number">1</div>
-              <div className="process-step-content">
-                <h3 data-vi="Lắng nghe mục tiêu & sản phẩm" data-en="Listen to goals & products">Listen to goals & products</h3>
-                <p data-vi="Unitrux hỏi ngắn gọn: bạn muốn tăng điều gì (lượt nhấp, đơn hàng, nhận diện)? Dùng ảnh/video ở đâu (web, mạng xã hội, sàn)? Sản phẩm có điểm nổi bật nào cần làm rõ?" data-en="Unitrux asks briefly: what do you want to increase (clicks, orders, awareness)? Where will photos/videos be used (web, social, marketplaces)? What standout points of the product need to be highlighted?">
-                  Unitrux asks briefly: what do you want to increase (clicks, orders, awareness)? Where will photos/videos be used (web, social, marketplaces)? What standout points of the product need to be highlighted?
-                </p>
-              </div>
-            </div>
-            <div className="process-step">
-              <div className="step-number">2</div>
-              <div className="process-step-content">
-                <h3 data-vi="Lên ý tưởng & kịch bản" data-en="Concept & scripting">Concept & scripting</h3>
-                <p data-vi="Unitrux gửi moodboard (tham khảo bố cục – ánh sáng – màu), danh sách góc chụp (shot‑list) hoặc kịch bản video ngắn gọn, văn nói dễ hiểu." data-en="Unitrux sends a moodboard (references for composition – lighting – color), a shot list, or a concise, conversational video script.">
-                  Unitrux sends a moodboard (references for composition – lighting – color), a shot list, or a concise, conversational video script.
-                </p>
-              </div>
-            </div>
-            <div className="process-step">
-              <div className="step-number">3</div>
-              <div className="process-step-content">
-                <h3 data-vi="Demo nhanh & chốt lịch" data-en="Quick demo & lock schedule">Quick demo & lock schedule</h3>
-                <p data-vi="Unitrux làm demo 1–2 khung hình/khung cảnh để bạn hình dung; chốt địa điểm (studio hay tại cửa hàng), thời gian, số lượng sản phẩm, người mẫu (nếu cần)." data-en="Unitrux makes a demo of 1–2 frames/scenes for visualization; finalizes location (studio or at your store), time, number of products, and models (if needed).">
-                  Unitrux makes a demo of 1–2 frames/scenes for visualization; finalizes location (studio or at your store), time, number of products, and models (if needed).
-                </p>
-              </div>
-            </div>
-            <div className="process-step">
-              <div className="step-number">4</div>
-              <div className="process-step-content">
-                <h3 data-vi="Chuẩn bị kỹ & báo giá cuối" data-en="Thorough preparation & final quotation">Thorough preparation & final quotation</h3>
-                <p data-vi="Unitrux chuẩn bị ánh sáng, phông nền, đạo cụ; xin phép địa điểm nếu quay ngoài trời; gửi bảng giá minh bạch theo số ảnh/video & phạm vi chỉnh sửa." data-en="Unitrux prepares lighting, backdrops, props; secures location permits if shooting outdoors; sends a transparent price sheet by photo/video count and edit scope.">
-                  Unitrux prepares lighting, backdrops, props; secures location permits if shooting outdoors; sends a transparent price sheet by photo/video count and edit scope.
-                </p>
-              </div>
-            </div>
-            <div className="process-step">
-              <div className="step-number">5</div>
-              <div className="process-step-content">
-                <h3 data-vi="Chụp/quay tại studio hoặc on‑site" data-en="Shoot/film in studio or on-site">Shoot/film in studio or on-site</h3>
-                <p data-vi="Unitrux làm việc gọn gàng, hướng dẫn tạo dáng/bối cảnh, ưu tiên góc nhìn biết bán hàng (rõ điểm mạnh, rõ kích thước, rõ công dụng)." data-en="Unitrux works neatly, guides posing/context, prioritizes 'sales-savvy' angles (clear strengths, clear dimensions, clear functions).">
-                  Unitrux works neatly, guides posing/context, prioritizes "sales-savvy" angles (clear strengths, clear dimensions, clear functions).
-                </p>
-              </div>
-            </div>
-            <div className="process-step">
-              <div className="step-number">6</div>
-              <div className="process-step-content">
-                <h3 data-vi="Hậu kỳ & bàn giao đa định dạng" data-en="Post-production & multi-format delivery">Post-production & multi-format delivery</h3>
-                <p data-vi="Unitrux chỉnh màu, xóa khuyết điểm vừa đủ, lồng chữ ngắn khi cần; xuất bộ ảnh/video dùng cho web – quảng cáo – mạng xã hội – sàn (mỗi kênh một kích thước phù hợp)." data-en="Unitrux color-grades, retouches just enough, overlays short text when needed; exports photo/video sets for web – ads – social – marketplaces (each channel in an appropriate size).">
-                  Unitrux color-grades, retouches just enough, overlays short text when needed; exports photo/video sets for web – ads – social – marketplaces (each channel in an appropriate size).
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Results */}
-      <section className="results-section">
-        <div className="container">
-          <h2 data-vi="Kết quả bạn có thể kỳ vọng" data-en="Results you can expect">Results you can expect</h2>
-          <div className="results-grid">
-            <div className="result-item">
-              <div className="result-icon">📸</div>
-              <h3 data-vi="Ảnh/video rõ – thật – đẹp" data-en="Clear – authentic – attractive photos/videos">Clear – authentic – attractive photos/videos</h3>
-              <p data-vi="khách nhìn là hiểu sản phẩm." data-en="that let customers understand the product at a glance.">
-                that let customers understand the product at a glance.
-              </p>
-            </div>
-            <div className="result-item">
-              <div className="result-icon">🛍️</div>
-              <h3 data-vi="Trang sản phẩm hút mắt hơn" data-en="More eye-catching product pages">More eye-catching product pages</h3>
-              <p data-vi="tỷ lệ thêm vào giỏ và đặt mua tăng." data-en="higher add-to-cart and purchase rates.">
-                higher add-to-cart and purchase rates.
-              </p>
-            </div>
-            <div className="result-item">
-              <div className="result-icon">💰</div>
-              <h3 data-vi="Quảng cáo dễ ra đơn hơn" data-en="Ads that generate orders more easily">Ads that generate orders more easily</h3>
-              <p data-vi="đỡ tốn chi phí thử nghiệm." data-en="with lower experimentation costs.">
-                with lower experimentation costs.
-              </p>
-            </div>
-            <div className="result-item">
-              <div className="result-icon">📱</div>
-              <h3 data-vi="Tài khoản mạng xã hội đều tay" data-en="Consistent content across social accounts">Consistent content across social accounts</h3>
-              <p data-vi="nội dung, giữ phong cách thương hiệu thống nhất." data-en="maintaining a unified brand style.">
-                maintaining a unified brand style.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="faq-section">
-        <div className="container">
-          <h2 data-vi="Câu hỏi thường gặp (FAQ)" data-en="Frequently Asked Questions (FAQ)">Frequently Asked Questions (FAQ)</h2>
-          <div className="faq-list">
-            <div className="faq-item">
-              <h3 data-vi="1) Không có ý tưởng, Unitrux có gợi ý giúp không?" data-en="No ideas—can Unitrux suggest concepts?">No ideas—can Unitrux suggest concepts?</h3>
-              <p data-vi="Có. Bạn chỉ cần cho biết sản phẩm, mục tiêu và ngân sách; Unitrux đề xuất phong cách phù hợp." data-en="Yes. You only need to share the product, goals, and budget; Unitrux will propose a suitable style.">
-                Yes. You only need to share the product, goals, and budget; Unitrux will propose a suitable style.
-              </p>
-            </div>
-            <div className="faq-item">
-              <h3 data-vi="2) Chụp ở đâu?" data-en="Where is the shoot?">Where is the shoot?</h3>
-              <p data-vi="Tại studio của Unitrux hoặc ngay cửa hàng/nhà máy của bạn. Với quay ngoại cảnh, Unitrux hỗ trợ xin phép địa điểm." data-en="At Unitrux's studio or right at your store/factory. For outdoor filming, Unitrux helps obtain location permits.">
-                At Unitrux's studio or right at your store/factory. For outdoor filming, Unitrux helps obtain location permits.
-              </p>
-            </div>
-            <div className="faq-item">
-              <h3 data-vi="3) Sửa mấy lần?" data-en="How many rounds of edits?">How many rounds of edits?</h3>
-              <p data-vi="Thông thường 1–2 vòng chỉnh (màu, bố cục, cắt ghép). Nếu cần thêm, mình báo rõ chi phí phát sinh." data-en="Typically 1–2 rounds (color, composition, cropping). If more are needed, we'll clearly outline additional costs.">
-                Typically 1–2 rounds (color, composition, cropping). If more are needed, we'll clearly outline additional costs.
-              </p>
-            </div>
-            <div className="faq-item">
-              <h3 data-vi="4) Bao lâu thì xong?" data-en="How long does it take?">How long does it take?</h3>
-              <p data-vi="Phổ biến từ 3–7 ngày làm việc tính từ lúc chụp/quay (tùy số lượng & mức độ hậu kỳ)." data-en="Commonly 3–7 business days from the shoot/filming date (depending on volume & post-production level).">
-                Commonly 3–7 business days from the shoot/filming date (depending on volume & post-production level).
-              </p>
-            </div>
-            <div className="faq-item">
-              <h3 data-vi="5) Kết xuất 3D dùng khi nào?" data-en="When is 3D rendering used?">When is 3D rendering used?</h3>
-              <p data-vi="Khi sản phẩm khó chụp, nhiều màu/góc hoặc chưa có sẵn mẫu thật; 3D giúp nhìn như thật và đổi màu/nhãn rất nhanh." data-en="When the product is hard to shoot, has many colors/angles, or you don't yet have a physical sample; 3D makes it look real and allows very fast color/label changes.">
-                When the product is hard to shoot, has many colors/angles, or you don't yet have a physical sample; 3D makes it look real and allows very fast color/label changes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="cta-section">
-        <div className="container">
-          <div className="cta-content">
-            <h2 data-vi="Nhận báo giá & xem demo concept • Đặt lịch chụp/quay • Yêu cầu bộ ảnh tối ưu cho web/sàn" data-en="Get a quote & see demo concepts • Book a photo/video shoot • Request an image set optimized for web/marketplaces">Get a quote & see demo concepts • Book a photo/video shoot • Request an image set optimized for web/marketplaces</h2>
-            <div className="cta-buttons">
-              <Link to="/contact" className="btn-primary">
-                <span data-vi="Nhận báo giá miễn phí" data-en="Get Free Quote">Get Free Quote</span>
-              </Link>
-              <Link to="/contact" className="btn-secondary">
-                <span data-vi="Đặt lịch tư vấn" data-en="Book Consultation">Book Consultation</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <video
+      ref={videoRef}
+      className={className}
+      muted
+      loop
+      playsInline
+      preload={eager ? 'auto' : 'metadata'}
+      aria-label={labelEn}
+      data-aria-label-vi={labelVi}
+      data-aria-label-en={labelEn}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
   );
 };
+
+const PhotographyVideoService = () => (
+  <div className="production-page theme-synced-page">
+    <section className="production-hero" aria-labelledby="production-title">
+      <div className="production-shell production-hero__grid">
+        <div className="production-hero__copy">
+          <Link className="production-back" to="/services">
+            <span aria-hidden="true">←</span>
+            <span data-vi="Tất cả giải pháp" data-en="All solutions">All solutions</span>
+          </Link>
+          <p className="production-kicker">Production × Performance</p>
+          <h1
+            id="production-title"
+            data-vi="Video quảng cáo khiến khách dừng lại—và biết phải làm gì tiếp theo."
+            data-en="Advertising films that stop the scroll—and make the next action clear."
+          >
+            Advertising films that stop the scroll—and make the next action clear.
+          </h1>
+          <p
+            className="production-hero__lead"
+            data-vi="Unitrux xây ý tưởng, quay, dựng và bàn giao video theo đúng hành vi của từng nền tảng. Một buổi sản xuất có thể tạo ra nhiều phiên bản cho Facebook, Instagram, TikTok, YouTube, website và sàn thương mại điện tử."
+            data-en="Unitrux develops the concept, shoots, edits and delivers each film for the behavior of its platform. One production can become multiple versions for Facebook, Instagram, TikTok, YouTube, websites and marketplaces."
+          >
+            Unitrux develops the concept, shoots, edits and delivers each film for the behavior of its platform. One production can become multiple versions for Facebook, Instagram, TikTok, YouTube, websites and marketplaces.
+          </p>
+          <div className="production-actions">
+            <a className="production-button production-button--primary" href="https://zalo.me/3299309778518905129">
+              <span data-vi="Trao đổi concept" data-en="Discuss a concept">Discuss a concept</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <Link className="production-button production-button--secondary" to="/contact">
+              <span data-vi="Nhận đề xuất sản xuất" data-en="Request a production plan">Request a production plan</span>
+            </Link>
+          </div>
+          <p
+            className="production-hero__note"
+            data-vi="Gửi sản phẩm, kênh dự kiến và mục tiêu chiến dịch. Unitrux sẽ đề xuất định dạng và phạm vi phù hợp."
+            data-en="Share your product, intended channels and campaign goal. Unitrux will recommend a suitable format and scope."
+          >
+            Share your product, intended channels and campaign goal. Unitrux will recommend a suitable format and scope.
+          </p>
+        </div>
+
+        <figure className="production-hero__media">
+          <AutoVideo
+            src="/product-commercial-ads.mp4"
+            className="production-hero__video"
+            labelVi="Video quảng cáo sản phẩm do Unitrux sản xuất"
+            labelEn="Product advertising film produced by Unitrux"
+            eager
+          />
+          <figcaption>
+            <span data-vi="Quảng cáo sản phẩm" data-en="Product commercial">Product commercial</span>
+            <span data-vi="Sản xuất bởi Unitrux" data-en="Produced by Unitrux">Produced by Unitrux</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section className="production-channel-strip" aria-label="Delivery channels">
+      <div className="production-shell">
+        {CHANNELS.map((channel) => <span key={channel}>{channel}</span>)}
+      </div>
+    </section>
+
+    <section className="production-showcase" aria-labelledby="production-showcase-title">
+      <div className="production-shell">
+        <div className="production-heading production-heading--split">
+          <h2
+            id="production-showcase-title"
+            data-vi="Đừng hình dung năng lực sản xuất qua lời mô tả. Hãy xem chuyển động."
+            data-en="Do not judge production through a description. Watch the work move."
+          >
+            Do not judge production through a description. Watch the work move.
+          </h2>
+          <p
+            data-vi="Mỗi video được xây từ một vai trò cụ thể: thu hút sự chú ý, giải thích sản phẩm, tạo niềm tin hoặc dẫn khách đến bước chuyển đổi."
+            data-en="Each film is built around a specific job: earn attention, explain the product, build trust or lead viewers toward conversion."
+          >
+            Each film is built around a specific job: earn attention, explain the product, build trust or lead viewers toward conversion.
+          </p>
+        </div>
+
+        <div className="production-work-grid">
+          {WORKS.map((work) => (
+            <figure className={work.className} key={work.src}>
+              <AutoVideo
+                src={work.src}
+                className="production-work__video"
+                labelVi={work.labelVi}
+                labelEn={work.labelEn}
+              />
+              <figcaption data-vi={work.labelVi} data-en={work.labelEn}>{work.labelEn}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="production-services" aria-labelledby="production-services-title">
+      <div className="production-shell production-services__layout">
+        <div className="production-heading production-heading--sticky">
+          <h2
+            id="production-services-title"
+            data-vi="Một đội ngũ sản xuất. Nhiều điểm chạm bán hàng."
+            data-en="One production team. Multiple selling moments."
+          >
+            One production team. Multiple selling moments.
+          </h2>
+          <p
+            data-vi="Không bắt đầu bằng máy quay. Chúng tôi bắt đầu từ người xem, bối cảnh hiển thị và hành động mà nội dung cần tạo ra."
+            data-en="We do not start with the camera. We start with the viewer, the viewing context and the action the content needs to create."
+          >
+            We do not start with the camera. We start with the viewer, the viewing context and the action the content needs to create.
+          </p>
+        </div>
+
+        <div className="production-service-list">
+          <article>
+            <span>01</span>
+            <div>
+              <h3 data-vi="Video quảng cáo ngắn" data-en="Short-form advertising">Short-form advertising</h3>
+              <p
+                data-vi="Hook, kịch bản, quay và dựng cho Reels, TikTok, Stories, Spark Ads và các chiến dịch chuyển đổi."
+                data-en="Hooks, scripts, production and editing for Reels, TikTok, Stories, Spark Ads and conversion campaigns."
+              >
+                Hooks, scripts, production and editing for Reels, TikTok, Stories, Spark Ads and conversion campaigns.
+              </p>
+            </div>
+          </article>
+          <article>
+            <span>02</span>
+            <div>
+              <h3 data-vi="Video sản phẩm & thương mại điện tử" data-en="Product & e-commerce film">Product & e-commerce film</h3>
+              <p
+                data-vi="Trình diễn công dụng, chất liệu, kích thước và trải nghiệm sử dụng cho website, landing page và sàn."
+                data-en="Demonstrate features, materials, dimensions and real use for websites, landing pages and marketplaces."
+              >
+                Demonstrate features, materials, dimensions and real use for websites, landing pages and marketplaces.
+              </p>
+            </div>
+          </article>
+          <article>
+            <span>03</span>
+            <div>
+              <h3 data-vi="Chụp ảnh sản phẩm & chiến dịch" data-en="Product & campaign photography">Product & campaign photography</h3>
+              <p
+                data-vi="Ảnh nền sạch, ảnh bối cảnh, key visual và bộ ảnh đa tỷ lệ để thương hiệu xuất hiện nhất quán trên mọi kênh."
+                data-en="Clean product imagery, lifestyle scenes, key visuals and multi-ratio sets for consistent presence across channels."
+              >
+                Clean product imagery, lifestyle scenes, key visuals and multi-ratio sets for consistent presence across channels.
+              </p>
+            </div>
+          </article>
+          <article>
+            <span>04</span>
+            <div>
+              <h3 data-vi="Video thương hiệu & doanh nghiệp" data-en="Brand & corporate film">Brand & corporate film</h3>
+              <p
+                data-vi="Câu chuyện thương hiệu, phỏng vấn, không gian làm việc và quy trình vận hành được kể rõ, tự nhiên và có chủ đích."
+                data-en="Brand stories, interviews, workspaces and operations told with clarity, natural direction and intent."
+              >
+                Brand stories, interviews, workspaces and operations told with clarity, natural direction and intent.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section className="production-delivery" aria-labelledby="production-delivery-title">
+      <div className="production-shell production-delivery__layout">
+        <div>
+          <p className="production-kicker">One shoot → many formats</p>
+          <h2
+            id="production-delivery-title"
+            data-vi="Quay một lần. Bàn giao đúng tỷ lệ cho từng kênh."
+            data-en="Shoot once. Deliver the right ratio for every channel."
+          >
+            Shoot once. Deliver the right ratio for every channel.
+          </h2>
+        </div>
+        <div className="production-ratios" aria-label="Video aspect ratios">
+          <span className="production-ratio production-ratio--vertical"><strong>9:16</strong><small>Reels · TikTok</small></span>
+          <span className="production-ratio production-ratio--portrait"><strong>4:5</strong><small>Social feed</small></span>
+          <span className="production-ratio production-ratio--square"><strong>1:1</strong><small>Ads · E-commerce</small></span>
+          <span className="production-ratio production-ratio--wide"><strong>16:9</strong><small>YouTube · Website</small></span>
+        </div>
+      </div>
+    </section>
+
+    <section className="production-process" aria-labelledby="production-process-title">
+      <div className="production-shell">
+        <div className="production-heading production-heading--split">
+          <h2
+            id="production-process-title"
+            data-vi="Từ brief đến bộ nội dung sẵn sàng chạy."
+            data-en="From brief to campaign-ready content."
+          >
+            From brief to campaign-ready content.
+          </h2>
+          <p
+            data-vi="Bốn quyết định rõ ràng giúp buổi quay tập trung và giảm sửa đổi không cần thiết."
+            data-en="Four clear decisions keep the shoot focused and reduce unnecessary revision."
+          >
+            Four clear decisions keep the shoot focused and reduce unnecessary revision.
+          </p>
+        </div>
+        <ol className="production-process__steps">
+          <li>
+            <span>01</span>
+            <h3 data-vi="Chốt mục tiêu & kênh" data-en="Define the goal & channel">Define the goal & channel</h3>
+            <p data-vi="Sản phẩm, người xem, thông điệp và hành động cần tạo ra." data-en="Product, audience, message and the action to create.">Product, audience, message and the action to create.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3 data-vi="Concept & shot list" data-en="Concept & shot list">Concept & shot list</h3>
+            <p data-vi="Hướng hình ảnh, kịch bản, bối cảnh, đạo cụ và danh sách cảnh quay." data-en="Visual direction, script, locations, props and a focused shot list.">Visual direction, script, locations, props and a focused shot list.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3 data-vi="Sản xuất" data-en="Production">Production</h3>
+            <p data-vi="Quay tại studio hoặc địa điểm của doanh nghiệp với phạm vi đã thống nhất." data-en="Shoot in studio or on location within the agreed scope.">Shoot in studio or on location within the agreed scope.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <h3 data-vi="Hậu kỳ & bàn giao" data-en="Post-production & delivery">Post-production & delivery</h3>
+            <p data-vi="Dựng, chỉnh màu, âm thanh, phụ đề và xuất phiên bản cho từng nền tảng." data-en="Edit, grade, sound, subtitle and export versions for each platform.">Edit, grade, sound, subtitle and export versions for each platform.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section className="production-faq" aria-labelledby="production-faq-title">
+      <div className="production-shell production-faq__layout">
+        <div>
+          <h2 id="production-faq-title" data-vi="Làm rõ trước ngày quay." data-en="Clear before shoot day.">Clear before shoot day.</h2>
+          <p
+            data-vi="Phạm vi sản xuất được xác định từ đầu để đội ngũ của bạn biết điều gì sẽ được quay, sửa và bàn giao."
+            data-en="Production scope is defined upfront so your team knows what will be shot, revised and delivered."
+          >
+            Production scope is defined upfront so your team knows what will be shot, revised and delivered.
+          </p>
+        </div>
+        <div className="production-faq__list">
+          <details>
+            <summary data-vi="Chưa có ý tưởng thì có bắt đầu được không?" data-en="Can we start without a concept?">Can we start without a concept?</summary>
+            <p data-vi="Có. Bạn chỉ cần chia sẻ sản phẩm, mục tiêu, kênh và khoảng ngân sách. Unitrux sẽ đề xuất hướng nội dung phù hợp để cùng duyệt." data-en="Yes. Share the product, goal, channels and budget range. Unitrux will propose a content direction for review.">Yes. Share the product, goal, channels and budget range. Unitrux will propose a content direction for review.</p>
+          </details>
+          <details>
+            <summary data-vi="Có thể quay tại cửa hàng hoặc nhà máy không?" data-en="Can you shoot at our store or factory?">Can you shoot at our store or factory?</summary>
+            <p data-vi="Có. Sau khi khảo sát điều kiện ánh sáng, âm thanh và vận hành, chúng tôi sẽ đề xuất thiết bị và lịch quay phù hợp." data-en="Yes. After reviewing lighting, sound and operations, we will recommend the right setup and schedule.">Yes. After reviewing lighting, sound and operations, we will recommend the right setup and schedule.</p>
+          </details>
+          <details>
+            <summary data-vi="Một video có dùng cho nhiều nền tảng được không?" data-en="Can one film work across multiple platforms?">Can one film work across multiple platforms?</summary>
+            <p data-vi="Có thể dùng chung nguồn quay, nhưng mỗi nền tảng cần tỷ lệ, nhịp dựng, thời lượng và vùng chữ riêng. Các phiên bản này sẽ được xác định trong phạm vi bàn giao." data-en="The same footage can be used, but each platform needs its own ratio, pace, duration and safe text area. These versions are defined in the delivery scope.">The same footage can be used, but each platform needs its own ratio, pace, duration and safe text area. These versions are defined in the delivery scope.</p>
+          </details>
+          <details>
+            <summary data-vi="Chi phí được tính như thế nào?" data-en="How is production priced?">How is production priced?</summary>
+            <p data-vi="Chi phí phụ thuộc vào số ngày quay, bối cảnh, thiết bị, nhân sự, người mẫu, đạo cụ, số phiên bản và mức độ hậu kỳ. Báo giá sẽ tách rõ từng phạm vi." data-en="Pricing depends on shoot days, locations, equipment, crew, talent, props, version count and post-production. The quotation itemizes the scope.">Pricing depends on shoot days, locations, equipment, crew, talent, props, version count and post-production. The quotation itemizes the scope.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section className="production-final" aria-labelledby="production-final-title">
+      <div className="production-shell production-final__panel">
+        <div>
+          <h2
+            id="production-final-title"
+            data-vi="Bạn có sản phẩm. Unitrux xây câu chuyện để sản phẩm được nhìn thấy đúng cách."
+            data-en="You have the product. Unitrux builds the story that helps people see it clearly."
+          >
+            You have the product. Unitrux builds the story that helps people see it clearly.
+          </h2>
+          <p
+            data-vi="Bắt đầu bằng một brief ngắn: sản phẩm, khách hàng, nền tảng và thời điểm dự kiến."
+            data-en="Start with a short brief: product, audience, platforms and expected timing."
+          >
+            Start with a short brief: product, audience, platforms and expected timing.
+          </p>
+        </div>
+        <div className="production-actions">
+          <a className="production-button production-button--primary" href="https://zalo.me/3299309778518905129">
+            <span data-vi="Gửi brief qua Zalo" data-en="Send a brief on Zalo">Send a brief on Zalo</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <Link className="production-button production-button--secondary" to="/contact">
+            <span data-vi="Đặt lịch trao đổi" data-en="Book a conversation">Book a conversation</span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  </div>
+);
 
 export default PhotographyVideoService;

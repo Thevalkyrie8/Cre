@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { chatboxFaqs } from '../seo/seoConfig';
+import './ServiceEditorialDetail.css';
 
 const serviceDetails = {
   web: {
@@ -121,7 +122,7 @@ const ServiceEditorialDetail = ({ type }) => {
   const service = serviceDetails[type];
 
   return (
-  <div className="theme-synced-page service-editorial-detail tw-bg-[#FAF8F5] tw-text-[#263B35]">
+  <div className={`theme-synced-page service-editorial-detail service-editorial-detail--${type} tw-bg-[#FAF8F5] tw-text-[#263B35]`}>
     <section data-reveal className="tw-relative tw-isolate tw-overflow-hidden tw-pb-20 tw-pt-36 sm:tw-pb-28 sm:tw-pt-44">
       <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_12%_10%,rgba(13,94,77,.11),transparent_27%),radial-gradient(circle_at_90%_35%,rgba(230,140,35,.10),transparent_24%)]" />
       <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-14 lg:tw-grid-cols-[1.45fr_.55fr] lg:tw-items-end">
@@ -202,7 +203,7 @@ const ServiceEditorialDetail = ({ type }) => {
       </div>
     </section>
 
-    <section data-reveal className="tw-relative tw-overflow-hidden tw-bg-[#0D5E4D] tw-py-24 tw-text-[#FFF9F1]">
+    <section data-reveal className="service-editorial-dark-surface tw-relative tw-overflow-hidden tw-bg-[#0D5E4D] tw-py-24 tw-text-[#FFF9F1]">
       <div className="tw-pointer-events-none tw-absolute -tw-right-32 -tw-top-32 tw-h-96 tw-w-96 tw-rounded-full tw-border tw-border-[#FFF9F1]/10" />
       <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.75fr_1.25fr] lg:tw-items-end">
         <div><p className="tw-m-0 tw-text-[.68rem] tw-font-extrabold tw-uppercase tw-tracking-[.25em] tw-text-[#F5BC72]">Case-study model</p><h2 className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-6xl tw-font-semibold tw-leading-[.86] tw-text-[#FFF9F1]">Measure the system, not the decoration.</h2><p className="tw-mb-0 tw-mt-7 tw-max-w-md tw-text-sm tw-leading-7 tw-text-[#D8E6DF]">A representative launch dashboard showing how experience quality, speed, and conversion signals are reviewed together. Indexed values are illustrative—not client performance claims.</p></div>
@@ -269,7 +270,7 @@ const ServiceEditorialDetail = ({ type }) => {
     )}
 
     <section className="tw-pb-28">
-      <div className="tw-mx-auto tw-flex tw-w-[min(76rem,calc(100%_-_2rem))] tw-flex-col tw-items-start tw-justify-between tw-gap-8 tw-rounded-[2rem] tw-bg-[#0D5E4D] tw-p-8 sm:tw-p-12 lg:tw-flex-row lg:tw-items-end">
+      <div className="service-editorial-dark-surface tw-mx-auto tw-flex tw-w-[min(76rem,calc(100%_-_2rem))] tw-flex-col tw-items-start tw-justify-between tw-gap-8 tw-rounded-[2rem] tw-bg-[#0D5E4D] tw-p-8 sm:tw-p-12 lg:tw-flex-row lg:tw-items-end">
         <div><p className="tw-m-0 tw-text-xs tw-font-bold tw-uppercase tw-tracking-[.2em] tw-text-[#F6BD73]">Start a useful conversation</p><h2 className="tw-mb-0 tw-mt-5 tw-max-w-2xl tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-[.9] tw-text-[#FFF9F1]">Bring the challenge. We’ll shape the right path.</h2></div>
         <div className="tw-flex tw-flex-wrap tw-gap-3"><Link to="/contact" data-magnetic data-ripple className="master-magnetic tw-relative tw-overflow-hidden tw-rounded-full tw-bg-[#E68C23] tw-px-6 tw-py-3 tw-text-sm tw-font-bold tw-text-[#FFF9F1] tw-no-underline tw-transition-colors hover:tw-bg-[#FFF9F1] hover:tw-text-[#0D5E4D]">Get consultation</Link><Link to="/packages" className="tw-rounded-full tw-border tw-border-[#FFF9F1]/35 tw-px-6 tw-py-3 tw-text-sm tw-font-bold tw-text-[#FFF9F1] tw-no-underline tw-transition hover:tw-bg-[#FFF9F1]/10">View packages</Link></div>
       </div>
