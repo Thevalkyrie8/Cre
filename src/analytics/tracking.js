@@ -3,15 +3,44 @@ import { onCLS, onINP, onLCP } from 'web-vitals';
 let lastPagePath = '';
 let vitalsStarted = false;
 
-const sendGtag = (...args) => {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
-  window.gtag(...args);
+const eventParameterKeys = [
+  'page_location',
+  'page_path',
+  'page_title',
+  'method',
+  'placement',
+  'service',
+  'form_name',
+  'content_type',
+  'content_id',
+  'content_name',
+  'metric_name',
+  'metric_value',
+  'metric_rating',
+  'metric_id',
+  'navigation_type',
+  'non_interaction',
+  'cta_name',
+  'link_domain',
+  'link_url',
+  'link_text',
+];
+
+const pushToDataLayer = (payload) => {
+  if (typeof window === 'undefined') return;
+  window.dataLayer = window.dataLayer || [];
+  const clearedParameters = Object.fromEntries(eventParameterKeys.map((key) => [key, undefined]));
+  window.dataLayer.push({
+    ...clearedParameters,
+    ...payload,
+  });
 };
 
 export const trackPageView = (path) => {
   if (!path || path === lastPagePath) return;
   lastPagePath = path;
-  sendGtag('event', 'page_view', {
+  pushToDataLayer({
+    event: 'page_view',
     page_location: window.location.href,
     page_path: path,
     page_title: document.title,
@@ -20,7 +49,11 @@ export const trackPageView = (path) => {
 
 export const trackEvent = (name, parameters = {}) => {
   if (!name) return;
-  sendGtag('event', name, parameters);
+  const { event: _ignoredEvent, ...safeParameters } = parameters;
+  pushToDataLayer({
+    event: name,
+    ...safeParameters,
+  });
 };
 
 export const startWebVitalsTracking = () => {

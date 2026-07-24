@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getPackages, getPopularPackages } from '../api/client';
+import { trackEvent } from '../analytics/tracking';
 
 const Packages = () => {
   const [faqOpen, setFaqOpen] = useState(null);
@@ -99,6 +100,7 @@ const Packages = () => {
   };
 
   const scrollToContact = () => {
+    trackEvent('cta_click', { cta_name: 'free_consultation', placement: 'packages' });
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
@@ -106,6 +108,7 @@ const Packages = () => {
   };
 
   const showPhoneNumber = () => {
+    trackEvent('contact_reveal', { method: 'phone', placement: 'packages' });
     setShowPhone(true);
     // Auto hide after 5 seconds
     setTimeout(() => setShowPhone(false), 5000);
@@ -284,7 +287,10 @@ const Packages = () => {
             <div className="phone-number">+84 364 750 316</div>
             <button 
               className="btn btn-primary"
-              onClick={() => window.open('tel:+84364750316')}
+              onClick={() => {
+                trackEvent('contact_click', { method: 'phone', placement: 'packages_modal' });
+                window.open('tel:+84364750316');
+              }}
             >
               <span data-vi="Gọi ngay" data-en="Call Now">Gọi ngay</span>
             </button>
