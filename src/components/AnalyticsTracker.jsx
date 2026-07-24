@@ -49,7 +49,15 @@ const AnalyticsTracker = () => {
   const { pathname, search } = useLocation();
 
   useEffect(() => {
-    trackPageView(`${pathname}${search}`);
+    const sendPageView = () => trackPageView(`${pathname}${search}`);
+
+    if (document.readyState === 'complete') {
+      sendPageView();
+      return undefined;
+    }
+
+    window.addEventListener('load', sendPageView, { once: true });
+    return () => window.removeEventListener('load', sendPageView);
   }, [pathname, search]);
 
   useEffect(() => {
