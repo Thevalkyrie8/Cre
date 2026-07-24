@@ -13,6 +13,19 @@
       })(window,document,'script','dataLayer','GTM-NNLZW545');
     </script>
     <!-- End Google Tag Manager -->
+    <script>
+      window.addEventListener('load', function () {
+        var initialPath = window.location.pathname + window.location.search;
+        if (window.__unitruxLastPagePath === initialPath) return;
+        window.__unitruxLastPagePath = initialPath;
+        window.dataLayer.push({
+          event: 'page_view',
+          page_location: window.location.href,
+          page_path: initialPath,
+          page_title: document.title
+        });
+      });
+    </script>
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />

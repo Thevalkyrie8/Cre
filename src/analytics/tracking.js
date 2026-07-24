@@ -1,6 +1,5 @@
 import { onCLS, onINP, onLCP } from 'web-vitals';
 
-let lastPagePath = '';
 let vitalsStarted = false;
 
 const eventParameterKeys = [
@@ -37,8 +36,8 @@ const pushToDataLayer = (payload) => {
 };
 
 export const trackPageView = (path) => {
-  if (!path || path === lastPagePath) return;
-  lastPagePath = path;
+  if (!path || path === window.__unitruxLastPagePath) return;
+  window.__unitruxLastPagePath = path;
   pushToDataLayer({
     event: 'page_view',
     page_location: window.location.href,
