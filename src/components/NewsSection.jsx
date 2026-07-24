@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getNews } from '../api/client';
+import { getFeaturedNews } from '../api/client';
 import NewsCard from './NewsCard';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, unwrapNewsList } from '../utils/newsSlug';
 
@@ -121,8 +121,9 @@ const NewsSection = ({ compact = false }) => {
       setError('');
 
       try {
-        const payload = await getNews({ lang: language });
+        const payload = await getFeaturedNews({ lang: language });
         const nextArticles = unwrapNewsList(payload)
+          .filter((item) => item?.isFeatured === true || item?.featured === true)
           .slice(0, 4)
           .map((item, index) => normalizeArticle(item, index, language));
 
