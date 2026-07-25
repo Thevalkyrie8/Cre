@@ -1,37 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { productionHeroVideo, productionWorks } from '../data/productionPortfolio';
 import './PhotographyVideoService.css';
 
 const CHANNELS = ['TikTok & Reels', 'Facebook Ads', 'YouTube', 'Website', 'E-commerce'];
 
-const WORKS = [
-  {
-    src: '/drink-f.mp4',
-    labelVi: 'F&B · Video social',
-    labelEn: 'F&B · Social film',
-    className: 'production-work production-work--wide',
-  },
-  {
-    src: '/fan.mp4',
-    labelVi: 'Sản phẩm · Demo công dụng',
-    labelEn: 'Product · Feature demo',
-    className: 'production-work production-work--portrait',
-  },
-  {
-    src: '/Ls-ad.mp4',
-    labelVi: 'Chiến dịch · Video quảng cáo',
-    labelEn: 'Campaign · Advertising film',
-    className: 'production-work',
-  },
-  {
-    src: '/President.mp4',
-    labelVi: 'Thương hiệu · Câu chuyện doanh nghiệp',
-    labelEn: 'Brand · Corporate story',
-    className: 'production-work',
-  },
-];
-
-const AutoVideo = ({ src, className, labelVi, labelEn, eager = false }) => {
+const AutoVideo = ({ src, poster, className, labelVi, labelEn, eager = false }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -60,6 +34,7 @@ const AutoVideo = ({ src, className, labelVi, labelEn, eager = false }) => {
     <video
       ref={videoRef}
       className={className}
+      poster={poster}
       muted
       loop
       playsInline
@@ -117,10 +92,11 @@ const PhotographyVideoService = () => (
 
         <figure className="production-hero__media">
           <AutoVideo
-            src="/product-commercial-ads.mp4"
+            src={productionHeroVideo.src}
+            poster={productionHeroVideo.thumbnail}
             className="production-hero__video"
-            labelVi="Video quảng cáo sản phẩm do Unitrux sản xuất"
-            labelEn="Product advertising film produced by Unitrux"
+            labelVi={productionHeroVideo.titleVi}
+            labelEn={productionHeroVideo.title}
             eager
           />
           <figcaption>
@@ -156,10 +132,11 @@ const PhotographyVideoService = () => (
         </div>
 
         <div className="production-work-grid">
-          {WORKS.map((work) => (
+          {productionWorks.map((work) => (
             <figure className={work.className} key={work.src}>
               <AutoVideo
                 src={work.src}
+                poster={work.thumbnail}
                 className="production-work__video"
                 labelVi={work.labelVi}
                 labelEn={work.labelEn}

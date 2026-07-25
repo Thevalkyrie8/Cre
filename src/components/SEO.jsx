@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { buildArticleStructuredData, buildStructuredData, DEFAULT_OG_IMAGE, getCanonicalUrl, getSeoForPath, SITE_NAME } from '../seo/seoConfig';
+import {
+  buildArticleStructuredData,
+  buildCmsServiceStructuredData,
+  buildStructuredData,
+  DEFAULT_OG_IMAGE,
+  getCanonicalUrl,
+  getSeoForPath,
+  SITE_NAME,
+} from '../seo/seoConfig';
 
 const ensureMeta = (selector, attributes) => {
   let element = document.head.querySelector(selector);
@@ -28,6 +36,7 @@ const SEO = () => {
   useEffect(() => {
     const page = getSeoForPath(pathname);
     const canonical = getCanonicalUrl(pathname);
+    const socialImage = page.ogImage || DEFAULT_OG_IMAGE;
     document.title = page.title;
 
     ensureMeta('meta[name="description"]', { name: 'description', content: page.description });
@@ -39,14 +48,14 @@ const SEO = () => {
     ensureMeta('meta[property="og:description"]', { property: 'og:description', content: page.description });
     ensureMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
     ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
-    ensureMeta('meta[property="og:image"]', { property: 'og:image', content: DEFAULT_OG_IMAGE });
+    ensureMeta('meta[property="og:image"]', { property: 'og:image', content: socialImage });
     ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: SITE_NAME });
     ensureMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'vi_VN' });
     ensureMeta('meta[property="og:locale:alternate"]', { property: 'og:locale:alternate', content: 'en_US' });
     ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: page.title });
     ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: page.description });
-    ensureMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: DEFAULT_OG_IMAGE });
+    ensureMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: socialImage });
 
     let canonicalLink = document.head.querySelector('link[rel="canonical"]');
     if (!canonicalLink) {
@@ -59,6 +68,48 @@ const SEO = () => {
     document.head.querySelectorAll('meta[property^="article:"]').forEach((element) => element.remove());
     updateSchema(buildStructuredData(pathname));
   }, [pathname]);
+
+  useEffect(() => {
+    const applyServiceSeo = (event) => {
+      const { service, pathname: servicePath, language } = event.detail || {};
+      if (!service || !servicePath) return;
+
+      const schema = buildCmsServiceStructuredData({
+        service,
+        pathname: servicePath,
+        language,
+      });
+      const canonical = getCanonicalUrl(servicePath);
+      const webpage = schema['@graph']?.find((item) => item['@id'] === `${canonical}#webpage`);
+      if (!webpage) return;
+
+      document.title = webpage.name;
+      ensureMeta('meta[name="description"]', { name: 'description', content: webpage.description || '' });
+      ensureMeta('meta[name="robots"]', {
+        name: 'robots',
+        content: service.isActive === false
+          ? 'noindex, follow'
+          : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+      });
+      ensureMeta('meta[property="og:title"]', { property: 'og:title', content: webpage.name });
+      ensureMeta('meta[property="og:description"]', { property: 'og:description', content: webpage.description || '' });
+      ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
+      ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: webpage.name });
+      ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: webpage.description || '' });
+
+      let canonicalLink = document.head.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.href = canonical;
+      updateSchema(schema);
+    };
+
+    window.addEventListener('seo:service', applyServiceSeo);
+    return () => window.removeEventListener('seo:service', applyServiceSeo);
+  }, []);
 
   useEffect(() => {
     const applyArticleSeo = (event) => {

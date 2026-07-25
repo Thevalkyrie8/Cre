@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   buildArticleStructuredData,
+  buildCmsServiceStructuredData,
   buildStructuredData,
   DEFAULT_OG_IMAGE,
   getCanonicalUrl,
@@ -14,6 +15,8 @@ import {
   SITE_NAME,
   SITE_URL,
 } from '../src/seo/seoConfig.js';
+import { productionPortfolio } from '../src/data/productionPortfolio.js';
+import { toAbsoluteUrl } from '../src/seo/schemaFactory.js';
 import { getNewsSlug } from '../src/utils/newsSlug.js';
 
 const distDir = join(process.cwd(), 'dist');
@@ -53,6 +56,34 @@ const unwrapNews = (payload) => {
   return candidates.find(Array.isArray) || [];
 };
 
+const unwrapServices = (payload) => {
+  const candidates = [
+    payload,
+    payload?.data,
+    payload?.items,
+    payload?.services,
+    payload?.results,
+    payload?.data?.items,
+    payload?.data?.services,
+  ];
+  return candidates.find(Array.isArray) || [];
+};
+
+const loadServices = async () => {
+  try {
+    const response = await fetch(process.env.SERVICES_API_URL || 'https://be.unitrux.site/api/services', {
+      headers: { Accept: 'application/json' },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return unwrapServices(await response.json())
+      .filter((service) => service?.id && service.isActive !== false);
+  } catch (error) {
+    console.warn(`Services API unavailable; no CMS service pages will be prerendered: ${error.message}`);
+    return [];
+  }
+};
+
 const loadNewsArticles = async () => {
   try {
     const response = await fetch(process.env.NEWS_API_URL || 'https://be.unitrux.site/api/news?lang=vi', {
@@ -84,9 +115,11 @@ const loadNewsArticles = async () => {
 };
 
 const newsArticles = await loadNewsArticles();
+const cmsServices = await loadServices();
 
 const buildSeoBlock = (path, page) => {
   const canonical = getCanonicalUrl(path);
+  const socialImage = page.ogImage || DEFAULT_OG_IMAGE;
   const schema = JSON.stringify(buildStructuredData(path)).replaceAll('<', '\\u003c');
   return `<!-- SEO:START -->
     <title>${escapeHtml(page.title)}</title>
@@ -97,14 +130,14 @@ const buildSeoBlock = (path, page) => {
     <meta property="og:description" content="${escapeHtml(page.description)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${canonical}" />
-    <meta property="og:image" content="${DEFAULT_OG_IMAGE}" />
+    <meta property="og:image" content="${escapeHtml(socialImage)}" />
     <meta property="og:site_name" content="${SITE_NAME}" />
     <meta property="og:locale" content="vi_VN" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(page.title)}" />
     <meta name="twitter:description" content="${escapeHtml(page.description)}" />
-    <meta name="twitter:image" content="${DEFAULT_OG_IMAGE}" />
+    <meta name="twitter:image" content="${escapeHtml(socialImage)}" />
     <script id="seo-static-schema" type="application/ld+json">${schema}</script>
     <style>#root>.seo-static-content{max-width:960px;margin:0 auto;padding:140px 24px 80px;font-family:Arial,sans-serif;line-height:1.7}#root>.seo-static-content h1{font-size:clamp(2rem,6vw,4.5rem);line-height:1.05}#root>.seo-static-content p,#root>.seo-static-content li{font-size:1.05rem}</style>
     <!-- SEO:END -->`;
@@ -149,6 +182,38 @@ const buildArticleSeoBlock = (article) => {
     <!-- SEO:END -->`;
 };
 
+const buildCmsServiceSeoBlock = (service) => {
+  const path = `/services/${service.id}`;
+  const canonical = getCanonicalUrl(path);
+  const name = service.nameVi || service.name;
+  const description = service.descriptionVi || service.description || '';
+  const schema = JSON.stringify(buildCmsServiceStructuredData({
+    service,
+    pathname: path,
+    language: 'vi',
+  })).replaceAll('<', '\\u003c');
+
+  return `<!-- SEO:START -->
+    <title>${escapeHtml(name)} | ${SITE_NAME}</title>
+    <meta name="description" content="${escapeHtml(description)}" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="${canonical}" />
+    <meta property="og:title" content="${escapeHtml(name)}" />
+    <meta property="og:description" content="${escapeHtml(description)}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${canonical}" />
+    <meta property="og:image" content="${DEFAULT_OG_IMAGE}" />
+    <meta property="og:site_name" content="${SITE_NAME}" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapeHtml(name)}" />
+    <meta name="twitter:description" content="${escapeHtml(description)}" />
+    <meta name="twitter:image" content="${DEFAULT_OG_IMAGE}" />
+    <script id="seo-static-schema" type="application/ld+json">${schema}</script>
+    <style>#root>.seo-static-content{max-width:960px;margin:0 auto;padding:140px 24px 80px;font-family:Arial,sans-serif;line-height:1.7}#root>.seo-static-content h1{font-size:clamp(2rem,6vw,4.5rem);line-height:1.05}#root>.seo-static-content p,#root>.seo-static-content li{font-size:1.05rem}</style>
+    <!-- SEO:END -->`;
+};
+
 const buildStaticContent = (page, path) => {
   const bullets = page.bullets?.length
     ? `<ul>${page.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
@@ -175,7 +240,10 @@ const buildStaticContent = (page, path) => {
   const newsLinks = path === '/news' && newsArticles.length
     ? `<section><h2>Bài viết mới</h2><ul>${newsArticles.map((article) => `<li><a href="/news/${encodeURIComponent(article.slug)}/">${escapeHtml(article.title)}</a></li>`).join('')}</ul></section>`
     : '';
-  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${facts}${faqs}${newsLinks}${navigation}</main></div>`;
+  const portfolioVideos = path === productionPortfolio.path
+    ? `<section><h2>Portfolio video quảng cáo</h2>${productionPortfolio.items.map((video) => `<figure><video controls muted playsinline preload="metadata" poster="${escapeHtml(video.thumbnail)}" width="${video.width}" height="${video.height}" aria-label="${escapeHtml(video.titleVi || video.title)}"><source src="${escapeHtml(video.src)}" type="${escapeHtml(video.mimeType)}" /></video><figcaption><strong>${escapeHtml(video.titleVi || video.title)}</strong><p>${escapeHtml(video.descriptionVi || video.description)}</p></figcaption></figure>`).join('')}</section>`
+    : '';
+  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${facts}${faqs}${portfolioVideos}${newsLinks}${navigation}</main></div>`;
 };
 
 for (const [path, page] of Object.entries(seoPages)) {
@@ -202,9 +270,39 @@ for (const article of newsArticles) {
   await writeFile(outputPath, html, 'utf8');
 }
 
+for (const service of cmsServices) {
+  const path = `/services/${service.id}`;
+  const name = service.nameVi || service.name;
+  const description = service.descriptionVi || service.description || '';
+  const features = service.featuresVi || service.features || [];
+  const featureList = Array.isArray(features) && features.length
+    ? `<section><h2>Hạng mục triển khai</h2><ul>${features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join('')}</ul></section>`
+    : '';
+  const content = `<div id="root"><main class="seo-static-content"><article><h1>${escapeHtml(name)}</h1><p>${escapeHtml(description)}</p>${featureList}</article><p><a href="/services/">Xem tất cả dịch vụ</a></p></main></div>`;
+  const html = template
+    .replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/, buildCmsServiceSeoBlock(service))
+    .replace('<div id="root"></div>', content);
+  const outputPath = join(distDir, 'services', String(service.id), 'index.html');
+  await mkdir(dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, html, 'utf8');
+}
+
+const buildVideoSitemapMarkup = (path) => {
+  if (path !== productionPortfolio.path) return '';
+  return productionPortfolio.items.map((video) => `\n    <video:video>
+      <video:thumbnail_loc>${escapeHtml(toAbsoluteUrl(video.thumbnail, SITE_URL))}</video:thumbnail_loc>
+      <video:title>${escapeHtml(video.titleVi || video.title)}</video:title>
+      <video:description>${escapeHtml(video.descriptionVi || video.description)}</video:description>
+      <video:content_loc>${escapeHtml(toAbsoluteUrl(video.src, SITE_URL))}</video:content_loc>
+      <video:duration>${Math.round(video.durationSeconds)}</video:duration>
+      <video:publication_date>${escapeHtml(video.uploadDate)}</video:publication_date>
+    </video:video>`).join('');
+};
+
 const staticSitemapUrls = Object.keys(seoPages).map((path) => {
   const loc = getCanonicalUrl(path);
-  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${SEO_LAST_MODIFIED}</lastmod>\n  </url>`;
+  const videos = buildVideoSitemapMarkup(path);
+  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${SEO_LAST_MODIFIED}</lastmod>${videos}\n  </url>`;
 });
 const articleSitemapUrls = newsArticles.map((article) => {
   const lastModified = article.updatedAt || article.createdAt;
@@ -213,13 +311,21 @@ const articleSitemapUrls = newsArticles.map((article) => {
     : SEO_LAST_MODIFIED;
   return `  <url>\n    <loc>${getCanonicalUrl(`/news/${article.slug}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
 });
-const sitemapUrls = [...staticSitemapUrls, ...articleSitemapUrls].join('\n');
+const serviceSitemapUrls = cmsServices.map((service) => {
+  const lastModified = service.updatedAt || service.createdAt;
+  const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
+    ? new Date(lastModified).toISOString().slice(0, 10)
+    : SEO_LAST_MODIFIED;
+  return `  <url>\n    <loc>${getCanonicalUrl(`/services/${service.id}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+});
+const sitemapUrls = [...staticSitemapUrls, ...articleSitemapUrls, ...serviceSitemapUrls].join('\n');
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 ${sitemapUrls}
 </urlset>
 `;
 
 await writeFile(join(distDir, 'sitemap.xml'), sitemap, 'utf8');
-console.log(`Generated ${Object.keys(seoPages).length} static pages, ${newsArticles.length} news pages, and sitemap.xml for ${SITE_URL}`);
+console.log(`Generated ${Object.keys(seoPages).length} static pages, ${cmsServices.length} CMS service pages, ${newsArticles.length} news pages, and sitemap.xml for ${SITE_URL}`);

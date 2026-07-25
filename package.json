@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/generate-seo-pages.mjs",
-    "build:prod": "vite build && node scripts/generate-seo-pages.mjs",
+    "test:schema": "node scripts/validate-schema.mjs",
+    "build": "npm run test:schema && vite build && node scripts/generate-seo-pages.mjs",
+    "build:prod": "npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "serve": "vite preview --port 4173",

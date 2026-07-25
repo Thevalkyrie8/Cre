@@ -1,7 +1,15 @@
+import { productionHeroVideo, productionPortfolio } from '../data/productionPortfolio.js';
+import {
+  buildPortfolioNodes,
+  buildServiceNode,
+  normalizeCmsService,
+  removeEmptySchemaValues,
+} from './schemaFactory.js';
+
 export const SITE_URL = 'https://unitrux.com';
 export const SITE_NAME = 'Unitrux';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
-export const SEO_LAST_MODIFIED = '2026-07-17';
+export const SEO_LAST_MODIFIED = '2026-07-25';
 
 export const chatboxFaqs = [
   {
@@ -156,6 +164,19 @@ export const seoPages = {
     faqs: marketingFaqs,
     type: 'Service',
     serviceName: 'Dịch vụ chạy quảng cáo đa nền tảng',
+    schema: {
+      serviceType: 'Digital Marketing',
+      categories: ['Quảng cáo đa nền tảng', 'Facebook Ads', 'Instagram Ads', 'Google Ads', 'TikTok Ads', 'Lead Generation'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần quảng cáo, thu lead và phát triển doanh thu online',
+      offerCatalogName: 'Hạng mục Digital Marketing',
+      offerCatalog: [
+        { name: 'Quảng cáo đa nền tảng' },
+        { name: 'Quảng cáo thu lead' },
+        { name: 'Sáng tạo nội dung quảng cáo' },
+        { name: 'Landing page và đo lường chuyển đổi' },
+      ],
+    },
   },
   '/automation': {
     title: 'Tự động hóa quy trình doanh nghiệp | Unitrux',
@@ -168,11 +189,26 @@ export const seoPages = {
   '/photography-video': {
     title: 'Dịch vụ quay Video quảng cáo & chụp ảnh sản phẩm | Unitrux',
     description: 'Sản xuất video quảng cáo, Reels, TikTok, video sản phẩm và chụp ảnh thương mại cho Facebook, YouTube, website và sàn thương mại điện tử.',
+    ogImage: `${SITE_URL}${productionHeroVideo.thumbnail}`,
     heading: 'Sản xuất Video quảng cáo và hình ảnh thương mại',
     summary: 'Từ concept, quay dựng đến bàn giao đa định dạng cho quảng cáo, mạng xã hội, website và thương mại điện tử.',
     faqs: productionFaqs,
     type: 'Service',
     serviceName: 'Sản xuất Video quảng cáo và chụp ảnh sản phẩm',
+    portfolio: productionPortfolio,
+    schema: {
+      serviceType: 'Sản xuất video và chụp ảnh thương mại',
+      categories: ['Video quảng cáo', 'Video sản phẩm', 'Video social', 'Chụp ảnh sản phẩm', 'Corporate film'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần nội dung hình ảnh và video cho quảng cáo, website hoặc E-commerce',
+      offerCatalogName: 'Hạng mục sản xuất hình ảnh và video',
+      offerCatalog: [
+        { name: 'Video quảng cáo ngắn' },
+        { name: 'Video sản phẩm và E-commerce' },
+        { name: 'Chụp ảnh sản phẩm và chiến dịch' },
+        { name: 'Video thương hiệu và doanh nghiệp' },
+      ],
+    },
   },
   '/ui-ux-design': {
     title: 'Thiết kế UI/UX tối ưu chuyển đổi | Unitrux',
@@ -274,14 +310,32 @@ export const getCanonicalUrl = (pathname) => {
   return path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}/`;
 };
 
-export const buildStructuredData = (pathname) => {
-  const page = getSeoForPath(pathname);
-  const canonical = getCanonicalUrl(page.path);
+export const buildStructuredData = (pathname, overrides = {}) => {
+  const basePage = getSeoForPath(pathname);
+  const page = {
+    ...basePage,
+    ...overrides,
+    schema: {
+      ...(basePage.schema || {}),
+      ...(overrides.schema || {}),
+    },
+  };
+  const canonical = overrides.canonical || getCanonicalUrl(page.path || pathname);
+  const organizationId = `${SITE_URL}/#organization`;
   const graph = [
     {
-      '@type': 'Organization',
+      '@type': ['Organization', 'LocalBusiness', 'ProfessionalService'],
       '@id': `${SITE_URL}/#organization`,
       name: SITE_NAME,
+      legalName: 'CÔNG TY TNHH UNITRUX',
+      alternateName: ['UNITRUX COMPANY LIMITED', 'UNITRUX CO.,LTD'],
+      taxID: '0319201007',
+      identifier: {
+        '@type': 'PropertyValue',
+        propertyID: 'Mã số thuế Việt Nam',
+        value: '0319201007',
+      },
+      foundingDate: '2025-10-06',
       url: `${SITE_URL}/`,
       description: 'Unitrux cung cấp giải pháp website, Digital Marketing, E-commerce, nội dung sáng tạo và tự động hóa AI cho doanh nghiệp.',
       logo: {
@@ -292,12 +346,15 @@ export const buildStructuredData = (pathname) => {
       },
       image: DEFAULT_OG_IMAGE,
       email: 'info@unitrux.com',
-      telephone: ['+84 938 695 186', '+84 364 750 316'],
+      telephone: '+84 938 695 186',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Ho Chi Minh City',
+        streetAddress: '84/12 Đường An Phú Đông 03',
+        addressLocality: 'Phường An Phú Đông',
+        addressRegion: 'Thành phố Hồ Chí Minh',
         addressCountry: 'VN',
       },
+      isicV4: '7310',
       areaServed: ['VN', 'Worldwide'],
       knowsAbout: ['Website Development', 'Digital Marketing', 'Search Engine Optimization', 'E-commerce', 'UI/UX Design', 'Marketing Automation', 'AI Chatbot'],
       sameAs: [
@@ -321,6 +378,13 @@ export const buildStructuredData = (pathname) => {
       },
     },
     {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#legal-representative`,
+      name: 'NGUYỄN TRUNG ĐỨC',
+      jobTitle: 'Người đại diện theo pháp luật',
+      worksFor: { '@id': `${SITE_URL}/#organization` },
+    },
+    {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
       name: SITE_NAME,
@@ -335,48 +399,73 @@ export const buildStructuredData = (pathname) => {
       name: page.title,
       description: page.description,
       isPartOf: { '@id': `${SITE_URL}/#website` },
-      about: { '@id': `${SITE_URL}/#organization` },
-      inLanguage: 'vi',
+      about: { '@id': organizationId },
+      inLanguage: page.language || 'vi-VN',
+      mainEntity: page.type === 'Service' ? { '@id': `${canonical}#service` } : undefined,
+      breadcrumb: page.path !== '/' ? { '@id': `${canonical}#breadcrumb` } : undefined,
+      hasPart: page.portfolio ? { '@id': `${canonical}#portfolio` } : undefined,
+      datePublished: page.datePublished,
+      dateModified: page.dateModified,
     },
   ];
 
   if (page.type === 'Service') {
-    graph.push({
-      '@type': 'Service',
-      '@id': `${canonical}#service`,
-      name: page.serviceName,
-      description: page.description,
-      url: canonical,
-      provider: { '@id': `${SITE_URL}/#organization` },
-      areaServed: ['VN', 'Worldwide'],
-      serviceType: page.serviceName,
-    });
+    graph.push(buildServiceNode({
+      page,
+      canonical,
+      providerId: organizationId,
+      language: page.language || 'vi-VN',
+    }));
   }
 
-  if (page.faqs?.length) {
-    graph.push({
-      '@type': 'FAQPage',
-      '@id': `${canonical}#faq`,
-      mainEntity: page.faqs.map(({ question, answer }) => ({
-        '@type': 'Question',
-        name: question,
-        acceptedAnswer: { '@type': 'Answer', text: answer },
-      })),
-    });
+  if (page.portfolio) {
+    graph.push(...buildPortfolioNodes({
+      portfolio: page.portfolio,
+      canonical,
+      siteUrl: SITE_URL,
+      organizationId,
+    }));
   }
 
   if (page.path !== '/') {
+    const itemListElement = [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: `${SITE_URL}/` },
+    ];
+
+    if (page.type === 'Service') {
+      itemListElement.push(
+        { '@type': 'ListItem', position: 2, name: 'Dịch vụ', item: `${SITE_URL}/services/` },
+        { '@type': 'ListItem', position: 3, name: page.heading, item: canonical },
+      );
+    } else {
+      itemListElement.push(
+        { '@type': 'ListItem', position: 2, name: page.heading, item: canonical },
+      );
+    }
+
     graph.push({
       '@type': 'BreadcrumbList',
       '@id': `${canonical}#breadcrumb`,
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: page.heading, item: canonical },
-      ],
+      itemListElement,
     });
   }
 
-  return { '@context': 'https://schema.org', '@graph': graph };
+  return removeEmptySchemaValues({ '@context': 'https://schema.org', '@graph': graph });
+};
+
+export const buildCmsServiceStructuredData = ({
+  service,
+  pathname,
+  language = 'vi',
+}) => {
+  const canonical = getCanonicalUrl(pathname);
+  const page = normalizeCmsService({
+    service,
+    pathname,
+    canonical,
+    language,
+  });
+  return buildStructuredData(pathname, page);
 };
 
 export const buildArticleStructuredData = ({

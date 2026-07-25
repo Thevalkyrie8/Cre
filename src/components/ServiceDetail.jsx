@@ -50,6 +50,17 @@ const ServiceDetail = () => {
     return () => window.removeEventListener('languageChange', handleLanguageChange);
   }, []);
 
+  useEffect(() => {
+    if (!service || !id) return;
+    window.dispatchEvent(new CustomEvent('seo:service', {
+      detail: {
+        service,
+        pathname: `/services/${id}`,
+        language: lang,
+      },
+    }));
+  }, [id, lang, service]);
+
   if (loading) {
     return (
       <div className="service-detail-page">
@@ -126,7 +137,6 @@ const ServiceDetail = () => {
   const title = lang === 'vi' ? (service.nameVi || service.name || 'Untitled') : (service.name || service.nameVi || 'Untitled');
   const description = lang === 'vi' ? (service.descriptionVi || service.description || '') : (service.description || service.descriptionVi || '');
   const features = lang === 'vi' ? (service.featuresVi || service.features || []) : (service.features || service.featuresVi || []);
-  const image = service.icon ? service.icon : '/logo-unitrux.jpg';
   const category = service.category || 'service';
   const date = service.createdAt ? new Date(service.createdAt).toLocaleDateString('vi-VN') : '';
   const author = service.author || 'Unitrux Team';
