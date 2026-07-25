@@ -7,8 +7,8 @@ import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unw
 import { trackEvent } from '../analytics/tracking';
 
 const copy = {
-  en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: 'Unitrux publishes practical content for readers first. See who is responsible, how we edit, and how to request a correction.', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
-  vi: { home: 'Trang chủ', news: 'Tin tức', back: 'Quay lại tin tức', loading: 'Đang chuẩn bị bài viết…', error: 'Không thể tải bài viết này.', note: 'Về bài viết này', noteBody: 'Unitrux xuất bản nội dung thực tiễn cho người đọc trước tiên. Xem người chịu trách nhiệm, cách biên tập và cách yêu cầu sửa lỗi.', standards: 'Tiêu chuẩn biên tập', published: 'Xuất bản', updated: 'Cập nhật', min: 'phút đọc', keep: 'Đọc tiếp', trend: 'Theo dõi xu hướng' }
+  en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: '', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
+  vi: { home: 'Trang chủ', news: 'Tin tức', back: 'Quay lại tin tức', loading: 'Đang chuẩn bị bài viết…', error: 'Không thể tải bài viết này.', note: 'Về bài viết này', noteBody: '', standards: 'Tiêu chuẩn biên tập', published: 'Xuất bản', updated: 'Cập nhật', min: 'phút đọc', keep: 'Đọc tiếp', trend: 'Theo dõi xu hướng' }
 };
 
 const stripMarkdown = (value = '') => String(value).replace(/[#*_>`~[\]()]/g, '').replace(/\s+/g, ' ').trim();
