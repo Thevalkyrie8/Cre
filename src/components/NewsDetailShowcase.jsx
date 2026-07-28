@@ -13,6 +13,15 @@ const copy = {
 
 const stripMarkdown = (value = '') => String(value).replace(/[#*_>`~[\]()]/g, '').replace(/\s+/g, ' ').trim();
 const normalizeUnicode = (value = '') => String(value).normalize('NFC');
+const normalizeTags = (value) => {
+  const tags = Array.isArray(value)
+    ? value
+    : String(value || '').split(',');
+
+  return [...new Set(tags
+    .map((tag) => normalizeUnicode(tag).trim().replace(/^#+/, ''))
+    .filter(Boolean))];
+};
 const readingTime = (value = '') => Math.max(1, Math.ceil(stripMarkdown(value).split(' ').filter(Boolean).length / 200));
 const formatDate = (value, language) => {
   const date = new Date(value || '');
@@ -33,6 +42,7 @@ const normalizeArticle = (article, language) => {
   return {
     ...article, title: title || 'Untitled', content: content || '', excerpt: stripMarkdown(excerpt || ''),
     slug: getNewsSlug(article), category: article.category || 'Business', author: article.author || 'Unitrux Team',
+    tags: normalizeTags(article.tags),
     image: resolveAssetUrl(article.image, '/logo.jpg'), dateLabel: formatDate(article.createdAt || article.updatedAt, language),
     publishedLabel: formatDate(article.createdAt, language), updatedLabel: formatDate(article.updatedAt, language),
     datePublished: toIsoDate(article.createdAt), dateModified: toIsoDate(article.updatedAt || article.createdAt),
@@ -113,6 +123,7 @@ const NewsDetailShowcase = () => {
         image: article.image,
         author: article.author,
         articleSection: article.category,
+        keywords: article.tags,
         datePublished: article.datePublished,
         dateModified: article.dateModified,
         language,
@@ -134,6 +145,21 @@ const NewsDetailShowcase = () => {
             <h1 data-title-reveal className="master-title news-detail-title tw-mb-0 tw-mt-7 tw-max-w-[68rem] tw-text-[#0D4537]">{article.title}</h1>
             {article.excerpt && <p className="tw-mb-0 tw-mt-8 tw-max-w-3xl tw-text-lg tw-leading-8 tw-text-[#536A61]">{article.excerpt}</p>}
             <div className="tw-mt-7 tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-sm tw-text-[#315248]"><span className="tw-grid tw-h-8 tw-w-8 tw-place-items-center tw-rounded-full tw-bg-[#0D5E4D] tw-font-editorial tw-text-[#F5BC72]">U.</span><Link to="/content-standards#editorial-process" className="tw-font-bold tw-text-[#315248] tw-underline-offset-4 hover:tw-underline">{article.author}</Link><span className="tw-h-5 tw-w-px tw-bg-[#0D5E4D]/25"/><span>◷&nbsp; {article.minutes} {t.min}</span></div>
+            {article.tags.length > 0 && (
+              <ul
+                className="tw-mb-0 tw-mt-6 tw-flex tw-list-none tw-flex-wrap tw-gap-2 tw-p-0"
+                aria-label={language === 'vi' ? 'Chủ đề bài viết' : 'Article topics'}
+              >
+                {article.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="tw-rounded-full tw-border tw-border-[#0D5E4D]/25 tw-bg-[#FAF8F5] tw-px-3 tw-py-1.5 tw-text-xs tw-font-semibold tw-text-[#315248]"
+                  >
+                    #{tag}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <aside className="tw-relative tw-hidden lg:tw-col-span-2 lg:tw-block"><div className="tw-absolute -tw-right-[8rem] -tw-top-44 tw-h-[34rem] tw-w-[15rem] tw-bg-[#0D4537] tw-px-8 tw-pt-40 tw-text-[#F5BC72]"><span className="tw-text-[.6rem] tw-font-black tw-uppercase tw-tracking-[.2em]">Article No.</span><strong className="tw-mt-4 tw-block tw-font-editorial tw-text-5xl tw-font-medium">{article.number}</strong><i className="tw-mt-4 tw-block tw-h-px tw-w-12 tw-bg-[#F5BC72]"/></div><div className="tw-absolute -tw-left-14 tw-top-0 tw-h-72 tw-w-72 tw-opacity-80"><BotanicalDrawing/></div></aside>
         </div>

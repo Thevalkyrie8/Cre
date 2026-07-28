@@ -3,6 +3,7 @@ import { access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { productionPortfolio } from '../src/data/productionPortfolio.js';
 import {
+  buildArticleStructuredData,
   buildCmsServiceStructuredData,
   buildStructuredData,
   seoPages,
@@ -94,7 +95,19 @@ assert.equal(cmsOffers[0].priceCurrency, undefined);
 assert.equal(cmsOffers[1].price, '5000000.00');
 assert.equal(cmsOffers[1].priceCurrency, 'VND');
 
+const article = buildArticleStructuredData({
+  path: '/news/schema-tags-test',
+  title: 'Schema tags test',
+  description: 'Kiểm tra tags của bài viết.',
+  articleSection: 'SEO',
+  keywords: ['seo', 'marketing', 'google-ranking'],
+  datePublished: '2026-07-28T00:00:00+07:00',
+});
+assertStructuredData(article, 'article tags');
+const articleNode = findType(article, 'BlogPosting')[0];
+assert.deepEqual(articleNode.keywords, ['seo', 'marketing', 'google-ranking']);
+
 console.log(
   `Schema validation passed: ${Object.keys(seoPages).length} static routes, `
-  + `${videos.length} videos, ${images.length} thumbnails, and 1 CMS service fixture.`,
+  + `${videos.length} videos, ${images.length} thumbnails, 1 CMS service fixture, and 1 article tags fixture.`,
 );

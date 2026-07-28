@@ -477,6 +477,7 @@ export const buildArticleStructuredData = ({
   datePublished,
   dateModified,
   articleSection,
+  keywords,
   language = 'vi',
 }) => {
   const canonical = getCanonicalUrl(path);
@@ -496,6 +497,7 @@ export const buildArticleStructuredData = ({
       : { '@type': 'Person', name: authorName },
     publisher: { '@id': `${SITE_URL}/#organization` },
     inLanguage: language,
+    keywords: Array.isArray(keywords) && keywords.length ? keywords : undefined,
   };
 
   if (datePublished) article.datePublished = datePublished;

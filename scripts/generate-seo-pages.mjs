@@ -35,6 +35,13 @@ const stripMarkdown = (value = '') => String(value)
   .replace(/\s+/g, ' ')
   .trim();
 
+const normalizeTags = (value) => {
+  const tags = Array.isArray(value) ? value : String(value || '').split(',');
+  return [...new Set(tags
+    .map((tag) => String(tag).normalize('NFC').trim().replace(/^#+/, ''))
+    .filter(Boolean))];
+};
+
 const toIsoDate = (value) => {
   const date = new Date(value || '');
   return Number.isNaN(date.getTime()) ? '' : date.toISOString();
@@ -105,6 +112,7 @@ const loadNewsArticles = async () => {
         excerpt,
         author: author || `${SITE_NAME} Team`,
         category: item.category || 'Kiến thức Digital',
+        tags: normalizeTags(item.tags),
         image: resolveAssetUrl(item.image),
       };
     }).filter((item) => item.slug && item.title && item.content);
@@ -155,6 +163,7 @@ const buildArticleSeoBlock = (article) => {
     image: article.image,
     author: article.author,
     articleSection: article.category,
+    keywords: article.tags,
     datePublished,
     dateModified,
   })).replaceAll('<', '\\u003c');
@@ -261,7 +270,10 @@ for (const [path, page] of Object.entries(seoPages)) {
 for (const article of newsArticles) {
   const markdown = renderToStaticMarkup(createElement(ReactMarkdown, { remarkPlugins: [remarkGfm] }, article.content));
   const published = article.createdAt ? `<time datetime="${escapeHtml(article.createdAt)}">${escapeHtml(new Date(article.createdAt).toLocaleDateString('vi-VN'))}</time>` : '';
-  const content = `<div id="root"><main class="seo-static-content"><article><header><p>${escapeHtml(article.category)}</p><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.excerpt)}</p><p>Tác giả: <a href="/content-standards/">${escapeHtml(article.author)}</a>${published ? ` · ${published}` : ''}</p></header><img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}" width="1600" height="900" /><div>${markdown}</div></article><p><a href="/news/">Xem tất cả bài viết</a></p></main></div>`;
+  const tags = article.tags.length
+    ? `<ul aria-label="Chủ đề bài viết">${article.tags.map((tag) => `<li>#${escapeHtml(tag)}</li>`).join('')}</ul>`
+    : '';
+  const content = `<div id="root"><main class="seo-static-content"><article><header><p>${escapeHtml(article.category)}</p><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.excerpt)}</p><p>Tác giả: <a href="/content-standards/">${escapeHtml(article.author)}</a>${published ? ` · ${published}` : ''}</p>${tags}</header><img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}" width="1600" height="900" /><div>${markdown}</div></article><p><a href="/news/">Xem tất cả bài viết</a></p></main></div>`;
   const html = template
     .replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/, buildArticleSeoBlock(article))
     .replace('<div id="root"></div>', content);
