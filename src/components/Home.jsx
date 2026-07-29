@@ -32,18 +32,18 @@ const Home = () => (
     <section id="contact" className="home-contact-stage" aria-labelledby="home-contact-title">
       <div className="home-shell home-contact-stage__layout">
         <div className="home-contact-stage__copy">
-          <p className="home-kicker" data-en="Start with the bottleneck" data-vi="Bắt đầu từ điểm nghẽn">Start with the bottleneck</p>
-          <h2 id="home-contact-title" data-en="Tell us where growth is getting stuck." data-vi="Cho chúng tôi biết tăng trưởng đang mắc ở đâu.">
+          <p className="home-kicker" data-en="Start with the bottleneck" data-vi="Bắt đầu từ nhu cầu của bạn">Start with the bottleneck</p>
+          <h2 id="home-contact-title" data-en="Tell us where growth is getting stuck." data-vi="Cùng tìm ra bước tiếp theo cho hành trình phát triển.">
             Tell us where growth is getting stuck.
           </h2>
-          <p data-en="We will look at the whole customer journey, then recommend the smallest useful system—not a list of disconnected services." data-vi="Chúng tôi sẽ nhìn toàn bộ hành trình khách hàng, sau đó đề xuất hệ thống gọn nhất có thể tạo giá trị — không phải một danh sách dịch vụ rời rạc.">
+          <p data-en="We will look at the whole customer journey, then recommend the smallest useful system—not a list of disconnected services." data-vi="Chia sẻ điều bạn đang muốn cải thiện. Unitrux sẽ cùng bạn nhìn lại hành trình khách hàng và xác định hướng triển khai phù hợp.">
             We will look at the whole customer journey, then recommend the smallest useful system—not a list of disconnected services.
           </p>
           <button type="button" className="home-chat-action" onClick={openChat}>
-            <span data-en="Chat with Unitrux now" data-vi="Chat với Unitrux ngay">Chat with Unitrux now</span>
+            <span data-en="Chat with Unitrux now" data-vi="Trao đổi cùng với Unitrux">Chat with Unitrux now</span>
             <span aria-hidden="true">↗</span>
           </button>
-          <p className="home-contact-stage__note" data-en="Prefer a detailed brief? Use the form and we will respond through your contact email." data-vi="Muốn gửi brief chi tiết? Điền form và chúng tôi sẽ phản hồi qua email liên hệ.">
+          <p className="home-contact-stage__note" data-en="Prefer a detailed brief? Use the form and we will respond through your contact email." data-vi="Bạn muốn gửi brief chi tiết? Hãy điền form và chúng tôi sẽ phản hồi qua email liên hệ.">
             Prefer a detailed brief? Use the form and we will respond through your contact email.
           </p>
         </div>

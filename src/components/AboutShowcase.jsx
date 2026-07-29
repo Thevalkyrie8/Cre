@@ -325,7 +325,7 @@ const AboutShowcase = () => {
         <div className="about-engine-shell about-final-cta__panel" data-about-reveal>
           <div>
             <p className="about-engine-kicker" data-en="The next useful step" data-vi="Bước tiếp theo hữu ích">The next useful step</p>
-            <h2 data-en="Start with the bottleneck." data-vi="Bắt đầu từ điểm nghẽn.">Start with the bottleneck.</h2>
+            <h2 data-en="Start with the bottleneck." data-vi="Bắt đầu từ nhu cầu của bạn.">Start with the bottleneck.</h2>
             <p data-en="Tell us what is slowing growth. We will suggest the smallest useful next step." data-vi="Cho chúng tôi biết điều gì đang cản trở tăng trưởng. Unitrux sẽ đề xuất bước tiếp theo vừa đủ và hữu ích.">
               Tell us what is slowing growth. We will suggest the smallest useful next step.
             </p>

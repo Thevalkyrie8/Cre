@@ -53,10 +53,10 @@ const ContactForm = () => {
       <form className="contact-form" onSubmit={handleSubmit}>
         <header className="contact-form__intro">
           <div>
-            <h3 data-en="A quick project brief" data-vi="Chia sẻ nhanh về dự án">A quick project brief</h3>
+            <h3 data-en="A quick project brief" data-vi="Chia sẻ về dự án của bạn">A quick project brief</h3>
             <p
               data-en="A few details are enough for us to prepare a useful first response."
-              data-vi="Chỉ cần vài thông tin để chúng tôi chuẩn bị phản hồi phù hợp ngay từ đầu."
+              data-vi="Hãy điền một vài thông tin ban đầu để Unitrux chuẩn bị nội dung và trao đổi đúng với nhu cầu của bạn."
             >
               A few details are enough for us to prepare a useful first response.
             </p>
@@ -101,7 +101,7 @@ const ContactForm = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="message" data-vi="Bạn muốn cải thiện điều gì?" data-en="What would you like to improve?">
+          <label htmlFor="message" data-vi="Bạn đang muốn cải thiện điều gì?" data-en="What would you like to improve?">
             What would you like to improve?
           </label>
           <textarea
