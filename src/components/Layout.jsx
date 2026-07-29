@@ -190,12 +190,52 @@ const Layout = ({ children }) => {
             <Link to="/news" className={`nav-link ${isActivePath('/news') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
               <span data-vi="Góc tăng trưởng" data-en="Growth insights" data-default="en">Growth insights</span>
             </Link>
+            <a
+              href="tel:+84938695186"
+              className="nav-link nav-link--mobile-hotline"
+              onClick={() => setIsMenuOpen(false)}
+              aria-label="Gọi hotline Unitrux 0938 695 186"
+            >
+              <span className="nav-hotline-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M7.2 3.8 9.7 7a1.4 1.4 0 0 1-.1 1.8L8.2 10a14.7 14.7 0 0 0 5.8 5.8l1.2-1.4a1.4 1.4 0 0 1 1.8-.1l3.2 2.5a1.4 1.4 0 0 1 .4 1.7l-.7 1.6a2.5 2.5 0 0 1-2.6 1.4A17.2 17.2 0 0 1 2.5 6.7 2.5 2.5 0 0 1 3.9 4l1.6-.7a1.4 1.4 0 0 1 1.7.5Z" />
+                </svg>
+              </span>
+              <span>Hotline: 0938 695 186</span>
+            </a>
             <Link to="/contact" className={`nav-link nav-link--mobile-cta ${isActivePath('/contact') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
               <span data-vi="Bắt đầu dự án" data-en="Start a project" data-default="en">Start a project</span>
             </Link>
           </div>
 
           <div className="nav-actions">
+            <a
+              href="tel:+84938695186"
+              className="nav-hotline"
+              aria-label="Gọi hotline Unitrux 0938 695 186"
+              title="Gọi 0938 695 186"
+            >
+              <span className="nav-hotline-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M7.2 3.8 9.7 7a1.4 1.4 0 0 1-.1 1.8L8.2 10a14.7 14.7 0 0 0 5.8 5.8l1.2-1.4a1.4 1.4 0 0 1 1.8-.1l3.2 2.5a1.4 1.4 0 0 1 .4 1.7l-.7 1.6a2.5 2.5 0 0 1-2.6 1.4A17.2 17.2 0 0 1 2.5 6.7 2.5 2.5 0 0 1 3.9 4l1.6-.7a1.4 1.4 0 0 1 1.7.5Z" />
+                </svg>
+              </span>
+              <span
+                className="nav-hotline-nudge"
+                aria-hidden="true"
+              >
+                <span
+                  className="nav-hotline-nudge__label"
+                  data-vi="Gọi ngay"
+                  data-en="Call now"
+                  data-default="en"
+                >
+                  Call now
+                </span>
+                <strong>0938 695 186</strong>
+                <span className="nav-hotline-nudge__scan" aria-hidden="true" />
+              </span>
+            </a>
             <button
               className="theme-toggle"
               onClick={toggleTheme}
