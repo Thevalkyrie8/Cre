@@ -138,7 +138,7 @@ const AddOnPicker = ({ item, selectedAddOns, onToggle }) => {
           const selected = selectedAddOns.has(key);
           return (
             <button key={addOnEn} type="button" aria-pressed={selected} onClick={() => onToggle(key)}>
-              <span aria-hidden="true">{selected ? '✓' : '+'}</span>
+              <span className="packages-hub__addon-icon" aria-hidden="true">{selected ? '✓' : '+'}</span>
               <Bilingual en={addOnEn} vi={addOnVi} />
             </button>
           );
