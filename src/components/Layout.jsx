@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useMasterInteractions from '../hooks/useMasterInteractions';
 import SEO from './SEO';
@@ -30,7 +30,36 @@ const Layout = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [language, setLanguage] = useState('en');
   const [theme, setTheme] = useState('dark');
+  const navigationRef = useRef(null);
   useMasterInteractions(`${location.pathname}:${theme}`);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const closeMenuOnEscape = (event) => {
+      if (event.key === 'Escape') setIsMenuOpen(false);
+    };
+    const closeMenuOutside = (event) => {
+      if (navigationRef.current && !navigationRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    const closeMenuOnDesktop = () => {
+      if (window.innerWidth > 1240) setIsMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', closeMenuOnEscape);
+    document.addEventListener('pointerdown', closeMenuOutside);
+    window.addEventListener('resize', closeMenuOnDesktop);
+
+    return () => {
+      document.removeEventListener('keydown', closeMenuOnEscape);
+      document.removeEventListener('pointerdown', closeMenuOutside);
+      window.removeEventListener('resize', closeMenuOnDesktop);
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -171,7 +200,7 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Navigation */}
-      <nav className={`navbar ${location.pathname === '/' ? 'homepage-navbar' : ''} ${isScrolled ? 'scrolled' : ''}`}>
+      <nav ref={navigationRef} className={`navbar ${location.pathname === '/' ? 'homepage-navbar' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <Link to="/" className="nav-logo" aria-label="Unitrux - Trang chủ">
             <div className="logo-unitrux"></div>
@@ -272,8 +301,8 @@ const Layout = ({ children }) => {
               </svg>
             </Link>
             <button 
-              className="nav-toggle" 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`nav-toggle ${isMenuOpen ? 'active' : ''}`}
+              onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
               aria-label={isMenuOpen ? 'Đóng menu điều hướng' : 'Mở menu điều hướng'}
               aria-expanded={isMenuOpen}
               aria-controls="primary-navigation"

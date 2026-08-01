@@ -15071,9 +15071,11 @@ html[lang] body .navbar .nav-link--mobile-hotline {
   body .navbar,
   body .navbar.scrolled,
   body .navbar.homepage-navbar {
+    width: auto !important;
     height: 76px !important;
     min-height: 76px !important;
     padding: 0 14px !important;
+    box-sizing: border-box !important;
   }
 
   body .navbar .nav-container {
@@ -15096,17 +15098,36 @@ html[lang] body .navbar .nav-link--mobile-hotline {
     right: 14px !important;
     display: flex !important;
     width: auto !important;
-    max-height: calc(100dvh - 88px) !important;
+    max-height: calc(100dvh - 88px - env(safe-area-inset-bottom, 0px)) !important;
     flex-direction: column !important;
     align-items: stretch !important;
     justify-content: flex-start !important;
     gap: 3px !important;
     padding: 10px !important;
     overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    scrollbar-gutter: stable !important;
     border: 1px solid var(--engine-border) !important;
     border-radius: 12px !important;
     box-shadow: 0 8px 8px rgba(15, 23, 42, 0.12) !important;
     backdrop-filter: blur(18px) saturate(130%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-12px) !important;
+    transition:
+      opacity 180ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 220ms !important;
+  }
+
+  body .navbar .nav-menu.active,
+  body .navbar.homepage-navbar .nav-menu.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+    transition-delay: 0s !important;
   }
 
   body.dark-mode .navbar .nav-menu {
@@ -15169,9 +15190,10 @@ html[lang] body .navbar .nav-link--mobile-hotline {
   }
 
   body .navbar .nav-hotline {
-    width: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
     justify-content: center !important;
     padding: 0 !important;
   }
@@ -15186,8 +15208,29 @@ html[lang] body .navbar .nav-link--mobile-hotline {
 
   body .navbar .nav-toggle {
     display: flex !important;
-    width: 40px !important;
-    min-width: 40px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  body .navbar :is(.theme-toggle, .language-toggle) {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+
+  body .navbar .nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg) !important;
+  }
+
+  body .navbar .nav-toggle.active span:nth-child(2) {
+    opacity: 0 !important;
+  }
+
+  body .navbar .nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg) !important;
   }
 }
 
@@ -15203,8 +15246,8 @@ html[lang] body .navbar .nav-link--mobile-hotline {
   }
 
   body .navbar .language-toggle {
-    width: 42px !important;
-    min-width: 42px !important;
+    width: 44px !important;
+    min-width: 44px !important;
   }
 
   body .navbar .nav-hotline-nudge {
@@ -15240,6 +15283,23 @@ html[lang] body .navbar .nav-link--mobile-hotline {
 }
 
 @media (max-width: 360px) {
+  body .navbar,
+  body .navbar.scrolled,
+  body .navbar.homepage-navbar {
+    padding-inline: 8px !important;
+  }
+
+  body .navbar .logo-unitrux {
+    width: 100px !important;
+    height: 32px !important;
+  }
+
+  body .navbar .nav-menu,
+  body .navbar.homepage-navbar .nav-menu {
+    right: 8px !important;
+    left: 8px !important;
+  }
+
   body .navbar .nav-hotline {
     display: none !important;
   }
@@ -15273,6 +15333,11 @@ html[lang] body .navbar .nav-link--mobile-hotline {
   body .navbar .nav-hotline:focus-visible .nav-hotline-nudge {
     opacity: 1 !important;
     clip-path: inset(0 0 0 0 round 999px) !important;
+  }
+
+  body .navbar .nav-menu,
+  body .navbar .nav-toggle span {
+    transition: none !important;
   }
 }
 
