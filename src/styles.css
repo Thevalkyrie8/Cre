@@ -12638,26 +12638,6 @@ body:not(.dark-mode) .home--flow {
   position: relative;
 }
 
-.partner-marquee__stage::before,
-.partner-marquee__stage::after {
-  position: absolute;
-  top: 50%;
-  z-index: 1;
-  width: clamp(1.5rem, 5vw, 5rem);
-  height: 1px;
-  background: var(--home-cyan);
-  content: '';
-  pointer-events: none;
-}
-
-.partner-marquee__stage::before {
-  left: 0;
-}
-
-.partner-marquee__stage::after {
-  right: 0;
-}
-
 .partner-marquee__viewport {
   min-width: 0;
   overflow: hidden;
