@@ -1,5 +1,6 @@
 import { productionHeroVideo, productionPortfolio } from '../data/productionPortfolio.js';
 import {
+  buildFaqNode,
   buildPortfolioNodes,
   buildServiceNode,
   normalizeCmsService,
@@ -426,6 +427,9 @@ export const buildStructuredData = (pathname, overrides = {}) => {
       organizationId,
     }));
   }
+
+  const faqNode = buildFaqNode({ faqs: page.faqs, canonical });
+  if (faqNode) graph.push(faqNode);
 
   if (page.path !== '/') {
     const itemListElement = [

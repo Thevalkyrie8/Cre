@@ -260,6 +260,30 @@ export const buildPortfolioNodes = ({
   return [portfolioNode, itemListNode, ...videoNodes, ...imageNodes];
 };
 
+export const buildFaqNode = ({ faqs, canonical }) => {
+  if (!Array.isArray(faqs) || !faqs.length) return undefined;
+
+  const mainEntity = faqs
+    .map((faq, index) => removeEmptySchemaValues({
+      '@type': 'Question',
+      '@id': `${canonical}#faq-${index + 1}`,
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    }))
+    .filter(Boolean);
+
+  if (!mainEntity.length) return undefined;
+
+  return {
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity,
+  };
+};
+
 const inspectValues = (value, path = '$', errors = []) => {
   if (typeof value === 'string') {
     if (PLACEHOLDER_PATTERN.test(value)) errors.push(`${path}: unresolved CMS placeholder`);

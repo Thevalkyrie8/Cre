@@ -1,6 +1,7 @@
 import HeroShowcase from './HeroShowcase';
 import GrowthSystemFlow from './GrowthSystemFlow';
 import PortfolioProof from './PortfolioProof';
+import TemplateShowcase from './TemplateShowcase';
 import PartnerMarquee from './PartnerMarquee';
 import NewsSection from './NewsSection';
 import ContactForm from './ContactForm';
@@ -14,6 +15,7 @@ const Home = () => (
     <HeroShowcase />
     <GrowthSystemFlow />
     <PortfolioProof />
+    <TemplateShowcase />
     <PartnerMarquee />
 
     <section className="home-insights" aria-labelledby="home-insights-title">

@@ -39,7 +39,23 @@ assert.equal(images.length, productionPortfolio.items.length);
 assert.ok(videos.every((video) => /^PT(?:\d+H)?(?:\d+M)?(?:\d+S)?$/.test(video.duration)));
 assert.ok(videos.every((video) => video.contentUrl.startsWith(SITE_URL)));
 assert.ok(videos.every((video) => video.thumbnailUrl[0].startsWith(SITE_URL)));
-assert.equal(findType(portfolio, 'FAQPage').length, 0);
+
+const portfolioFaqPages = findType(portfolio, 'FAQPage');
+assert.equal(portfolioFaqPages.length, 1, 'Photography/video page must expose exactly one FAQPage node');
+const portfolioFaqs = portfolioFaqPages[0].mainEntity;
+assert.equal(portfolioFaqs.length, seoPages['/photography-video'].faqs.length);
+assert.ok(portfolioFaqs.every((question) => (
+  question['@type'] === 'Question'
+  && typeof question.name === 'string' && question.name.length > 0
+  && question.acceptedAnswer?.['@type'] === 'Answer'
+  && typeof question.acceptedAnswer.text === 'string' && question.acceptedAnswer.text.length > 0
+)), 'Every FAQ entry must have a non-empty question and answer');
+
+const chatbox = buildStructuredData('/chatbox-ai');
+assert.equal(findType(chatbox, 'FAQPage').length, 1, 'Chatbox AI page must expose an FAQPage node');
+
+const noFaqPage = buildStructuredData('/web-development');
+assert.equal(findType(noFaqPage, 'FAQPage').length, 0, 'Pages without FAQ content must not emit an empty FAQPage node');
 
 for (const item of productionPortfolio.items) {
   await access(join(process.cwd(), 'public', item.src.replace(/^\//, '')));

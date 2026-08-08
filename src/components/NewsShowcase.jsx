@@ -183,7 +183,7 @@ const NewsShowcase = () => {
             {showFeatured && (
               <section className="news-hub__featured" aria-labelledby="featured-title">
                 <div className={`news-hub__featured-media ${featured.isLogo ? 'is-logo' : ''}`}>
-                  <img src={featured.image} alt="" width="1200" height="675" fetchPriority="high" decoding="async" />
+                  <img src={featured.image} alt={featured.title} width="1200" height="675" fetchPriority="high" decoding="async" />
                 </div>
                 <div className="news-hub__featured-copy">
                   <p className="news-hub__section-label">{t.featured}</p>
@@ -205,7 +205,7 @@ const NewsShowcase = () => {
                 <div className="news-hub__article-list">
                   {latest.map((article) => (
                     <Link key={article.id} to={`/news/${article.slug}`} className="news-hub__article">
-                      <div className={`news-hub__article-media ${article.isLogo ? 'is-logo' : ''}`}><img src={article.image} alt="" width="640" height="400" loading="lazy" decoding="async" /></div>
+                      <div className={`news-hub__article-media ${article.isLogo ? 'is-logo' : ''}`}><img src={article.image} alt={article.title} width="640" height="400" loading="lazy" decoding="async" /></div>
                       <div className="news-hub__article-copy">
                         <div className="news-hub__meta"><span>{article.category}</span><span>{article.dateLabel}</span><span>{article.minutes} {t.min}</span></div>
                         <h3>{article.title}</h3>
