@@ -6,11 +6,13 @@ import {
   buildArticleStructuredData,
   buildCmsServiceStructuredData,
   buildStructuredData,
+  legacyRedirects,
   seoPages,
   SITE_URL,
 } from '../src/seo/seoConfig.js';
 import {
   assertStructuredData,
+  extractFaqFromMarkdown,
   validateStructuredData,
 } from '../src/seo/schemaFactory.js';
 
@@ -54,8 +56,41 @@ assert.ok(portfolioFaqs.every((question) => (
 const chatbox = buildStructuredData('/chatbox-ai');
 assert.equal(findType(chatbox, 'FAQPage').length, 1, 'Chatbox AI page must expose an FAQPage node');
 
-const noFaqPage = buildStructuredData('/web-development');
+const noFaqPage = buildStructuredData('/ecommerce');
 assert.equal(findType(noFaqPage, 'FAQPage').length, 0, 'Pages without FAQ content must not emit an empty FAQPage node');
+
+// New/rebuilt service pages: each must expose both a Service node and an FAQPage
+// node with a non-empty question/answer for every configured FAQ.
+const newServiceRoutes = [
+  '/digital-solutions',
+  '/fanpage-management',
+  '/content-creation',
+  '/seo-services',
+  '/product-photography',
+  '/web-development',
+];
+for (const route of newServiceRoutes) {
+  const data = buildStructuredData(route);
+  assertStructuredData(data, route);
+
+  const serviceNode = findType(data, 'Service')[0];
+  assert.ok(serviceNode, `${route} must expose a Service node`);
+  assert.equal(serviceNode.provider['@id'], `${SITE_URL}/#organization`);
+
+  const faqPages = findType(data, 'FAQPage');
+  assert.equal(faqPages.length, 1, `${route} must expose exactly one FAQPage node`);
+  assert.equal(faqPages[0].mainEntity.length, seoPages[route].faqs.length, `${route} FAQPage question count must match its faqs config`);
+  assert.ok(faqPages[0].mainEntity.every((question) => (
+    question['@type'] === 'Question'
+    && typeof question.name === 'string' && question.name.length > 0
+    && question.acceptedAnswer?.['@type'] === 'Answer'
+    && typeof question.acceptedAnswer.text === 'string' && question.acceptedAnswer.text.length > 0
+  )), `${route}: every FAQ entry must have a non-empty question and answer`);
+}
+
+// /ui-ux-design retired in favor of the merged /web-development page.
+assert.ok(!('/ui-ux-design' in seoPages), '/ui-ux-design must be removed from seoPages once merged into /web-development');
+assert.equal(legacyRedirects['/ui-ux-design'], '/web-development');
 
 for (const item of productionPortfolio.items) {
   await access(join(process.cwd(), 'public', item.src.replace(/^\//, '')));
@@ -120,6 +155,40 @@ const article = buildArticleStructuredData({
   datePublished: '2026-07-28T00:00:00+07:00',
 });
 assertStructuredData(article, 'article tags');
+
+const noFaqArticle = findType(article, 'FAQPage');
+assert.equal(noFaqArticle.length, 0, 'Article without an FAQ section must not emit an FAQPage node');
+
+const faqMarkdown = `# Article title\n\nSome intro paragraph.\n\n## Frequently Asked Questions\n\n**Does this work?**\nYes, it does.\n\n**What about edge cases?**\nThey are handled too.\n\n## Next section\n\nUnrelated content that must not be picked up as an answer.`;
+const parsedFaqs = extractFaqFromMarkdown(faqMarkdown);
+assert.deepEqual(parsedFaqs, [
+  { question: 'Does this work?', answer: 'Yes, it does.' },
+  { question: 'What about edge cases?', answer: 'They are handled too.' },
+]);
+
+const viFaqMarkdown = '## Câu Hỏi Thường Gặp\n\n**Có phí không?**\nKhông.';
+assert.deepEqual(extractFaqFromMarkdown(viFaqMarkdown), [{ question: 'Có phí không?', answer: 'Không.' }]);
+assert.deepEqual(extractFaqFromMarkdown('No FAQ heading here.'), []);
+
+// Some CMS articles format each FAQ question as its own "###" sub-heading instead
+// of a bold line — both shapes must be supported.
+const headingFaqMarkdown = '## Frequently Asked Questions\n\n### What determines the cost?\n\nIt depends on scope.\n\n### How long does it take?\n\nIt depends on complexity.\n\n## Next section\n\nUnrelated content.';
+assert.deepEqual(extractFaqFromMarkdown(headingFaqMarkdown), [
+  { question: 'What determines the cost?', answer: 'It depends on scope.' },
+  { question: 'How long does it take?', answer: 'It depends on complexity.' },
+]);
+
+const articleWithFaq = buildArticleStructuredData({
+  path: '/news/schema-faq-test',
+  title: 'Schema FAQ test',
+  description: 'Kiểm tra FAQ schema của bài viết.',
+  content: faqMarkdown,
+  datePublished: '2026-07-28T00:00:00+07:00',
+});
+assertStructuredData(articleWithFaq, 'article faq');
+const articleFaqPages = findType(articleWithFaq, 'FAQPage');
+assert.equal(articleFaqPages.length, 1, 'Article with an FAQ section must emit one FAQPage node');
+assert.equal(articleFaqPages[0].mainEntity.length, 2);
 const articleNode = findType(article, 'BlogPosting')[0];
 assert.deepEqual(articleNode.keywords, ['seo', 'marketing', 'google-ranking']);
 

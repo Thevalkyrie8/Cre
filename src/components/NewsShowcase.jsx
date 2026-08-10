@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getFeaturedNews, getNews, resolveAssetUrl } from '../api/client';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, unwrapNewsList } from '../utils/newsSlug';
+import { truncateAtWordBoundary } from '../utils/text';
 
 const copy = {
   en: {
@@ -46,13 +47,13 @@ const formatDate = (value, language) => {
 
 const normalizeArticle = (item, language) => {
   const { title, content, excerpt: sourceExcerpt } = getLocalizedNewsFields(item, language);
-  const excerpt = stripText(sourceExcerpt).slice(0, 190);
+  const excerpt = truncateAtWordBoundary(stripText(sourceExcerpt), 190);
   return {
     id: item.id || getNewsSlug(item),
     slug: getNewsSlug(item),
     title: normalizeText(title || 'Untitled'),
     category: normalizeText(item.category || 'Business'),
-    excerpt: excerpt.length === 190 ? `${excerpt}…` : excerpt,
+    excerpt,
     image: resolveAssetUrl(item.image, '/logo.jpg'),
     dateLabel: formatDate(item.createdAt || item.updatedAt || item.date, language),
     minutes: readingTime(content || sourceExcerpt),

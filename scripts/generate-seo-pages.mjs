@@ -10,6 +10,7 @@ import {
   buildStructuredData,
   DEFAULT_OG_IMAGE,
   getCanonicalUrl,
+  legacyRedirects,
   SEO_LAST_MODIFIED,
   seoPages,
   SITE_NAME,
@@ -18,6 +19,8 @@ import {
 import { productionPortfolio } from '../src/data/productionPortfolio.js';
 import { toAbsoluteUrl } from '../src/seo/schemaFactory.js';
 import { getNewsSlug } from '../src/utils/newsSlug.js';
+import { articleMarkdownComponents } from '../src/utils/markdownComponents.js';
+import { buildPageTitle, truncateAtWordBoundary } from '../src/utils/text.js';
 
 const distDir = join(process.cwd(), 'dist');
 const template = await readFile(join(distDir, 'index.html'), 'utf8');
@@ -102,7 +105,7 @@ const loadNewsArticles = async () => {
     return items.map((item) => {
       const title = item.titleVi || item.title || '';
       const content = item.contentVi || item.content || '';
-      const excerpt = stripMarkdown(item.excerptVi || item.excerpt || content).slice(0, 180);
+      const excerpt = truncateAtWordBoundary(stripMarkdown(item.excerptVi || item.excerpt || content), 160);
       const author = typeof item.author === 'object' ? item.author?.name : item.author;
       return {
         ...item,
@@ -164,12 +167,13 @@ const buildArticleSeoBlock = (article) => {
     author: article.author,
     articleSection: article.category,
     keywords: article.tags,
+    content: article.content,
     datePublished,
     dateModified,
   })).replaceAll('<', '\\u003c');
   const dates = `${datePublished ? `<meta property="article:published_time" content="${datePublished}" />` : ''}${dateModified ? `<meta property="article:modified_time" content="${dateModified}" />` : ''}`;
   return `<!-- SEO:START -->
-    <title>${escapeHtml(article.title)} | ${SITE_NAME}</title>
+    <title>${escapeHtml(buildPageTitle(article.title, SITE_NAME))}</title>
     <meta name="description" content="${escapeHtml(article.excerpt)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="${canonical}" />
@@ -267,8 +271,29 @@ for (const [path, page] of Object.entries(seoPages)) {
   await writeFile(outputPath, html, 'utf8');
 }
 
+for (const [from, to] of Object.entries(legacyRedirects)) {
+  const target = getCanonicalUrl(to);
+  const html = `<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đã chuyển trang | ${SITE_NAME}</title>
+  <link rel="canonical" href="${target}" />
+  <meta http-equiv="refresh" content="0;url=${target}" />
+</head>
+<body>
+  <p>Trang này đã chuyển sang <a href="${target}">${target}</a></p>
+</body>
+</html>
+`;
+  const outputPath = join(distDir, from.slice(1), 'index.html');
+  await mkdir(dirname(outputPath), { recursive: true });
+  await writeFile(outputPath, html, 'utf8');
+}
+
 for (const article of newsArticles) {
-  const markdown = renderToStaticMarkup(createElement(ReactMarkdown, { remarkPlugins: [remarkGfm] }, article.content));
+  const markdown = renderToStaticMarkup(createElement(ReactMarkdown, { remarkPlugins: [remarkGfm], components: articleMarkdownComponents }, article.content));
   const published = article.createdAt ? `<time datetime="${escapeHtml(article.createdAt)}">${escapeHtml(new Date(article.createdAt).toLocaleDateString('vi-VN'))}</time>` : '';
   const tags = article.tags.length
     ? `<ul aria-label="Chủ đề bài viết">${article.tags.map((tag) => `<li>#${escapeHtml(tag)}</li>`).join('')}</ul>`

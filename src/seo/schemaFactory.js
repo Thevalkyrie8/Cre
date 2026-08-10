@@ -260,6 +260,57 @@ export const buildPortfolioNodes = ({
   return [portfolioNode, itemListNode, ...videoNodes, ...imageNodes];
 };
 
+const FAQ_HEADING_PATTERN = /^(#{2,3})\s*(frequently asked questions|câu hỏi thường gặp)\s*$/im;
+// Question style A: the question is its own sub-heading, e.g. "### Do we need to post every day?".
+const HEADING_QA_PATTERN = /^###\s+(.+?)\s*\n+([\s\S]+?)(?=\n###\s+\S|$)/gm;
+// Question style B: the question is a bold line, e.g. "**Do we need to post every day?**".
+const BOLD_QA_PATTERN = /\*\*(.+?)\*\*\s*\n+([\s\S]+?)(?=\n\*\*.+?\*\*\s*\n|$)/g;
+
+const stripInlineMarkdown = (value = '') => value
+  .replace(/\[(.+?)\]\(.+?\)/g, '$1')
+  .replace(/[*_`]/g, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const collectMatches = (pattern, text) => {
+  const results = [];
+  let match;
+  pattern.lastIndex = 0;
+  while ((match = pattern.exec(text)) !== null) {
+    const question = stripInlineMarkdown(match[1]);
+    const answer = stripInlineMarkdown(match[2]);
+    if (question && answer) results.push({ question, answer });
+  }
+  return results;
+};
+
+// News articles embed their FAQ as a "## Frequently Asked Questions" /
+// "## Câu Hỏi Thường Gặp" markdown section, but different articles format the
+// actual questions differently — some as "### Question" sub-headings, others
+// as a "**Question**" bold line followed by a plain-text answer. This extracts
+// either shape into {question, answer} pairs so it can back FAQPage schema
+// without requiring a dedicated CMS field. If the CMS ever adds a structured
+// `faqs` field for news (like `packages` already exists for services), prefer
+// that over this best-effort parser — CMS formatting can drift over time.
+export const extractFaqFromMarkdown = (markdown = '') => {
+  const source = String(markdown || '');
+  const headingMatch = FAQ_HEADING_PATTERN.exec(source);
+  if (!headingMatch) return [];
+
+  const headingLevel = headingMatch[1].length;
+  const afterHeading = source.slice(headingMatch.index + headingMatch[0].length);
+  // A "###" question under a "##" FAQ heading is part of the section, not the
+  // end of it — only a heading at the same level or shallower closes it out.
+  const sectionEndPattern = new RegExp(`^#{1,${headingLevel}}\\s+\\S`, 'm');
+  const sectionEndMatch = sectionEndPattern.exec(afterHeading);
+  const section = sectionEndMatch ? afterHeading.slice(0, sectionEndMatch.index) : afterHeading;
+
+  const headingQuestions = collectMatches(HEADING_QA_PATTERN, section);
+  if (headingQuestions.length) return headingQuestions;
+
+  return collectMatches(BOLD_QA_PATTERN, section);
+};
+
 export const buildFaqNode = ({ faqs, canonical }) => {
   if (!Array.isArray(faqs) || !faqs.length) return undefined;
 

@@ -90,8 +90,8 @@ const TemplateShowcase = () => (
       <header className="template-showcase__header">
         <div>
           <p className="home-kicker" data-en="Ready-made template" data-vi="Mẫu website dựng sẵn">Ready-made template</p>
-          <h2 id="template-showcase-title" data-en="Start from a template, tailor it to your brand." data-vi="Bắt đầu từ mẫu có sẵn, tinh chỉnh theo thương hiệu của bạn.">
-            Start from a template, tailor it to your brand.
+          <h2 id="template-showcase-title" data-en="Starting from a carefully selected website template, we refine every detail to create a unique version that reflects your brand’s identity." data-vi="Từ mẫu website được tuyển chọn, chúng tôi tinh chỉnh từng chi tiết để tạo nên phiên bản mang dấu ấn riêng của doanh nghiệp bạn.">
+            Starting from a carefully selected website template, we refine every detail to create a unique version that reflects your brand’s identity.
           </h2>
         </div>
         <p data-en="A first look at our salon & beauty template line — live previews, not mockups. Ask us to adapt one to your business." data-vi="Xem thử dòng mẫu website ngành salon & làm đẹp của Unitrux — bản xem trực tiếp, không phải ảnh dựng. Liên hệ để chúng tôi tinh chỉnh theo đúng thương hiệu của bạn.">

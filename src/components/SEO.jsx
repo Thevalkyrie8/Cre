@@ -9,6 +9,7 @@ import {
   getSeoForPath,
   SITE_NAME,
 } from '../seo/seoConfig';
+import { buildPageTitle } from '../utils/text';
 
 const ensureMeta = (selector, attributes) => {
   let element = document.head.querySelector(selector);
@@ -119,7 +120,7 @@ const SEO = () => {
       const canonical = getCanonicalUrl(article.path);
       const description = article.description || '';
       const image = article.image || DEFAULT_OG_IMAGE;
-      document.title = `${article.title} | ${SITE_NAME}`;
+      document.title = buildPageTitle(article.title, SITE_NAME);
       ensureMeta('meta[name="description"]', { name: 'description', content: description });
       ensureMeta('meta[property="og:title"]', { property: 'og:title', content: article.title });
       ensureMeta('meta[property="og:description"]', { property: 'og:description', content: description });

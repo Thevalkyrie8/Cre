@@ -7,13 +7,17 @@ import AnalyticsTracker from './AnalyticsTracker';
 const ChatBox = lazy(() => import('./ChatBox'));
 
 const PRIMARY_SERVICE_PATHS = [
+  '/digital-solutions',
+  '/fanpage-management',
+  '/chatbox-ai',
+  '/content-creation',
+  '/digital-marketing',
+  '/automation',
+  '/seo-services',
+  '/photography-video',
+  '/product-photography',
   '/web-development',
   '/ecommerce',
-  '/digital-marketing',
-  '/chatbox-ai',
-  '/automation',
-  '/photography-video',
-  '/ui-ux-design',
 ];
 
 const Layout = ({ children }) => {
@@ -333,11 +337,17 @@ const Layout = ({ children }) => {
             <div className="footer-section">
               <h4 data-vi="Dịch vụ" data-en="Services" data-default="en">Services</h4>
               <ul>
-                <li><Link to="/chatbox-ai">Chatbox AI</Link></li>
-                <li><Link to="/digital-marketing">Digital Marketing & SEO</Link></li>
-                <li><Link to="/web-development">Web Development</Link></li>
-                <li><Link to="/ecommerce">E-commerce</Link></li>
-                <li><Link to="/automation">Automation</Link></li>
+                <li><Link to="/digital-solutions"><span data-vi="Ứng dụng & giải pháp số" data-en="App & digital solutions" data-default="en">App & digital solutions</span></Link></li>
+                <li><Link to="/fanpage-management"><span data-vi="Xây dựng Fanpage" data-en="Fanpage setup" data-default="en">Fanpage setup</span></Link></li>
+                <li><Link to="/chatbox-ai"><span data-vi="Chatbot AI" data-en="AI chatbot" data-default="en">AI chatbot</span></Link></li>
+                <li><Link to="/content-creation"><span data-vi="Nội dung đa kênh" data-en="Multi-channel content" data-default="en">Multi-channel content</span></Link></li>
+                <li><Link to="/digital-marketing"><span data-vi="Quảng cáo đa nền tảng" data-en="Multi-platform advertising" data-default="en">Multi-platform advertising</span></Link></li>
+                <li><Link to="/automation"><span data-vi="Marketing Automation" data-en="Marketing automation" data-default="en">Marketing automation</span></Link></li>
+                <li><Link to="/seo-services"><span data-vi="SEO/AEO/GEO" data-en="SEO/AEO/GEO" data-default="en">SEO/AEO/GEO</span></Link></li>
+                <li><Link to="/photography-video"><span data-vi="Video quảng cáo" data-en="Advertising video" data-default="en">Advertising video</span></Link></li>
+                <li><Link to="/product-photography"><span data-vi="Chụp ảnh sản phẩm" data-en="Product photography" data-default="en">Product photography</span></Link></li>
+                <li><Link to="/web-development"><span data-vi="Thiết kế website" data-en="Website design" data-default="en">Website design</span></Link></li>
+                <li><Link to="/ecommerce"><span data-vi="E-commerce" data-en="E-commerce" data-default="en">E-commerce</span></Link></li>
               </ul>
             </div>
             <div className="footer-section">

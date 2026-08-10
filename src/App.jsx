@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './components/Home';
+import { legacyRedirects } from './seo/seoConfig';
 
 const ThemedAbout = lazy(() => import('./components/ThemedAbout'));
 const ThemedServices = lazy(() => import('./components/ThemedServices'));
@@ -10,10 +11,10 @@ const ThemedNews = lazy(() => import('./components/ThemedNews'));
 const ThemedNewsDetail = lazy(() => import('./components/ThemedNewsDetail'));
 const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
 const ThemedServiceDetail = lazy(() => import('./components/ThemedServiceDetail'));
+const ServiceLanding = lazy(() => import('./components/ServiceLanding'));
 const DigitalMarketingLanding = lazy(() => import('./components/DigitalMarketingLanding'));
 const AutomationService = lazy(() => import('./components/AutomationService'));
 const PhotographyVideoService = lazy(() => import('./components/PhotographyVideoService'));
-const UIUXDesignService = lazy(() => import('./components/UIUXDesignService'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./components/TermsOfService'));
 const DeleteData = lazy(() => import('./components/DeleteData'));
@@ -90,13 +91,20 @@ function App() {
               <Route path="/news" element={<ThemedNews />} />
               <Route path="/news/:id" element={<ThemedNewsDetail />} />
               <Route path="/services/:id" element={<ServiceDetail />} />
-              <Route path="/web-development" element={<ThemedServiceDetail type="web" />} />
+              <Route path="/web-development" element={<ServiceLanding serviceKey="web-development" />} />
               <Route path="/ecommerce" element={<ThemedServiceDetail type="ecommerce" />} />
               <Route path="/digital-marketing" element={<DigitalMarketingLanding />} />
               <Route path="/chatbox-ai" element={<ThemedServiceDetail type="chatbox" />} />
               <Route path="/automation" element={<AutomationService />} />
               <Route path="/photography-video" element={<PhotographyVideoService />} />
-              <Route path="/ui-ux-design" element={<UIUXDesignService />} />
+              <Route path="/digital-solutions" element={<ServiceLanding serviceKey="digital-solutions" />} />
+              <Route path="/fanpage-management" element={<ServiceLanding serviceKey="fanpage-management" />} />
+              <Route path="/content-creation" element={<ServiceLanding serviceKey="content-creation" />} />
+              <Route path="/seo-services" element={<ServiceLanding serviceKey="seo-services" />} />
+              <Route path="/product-photography" element={<ServiceLanding serviceKey="product-photography" />} />
+              {Object.entries(legacyRedirects).map(([from, to]) => (
+                <Route key={from} path={from} element={<Navigate to={to} replace />} />
+              ))}
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/delete-data" element={<DeleteData />} />

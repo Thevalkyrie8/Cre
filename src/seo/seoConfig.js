@@ -3,6 +3,7 @@ import {
   buildFaqNode,
   buildPortfolioNodes,
   buildServiceNode,
+  extractFaqFromMarkdown,
   normalizeCmsService,
   removeEmptySchemaValues,
 } from './schemaFactory.js';
@@ -11,6 +12,13 @@ export const SITE_URL = 'https://unitrux.com';
 export const SITE_NAME = 'Unitrux';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
 export const SEO_LAST_MODIFIED = '2026-07-25';
+
+// Retired routes that now redirect to a merged/replacement page. Consumed by
+// scripts/generate-seo-pages.mjs to emit a meta-refresh + canonical redirect
+// stub, and by App.jsx's client-side <Navigate> for the same paths.
+export const legacyRedirects = {
+  '/ui-ux-design': '/web-development',
+};
 
 export const chatboxFaqs = [
   {
@@ -101,6 +109,168 @@ const productionFaqs = [
   },
 ];
 
+export const digitalSolutionsFaqs = [
+  {
+    question: 'MVP là gì và có phù hợp với doanh nghiệp nhỏ không?',
+    answer: 'MVP (Minimum Viable Product) là phiên bản nhỏ nhất giải quyết đúng vấn đề ưu tiên, giúp kiểm tra nhu cầu thật trước khi đầu tư một hệ thống đầy đủ. Đây là cách phù hợp với hầu hết doanh nghiệp nhỏ vì kiểm soát được chi phí và rủi ro.',
+    questionEn: 'What is an MVP, and is it right for a small business?',
+    answerEn: 'An MVP (Minimum Viable Product) is the smallest version that solves the priority problem, letting you test real demand before investing in a full system. It suits most small businesses because it keeps cost and risk under control.',
+  },
+  {
+    question: 'Chi phí thiết kế ứng dụng và giải pháp số được tính như thế nào?',
+    answer: 'Chi phí phụ thuộc vào số vai trò người dùng, số màn hình, mức độ tùy chỉnh, số hệ thống cần tích hợp và yêu cầu bảo mật. Unitrux khảo sát nhu cầu trước rồi mới báo giá theo phạm vi cụ thể.',
+    questionEn: 'How is app and digital solution design priced?',
+    answerEn: 'Cost depends on the number of user roles, screens, level of customization, integrations, and security requirements. Unitrux scopes the requirements first, then quotes against that specific scope.',
+  },
+  {
+    question: 'Tôi có sở hữu mã nguồn sau khi hoàn thành không?',
+    answer: 'Có. Mã nguồn, tài khoản và tài liệu kỹ thuật được bàn giao đầy đủ, quyền sở hữu thuộc về bạn.',
+    questionEn: 'Do I own the source code once the project is finished?',
+    answerEn: 'Yes. Source code, accounts and technical documentation are fully handed over, and ownership belongs to you.',
+  },
+  {
+    question: 'Mất bao lâu để có một MVP hoạt động?',
+    answer: 'Thường khoảng 4–8 tuần tùy phạm vi, tính từ lúc chốt yêu cầu đến khi có phiên bản hoạt động thực tế để thử nghiệm.',
+    questionEn: 'How long does it take to get a working MVP?',
+    answerEn: 'Usually 4–8 weeks depending on scope, from finalized requirements to a working version ready for real-world testing.',
+  },
+];
+
+export const fanpageFaqs = [
+  {
+    question: 'Xây dựng Fanpage khác gì với chạy quảng cáo Facebook?',
+    answer: 'Xây dựng Fanpage là hoàn thiện nền tảng: hình ảnh, thông tin và cấu trúc nội dung để trang đủ uy tín trước khi có khách truy cập. Quảng cáo là bước đưa người xem đến trang đó — nếu trang chưa hoàn thiện, quảng cáo sẽ kém hiệu quả hơn.',
+    questionEn: 'How is Fanpage setup different from running Facebook ads?',
+    answerEn: 'Fanpage setup builds the foundation — visuals, information and content structure — so the page looks trustworthy before any visitor arrives. Advertising is what brings people to that page; if the page isn\'t ready, the ads underperform.',
+  },
+  {
+    question: 'Sau khi hoàn thiện, tôi có tự quản lý được Fanpage không?',
+    answer: 'Có. Unitrux bàn giao kèm hướng dẫn ngắn gọn để đội ngũ của bạn tự cập nhật trang mà không cần hỗ trợ liên tục từ bên ngoài.',
+    questionEn: 'Can I manage the Fanpage myself after setup?',
+    answerEn: 'Yes. Unitrux hands over a short guide so your team can keep the page updated without needing ongoing outside support.',
+  },
+  {
+    question: 'Dịch vụ có bao gồm sản xuất nội dung đăng bài hằng ngày không?',
+    answer: 'Xây dựng Fanpage tập trung vào nền tảng (hình ảnh, thông tin, cấu trúc). Sản xuất nội dung đăng bài định kỳ thuộc dịch vụ Sáng tạo nội dung đa kênh, có thể kết hợp cùng lúc nếu cần.',
+    questionEn: 'Does this include producing daily posts?',
+    answerEn: 'Fanpage setup focuses on the foundation (visuals, information, structure). Ongoing post production is part of the Multi-channel content creation service, and can be combined if needed.',
+  },
+  {
+    question: 'Mất bao lâu để hoàn thiện một Fanpage?',
+    answer: 'Thường 1–2 tuần tùy khối lượng thông tin cần rà soát và số nội dung cũ cần dọn dẹp.',
+    questionEn: 'How long does a Fanpage setup take?',
+    answerEn: 'Usually 1–2 weeks, depending on how much information needs review and how much old content needs cleanup.',
+  },
+];
+
+export const contentCreationFaqs = [
+  {
+    question: 'Có cần đăng bài mỗi ngày không?',
+    answer: 'Không có tần suất chuẩn cho mọi doanh nghiệp. Tần suất nên dựa trên nguồn lực, chất lượng nội dung và khả năng đo lường. Đăng ít nhưng có mục tiêu rõ thường hiệu quả hơn đăng nhiều nhưng rời rạc.',
+    questionEn: 'Do we need to post every day?',
+    answerEn: 'There\'s no standard frequency that fits every business. Frequency should be based on resources, content quality and measurement capability. Posting less often but with clear purpose usually outperforms posting a lot but disconnectedly.',
+  },
+  {
+    question: 'Nội dung có được viết riêng cho từng kênh không hay dùng chung?',
+    answer: 'Nội dung dựa trên cùng một thông điệp gốc, nhưng được điều chỉnh về độ dài, định dạng và cách trình bày theo hành vi người dùng của từng nền tảng — không copy nguyên văn giữa các kênh.',
+    questionEn: 'Is content written separately for each channel, or reused as-is?',
+    answerEn: 'Content is built from the same core message, but adapted in length, format and presentation to match user behavior on each platform — not copy-pasted across channels.',
+  },
+  {
+    question: 'Làm sao đo được hiệu quả của nội dung?',
+    answer: 'Đo theo 3 lớp: chất lượng triển khai (đúng hạn, đúng CTA), hành vi người dùng (lượt xem, lượt nhấp, form gửi) và kết quả kinh doanh (lead, cuộc hẹn, chuyển đổi) — không chỉ dựa vào lượt xem hay lượt thích.',
+    questionEn: 'How is content performance measured?',
+    answerEn: 'Across three layers: execution quality (on-time, right CTA), user behavior (views, clicks, form submissions) and business outcomes (leads, bookings, conversions) — not just views or likes.',
+  },
+  {
+    question: 'Dịch vụ có bao gồm cả thiết kế hình ảnh/video không?',
+    answer: 'Có — nội dung được sản xuất kèm hình ảnh, video ngắn hoặc carousel phù hợp từng định dạng. Video quảng cáo dài hơn hoặc chụp ảnh sản phẩm chuyên sâu thuộc dịch vụ riêng, có thể kết hợp khi cần.',
+    questionEn: 'Does this include image/video design?',
+    answerEn: 'Yes — content is produced with matching images, short videos or carousels per format. Longer advertising video or dedicated product photography sit under their own services and can be combined when needed.',
+  },
+];
+
+export const seoServicesFaqs = [
+  {
+    question: 'SEO, AEO và GEO khác nhau như thế nào?',
+    answer: 'SEO giúp trang xếp hạng trong kết quả tìm kiếm truyền thống. AEO tối ưu để nội dung được trích vào featured snippet và "Mọi người cũng hỏi". GEO giúp công cụ AI (ChatGPT, Google AI Overviews...) trích dẫn thương hiệu khi trả lời câu hỏi. Cả ba cùng dựa trên một nền tảng: nội dung chính xác và dữ liệu có cấu trúc thật.',
+    questionEn: 'What\'s the difference between SEO, AEO and GEO?',
+    answerEn: 'SEO helps a page rank in classic search results. AEO structures content to get pulled into featured snippets and "People also ask". GEO helps AI tools (ChatGPT, Google AI Overviews...) cite your brand when answering a question. All three rest on the same foundation: accurate content and real structured data.',
+  },
+  {
+    question: 'Bao lâu thì thấy kết quả SEO?',
+    answer: 'Các vấn đề kỹ thuật thường khắc phục được ngay, nhưng thứ hạng và lượng truy cập cần thời gian dài hơn — thường vài tháng — và phụ thuộc vào mức độ cạnh tranh của từ khóa, tuổi domain và tần suất cập nhật nội dung.',
+    questionEn: 'How soon will I see SEO results?',
+    answerEn: 'Technical issues can usually be fixed right away, but rankings and traffic take longer — typically a few months — and depend on keyword competitiveness, domain age and how often content gets updated.',
+  },
+  {
+    question: 'Có cam kết lên top Google không?',
+    answer: 'Không đơn vị nào có thể cam kết chắc chắn một vị trí cụ thể trên Google, vì thứ hạng còn phụ thuộc thuật toán, đối thủ và hành vi tìm kiếm thực tế. Unitrux cam kết về quy trình, tính minh bạch trong báo cáo và việc tối ưu đúng chuẩn kỹ thuật.',
+    questionEn: 'Do you guarantee a #1 Google ranking?',
+    answerEn: 'No agency can guarantee a specific ranking, since it depends on Google\'s algorithm, competitors, and real search behavior. Unitrux commits to a transparent process, honest reporting, and technically correct optimization.',
+  },
+  {
+    question: 'Dịch vụ SEO có bao gồm việc viết lại nội dung website không?',
+    answer: 'Có, trong phạm vi tối ưu on-page. Nếu cần xây nội dung mới quy mô lớn (bài viết, trang dịch vụ mới), phạm vi này thường kết hợp với dịch vụ Sáng tạo nội dung đa kênh.',
+    questionEn: 'Does this include rewriting website content?',
+    answerEn: 'Yes, within the scope of on-page optimization. Larger new-content needs (articles, new service pages) are usually combined with the Multi-channel content creation service.',
+  },
+];
+
+export const productPhotographyFaqs = [
+  {
+    question: 'Có thể chụp tại cửa hàng/salon của tôi không hay phải mang sản phẩm đến studio?',
+    answer: 'Cả hai đều được. Sau khi khảo sát ánh sáng và không gian thực tế, Unitrux sẽ đề xuất phương án phù hợp — chụp tại chỗ hoặc mang về studio.',
+    questionEn: 'Can you shoot at my store/salon, or do I need to bring products to a studio?',
+    answerEn: 'Either works. After surveying the actual lighting and space, Unitrux will recommend the right option — on-location or in-studio.',
+  },
+  {
+    question: 'Một buổi chụp có thể dùng cho cả website lẫn sàn TMĐT không?',
+    answer: 'Có thể dùng chung nguồn ảnh gốc, nhưng mỗi kênh cần kích thước và tỷ lệ khung hình riêng — các phiên bản này được xác định rõ trong phạm vi bàn giao.',
+    questionEn: 'Can one shoot cover both website and marketplace needs?',
+    answerEn: 'The source images can be shared, but each channel needs its own sizing and aspect ratio — these versions are defined clearly in the delivery scope.',
+  },
+  {
+    question: 'Chi phí chụp ảnh sản phẩm được tính như thế nào?',
+    answer: 'Chi phí phụ thuộc vào số sản phẩm/không gian cần chụp, địa điểm, thiết bị, số ngày quay và mức độ hậu kỳ. Báo giá của Unitrux sẽ tách rõ từng phạm vi.',
+    questionEn: 'How is product photography priced?',
+    answerEn: 'Cost depends on the number of products/spaces to shoot, location, equipment, shoot days and level of post-production. Unitrux\'s quote breaks each scope down clearly.',
+  },
+  {
+    question: 'Có làm luôn video ngắn trong buổi chụp không?',
+    answer: 'Dịch vụ này tập trung vào ảnh tĩnh. Nếu cần video quảng cáo hoặc Reels/TikTok, đây thuộc dịch vụ Sản xuất Video quảng cáo, có thể kết hợp cùng lịch quay để tối ưu chi phí.',
+    questionEn: 'Can you also shoot a short video during the same session?',
+    answerEn: 'This service focuses on still photography. Advertising video or Reels/TikTok content falls under the Advertising Video Production service, which can be scheduled alongside the photo shoot to save cost.',
+  },
+];
+
+export const webDevelopmentFaqs = [
+  {
+    question: 'Trang này có gì khác với dịch vụ SEO/AEO/GEO riêng?',
+    answer: 'Thiết kế website là xây một website mới với nền tảng UI/UX và SEO/AEO/GEO ngay từ đầu. Dịch vụ SEO/AEO/GEO riêng là tối ưu liên tục cho một website đang hoạt động, bất kể ai đã thiết kế ra nó.',
+    questionEn: 'How is this different from the standalone SEO/AEO/GEO service?',
+    answerEn: 'Website design builds a new website with UI/UX and SEO/AEO/GEO foundations from day one. The standalone SEO/AEO/GEO service is ongoing optimization for a website that\'s already live, regardless of who built it.',
+  },
+  {
+    question: 'Website mới có tự động chuẩn SEO không hay cần làm thêm?',
+    answer: 'Nền tảng SEO on-page (cấu trúc heading, metadata, dữ liệu có cấu trúc, tốc độ tải) được xây sẵn trong quá trình thiết kế. Việc tối ưu liên tục theo từ khóa và cạnh tranh thị trường vẫn cần một quy trình riêng sau khi ra mắt.',
+    questionEn: 'Is the new website automatically SEO-ready, or is extra work needed?',
+    answerEn: 'The on-page SEO foundation (heading structure, metadata, structured data, load speed) is built in during design. Ongoing keyword and competitive optimization still needs its own process after launch.',
+  },
+  {
+    question: 'Bao lâu thì website hoàn thành?',
+    answer: 'Gói cơ bản thường 3–5 tuần; dự án nhiều tính năng hoặc cần tích hợp thêm 6–8 tuần. Lịch trình được chốt ngay từ đầu sau khi khảo sát.',
+    questionEn: 'How long does the website take to complete?',
+    answerEn: 'Basic packages usually take 3–5 weeks; projects with more features or integrations take 6–8 weeks. The schedule is finalized upfront after discovery.',
+  },
+  {
+    question: 'Tôi có thể tự cập nhật nội dung sau khi bàn giao không?',
+    answer: 'Có. Bạn sẽ có hướng dẫn ngắn để thêm/sửa nội dung; nếu muốn, có thể chọn gói bảo trì để Unitrux hỗ trợ cập nhật liên tục.',
+    questionEn: 'Can I update content myself after handover?',
+    answerEn: 'Yes. You\'ll get a short guide to add/edit content yourself; a maintenance package is also available if you\'d rather have Unitrux handle ongoing updates.',
+  },
+];
+
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
@@ -117,11 +287,22 @@ export const seoPages = {
     type: 'AboutPage',
   },
   '/services': {
-    title: 'Dịch vụ Website, Quảng cáo, AI & Automation | Unitrux',
-    description: 'Khám phá dịch vụ Website, UI/UX, E-commerce, quảng cáo đa nền tảng, sản xuất video, Chatbot AI và Automation của Unitrux.',
+    title: 'Dịch vụ Website, Fanpage, SEO/AEO/GEO, AI & Automation | Unitrux',
+    description: '10 dịch vụ của Unitrux: ứng dụng & giải pháp số, Fanpage, Chatbot AI, nội dung đa kênh, quảng cáo, Marketing Automation, SEO/AEO/GEO, video, chụp ảnh và thiết kế website.',
     heading: 'Hệ thống dịch vụ tăng trưởng số của Unitrux',
-    summary: 'Bảy năng lực được kết nối quanh hành trình thu hút nhu cầu, tạo trải nghiệm, bắt đầu hội thoại và tối ưu vận hành.',
-    bullets: ['Quảng cáo đa nền tảng', 'Sản xuất Video và hình ảnh', 'Website và UI/UX', 'E-commerce và marketplace', 'Chatbot AI đa kênh', 'Automation và CRM'],
+    summary: '10 năng lực được kết nối quanh hành trình thu hút nhu cầu, tạo trải nghiệm, bắt đầu hội thoại và tối ưu vận hành.',
+    bullets: [
+      'Thiết kế ứng dụng và giải pháp số',
+      'Xây dựng Fanpage chuyên nghiệp',
+      'Chatbot AI chăm sóc khách hàng',
+      'Sáng tạo nội dung đa kênh',
+      'Quảng cáo đa nền tảng',
+      'Marketing Automation',
+      'Dịch vụ SEO/AEO/GEO',
+      'Sản xuất video quảng cáo',
+      'Quay chụp sản phẩm và thương hiệu',
+      'Thiết kế website chuẩn UI/UX và SEO/AEO/GEO',
+    ],
     type: 'CollectionPage',
   },
   '/chatbox-ai': {
@@ -142,12 +323,26 @@ export const seoPages = {
     serviceName: 'Tích hợp Chatbot AI đa kênh',
   },
   '/web-development': {
-    title: 'Thiết kế Website chuẩn SEO cho doanh nghiệp | Unitrux',
-    description: 'Thiết kế website tốc độ cao, chuẩn SEO, tối ưu chuyển đổi và hệ thống web tùy chỉnh phù hợp quy trình doanh nghiệp.',
-    heading: 'Thiết kế và phát triển Website',
-    summary: 'Website và ứng dụng web được xây dựng quanh nhu cầu khách hàng, tốc độ, SEO và hiệu quả vận hành.',
+    title: 'Thiết kế Website chuẩn UI/UX và SEO/AEO/GEO | Unitrux',
+    description: 'Thiết kế website tốc độ cao, chuẩn UI/UX, có sẵn nền tảng SEO/AEO/GEO và tối ưu chuyển đổi cho doanh nghiệp.',
+    heading: 'Thiết kế website chuẩn UI/UX và SEO/AEO/GEO',
+    summary: 'Giao diện và nền tảng SEO/AEO/GEO được thiết kế cùng lúc — kiến trúc thông tin rõ ràng, tốc độ tải nhanh và cấu trúc nội dung mà công cụ tìm kiếm lẫn AI có thể đọc được ngay từ đầu.',
+    faqs: webDevelopmentFaqs,
     type: 'Service',
-    serviceName: 'Thiết kế và phát triển Website',
+    serviceName: 'Thiết kế website chuẩn UI/UX và SEO/AEO/GEO',
+    schema: {
+      serviceType: 'Thiết kế website và UI/UX',
+      categories: ['Thiết kế website', 'UI/UX', 'SEO on-page', 'Corporate website', 'Landing page', 'Web app'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần website mới hoặc tái thiết kế với nền tảng SEO/AEO/GEO ngay từ đầu',
+      offerCatalogName: 'Hạng mục thiết kế website',
+      offerCatalog: [
+        { name: 'Kiến trúc thông tin và UX' },
+        { name: 'Thiết kế UI và hệ thống giao diện' },
+        { name: 'Nền tảng SEO/AEO/GEO on-page' },
+        { name: 'Tối ưu tốc độ và Core Web Vitals' },
+      ],
+    },
   },
   '/ecommerce': {
     title: 'Giải pháp E-commerce và Marketplace | Unitrux',
@@ -188,36 +383,134 @@ export const seoPages = {
     serviceName: 'Tự động hóa doanh nghiệp',
   },
   '/photography-video': {
-    title: 'Dịch vụ quay Video quảng cáo & chụp ảnh sản phẩm | Unitrux',
-    description: 'Sản xuất video quảng cáo, Reels, TikTok, video sản phẩm và chụp ảnh thương mại cho Facebook, YouTube, website và sàn thương mại điện tử.',
+    title: 'Dịch vụ sản xuất Video quảng cáo | Unitrux',
+    description: 'Sản xuất video quảng cáo, Reels, TikTok và video sản phẩm cho Facebook, YouTube, website và sàn thương mại điện tử.',
     ogImage: `${SITE_URL}${productionHeroVideo.thumbnail}`,
-    heading: 'Sản xuất Video quảng cáo và hình ảnh thương mại',
+    heading: 'Sản xuất Video quảng cáo',
     summary: 'Từ concept, quay dựng đến bàn giao đa định dạng cho quảng cáo, mạng xã hội, website và thương mại điện tử.',
     faqs: productionFaqs,
     type: 'Service',
-    serviceName: 'Sản xuất Video quảng cáo và chụp ảnh sản phẩm',
+    serviceName: 'Sản xuất Video quảng cáo',
     portfolio: productionPortfolio,
     schema: {
-      serviceType: 'Sản xuất video và chụp ảnh thương mại',
-      categories: ['Video quảng cáo', 'Video sản phẩm', 'Video social', 'Chụp ảnh sản phẩm', 'Corporate film'],
+      serviceType: 'Sản xuất video quảng cáo',
+      categories: ['Video quảng cáo', 'Video sản phẩm', 'Video social', 'Corporate film'],
       areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
-      audienceType: 'Doanh nghiệp cần nội dung hình ảnh và video cho quảng cáo, website hoặc E-commerce',
-      offerCatalogName: 'Hạng mục sản xuất hình ảnh và video',
+      audienceType: 'Doanh nghiệp cần nội dung video cho quảng cáo, website hoặc E-commerce',
+      offerCatalogName: 'Hạng mục sản xuất video',
       offerCatalog: [
         { name: 'Video quảng cáo ngắn' },
         { name: 'Video sản phẩm và E-commerce' },
-        { name: 'Chụp ảnh sản phẩm và chiến dịch' },
         { name: 'Video thương hiệu và doanh nghiệp' },
       ],
     },
   },
-  '/ui-ux-design': {
-    title: 'Thiết kế UI/UX tối ưu chuyển đổi | Unitrux',
-    description: 'Thiết kế UI/UX rõ ràng, responsive và tối ưu hành trình người dùng cho website, ứng dụng và sản phẩm số.',
-    heading: 'Thiết kế UI/UX',
-    summary: 'Giao diện dễ hiểu và hành trình hợp lý giúp khách hàng hành động nhanh hơn và quay lại nhiều hơn.',
+  '/digital-solutions': {
+    title: 'Thiết kế ứng dụng và giải pháp số | Unitrux',
+    description: 'Tư vấn và phát triển ứng dụng, hệ thống đặt lịch, quản lý dữ liệu và giải pháp số phù hợp với hoạt động doanh nghiệp.',
+    heading: 'Thiết kế ứng dụng và giải pháp số',
+    summary: 'Unitrux thiết kế đúng hệ thống nhỏ nhất giải quyết được vấn đề vận hành thật, bắt đầu từ MVP và mở rộng khi dữ liệu thực tế chứng minh nhu cầu.',
+    faqs: digitalSolutionsFaqs,
     type: 'Service',
-    serviceName: 'Thiết kế UI/UX',
+    serviceName: 'Thiết kế ứng dụng và giải pháp số',
+    schema: {
+      serviceType: 'Thiết kế ứng dụng và giải pháp số',
+      categories: ['Ứng dụng đặt lịch', 'Ứng dụng quản lý dữ liệu', 'MVP', 'Web app nội bộ'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần hệ thống đặt lịch, quản lý dữ liệu hoặc MVP để kiểm tra ý tưởng',
+      offerCatalogName: 'Hạng mục giải pháp số',
+      offerCatalog: [
+        { name: 'Hệ thống đặt lịch' },
+        { name: 'Ứng dụng quản lý khách hàng và dữ liệu' },
+        { name: 'Công cụ quản lý công việc nội bộ' },
+        { name: 'MVP cho ý tưởng mới' },
+      ],
+    },
+  },
+  '/fanpage-management': {
+    title: 'Xây dựng Fanpage chuyên nghiệp | Unitrux',
+    description: 'Hoàn thiện hình ảnh, thông tin, nội dung và cấu trúc Fanpage giúp doanh nghiệp tăng nhận diện, uy tín và thu hút khách hàng.',
+    heading: 'Xây dựng Fanpage chuyên nghiệp',
+    summary: 'Unitrux xây lại cấu trúc trang, thông tin và nền tảng nội dung để khách truy cập đủ tin tưởng để nhắn hỏi.',
+    faqs: fanpageFaqs,
+    type: 'Service',
+    serviceName: 'Xây dựng Fanpage chuyên nghiệp',
+    schema: {
+      serviceType: 'Xây dựng Fanpage',
+      categories: ['Facebook Fanpage', 'Thiết lập trang doanh nghiệp', 'Content pillar'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần hoàn thiện Fanpage trước khi chạy quảng cáo hoặc chăm sóc khách hàng',
+      offerCatalogName: 'Hạng mục xây dựng Fanpage',
+      offerCatalog: [
+        { name: 'Thiết lập hình ảnh & bộ nhận diện trang' },
+        { name: 'Rà soát thông tin doanh nghiệp' },
+        { name: 'Cấu trúc nội dung & bài ghim' },
+      ],
+    },
+  },
+  '/content-creation': {
+    title: 'Sáng tạo nội dung đa kênh | Unitrux',
+    description: 'Xây dựng nội dung phù hợp cho Facebook, Website, Zalo, TikTok, Instagram và LinkedIn theo định hướng thương hiệu.',
+    heading: 'Sáng tạo nội dung đa kênh',
+    summary: 'Unitrux xây một hệ thống thông điệp thống nhất, rồi điều chỉnh theo định dạng và hành vi người dùng của từng nền tảng.',
+    faqs: contentCreationFaqs,
+    type: 'Service',
+    serviceName: 'Sáng tạo nội dung đa kênh',
+    schema: {
+      serviceType: 'Sáng tạo nội dung đa kênh',
+      categories: ['Content pillar', 'Content calendar', 'Facebook', 'TikTok', 'Instagram', 'LinkedIn'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần hệ thống nội dung nhất quán trên nhiều kênh',
+      offerCatalogName: 'Hạng mục sáng tạo nội dung',
+      offerCatalog: [
+        { name: 'Hệ thống thông điệp & content pillar' },
+        { name: 'Content calendar & content map' },
+        { name: 'Sản xuất nội dung đa định dạng' },
+      ],
+    },
+  },
+  '/seo-services': {
+    title: 'Dịch vụ SEO/AEO/GEO cho thương hiệu và website | Unitrux',
+    description: 'Nghiên cứu từ khóa, tối ưu nội dung và kỹ thuật website nhằm tăng khả năng xuất hiện trên Google, AI và câu trả lời của AI.',
+    heading: 'Dịch vụ SEO/AEO/GEO cho thương hiệu và website',
+    summary: 'Unitrux nghiên cứu từ khóa, cấu trúc nội dung và xử lý nền tảng kỹ thuật để thương hiệu bạn xuất hiện đúng trên cả kết quả tìm kiếm, featured snippet và câu trả lời của AI.',
+    faqs: seoServicesFaqs,
+    type: 'Service',
+    serviceName: 'Dịch vụ SEO/AEO/GEO',
+    schema: {
+      serviceType: 'SEO, AEO và GEO',
+      categories: ['SEO', 'AEO', 'GEO', 'Technical SEO', 'Content optimization'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần tăng khả năng xuất hiện trên Google và công cụ AI',
+      offerCatalogName: 'Hạng mục SEO/AEO/GEO',
+      offerCatalog: [
+        { name: 'Nghiên cứu từ khóa & search intent' },
+        { name: 'Tối ưu on-page & nội dung' },
+        { name: 'Audit kỹ thuật SEO' },
+        { name: 'Cấu trúc & schema cho AEO/GEO' },
+      ],
+    },
+  },
+  '/product-photography': {
+    title: 'Quay chụp sản phẩm và thương hiệu | Unitrux',
+    description: 'Quay phim, chụp ảnh sản phẩm, không gian và dịch vụ phục vụ quảng cáo, website, mạng xã hội và truyền thông thương hiệu.',
+    heading: 'Quay chụp sản phẩm và thương hiệu',
+    summary: 'Ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử và mạng xã hội — chụp theo một tiêu chuẩn hình ảnh nhất quán.',
+    faqs: productPhotographyFaqs,
+    type: 'Service',
+    serviceName: 'Quay chụp sản phẩm và thương hiệu',
+    schema: {
+      serviceType: 'Chụp ảnh sản phẩm và thương hiệu',
+      categories: ['Chụp ảnh sản phẩm', 'Chụp ảnh không gian', 'Hình ảnh thương hiệu'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần hình ảnh sản phẩm và thương hiệu cho website, sàn TMĐT hoặc mạng xã hội',
+      offerCatalogName: 'Hạng mục chụp ảnh',
+      offerCatalog: [
+        { name: 'Chụp ảnh sản phẩm' },
+        { name: 'Chụp ảnh không gian' },
+        { name: 'Hình ảnh thương hiệu & lifestyle' },
+      ],
+    },
   },
   '/packages': {
     title: 'Bảng giá và gói dịch vụ Digital | Unitrux',
@@ -482,6 +775,7 @@ export const buildArticleStructuredData = ({
   dateModified,
   articleSection,
   keywords,
+  content,
   language = 'vi',
 }) => {
   const canonical = getCanonicalUrl(path);
@@ -534,6 +828,9 @@ export const buildArticleStructuredData = ({
     url: image || DEFAULT_OG_IMAGE,
     contentUrl: image || DEFAULT_OG_IMAGE,
   });
+
+  const articleFaqNode = buildFaqNode({ faqs: extractFaqFromMarkdown(content), canonical });
+  if (articleFaqNode) articleGraph.push(articleFaqNode);
 
   return { ...base, '@graph': [...articleGraph, article] };
 };

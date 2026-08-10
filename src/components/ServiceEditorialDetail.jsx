@@ -3,27 +3,6 @@ import { chatboxFaqs } from '../seo/seoConfig';
 import './ServiceEditorialDetail.css';
 
 const serviceDetails = {
-  web: {
-    index: '01',
-    eyebrow: 'Web Development',
-    eyebrowVi: 'Phát triển Web',
-    title: 'Digital foundations that feel effortless—and work relentlessly.',
-    titleVi: 'Nền tảng số vận hành bền bỉ nhưng mang lại cảm giác thật nhẹ nhàng.',
-    intro: 'We design and engineer fast websites, web applications, and connected systems around customer intent and operational reality.',
-    introVi: 'Chúng tôi thiết kế website tốc độ cao, ứng dụng web và hệ thống kết nối dựa trên ý định khách hàng cùng thực tế vận hành.',
-    promise: 'From the first click to the internal workflow behind it, every layer is designed to reduce friction.',
-    metrics: [['90+', 'Performance target'], ['AA', 'Accessibility goal'], ['24/7', 'Operational confidence']],
-    challengeTitle: 'The challenge',
-    challenge: 'Most websites are assembled around pages. We begin with decisions: what customers need to understand, what action matters next, and what your team needs after conversion.',
-    capabilities: [
-      ['Experience architecture', 'User journeys, information architecture, wireframes, and conversion paths shaped before visual polish.'],
-      ['Design systems', 'Reusable responsive components that keep the product coherent as content and teams grow.'],
-      ['Engineering', 'React storefronts, web applications, APIs, integrations, analytics, performance, and security.'],
-      ['Continuous improvement', 'Measurement plans and focused iterations after launch, based on real behavior rather than assumptions.'],
-    ],
-    process: ['Discovery & audit', 'Prototype & validate', 'Build & integrate', 'Launch & improve'],
-    deliverables: ['UX and content architecture', 'Responsive interface system', 'Production-ready implementation', 'Analytics and handover'],
-  },
   ecommerce: {
     index: '02',
     eyebrow: 'E-commerce',
@@ -90,11 +69,6 @@ const serviceDetails = {
 };
 
 const relatedServices = {
-  web: [
-    ['/digital-marketing', 'Digital Marketing tăng trưởng'],
-    ['/ecommerce', 'Giải pháp E-commerce'],
-    ['/chatbox-ai', 'Tích hợp Chatbot AI'],
-  ],
   ecommerce: [
     ['/web-development', 'Thiết kế website bán hàng'],
     ['/digital-marketing', 'Digital Marketing'],

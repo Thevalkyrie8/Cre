@@ -5,6 +5,8 @@ import remarkGfm from 'remark-gfm';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { trackEvent } from '../analytics/tracking';
+import { articleMarkdownComponents } from '../utils/markdownComponents';
+import { truncateAtWordBoundary } from '../utils/text';
 
 const copy = {
   en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: '', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
@@ -119,11 +121,12 @@ const NewsDetailShowcase = () => {
       detail: {
         path: `/news/${article.slug}`,
         title: article.title,
-        description: (article.excerpt || stripMarkdown(article.content)).slice(0, 180),
+        description: truncateAtWordBoundary(article.excerpt || stripMarkdown(article.content), 160),
         image: article.image,
         author: article.author,
         articleSection: article.category,
         keywords: article.tags,
+        content: article.content,
         datePublished: article.datePublished,
         dateModified: article.dateModified,
         language,
@@ -185,7 +188,7 @@ const NewsDetailShowcase = () => {
           <Link to="/content-standards#editorial-process" className="tw-mt-7 tw-inline-flex tw-font-bold tw-text-[#0D5E4D] tw-underline-offset-4 hover:tw-underline">{t.standards} →</Link>
           <Link to="/news" className="tw-mt-9 tw-inline-flex tw-items-center tw-gap-3 tw-font-bold tw-text-[#C5751E] tw-no-underline">← {t.back}</Link>
         </aside>
-        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body"><ReactMarkdown remarkPlugins={[remarkGfm]}>{article.content}</ReactMarkdown></div></div>
+        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={articleMarkdownComponents}>{article.content}</ReactMarkdown></div></div>
         <aside className="tw-hidden tw-pt-20 lg:tw-col-span-2 lg:tw-block"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.18em] tw-text-[#C5751E]">{t.trend}</span><div className="tw-mt-4 tw-grid tw-h-28 tw-w-28 tw-place-items-center tw-rounded-full tw-border tw-border-[#C58A2F] tw-font-editorial tw-text-xl tw-text-[#0D4537]">{new Date(article.createdAt || Date.now()).getFullYear()} →</div></aside>
       </section>
 
