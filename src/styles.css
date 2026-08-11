@@ -12624,10 +12624,29 @@ body:not(.dark-mode) .home--flow {
   line-height: 1.7;
 }
 
+.template-showcase__group {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.template-showcase__group:first-of-type {
+  margin-top: 0;
+}
+
+.template-showcase__group-title {
+  margin: 0 0 1.25rem;
+  color: var(--home-ink);
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
 .template-showcase__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
+}
+
+.template-showcase__grid--wide {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .template-card {
