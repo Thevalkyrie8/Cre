@@ -1,4 +1,5 @@
 import { productionHeroVideo, productionPortfolio } from '../data/productionPortfolio.js';
+import { templateCount, templateGroups } from '../data/templateGroups.js';
 import {
   buildFaqNode,
   buildPortfolioNodes,
@@ -303,6 +304,14 @@ export const seoPages = {
       'Quay chụp sản phẩm và thương hiệu',
       'Thiết kế website chuẩn UI/UX và SEO/AEO/GEO',
     ],
+    type: 'CollectionPage',
+  },
+  '/templates': {
+    title: `Thư viện ${templateCount} mẫu website thật | Unitrux`,
+    description: `Xem thử ${templateCount} mẫu website thật của Unitrux — salon & làm đẹp, quán cà phê, bất động sản và thương mại điện tử — bản xem trực tiếp, không phải ảnh dựng.`,
+    heading: `${templateCount} mẫu website thật, sẵn sàng tinh chỉnh theo thương hiệu của bạn`,
+    summary: 'Mỗi mẫu là một website thật đang hoạt động — không phải ảnh chụp. Xem thử rồi cho chúng tôi biết hướng nào phù hợp để tinh chỉnh theo đúng thương hiệu.',
+    bullets: templateGroups.map((group) => group.labelVi),
     type: 'CollectionPage',
   },
   '/chatbox-ai': {

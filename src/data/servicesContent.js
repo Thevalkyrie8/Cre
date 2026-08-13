@@ -539,6 +539,13 @@ export const servicesContent = {
           vi: 'Tối ưu hình ảnh, lazy loading và code splitting được kiểm tra trước khi ra mắt, không phải xử lý sau.',
         },
       },
+      {
+        title: { en: 'Start from a live template', vi: 'Bắt đầu từ mẫu website có sẵn' },
+        description: {
+          en: 'Browse our live template library across several industries and pick a starting point, or begin fully custom — either way the same UI/UX and SEO/AEO/GEO foundation applies.',
+          vi: 'Xem thư viện mẫu website thật của Unitrux theo nhiều ngành và chọn điểm khởi đầu, hoặc bắt đầu thiết kế mới hoàn toàn — cả hai hướng đều có cùng nền tảng UI/UX và SEO/AEO/GEO.',
+        },
+      },
     ],
     process: [
       { title: { en: 'Discovery & sitemap', vi: 'Khảo sát & sơ đồ trang' }, description: { en: 'Goals, target keywords and the customer journey mapped into a page structure.', vi: 'Mục tiêu, từ khóa mục tiêu và hành trình khách hàng được chuyển thành sơ đồ trang.' } },
@@ -554,6 +561,7 @@ export const servicesContent = {
       { en: 'Analytics & Search Console setup', vi: 'Thiết lập analytics & Search Console' },
     ],
     relatedServices: [
+      { path: '/templates', label: { en: 'Browse template library', vi: 'Xem thư viện mẫu website' } },
       { path: '/seo-services', label: { en: 'SEO / AEO / GEO', vi: 'SEO/AEO/GEO' } },
       { path: '/ecommerce', label: { en: 'E-commerce & marketplace', vi: 'E-commerce & marketplace' } },
       { path: '/digital-solutions', label: { en: 'App & digital solutions', vi: 'Ứng dụng & giải pháp số' } },

@@ -347,6 +347,7 @@ const Layout = ({ children }) => {
                 <li><Link to="/photography-video"><span data-vi="Video quảng cáo" data-en="Advertising video" data-default="en">Advertising video</span></Link></li>
                 <li><Link to="/product-photography"><span data-vi="Chụp ảnh sản phẩm" data-en="Product photography" data-default="en">Product photography</span></Link></li>
                 <li><Link to="/web-development"><span data-vi="Thiết kế website" data-en="Website design" data-default="en">Website design</span></Link></li>
+                <li><Link to="/templates"><span data-vi="Thư viện mẫu website" data-en="Template library" data-default="en">Template library</span></Link></li>
                 <li><Link to="/ecommerce"><span data-vi="E-commerce" data-en="E-commerce" data-default="en">E-commerce</span></Link></li>
               </ul>
             </div>

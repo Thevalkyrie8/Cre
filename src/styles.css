@@ -12649,6 +12649,31 @@ body:not(.dark-mode) .home--flow {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.template-showcase__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+.template-showcase__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--home-line);
+  border-radius: 999px;
+  color: var(--home-ink) !important;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.template-showcase__view-all:hover {
+  color: var(--home-blue) !important;
+  border-color: var(--home-blue);
+}
+
 .template-card {
   display: block;
   border: 1px solid var(--home-line);

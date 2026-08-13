@@ -12,6 +12,7 @@ const ThemedNewsDetail = lazy(() => import('./components/ThemedNewsDetail'));
 const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
 const ThemedServiceDetail = lazy(() => import('./components/ThemedServiceDetail'));
 const ServiceLanding = lazy(() => import('./components/ServiceLanding'));
+const TemplatesPage = lazy(() => import('./components/TemplatesPage'));
 const DigitalMarketingLanding = lazy(() => import('./components/DigitalMarketingLanding'));
 const AutomationService = lazy(() => import('./components/AutomationService'));
 const PhotographyVideoService = lazy(() => import('./components/PhotographyVideoService'));
@@ -102,6 +103,7 @@ function App() {
               <Route path="/content-creation" element={<ServiceLanding serviceKey="content-creation" />} />
               <Route path="/seo-services" element={<ServiceLanding serviceKey="seo-services" />} />
               <Route path="/product-photography" element={<ServiceLanding serviceKey="product-photography" />} />
+              <Route path="/templates" element={<TemplatesPage />} />
               {Object.entries(legacyRedirects).map(([from, to]) => (
                 <Route key={from} path={from} element={<Navigate to={to} replace />} />
               ))}
