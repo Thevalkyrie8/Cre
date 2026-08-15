@@ -43,6 +43,48 @@ export const templateGroups = [
         tagEn: 'Bold & moody',
         tagVi: 'Đậm chất & cuốn hút',
       },
+    ],
+  },
+  {
+    id: 'fnb',
+    labelEn: 'Food & beverage',
+    labelVi: 'Ẩm thực & đồ uống',
+    items: [
+      {
+        href: 'https://template-fnb5.unitrux.site/',
+        titleEn: 'Amber & Oak',
+        titleVi: 'Amber & Oak',
+        tagEn: 'Fine dining elegance',
+        tagVi: 'Tinh tế & sang trọng',
+      },
+      {
+        href: 'https://template-fnb2.unitrux.site/',
+        titleEn: 'Oakfire Steakhouse',
+        titleVi: 'Oakfire Steakhouse',
+        tagEn: 'Bold & smoky',
+        tagVi: 'Đậm chất & khói lửa',
+      },
+      {
+        href: 'https://template-fnb3.unitrux.site/',
+        titleEn: 'WasabiMai',
+        titleVi: 'WasabiMai',
+        tagEn: 'Fresh Japanese sushi',
+        tagVi: 'Sushi Nhật tươi mỗi ngày',
+      },
+      {
+        href: 'https://template-fnb1.unitrux.site/',
+        titleEn: 'Flavora',
+        titleVi: 'Flavora',
+        tagEn: 'Vibrant food delivery',
+        tagVi: 'Giao đồ ăn sống động',
+      },
+      {
+        href: 'https://template-fnb4.unitrux.site/',
+        titleEn: 'Wildflour Bakery & Café',
+        titleVi: 'Wildflour Bakery & Café',
+        tagEn: 'Warm & handcrafted',
+        tagVi: 'Ấm áp & thủ công',
+      },
       {
         href: 'https://template-cafe-3.unitrux.site/',
         titleEn: 'OCEANO',

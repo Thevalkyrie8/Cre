@@ -1,114 +1,6 @@
-import { createElement, useState } from 'react';
+import { createElement } from 'react';
 import { Link } from 'react-router-dom';
-
-const packages = [
-  {
-    id: 'full-operation',
-    stage: ['Scale', 'Mở rộng'],
-    period: ['Monthly / Quarterly / Yearly', 'Theo tháng / quý / năm'],
-    name: ['Full Operation Package', 'Gói vận hành toàn diện'],
-    description: [
-      'A complete growth team coordinating strategy, content, acquisition and measurement across every active channel.',
-      'Đội ngũ tăng trưởng toàn diện phối hợp chiến lược, nội dung, thu hút khách hàng và đo lường trên mọi kênh đang hoạt động.',
-    ],
-    features: [
-      ['End-to-end digital marketing strategy', 'Chiến lược digital marketing từ đầu đến cuối'],
-      ['Multi-channel campaign management', 'Quản lý chiến dịch đa kênh'],
-      ['Content creation and production', 'Sáng tạo và sản xuất nội dung'],
-      ['Performance reporting and optimization', 'Báo cáo hiệu suất và tối ưu'],
-    ],
-    addOns: [
-      ['Conversion website', 'Website tối ưu chuyển đổi'],
-      ['Sales automation', 'Tự động hóa bán hàng'],
-    ],
-    popular: true,
-  },
-  {
-    id: 'starter',
-    stage: ['Launch', 'Khởi động'],
-    period: ['One-time payment', 'Thanh toán một lần'],
-    name: ['Starter Package', 'Gói khởi đầu'],
-    description: [
-      'A focused digital foundation for a new business or an existing brand ready to look credible online.',
-      'Nền tảng số thiết yếu cho doanh nghiệp mới hoặc thương hiệu đang muốn xây dựng hình ảnh chuyên nghiệp trên môi trường trực tuyến.',
-    ],
-    features: [
-      ['Professional website or store setup', 'Thiết lập website hoặc cửa hàng chuyên nghiệp'],
-      ['Essential brand positioning', 'Định vị thương hiệu nền tảng'],
-      ['Basic SEO optimization', 'Tối ưu SEO cơ bản'],
-    ],
-    addOns: [['CRM starter setup', 'Thiết lập CRM cơ bản']],
-  },
-  {
-    id: 'multi-channel',
-    stage: ['Sell', 'Bán hàng'],
-    period: ['Monthly / Quarterly', 'Theo tháng / quý'],
-    name: ['Multi-channel Sales', 'Bán hàng đa kênh'],
-    description: [
-      'Connect social channels, marketplaces and storefronts into one practical operating rhythm.',
-      'Kết nối mạng xã hội, sàn thương mại điện tử và cửa hàng thành một quy trình vận hành bán hàng thống nhất.',
-    ],
-    features: [
-      ['Social media management', 'Quản lý mạng xã hội'],
-      ['Marketplace store operations', 'Vận hành gian hàng trên sàn'],
-      ['Sales platform integration', 'Tích hợp nền tảng bán hàng'],
-      ['Inventory coordination', 'Đồng bộ quản lý tồn kho'],
-    ],
-    addOns: [
-      ['Mobile sales app', 'Ứng dụng bán hàng di động'],
-      ['E-commerce website', 'Website thương mại điện tử'],
-    ],
-  },
-  {
-    id: 'image-video',
-    stage: ['Create', 'Sáng tạo'],
-    period: ['Per project', 'Theo dự án'],
-    name: ['Image & Video', 'Hình ảnh & Video'],
-    description: [
-      'Sales-focused visual content built around your products, services and campaign objectives.',
-      'Nội dung hình ảnh phục vụ bán hàng, được xây dựng theo sản phẩm, dịch vụ và mục tiêu chiến dịch của bạn.',
-    ],
-    features: [
-      ['Professional photography', 'Chụp ảnh chuyên nghiệp'],
-      ['Commercial video', 'Video thương mại'],
-      ['Retouched asset library', 'Thư viện hình ảnh đã hậu kỳ'],
-      ['Social media content formats', 'Định dạng nội dung cho mạng xã hội'],
-    ],
-  },
-  {
-    id: 'seo-analytics',
-    stage: ['Measure', 'Đo lường'],
-    period: ['Monthly / Quarterly', 'Theo tháng / quý'],
-    name: ['SEO & Analytics', 'SEO & Phân tích dữ liệu'],
-    description: [
-      'Build organic visibility and turn performance data into clear, commercially useful next actions.',
-      'Tăng khả năng hiển thị tự nhiên và chuyển dữ liệu hiệu suất thành những hành động tiếp theo rõ ràng, hữu ích cho kinh doanh.',
-    ],
-    features: [
-      ['Advanced SEO optimization', 'Tối ưu SEO chuyên sâu'],
-      ['Google Analytics setup', 'Thiết lập Google Analytics'],
-      ['Keyword research and content plan', 'Nghiên cứu từ khóa và kế hoạch nội dung'],
-      ['Tracking and reporting', 'Theo dõi và báo cáo'],
-    ],
-    addOns: [['Landing page system', 'Hệ thống landing page']],
-  },
-  {
-    id: 'consulting',
-    stage: ['Decide', 'Ra quyết định'],
-    period: ['Monthly / Quarterly', 'Theo tháng / quý'],
-    name: ['Consulting & Strategy', 'Tư vấn & Chiến lược'],
-    description: [
-      'Expert guidance and a decision-ready roadmap before your business commits budget or resources.',
-      'Tư vấn chuyên môn và lộ trình rõ ràng trước khi doanh nghiệp phân bổ ngân sách hoặc nguồn lực.',
-    ],
-    features: [
-      ['Digital strategy consultation', 'Tư vấn chiến lược số'],
-      ['Market analysis and research', 'Phân tích và nghiên cứu thị trường'],
-      ['Conversion audits', 'Đánh giá khả năng chuyển đổi'],
-      ['Custom roadmap development', 'Xây dựng lộ trình riêng'],
-    ],
-  },
-];
+import { services } from '../data/services';
 
 const Bilingual = ({ as = 'span', en, vi, children, ...props }) => (
   createElement(as, { 'data-en': en, 'data-vi': vi, 'data-default': 'en', ...props }, children ?? en)
@@ -120,74 +12,30 @@ const ArrowIcon = () => (
   </svg>
 );
 
-const CheckIcon = () => (
-  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="m4 9.3 3 2.8 7-7" />
-  </svg>
-);
-
-const AddOnPicker = ({ item, selectedAddOns, onToggle }) => {
-  if (!item.addOns) return null;
-
-  return (
-    <div className="packages-hub__addons">
-      <Bilingual as="p" en="Optional add-ons" vi="Hạng mục bổ sung tùy chọn" />
-      <div>
-        {item.addOns.map(([addOnEn, addOnVi]) => {
-          const key = `${item.id}:${addOnEn}`;
-          const selected = selectedAddOns.has(key);
-          return (
-            <button key={addOnEn} type="button" aria-pressed={selected} onClick={() => onToggle(key)}>
-              <span className="packages-hub__addon-icon" aria-hidden="true">{selected ? '✓' : '+'}</span>
-              <Bilingual en={addOnEn} vi={addOnVi} />
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
+const contactHref = (service) => {
+  const params = new URLSearchParams({ package: service.title });
+  return `/contact?${params.toString()}`;
 };
 
-const PackageCard = ({ item, selectedAddOns, onToggleAddOn, contactHref }) => (
+const ServicePackageCard = ({ service }) => (
   <article className="packages-hub__plan">
     <header>
-      <Bilingual className="packages-hub__stage" en={item.stage[0]} vi={item.stage[1]} />
-      <Bilingual className="packages-hub__period" en={item.period[0]} vi={item.period[1]} />
+      <Bilingual as="span" className="packages-hub__stage" en={`Service ${service.number}`} vi={`Dịch vụ ${service.number}`} />
     </header>
-    <Bilingual as="h3" en={item.name[0]} vi={item.name[1]} />
-    <Bilingual as="p" className="packages-hub__plan-description" en={item.description[0]} vi={item.description[1]} />
-    <ul>
-      {item.features.map(([featureEn, featureVi]) => (
-        <li key={featureEn}><CheckIcon /><Bilingual en={featureEn} vi={featureVi} /></li>
-      ))}
-    </ul>
-    <AddOnPicker item={item} selectedAddOns={selectedAddOns} onToggle={onToggleAddOn} />
-    <Link to={contactHref} className="packages-hub__plan-link">
-      <Bilingual en="Discuss this package" vi="Trao đổi về gói này" /> <ArrowIcon />
-    </Link>
+    <Bilingual as="h3" en={service.title} vi={service.titleVi} />
+    <Bilingual as="p" className="packages-hub__plan-description" en={service.description} vi={service.descriptionVi} />
+    <div className="packages-hub__plan-links">
+      <Link to={service.to} className="packages-hub__plan-secondary-link">
+        <Bilingual en="See what's included" vi="Xem chi tiết phạm vi" />
+      </Link>
+      <Link to={contactHref(service)} className="packages-hub__plan-link">
+        <Bilingual en="Discuss this service" vi="Trao đổi về dịch vụ này" /> <ArrowIcon />
+      </Link>
+    </div>
   </article>
 );
 
 const PackagesShowcase = () => {
-  const [selectedAddOns, setSelectedAddOns] = useState(() => new Set());
-  const featured = packages.find((item) => item.popular);
-  const standardPackages = packages.filter((item) => !item.popular);
-
-  const toggleAddOn = (key) => setSelectedAddOns((current) => {
-    const next = new Set(current);
-    if (next.has(key)) next.delete(key); else next.add(key);
-    return next;
-  });
-
-  const contactHref = (item) => {
-    const addOns = [...selectedAddOns]
-      .filter((key) => key.startsWith(`${item.id}:`))
-      .map((key) => key.split(':').slice(1).join(':'));
-    const params = new URLSearchParams({ package: item.name[0] });
-    if (addOns.length) params.set('addons', addOns.join(', '));
-    return `/contact?${params.toString()}`;
-  };
-
   const openChat = () => window.dispatchEvent(new CustomEvent('unitrux:open-chat'));
 
   return (
@@ -200,17 +48,17 @@ const PackagesShowcase = () => {
               <span aria-hidden="true">/</span>
               <Bilingual en="Packages" vi="Gói dịch vụ" />
             </nav>
-            <Bilingual as="p" className="packages-hub__label" en="Flexible service packages" vi="Gói dịch vụ linh hoạt" />
-            <Bilingual as="h1" id="packages-title" en="Choose the system your next stage needs." vi="Chọn hệ thống phù hợp với giai đoạn tiếp theo của doanh nghiệp." />
+            <Bilingual as="p" className="packages-hub__label" en="10 services, one growth system" vi="10 dịch vụ, một hệ thống tăng trưởng" />
+            <Bilingual as="h1" id="packages-title" en="Choose the service your business needs right now." vi="Chọn dịch vụ doanh nghiệp bạn cần ngay lúc này." />
             <Bilingual
               as="p"
               className="packages-hub__lede"
-              en="Start with a clear business outcome—not a list of disconnected deliverables. Every package can connect website, content, acquisition and automation into one measurable growth system."
-              vi="Bắt đầu từ một kết quả kinh doanh rõ ràng — không phải danh sách đầu việc rời rạc. Mỗi gói có thể kết nối website, nội dung, thu hút khách hàng và tự động hóa thành một hệ thống tăng trưởng có thể đo lường."
+              en="Every service below can stand alone or connect with the others into one measurable growth system — website, content, acquisition and automation working together."
+              vi="Mỗi dịch vụ bên dưới có thể triển khai độc lập hoặc kết nối với các dịch vụ khác thành một hệ thống tăng trưởng có thể đo lường — website, nội dung, thu hút khách hàng và tự động hóa cùng vận hành."
             />
             <div className="packages-hub__hero-actions">
               <Link to="/contact" className="packages-hub__primary-action"><Bilingual en="Get a tailored recommendation" vi="Nhận đề xuất phù hợp" /> <ArrowIcon /></Link>
-              <Bilingual as="a" href="#packages" en="Explore all packages" vi="Xem tất cả gói dịch vụ" />
+              <Bilingual as="a" href="#packages" en="Explore all services" vi="Xem tất cả dịch vụ" />
             </div>
           </div>
 
@@ -231,12 +79,7 @@ const PackagesShowcase = () => {
         <div className="packages-hub__container">
           <div className="packages-hub__guide-intro">
             <Bilingual as="h2" id="package-guide-title" en="Start from the bottleneck." vi="Bắt đầu từ nhu cầu của bạn." />
-            <Bilingual as="p" en="You do not need everything at once. Choose the stage that is holding growth back today." vi="Bạn không cần triển khai mọi thứ cùng lúc. Hãy chọn giai đoạn đang kìm hãm tăng trưởng hôm nay." />
-          </div>
-          <div className="packages-hub__guide-steps">
-            <div><Bilingual as="strong" en="Need credibility?" vi="Cần tăng uy tín?" /><Bilingual en="Start with Launch." vi="Bắt đầu với Khởi động." /></div>
-            <div><Bilingual as="strong" en="Need more demand?" vi="Cần thêm nhu cầu?" /><Bilingual en="Choose Create or Measure." vi="Chọn Sáng tạo hoặc Đo lường." /></div>
-            <div><Bilingual as="strong" en="Need one operating team?" vi="Cần một đội ngũ vận hành thống nhất?" /><Bilingual en="Move to Scale." vi="Chuyển sang Mở rộng." /></div>
+            <Bilingual as="p" en="You do not need everything at once. Choose the one service that is holding growth back today, then expand when it is time." vi="Bạn không cần triển khai mọi thứ cùng lúc. Hãy chọn một dịch vụ đang kìm hãm tăng trưởng hôm nay, rồi mở rộng khi cần thiết." />
           </div>
         </div>
       </section>
@@ -245,37 +88,15 @@ const PackagesShowcase = () => {
         <div className="packages-hub__container">
           <header className="packages-hub__section-head">
             <div>
-              <Bilingual as="h2" id="plans-title" en="Packages built around outcomes." vi="Các gói được xây dựng theo kết quả." />
-              <Bilingual as="p" en="Every scope is clarified before work begins. Add-ons stay optional and selected choices follow you into the contact form." vi="Mọi phạm vi đều được làm rõ trước khi bắt đầu. Hạng mục bổ sung luôn tùy chọn và lựa chọn của bạn sẽ được chuyển sang biểu mẫu liên hệ." />
+              <Bilingual as="h2" id="plans-title" en="10 services. Pick where to start." vi="10 dịch vụ. Chọn nơi bắt đầu." />
+              <Bilingual as="p" en="Every scope is clarified before work begins. Send us the service you're interested in and we'll follow up with a tailored plan." vi="Mọi phạm vi đều được làm rõ trước khi bắt đầu. Gửi cho chúng tôi dịch vụ bạn quan tâm, Unitrux sẽ phản hồi với kế hoạch phù hợp." />
             </div>
-            <button type="button" onClick={openChat}><Bilingual en="Ask Unitrux to help me choose" vi="Nhờ Unitrux tư vấn chọn gói" /></button>
+            <button type="button" onClick={openChat}><Bilingual en="Ask Unitrux to help me choose" vi="Nhờ Unitrux tư vấn chọn dịch vụ" /></button>
           </header>
 
-          <article className="packages-hub__featured-plan">
-            <div className="packages-hub__featured-summary">
-              <div className="packages-hub__featured-top">
-                <Bilingual en="Recommended" vi="Đề xuất" />
-                <Bilingual en={featured.period[0]} vi={featured.period[1]} />
-              </div>
-              <Bilingual as="p" className="packages-hub__stage" en={featured.stage[0]} vi={featured.stage[1]} />
-              <Bilingual as="h2" en={featured.name[0]} vi={featured.name[1]} />
-              <Bilingual as="p" en={featured.description[0]} vi={featured.description[1]} />
-              <Link to={contactHref(featured)} className="packages-hub__primary-action"><Bilingual en="Discuss the full operation plan" vi="Trao đổi về gói vận hành toàn diện" /> <ArrowIcon /></Link>
-            </div>
-            <div className="packages-hub__featured-scope">
-              <Bilingual as="h3" en="What the team operates" vi="Phạm vi đội ngũ vận hành" />
-              <ul>
-                {featured.features.map(([featureEn, featureVi]) => (
-                  <li key={featureEn}><CheckIcon /><Bilingual en={featureEn} vi={featureVi} /></li>
-                ))}
-              </ul>
-              <AddOnPicker item={featured} selectedAddOns={selectedAddOns} onToggle={toggleAddOn} />
-            </div>
-          </article>
-
           <div className="packages-hub__plan-grid">
-            {standardPackages.map((item) => (
-              <PackageCard key={item.id} item={item} selectedAddOns={selectedAddOns} onToggleAddOn={toggleAddOn} contactHref={contactHref(item)} />
+            {services.map((service) => (
+              <ServicePackageCard key={service.to} service={service} />
             ))}
           </div>
         </div>
@@ -298,7 +119,7 @@ const PackagesShowcase = () => {
       <section className="packages-hub__cta" aria-labelledby="packages-cta-title">
         <div className="packages-hub__container">
           <div>
-            <Bilingual as="h2" id="packages-cta-title" en="Not sure which package fits?" vi="Chưa chắc gói nào phù hợp?" />
+            <Bilingual as="h2" id="packages-cta-title" en="Not sure which service fits?" vi="Chưa chắc dịch vụ nào phù hợp?" />
             <Bilingual as="p" en="Tell us where growth is stuck. We will recommend the smallest useful scope." vi="Chia sẻ nơi tăng trưởng đang gặp trở ngại. Chúng tôi sẽ đề xuất phạm vi nhỏ nhất nhưng hữu ích." />
           </div>
           <div>

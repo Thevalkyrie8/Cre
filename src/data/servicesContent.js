@@ -467,6 +467,28 @@ export const servicesContent = {
       { en: 'Brand / lifestyle photo set', vi: 'Bộ ảnh thương hiệu / lifestyle' },
       { en: 'Channel-ready file sizes (website, marketplace, social)', vi: 'File đã căn chỉnh kích thước theo từng kênh (website, TMĐT, mạng xã hội)' },
     ],
+    gallery: [
+      {
+        src: '/images/img4.jpg',
+        labelEn: 'Product photography studio setup',
+        labelVi: 'Dựng set chụp sản phẩm trong studio',
+      },
+      {
+        src: '/images/img1.jpg',
+        labelEn: 'Brand photography shot on location',
+        labelVi: 'Ảnh thương hiệu chụp tại địa điểm khách hàng',
+      },
+      {
+        src: '/images/img2.jpg',
+        labelEn: 'Crew checking lighting before a shoot',
+        labelVi: 'Ekip canh sáng trước khi quay',
+      },
+      {
+        src: '/images/img3.jpg',
+        labelEn: 'Team workspace & post-production',
+        labelVi: 'Không gian làm việc & hậu kỳ của đội ngũ',
+      },
+    ],
     relatedServices: [
       { path: '/photography-video', label: { en: 'Advertising video production', vi: 'Sản xuất video quảng cáo' } },
       { path: '/content-creation', label: { en: 'Multi-channel content', vi: 'Nội dung đa kênh' } },

@@ -14,8 +14,8 @@ const TemplateShowcase = () => (
             Starting from a carefully selected website template, we refine every detail to create a unique version that reflects your brand’s identity.
           </h2>
         </div>
-        <p data-en={`A first look at ${templateCount} live templates across salon & beauty, coffee & cafe, real estate and e-commerce — real previews, not mockups.`} data-vi={`Xem thử ${templateCount} mẫu website thật của Unitrux — salon & làm đẹp, quán cà phê, bất động sản và thương mại điện tử — bản xem trực tiếp, không phải ảnh dựng.`}>
-          {`A first look at ${templateCount} live templates across salon & beauty, coffee & cafe, real estate and e-commerce — real previews, not mockups.`}
+        <p data-en={`A first look at ${templateCount} live templates across salon & beauty, coffee & cafe, food & beverage, real estate and e-commerce — real previews, not mockups.`} data-vi={`Xem thử ${templateCount} mẫu website thật của Unitrux — salon & làm đẹp, quán cà phê, ẩm thực & đồ uống, bất động sản và thương mại điện tử — bản xem trực tiếp, không phải ảnh dựng.`}>
+          {`A first look at ${templateCount} live templates across salon & beauty, coffee & cafe, food & beverage, real estate and e-commerce — real previews, not mockups.`}
         </p>
       </header>
 

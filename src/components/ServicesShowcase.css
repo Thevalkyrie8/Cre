@@ -311,12 +311,13 @@ body.dark-mode .services-map__catalog-card:hover .services-map__arrow {
   gap: clamp(56px, 8vw, 112px);
 }
 
-.services-map__decision h2 {
+.services-map__decision.services-map__decision h2,
+#services-decision-title {
   max-width: 18ch;
   color: #ffffff !important;
 }
 
-.services-map__decision p {
+.services-map__decision.services-map__decision p {
   color: #94a3b8 !important;
 }
 

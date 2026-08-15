@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { productionHeroVideo, productionWorks } from '../data/productionPortfolio';
+import { productionBehindTheScenes, productionHeroVideo, productionWorks } from '../data/productionPortfolio';
 import './PhotographyVideoService.css';
 
 const CHANNELS = ['TikTok & Reels', 'Facebook Ads', 'YouTube', 'Website', 'E-commerce'];
@@ -100,7 +100,7 @@ const PhotographyVideoService = () => (
             eager
           />
           <figcaption>
-            <span data-vi="Quảng cáo sản phẩm" data-en="Product commercial">Product commercial</span>
+            <span data-vi={productionHeroVideo.labelVi} data-en={productionHeroVideo.labelEn}>{productionHeroVideo.labelEn}</span>
             <span data-vi="Sản xuất bởi Unitrux" data-en="Produced by Unitrux">Produced by Unitrux</span>
           </figcaption>
         </figure>
@@ -133,7 +133,7 @@ const PhotographyVideoService = () => (
 
         <div className="production-work-grid">
           {productionWorks.map((work) => (
-            <figure className={work.className} key={work.src}>
+            <figure className="production-work" style={{ '--production-aspect': work.ratio }} key={work.src}>
               <AutoVideo
                 src={work.src}
                 poster={work.thumbnail}
@@ -142,6 +142,36 @@ const PhotographyVideoService = () => (
                 labelEn={work.labelEn}
               />
               <figcaption data-vi={work.labelVi} data-en={work.labelEn}>{work.labelEn}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="production-bts" aria-labelledby="production-bts-title">
+      <div className="production-shell">
+        <div className="production-heading production-heading--split">
+          <h2
+            id="production-bts-title"
+            data-vi="Không chỉ có video: chụp ảnh sản phẩm, thương hiệu và hậu trường sản xuất."
+            data-en="Beyond video: product photography, brand photography and the production process."
+          >
+            Beyond video: product photography, brand photography and the production process.
+          </h2>
+          <p
+            data-vi="Ảnh thật từ studio, buổi quay tại địa điểm khách hàng và sự kiện — không phải ảnh minh họa."
+            data-en="Real photos from the studio, on-location shoots and event coverage — not stock imagery."
+          >
+            Real photos from the studio, on-location shoots and event coverage — not stock imagery.
+          </p>
+        </div>
+
+        <div className="production-bts-grid">
+          {productionBehindTheScenes.map((photo) => (
+            <figure className="production-bts-item" key={photo.id}>
+              <img src={photo.src} alt={photo.labelEn} loading="lazy" />
+              <span className="production-bts-item__tag" data-vi={photo.categoryVi} data-en={photo.categoryEn}>{photo.categoryEn}</span>
+              <figcaption data-vi={photo.labelVi} data-en={photo.labelEn}>{photo.labelEn}</figcaption>
             </figure>
           ))}
         </div>

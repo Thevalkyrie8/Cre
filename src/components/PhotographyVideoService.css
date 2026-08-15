@@ -269,34 +269,24 @@ body.dark-mode .production-button--primary {
 }
 
 .production-work-grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1rem;
+  columns: 3 280px;
+  column-gap: 1rem;
 }
 
 .production-work {
   position: relative;
-  grid-column: span 5;
-  min-height: 360px;
-  margin: 0;
+  display: block;
+  margin: 0 0 1rem;
   overflow: hidden;
   border-radius: 16px;
   background: #020617;
-}
-
-.production-work--wide {
-  grid-column: span 7;
-}
-
-.production-work--portrait {
-  grid-column: span 5;
+  break-inside: avoid;
 }
 
 .production-work__video {
   display: block;
   width: 100%;
-  height: 100%;
-  min-height: 360px;
+  aspect-ratio: var(--production-aspect, 16 / 9);
   object-fit: cover;
   transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -311,6 +301,65 @@ body.dark-mode .production-button--primary {
   bottom: 0;
   left: 0;
   padding: 3rem 1.15rem 1rem;
+  color: #ffffff;
+  background: linear-gradient(to top, rgba(2, 6, 23, 0.86), transparent);
+  font-size: 0.78rem;
+  font-weight: 720;
+}
+
+.production-bts {
+  padding: clamp(5.5rem, 10vw, 9rem) 0;
+  border-top: 1px solid var(--production-line);
+  background: var(--production-surface);
+}
+
+.production-bts-grid {
+  columns: 3 260px;
+  column-gap: 1rem;
+}
+
+.production-bts-item {
+  position: relative;
+  display: block;
+  margin: 0 0 1rem;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #020617;
+  break-inside: avoid;
+}
+
+.production-bts-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.production-bts-item:hover img {
+  transform: scale(1.025);
+}
+
+.production-bts-item__tag {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(2, 6, 23, 0.68);
+  backdrop-filter: blur(6px);
+  font-size: 0.68rem;
+  font-weight: 720;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.production-bts-item figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 3rem 1.1rem 0.9rem;
   color: #ffffff;
   background: linear-gradient(to top, rgba(2, 6, 23, 0.86), transparent);
   font-size: 0.78rem;
@@ -617,19 +666,9 @@ body.dark-mode .production-delivery {
     gap: 1.25rem;
   }
 
-  .production-work-grid {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .production-work,
-  .production-work__video {
-    min-height: 420px;
-  }
-
-  .production-work--wide,
-  .production-work--wide .production-work__video {
-    min-height: 260px;
+  .production-work-grid,
+  .production-bts-grid {
+    columns: 1;
   }
 
   .production-ratios {

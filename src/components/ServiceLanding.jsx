@@ -101,6 +101,22 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
         </section>
       )}
 
+      {content.gallery?.length > 0 && (
+        <section className="service-landing__section service-landing__gallery" aria-labelledby="service-gallery-title">
+          <div className="service-landing__shell">
+            <h2 id="service-gallery-title" data-en="From recent shoots" data-vi="Hình ảnh từ những buổi chụp gần đây">From recent shoots</h2>
+            <div className="service-landing__gallery-grid">
+              {content.gallery.map((photo, index) => (
+                <figure className="service-landing__gallery-item" key={index}>
+                  <img src={photo.src} alt={photo.labelEn} loading="lazy" />
+                  <figcaption data-en={photo.labelEn} data-vi={photo.labelVi}>{photo.labelEn}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {content.process?.length > 0 && (
         <section className="service-landing__section service-landing__process" aria-labelledby="service-process-title">
           <div className="service-landing__shell">

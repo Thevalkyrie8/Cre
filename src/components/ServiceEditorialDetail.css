@@ -128,6 +128,62 @@ body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .servic
   color: #ffffff !important;
 }
 
+/* All other service-editorial types (ecommerce, digital-marketing, automation,
+   digital-solutions, fanpage-management, content-creation, seo-services, ...)
+   share the same .service-editorial-dark-surface band but never got the
+   chatbox-only protection above. The sitewide h1-h3/p/li ink-color rules in
+   styles.css (~14022, ~11695) force dark text onto this deliberately-dark
+   surface, making it invisible. Re-apply the same fix generically; the
+   doubled class keeps specificity safely above those sitewide rules
+   regardless of stylesheet order. */
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(h1, h2, h3, strong, summary, dt, dd) {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(p, li) {
+  color: #cbd5e1 !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(
+  [class*="tw-text-[#F5BC72]"],
+  [class*="tw-text-[#F6BD73]"],
+  [class*="tw-text-[#E68C23]"]
+):not(.master-magnetic) {
+  color: #fbbf24 !important;
+}
+
+/* :not(.master-magnetic) keeps this off the "Get consultation"-style CTA
+   button, which carries tw-text-[#FFF9F1] too but has its own dedicated
+   light-on-dark / dark-on-light pairing (styles.css ~13809) that this
+   broader override would otherwise clobber. */
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[#FFF9F1]"]:not(.master-magnetic) {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[#D8E6DF]"]:not(.master-magnetic) {
+  color: #cbd5e1 !important;
+}
+
+/* The sitewide "tw-bg-[#FFF9F1]" card normalizer (styles.css ~13649) matches
+   by substring, so it also catches the opacity-modifier utility
+   tw-bg-[#FFF9F1]/[.07] used for the translucent metric panel inside this
+   dark band, forcing it to a solid opaque white card. That turns the
+   light-on-dark badge/metric text sitting on it invisible. Restore the
+   intended translucent tint here. */
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-bg-[#FFF9F1]/"] {
+  background-color: rgba(255, 249, 241, 0.07) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface a[href="/packages"] {
+  background-color: transparent !important;
+  border-color: color-mix(in srgb, #ffffff 36%, transparent) !important;
+  color: #ffffff !important;
+}
+
 @media (max-width: 767px) {
   .service-editorial-detail--chatbox > section {
     border-color: var(--chatbox-border) !important;

@@ -611,6 +611,19 @@ body:not(.dark-mode) .ads-landing {
   background: var(--ads-commit);
 }
 
+/* .ads-deliverables is a deliberately dark band in both themes. The sitewide
+   legacy rules (styles.css body:not(.dark-mode) h1..h4 / p,li,dd) force dark
+   ink onto every heading/paragraph and win over the plain (non-!important)
+   color above, making this text invisible in light mode. Doubled class
+   raises specificity enough to beat those rules. */
+.ads-deliverables.ads-deliverables h2 {
+  color: #ffffff !important;
+}
+
+.ads-deliverables.ads-deliverables p {
+  color: var(--ads-commit-muted) !important;
+}
+
 .ads-section-heading--light p {
   color: var(--ads-commit-muted);
 }

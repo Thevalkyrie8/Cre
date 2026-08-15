@@ -9,6 +9,10 @@ const descriptors = {
     en: 'Warm, tactile digital experiences built around the ritual of coffee.',
     vi: 'Trải nghiệm số ấm áp, gần gũi xoay quanh nghi thức thưởng thức cà phê.',
   },
+  fnb: {
+    en: 'Editorial digital experiences across restaurants, bars and food brands.',
+    vi: 'Trải nghiệm số mang tính biên tập cho nhà hàng, quán ăn và thương hiệu ẩm thực.',
+  },
   estate: {
     en: 'Architectural clarity for premium property and hospitality brands.',
     vi: 'Sự rõ ràng kiến trúc cho thương hiệu bất động sản và nghỉ dưỡng cao cấp.',
@@ -38,12 +42,29 @@ const SalonLayout = ({ group, indexPrefix }) => (
   </div>
 );
 
-// Coffee & cafe — a single overlapping horizontal strip, center project raised.
+// Coffee & cafe — a paired horizontal strip, side by side.
 const CafeLayout = ({ group, indexPrefix }) => (
-  <div className="tpl-composition tpl-composition--horizontal">
-    <TemplateProjectCard template={group.items[0]} index={`${indexPrefix}.01`} size="medium" aspect="4 / 3" className="tpl-composition__strip-item" />
-    <TemplateProjectCard template={group.items[1]} index={`${indexPrefix}.02`} size="large" aspect="4 / 3" className="tpl-composition__strip-item tpl-composition__strip-item--raised" />
-    <TemplateProjectCard template={group.items[2]} index={`${indexPrefix}.03`} size="medium" aspect="4 / 3" className="tpl-composition__strip-item" />
+  <div className="tpl-composition tpl-composition--horizontal tpl-composition--horizontal-2">
+    <TemplateProjectCard template={group.items[0]} index={`${indexPrefix}.01`} size="large" aspect="4 / 3" className="tpl-composition__strip-item" />
+    <TemplateProjectCard template={group.items[1]} index={`${indexPrefix}.02`} size="large" aspect="4 / 3" className="tpl-composition__strip-item" />
+  </div>
+);
+
+// Food & beverage — one premium featured project, a stacked pair beside it,
+// then a three-across strip for the rest. Six items, three distinct card
+// scales so the section doesn't read as a repeated grid of identical tiles.
+const FnbLayout = ({ group, indexPrefix }) => (
+  <div className="tpl-composition tpl-composition--fnb">
+    <TemplateProjectCard template={group.items[0]} index={`${indexPrefix}.01`} size="featured" aspect="4 / 5" className="tpl-composition__primary" />
+    <div className="tpl-composition__stack">
+      <TemplateProjectCard template={group.items[1]} index={`${indexPrefix}.02`} size="medium" aspect="16 / 11" />
+      <TemplateProjectCard template={group.items[2]} index={`${indexPrefix}.03`} size="medium" aspect="16 / 11" />
+    </div>
+    <div className="tpl-composition__row tpl-composition__row--fnb">
+      <TemplateProjectCard template={group.items[3]} index={`${indexPrefix}.04`} size="medium" aspect="4 / 3" />
+      <TemplateProjectCard template={group.items[4]} index={`${indexPrefix}.05`} size="medium" aspect="4 / 3" />
+      <TemplateProjectCard template={group.items[5]} index={`${indexPrefix}.06`} size="medium" aspect="4 / 3" />
+    </div>
   </div>
 );
 
@@ -74,6 +95,7 @@ const EcommerceLayout = ({ group, indexPrefix }) => (
 const layouts = {
   salon: SalonLayout,
   cafe: CafeLayout,
+  fnb: FnbLayout,
   estate: EstateLayout,
   ecommerce: EcommerceLayout,
 };

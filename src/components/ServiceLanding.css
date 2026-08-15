@@ -13,6 +13,8 @@
   --service-accent-text: #8F5015;
   --service-accent-strong: #0D5E4D;
   --service-on-accent-strong: #fff9f1;
+  --service-cta-bg: #0D5E4D;
+  --service-cta-ink: #fff9f1;
   --service-line: rgba(13, 94, 77, 0.14);
   overflow: clip;
   color: var(--service-body);
@@ -31,6 +33,12 @@ body.dark-mode .service-landing {
   --service-accent-text: #19D9FF;
   --service-accent-strong: #67B8F3;
   --service-on-accent-strong: #020B1F;
+  /* CTA band stays a dark, raised surface in dark mode instead of inverting
+     to the bright accent color — matches how every other CTA band on the
+     site (packages-hub__cta, production-final) treats dark mode: a dark
+     surface with light text, not a glaring light block on a dark page. */
+  --service-cta-bg: #0B2454;
+  --service-cta-ink: #F4F8FF;
   --service-line: rgba(103, 184, 243, 0.22);
 }
 
@@ -250,6 +258,45 @@ body.dark-mode .service-landing {
   line-height: 1.65;
 }
 
+/* Gallery */
+.service-landing__gallery-grid {
+  columns: 2 280px;
+  column-gap: 1.25rem;
+}
+
+.service-landing__gallery-item {
+  position: relative;
+  display: block;
+  margin: 0 0 1.25rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: var(--service-surface);
+  break-inside: avoid;
+}
+
+.service-landing__gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-landing__gallery-item:hover img {
+  transform: scale(1.025);
+}
+
+.service-landing__gallery-item figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2.5rem 1rem 0.85rem;
+  color: #ffffff;
+  background: linear-gradient(to top, rgba(2, 6, 23, 0.82), transparent);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
 /* Process */
 .service-landing__process-list {
   display: flex;
@@ -397,13 +444,15 @@ body.dark-mode .service-landing {
 /* CTA */
 .service-landing__cta {
   padding: clamp(3.5rem, 7vw, 5.5rem) 0;
-  color: var(--service-on-accent-strong);
-  background: var(--service-accent-strong);
+  color: var(--service-cta-ink);
+  background: var(--service-cta-bg);
 }
 
-.service-landing__cta h2,
-.service-landing__cta p {
-  color: var(--service-on-accent-strong) !important;
+/* Doubled class beats the sitewide `body.dark-mode h1/h2/h3/h4` and
+   `body.dark-mode p` !important rules on specificity. */
+.service-landing__cta.service-landing__cta h2,
+.service-landing__cta.service-landing__cta p {
+  color: var(--service-cta-ink) !important;
 }
 
 .service-landing__cta p {
@@ -428,21 +477,21 @@ body.dark-mode .service-landing {
 }
 
 .service-landing__cta .service-landing__button--primary {
-  color: var(--service-accent-strong) !important;
-  background: var(--service-on-accent-strong);
+  color: var(--service-cta-bg) !important;
+  background: var(--service-cta-ink);
 }
 
 .service-landing__cta .service-landing__button--primary:hover {
-  color: var(--service-on-accent-strong) !important;
+  color: var(--service-cta-ink) !important;
   background: transparent;
-  border-color: var(--service-on-accent-strong);
+  border-color: var(--service-cta-ink);
 }
 
 .service-landing__text-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--service-on-accent-strong) !important;
+  color: var(--service-cta-ink) !important;
   font-size: 0.85rem;
   font-weight: 800;
   text-decoration: none;
@@ -471,6 +520,10 @@ body.dark-mode .service-landing {
 
   .service-landing__process-list li {
     grid-template-columns: 1fr;
+  }
+
+  .service-landing__gallery-grid {
+    columns: 1;
   }
 
   .service-landing__process-index {

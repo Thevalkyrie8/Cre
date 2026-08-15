@@ -86,7 +86,7 @@ const ContentStandards = () => (
       <section className="tw-px-4 tw-py-20">
         <div className="tw-mx-auto tw-flex tw-w-[min(74rem,100%)] tw-flex-col tw-items-start tw-justify-between tw-gap-6 sm:tw-flex-row sm:tw-items-center">
           <p className="tw-m-0 tw-max-w-2xl tw-font-editorial tw-text-3xl tw-font-semibold tw-leading-tight tw-text-[#0D4537]" data-vi="Đọc các bài viết và tự đánh giá nội dung theo những cam kết này." data-en="Read our articles and hold us to these commitments.">Đọc các bài viết và tự đánh giá nội dung theo những cam kết này.</p>
-          <Link to="/news" className="tw-rounded-full tw-border tw-border-[#0D5E4D]/25 tw-px-6 tw-py-3 tw-font-bold tw-text-[#0D5E4D] tw-no-underline hover:tw-bg-[#0D5E4D] hover:tw-text-[#FFF9F1]" data-vi="Xem bài viết" data-en="Read articles">Xem bài viết</Link>
+          <Link to="/news" className="content-standards-cta tw-rounded-full tw-border tw-border-[#0D5E4D]/25 tw-px-6 tw-py-3 tw-font-bold tw-text-[#0D5E4D] tw-no-underline hover:tw-bg-[#0D5E4D] hover:tw-text-[#FFF9F1]" data-vi="Xem bài viết" data-en="Read articles">Xem bài viết</Link>
         </div>
       </section>
     </div>
