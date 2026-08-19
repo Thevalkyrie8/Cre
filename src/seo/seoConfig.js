@@ -275,9 +275,9 @@ export const webDevelopmentFaqs = [
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
-    description: 'Unitrux cung cấp thiết kế website, Digital Marketing, E-commerce và Chatbox AI tích hợp Fanpage, Zalo OA, website cho doanh nghiệp.',
+    description: 'Unitrux là đơn vị quay chụp sản phẩm, sản xuất video quảng cáo và triển khai trọn bộ 10 dịch vụ tăng trưởng số: thiết kế website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation và ứng dụng số cho doanh nghiệp.',
     heading: 'Giải pháp tăng trưởng số cho doanh nghiệp',
-    summary: 'Website, marketing, thương mại điện tử và tự động hóa AI được kết nối thành một hệ thống tăng trưởng rõ ràng.',
+    summary: 'Quay chụp sản phẩm, sản xuất video quảng cáo, website, marketing, chatbot AI và tự động hóa được kết nối thành một hệ thống tăng trưởng rõ ràng.',
     type: 'WebPage',
   },
   '/about': {
@@ -640,7 +640,7 @@ export const buildStructuredData = (pathname, overrides = {}) => {
       },
       foundingDate: '2025-10-06',
       url: `${SITE_URL}/`,
-      description: 'Unitrux cung cấp giải pháp website, Digital Marketing, E-commerce, nội dung sáng tạo và tự động hóa AI cho doanh nghiệp.',
+      description: 'Unitrux là đơn vị quay chụp sản phẩm, sản xuất video quảng cáo và cung cấp trọn bộ 10 dịch vụ tăng trưởng số gồm website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation và ứng dụng số cho doanh nghiệp.',
       logo: {
         '@type': 'ImageObject',
         url: DEFAULT_OG_IMAGE,
@@ -659,7 +659,7 @@ export const buildStructuredData = (pathname, overrides = {}) => {
       },
       isicV4: '7310',
       areaServed: ['VN', 'Worldwide'],
-      knowsAbout: ['Website Development', 'Digital Marketing', 'Search Engine Optimization', 'E-commerce', 'UI/UX Design', 'Marketing Automation', 'AI Chatbot'],
+      knowsAbout: ['Product Photography', 'Advertising Video Production', 'Website Development', 'Search Engine Optimization', 'AI Chatbot', 'Digital Marketing', 'Marketing Automation', 'E-commerce', 'UI/UX Design'],
       sameAs: [
         'https://www.facebook.com/UnitruxCreativeStudio',
         'https://www.linkedin.com/company/unitrux',

@@ -4,24 +4,45 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import { legacyRedirects } from './seo/seoConfig';
 
-const ThemedAbout = lazy(() => import('./components/ThemedAbout'));
-const ThemedServices = lazy(() => import('./components/ThemedServices'));
-const ThemedPackages = lazy(() => import('./components/ThemedPackages'));
-const ThemedNews = lazy(() => import('./components/ThemedNews'));
-const ThemedNewsDetail = lazy(() => import('./components/ThemedNewsDetail'));
-const ServiceDetail = lazy(() => import('./components/ServiceDetail'));
-const ThemedServiceDetail = lazy(() => import('./components/ThemedServiceDetail'));
-const ServiceLanding = lazy(() => import('./components/ServiceLanding'));
-const TemplatesPage = lazy(() => import('./components/TemplatesPage'));
-const DigitalMarketingLanding = lazy(() => import('./components/DigitalMarketingLanding'));
-const AutomationService = lazy(() => import('./components/AutomationService'));
-const PhotographyVideoService = lazy(() => import('./components/PhotographyVideoService'));
-const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
-const TermsOfService = lazy(() => import('./components/TermsOfService'));
-const DeleteData = lazy(() => import('./components/DeleteData'));
-const ThemedContact = lazy(() => import('./components/ThemedContact'));
-const NotFound = lazy(() => import('./components/NotFound'));
-const ContentStandards = lazy(() => import('./components/ContentStandards'));
+// After a new deploy, a visitor/crawler holding a stale index.html can request
+// a route chunk whose hashed filename no longer exists (404), throwing inside
+// import(). Retry once via a hard reload (picks up the fresh index.html and
+// chunk map) before surfacing the error to the ErrorBoundary.
+const lazyWithChunkRetry = (importer) => lazy(async () => {
+  const retryFlag = 'unitrux:chunk-retry';
+  try {
+    const mod = await importer();
+    sessionStorage.removeItem(retryFlag);
+    return mod;
+  } catch (error) {
+    if (!sessionStorage.getItem(retryFlag)) {
+      sessionStorage.setItem(retryFlag, '1');
+      window.location.reload();
+      return new Promise(() => {}); // reload is in flight; never resolve
+    }
+    sessionStorage.removeItem(retryFlag);
+    throw error;
+  }
+});
+
+const ThemedAbout = lazyWithChunkRetry(() => import('./components/ThemedAbout'));
+const ThemedServices = lazyWithChunkRetry(() => import('./components/ThemedServices'));
+const ThemedPackages = lazyWithChunkRetry(() => import('./components/ThemedPackages'));
+const ThemedNews = lazyWithChunkRetry(() => import('./components/ThemedNews'));
+const ThemedNewsDetail = lazyWithChunkRetry(() => import('./components/ThemedNewsDetail'));
+const ServiceDetail = lazyWithChunkRetry(() => import('./components/ServiceDetail'));
+const ThemedServiceDetail = lazyWithChunkRetry(() => import('./components/ThemedServiceDetail'));
+const ServiceLanding = lazyWithChunkRetry(() => import('./components/ServiceLanding'));
+const TemplatesPage = lazyWithChunkRetry(() => import('./components/TemplatesPage'));
+const DigitalMarketingLanding = lazyWithChunkRetry(() => import('./components/DigitalMarketingLanding'));
+const AutomationService = lazyWithChunkRetry(() => import('./components/AutomationService'));
+const PhotographyVideoService = lazyWithChunkRetry(() => import('./components/PhotographyVideoService'));
+const PrivacyPolicy = lazyWithChunkRetry(() => import('./components/PrivacyPolicy'));
+const TermsOfService = lazyWithChunkRetry(() => import('./components/TermsOfService'));
+const DeleteData = lazyWithChunkRetry(() => import('./components/DeleteData'));
+const ThemedContact = lazyWithChunkRetry(() => import('./components/ThemedContact'));
+const NotFound = lazyWithChunkRetry(() => import('./components/NotFound'));
+const ContentStandards = lazyWithChunkRetry(() => import('./components/ContentStandards'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
