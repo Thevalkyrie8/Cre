@@ -2,15 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
+import { getNews, getNewsById, getServices, resolveAssetUrl } from '../api/client';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { trackEvent } from '../analytics/tracking';
 import { articleMarkdownComponents } from '../utils/markdownComponents';
 import { truncateAtWordBoundary } from '../utils/text';
 
 const copy = {
-  en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: '', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch' },
-  vi: { home: 'Trang chủ', news: 'Tin tức', back: 'Quay lại tin tức', loading: 'Đang chuẩn bị bài viết…', error: 'Không thể tải bài viết này.', note: 'Về bài viết này', noteBody: '', standards: 'Tiêu chuẩn biên tập', published: 'Xuất bản', updated: 'Cập nhật', min: 'phút đọc', keep: 'Đọc tiếp', trend: 'Theo dõi xu hướng' }
+  en: { home: 'Home', news: 'News', back: 'Back to news', loading: 'Preparing the article…', error: 'This article could not be loaded.', note: 'About this article', noteBody: '', standards: 'Editorial standards', published: 'Published', updated: 'Updated', min: 'min read', keep: 'Keep reading', trend: 'Trend watch', relatedServices: 'Related services' },
+  vi: { home: 'Trang chủ', news: 'Tin tức', back: 'Quay lại tin tức', loading: 'Đang chuẩn bị bài viết…', error: 'Không thể tải bài viết này.', note: 'Về bài viết này', noteBody: '', standards: 'Tiêu chuẩn biên tập', published: 'Xuất bản', updated: 'Cập nhật', min: 'phút đọc', keep: 'Đọc tiếp', trend: 'Theo dõi xu hướng', relatedServices: 'Dịch vụ liên quan' }
 };
 
 const stripMarkdown = (value = '') => String(value).replace(/[#*_>`~[\]()]/g, '').replace(/\s+/g, ' ').trim();
@@ -36,6 +36,13 @@ const toIsoDate = (value) => {
   return Number.isNaN(date.getTime()) ? '' : date.toISOString();
 };
 
+const normalizeAuthor = (value) => {
+  if (value && typeof value === 'object') {
+    return { name: normalizeUnicode(value.name || 'Unitrux Team'), bio: normalizeUnicode(value.bio || ''), avatarUrl: value.avatarUrl || '' };
+  }
+  return { name: normalizeUnicode(value || 'Unitrux Team'), bio: '', avatarUrl: '' };
+};
+
 const normalizeArticle = (article, language) => {
   const localized = getLocalizedNewsFields(article, language);
   const title = normalizeUnicode(localized.title);
@@ -43,7 +50,7 @@ const normalizeArticle = (article, language) => {
   const excerpt = normalizeUnicode(localized.excerpt);
   return {
     ...article, title: title || 'Untitled', content: content || '', excerpt: stripMarkdown(excerpt || ''),
-    slug: getNewsSlug(article), category: article.category || 'Business', author: article.author || 'Unitrux Team',
+    slug: getNewsSlug(article), category: article.category || 'Business', author: normalizeAuthor(article.author),
     tags: normalizeTags(article.tags),
     image: resolveAssetUrl(article.image, '/logo.jpg'), dateLabel: formatDate(article.createdAt || article.updatedAt, language),
     publishedLabel: formatDate(article.createdAt, language), updatedLabel: formatDate(article.updatedAt, language),
@@ -66,6 +73,7 @@ const NewsDetailShowcase = () => {
   const [language, setLanguage] = useState(getStoredLanguage);
   const [rawArticle, setRawArticle] = useState(null);
   const [related, setRelated] = useState([]);
+  const [relatedServices, setRelatedServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const t = copy[language] || copy.en;
@@ -102,8 +110,26 @@ const NewsDetailShowcase = () => {
         setRawArticle(result);
         const canonical = getNewsSlug(result);
         if (canonical !== routeId) navigate(`/news/${canonical}`, { replace: true });
-        if (!list.length) list = unwrapNewsList(await getNews({ lang: language, category: result.category }));
-        if (active) setRelated(list.filter((item) => item.id !== result.id).slice(0, 3).map((item) => normalizeArticle(item, language)));
+
+        const relatedArticleIds = Array.isArray(result.relatedArticleIds) ? result.relatedArticleIds : [];
+        let relatedItems = [];
+        if (relatedArticleIds.length) {
+          const fetched = await Promise.all(relatedArticleIds.map((relatedId) => getNewsById(relatedId, { lang: language }).catch(() => null)));
+          relatedItems = fetched.filter(Boolean);
+        }
+        if (!relatedItems.length) {
+          if (!list.length) list = unwrapNewsList(await getNews({ lang: language, category: result.category }));
+          relatedItems = list.filter((item) => item.id !== result.id);
+        }
+        if (active) setRelated(relatedItems.slice(0, 3).map((item) => normalizeArticle(item, language)));
+
+        const relatedServiceIds = Array.isArray(result.relatedServiceIds) ? result.relatedServiceIds : [];
+        if (relatedServiceIds.length) {
+          const services = unwrapNewsList(await getServices());
+          if (active) setRelatedServices(services.filter((service) => relatedServiceIds.includes(service.id)));
+        } else if (active) {
+          setRelatedServices([]);
+        }
       } catch {
         if (active) setError(t.error);
       } finally {
@@ -123,7 +149,7 @@ const NewsDetailShowcase = () => {
         title: article.title,
         description: truncateAtWordBoundary(article.excerpt || stripMarkdown(article.content), 160),
         image: article.image,
-        author: article.author,
+        author: article.author?.name,
         articleSection: article.category,
         keywords: article.tags,
         content: article.content,
@@ -147,7 +173,18 @@ const NewsDetailShowcase = () => {
             <div className="tw-mt-12 tw-flex tw-items-center tw-gap-3 tw-text-[.7rem] tw-font-black tw-uppercase tw-tracking-[.2em] tw-text-[#C5751E]"><span>{article.category}</span><span>•</span><span>{article.dateLabel}</span></div>
             <h1 data-title-reveal className="master-title news-detail-title tw-mb-0 tw-mt-7 tw-max-w-[68rem] tw-text-[#0D4537]">{article.title}</h1>
             {article.excerpt && <p className="tw-mb-0 tw-mt-8 tw-max-w-3xl tw-text-lg tw-leading-8 tw-text-[#536A61]">{article.excerpt}</p>}
-            <div className="tw-mt-7 tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-sm tw-text-[#315248]"><span className="tw-grid tw-h-8 tw-w-8 tw-place-items-center tw-rounded-full tw-bg-[#0D5E4D] tw-font-editorial tw-text-[#F5BC72]">U.</span><Link to="/content-standards#editorial-process" className="tw-font-bold tw-text-[#315248] tw-underline-offset-4 hover:tw-underline">{article.author}</Link><span className="tw-h-5 tw-w-px tw-bg-[#0D5E4D]/25"/><span>◷&nbsp; {article.minutes} {t.min}</span></div>
+            <div className="tw-mt-7 tw-flex tw-flex-wrap tw-items-center tw-gap-4 tw-text-sm tw-text-[#315248]">
+              {article.author.avatarUrl ? (
+                <img src={resolveAssetUrl(article.author.avatarUrl, '')} alt={article.author.name} className="tw-h-8 tw-w-8 tw-rounded-full tw-border tw-border-[#0D5E4D]/20 tw-object-cover"/>
+              ) : (
+                <span className="tw-grid tw-h-8 tw-w-8 tw-place-items-center tw-rounded-full tw-bg-[#0D5E4D] tw-font-editorial tw-text-[#F5BC72]">{article.author.name.charAt(0).toUpperCase()}.</span>
+              )}
+              <span className="tw-flex tw-flex-col tw-leading-tight">
+                <Link to="/content-standards#editorial-process" className="tw-font-bold tw-text-[#315248] tw-underline-offset-4 hover:tw-underline">{article.author.name}</Link>
+                {article.author.bio && <span className="tw-text-xs tw-text-[#61756F]">{article.author.bio}</span>}
+              </span>
+              <span className="tw-h-5 tw-w-px tw-bg-[#0D5E4D]/25"/><span>◷&nbsp; {article.minutes} {t.min}</span>
+            </div>
             {article.tags.length > 0 && (
               <ul
                 className="tw-mb-0 tw-mt-6 tw-flex tw-list-none tw-flex-wrap tw-gap-2 tw-p-0"
@@ -193,6 +230,8 @@ const NewsDetailShowcase = () => {
       </section>
 
       {related.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#F1EBE2] tw-py-20"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-medium tw-text-[#0D4537]">{t.keep}</h2><div className="tw-mt-9 tw-grid tw-gap-5 md:tw-grid-cols-3">{related.map((item) => <Link key={item.id} to={`/news/${item.slug}`} className="tw-group tw-overflow-hidden tw-rounded-[1.4rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#FEF7EA] tw-text-inherit tw-no-underline"><img src={item.image} alt={item.title} width="800" height="450" loading="lazy" decoding="async" className="tw-h-48 tw-w-full tw-object-cover tw-transition tw-duration-700 group-hover:tw-scale-105"/><div className="tw-p-5"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.15em] tw-text-[#E68C23]">{item.category}</span><h3 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-2xl tw-font-medium tw-leading-none tw-text-[#0D4537]">{item.title}</h3></div></Link>)}</div></div></section>}
+
+      {relatedServices.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#FAF8F5] tw-py-16"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-4xl tw-font-medium tw-text-[#0D4537]">{t.relatedServices}</h2><ul className="tw-mb-0 tw-mt-7 tw-flex tw-list-none tw-flex-wrap tw-gap-3 tw-p-0">{relatedServices.map((service) => <li key={service.id}><Link to={`/services/${service.id}`} className="tw-inline-flex tw-items-center tw-gap-2 tw-rounded-full tw-border tw-border-[#0D5E4D]/25 tw-bg-[#FEF7EA] tw-px-5 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-[#0D4537] tw-no-underline tw-transition hover:tw-border-[#0D5E4D]/50">{language === 'vi' && service.nameVi ? service.nameVi : service.name} →</Link></li>)}</ul></div></section>}
     </article>
   );
 };
