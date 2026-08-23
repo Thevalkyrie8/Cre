@@ -138,10 +138,10 @@ const DigitalMarketingLanding = () => {
       });
     };
 
-    const savedLanguage = localStorage.getItem('language') === 'vi' ? 'vi' : 'en';
+    const savedLanguage = localStorage.getItem('language') === 'en' ? 'en' : 'vi';
     applyPageLanguage(savedLanguage);
 
-    const handleLanguageChange = (event) => applyPageLanguage(event.detail?.language === 'vi' ? 'vi' : 'en');
+    const handleLanguageChange = (event) => applyPageLanguage(event.detail?.language === 'en' ? 'en' : 'vi');
     window.addEventListener('languageChange', handleLanguageChange);
     return () => window.removeEventListener('languageChange', handleLanguageChange);
   }, []);

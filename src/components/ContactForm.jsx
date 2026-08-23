@@ -4,9 +4,9 @@ import { trackEvent } from '../analytics/tracking';
 
 const getInitialLanguage = () => {
   try {
-    return localStorage.getItem('language') === 'vi' ? 'vi' : 'en';
+    return localStorage.getItem('language') === 'en' ? 'en' : 'vi';
   } catch {
-    return 'en';
+    return 'vi';
   }
 };
 

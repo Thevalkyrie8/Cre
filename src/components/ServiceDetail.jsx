@@ -7,9 +7,9 @@ import remarkGfm from 'remark-gfm';
 // Helper function to get current language
 const getCurrentLanguage = () => {
   try {
-    return localStorage.getItem('language') || 'en';
+    return localStorage.getItem('language') === 'en' ? 'en' : 'vi';
   } catch {
-    return 'en';
+    return 'vi';
   }
 };
 

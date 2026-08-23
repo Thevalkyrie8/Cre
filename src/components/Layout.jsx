@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('vi');
   const [theme, setTheme] = useState('dark');
   const navigationRef = useRef(null);
   useMasterInteractions(`${location.pathname}:${theme}`);
@@ -68,7 +68,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     try {
       // Load saved language and theme
-      const savedLanguage = localStorage.getItem('language') || 'en';
+      const savedLanguage = localStorage.getItem('language') || 'vi';
       const savedTheme = localStorage.getItem('theme') || 'dark';
       setLanguage(savedLanguage);
       setTheme(savedTheme);
@@ -85,7 +85,7 @@ const Layout = ({ children }) => {
     } catch (error) {
       console.error('Error loading saved preferences:', error);
       // Set defaults if localStorage fails
-      setLanguage('en');
+      setLanguage('vi');
       setTheme('dark');
     }
   }, []);
@@ -222,6 +222,9 @@ const Layout = ({ children }) => {
             </Link>
             <Link to="/news" className={`nav-link ${isActivePath('/news') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
               <span data-vi="Góc tăng trưởng" data-en="Growth insights" data-default="en">Growth insights</span>
+            </Link>
+            <Link to="/media-pricing" className={`nav-link ${isActivePath('/media-pricing') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Quay chụp & Video" data-en="Photo & Video" data-default="vi">Quay chụp & Video</span>
             </Link>
             <a
               href="tel:+84938695186"

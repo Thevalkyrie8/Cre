@@ -490,6 +490,7 @@ export const servicesContent = {
       },
     ],
     relatedServices: [
+      { path: '/media-pricing', label: { en: 'See detailed photo & video pricing', vi: 'Xem bảng giá chi tiết quay chụp' } },
       { path: '/photography-video', label: { en: 'Advertising video production', vi: 'Sản xuất video quảng cáo' } },
       { path: '/content-creation', label: { en: 'Multi-channel content', vi: 'Nội dung đa kênh' } },
       { path: '/digital-marketing', label: { en: 'Multi-platform advertising', vi: 'Quảng cáo đa nền tảng' } },

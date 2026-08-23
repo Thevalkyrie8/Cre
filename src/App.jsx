@@ -43,6 +43,7 @@ const DeleteData = lazyWithChunkRetry(() => import('./components/DeleteData'));
 const ThemedContact = lazyWithChunkRetry(() => import('./components/ThemedContact'));
 const NotFound = lazyWithChunkRetry(() => import('./components/NotFound'));
 const ContentStandards = lazyWithChunkRetry(() => import('./components/ContentStandards'));
+const MediaPricingShowcase = lazyWithChunkRetry(() => import('./components/MediaPricingShowcase'));
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -125,6 +126,7 @@ function App() {
               <Route path="/seo-services" element={<ServiceLanding serviceKey="seo-services" />} />
               <Route path="/product-photography" element={<ServiceLanding serviceKey="product-photography" />} />
               <Route path="/templates" element={<TemplatesPage />} />
+              <Route path="/media-pricing" element={<MediaPricingShowcase />} />
               {Object.entries(legacyRedirects).map(([from, to]) => (
                 <Route key={from} path={from} element={<Navigate to={to} replace />} />
               ))}

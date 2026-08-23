@@ -219,6 +219,11 @@ const PhotographyVideoService = () => (
               >
                 Demonstrate features, materials, dimensions and real use for websites, landing pages and marketplaces.
               </p>
+              <p>
+                <Link to="/news/quay-video-san-pham-can-chuan-bi-gi">
+                  <span data-vi="Quay video sản phẩm cần chuẩn bị gì? →" data-en="What to prepare before a product video shoot →">What to prepare before a product video shoot →</span>
+                </Link>
+              </p>
             </div>
           </article>
           <article>
@@ -340,6 +345,15 @@ const PhotographyVideoService = () => (
             <summary data-vi="Chi phí được tính như thế nào?" data-en="How is production priced?">How is production priced?</summary>
             <p data-vi="Chi phí phụ thuộc vào số ngày quay, bối cảnh, thiết bị, nhân sự, người mẫu, đạo cụ, số phiên bản và mức độ hậu kỳ. Báo giá sẽ tách rõ từng phạm vi." data-en="Pricing depends on shoot days, locations, equipment, crew, talent, props, version count and post-production. The quotation itemizes the scope.">Pricing depends on shoot days, locations, equipment, crew, talent, props, version count and post-production. The quotation itemizes the scope.</p>
           </details>
+          <details>
+            <summary data-vi="Quay video sản phẩm cần chuẩn bị gì trước ngày quay?" data-en="What should we prepare before a product video shoot?">What should we prepare before a product video shoot?</summary>
+            <p data-vi="Nên xác định trước sản phẩm ưu tiên quay, số lượng cần có mặt trên set, kênh sẽ đăng nội dung và tỷ lệ khung hình cần dùng (ngang cho website, dọc cho TikTok/Reels)." data-en="Decide in advance which products to prioritize, how many units to have on set, which channels the content will run on, and which aspect ratio you need (horizontal for the website, vertical for TikTok/Reels).">Decide in advance which products to prioritize, how many units to have on set, which channels the content will run on, and which aspect ratio you need (horizontal for the website, vertical for TikTok/Reels).</p>
+            <p>
+              <Link to="/news/quay-video-san-pham-can-chuan-bi-gi">
+                <span data-vi="Xem checklist chuẩn bị đầy đủ →" data-en="See the full prep checklist →">See the full prep checklist →</span>
+              </Link>
+            </p>
+          </details>
         </div>
       </div>
     </section>
@@ -370,6 +384,11 @@ const PhotographyVideoService = () => (
             <span data-vi="Đặt lịch trao đổi" data-en="Book a conversation">Book a conversation</span>
           </Link>
         </div>
+        <p>
+          <Link to="/media-pricing">
+            <span data-vi="Xem bảng giá chi tiết quay chụp & media →" data-en="See detailed photography & media pricing →">See detailed photography & media pricing →</span>
+          </Link>
+        </p>
       </div>
     </section>
   </div>

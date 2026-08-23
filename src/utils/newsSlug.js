@@ -12,9 +12,9 @@ export const getNewsSlug = (article = {}) =>
 
 export const getStoredLanguage = () => {
   try {
-    return localStorage.getItem('language') === 'vi' ? 'vi' : 'en';
+    return localStorage.getItem('language') === 'en' ? 'en' : 'vi';
   } catch {
-    return 'en';
+    return 'vi';
   }
 };
 

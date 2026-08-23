@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getNews, getNewsById, getServices, resolveAssetUrl } from '../api/client';
+import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
+import { services as unitruxServices } from '../data/services';
 import { trackEvent } from '../analytics/tracking';
 import { articleMarkdownComponents } from '../utils/markdownComponents';
 import { truncateAtWordBoundary } from '../utils/text';
@@ -124,11 +125,8 @@ const NewsDetailShowcase = () => {
         if (active) setRelated(relatedItems.slice(0, 3).map((item) => normalizeArticle(item, language)));
 
         const relatedServiceIds = Array.isArray(result.relatedServiceIds) ? result.relatedServiceIds : [];
-        if (relatedServiceIds.length) {
-          const services = unwrapNewsList(await getServices());
-          if (active) setRelatedServices(services.filter((service) => relatedServiceIds.includes(service.id)));
-        } else if (active) {
-          setRelatedServices([]);
+        if (active) {
+          setRelatedServices(unitruxServices.filter((service) => relatedServiceIds.includes(service.to)));
         }
       } catch {
         if (active) setError(t.error);
@@ -231,7 +229,7 @@ const NewsDetailShowcase = () => {
 
       {related.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#F1EBE2] tw-py-20"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-medium tw-text-[#0D4537]">{t.keep}</h2><div className="tw-mt-9 tw-grid tw-gap-5 md:tw-grid-cols-3">{related.map((item) => <Link key={item.id} to={`/news/${item.slug}`} className="tw-group tw-overflow-hidden tw-rounded-[1.4rem] tw-border tw-border-[#0D5E4D]/12 tw-bg-[#FEF7EA] tw-text-inherit tw-no-underline"><img src={item.image} alt={item.title} width="800" height="450" loading="lazy" decoding="async" className="tw-h-48 tw-w-full tw-object-cover tw-transition tw-duration-700 group-hover:tw-scale-105"/><div className="tw-p-5"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.15em] tw-text-[#E68C23]">{item.category}</span><h3 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-2xl tw-font-medium tw-leading-none tw-text-[#0D4537]">{item.title}</h3></div></Link>)}</div></div></section>}
 
-      {relatedServices.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#FAF8F5] tw-py-16"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-4xl tw-font-medium tw-text-[#0D4537]">{t.relatedServices}</h2><ul className="tw-mb-0 tw-mt-7 tw-flex tw-list-none tw-flex-wrap tw-gap-3 tw-p-0">{relatedServices.map((service) => <li key={service.id}><Link to={`/services/${service.id}`} className="tw-inline-flex tw-items-center tw-gap-2 tw-rounded-full tw-border tw-border-[#0D5E4D]/25 tw-bg-[#FEF7EA] tw-px-5 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-[#0D4537] tw-no-underline tw-transition hover:tw-border-[#0D5E4D]/50">{language === 'vi' && service.nameVi ? service.nameVi : service.name} →</Link></li>)}</ul></div></section>}
+      {relatedServices.length > 0 && <section className="tw-border-t tw-border-[#0D5E4D]/10 tw-bg-[#FAF8F5] tw-py-16"><div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]"><h2 className="tw-m-0 tw-font-editorial tw-text-4xl tw-font-medium tw-text-[#0D4537]">{t.relatedServices}</h2><ul className="tw-mb-0 tw-mt-7 tw-flex tw-list-none tw-flex-wrap tw-gap-3 tw-p-0">{relatedServices.map((service) => <li key={service.to}><Link to={service.to} className="tw-inline-flex tw-items-center tw-gap-2 tw-rounded-full tw-border tw-border-[#0D5E4D]/25 tw-bg-[#FEF7EA] tw-px-5 tw-py-2.5 tw-text-sm tw-font-semibold tw-text-[#0D4537] tw-no-underline tw-transition hover:tw-border-[#0D5E4D]/50">{language === 'vi' && service.titleVi ? service.titleVi : service.title} →</Link></li>)}</ul></div></section>}
     </article>
   );
 };
