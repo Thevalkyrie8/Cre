@@ -21,12 +21,12 @@ const HeroShowcase = () => {
             Digital growth system for Vietnamese SMEs
           </p>
           <h1 id="unitrux-hero-title" data-title-reveal>
-            <span data-en="Website, chatbot, SEO and Ads." data-vi="Website, chatbot, SEO và Ads.">Website, chatbot, SEO and Ads.</span>
+            <span data-en="Not ten separate services." data-vi="Không phải mười dịch vụ rời rạc.">Not ten separate services.</span>
             {' '}
-            <span className="unitrux-hero__emphasis" data-en="One system built to grow." data-vi="Một hệ thống để tăng trưởng.">One system built to grow.</span>
+            <span className="unitrux-hero__emphasis" data-en="One connected growth system." data-vi="Là một hệ thống tăng trưởng kết nối.">One connected growth system.</span>
           </h1>
-          <p className="unitrux-hero__lead" data-en="Unitrux connects the touchpoints that attract, convince and convert customers—then gives your team the signals to improve what happens next." data-vi="Unitrux kết nối các điểm chạm để thu hút, thuyết phục và chuyển đổi khách hàng — đồng thời cung cấp dữ liệu để đội ngũ tối ưu bước tiếp theo.">
-            Unitrux connects the touchpoints that attract, convince and convert customers—then gives your team the signals to improve what happens next.
+          <p className="unitrux-hero__lead" data-en="From apps, Fanpage and AI chatbot to content, ads, automation, SEO/AEO/GEO, websites and product photography — Unitrux runs all 10 services as one connected system, built around your customer journey." data-vi="Từ ứng dụng số, Fanpage, Chatbot AI, nội dung, quảng cáo, automation, SEO/AEO/GEO, website đến quay chụp sản phẩm — Unitrux vận hành cả 10 dịch vụ trong một hệ thống duy nhất, xoay quanh hành trình khách hàng của bạn.">
+            From apps, Fanpage and AI chatbot to content, ads, automation, SEO/AEO/GEO, websites and product photography — Unitrux runs all 10 services as one connected system, built around your customer journey.
           </p>
           <div className="unitrux-hero__actions">
             <button type="button" className="home-primary-action engine-pill-cta" onClick={openChat} data-magnetic data-ripple>

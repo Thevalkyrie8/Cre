@@ -1,5 +1,10 @@
 # Unitrux React Website
 
+## Tài liệu tracking
+
+- [Hướng dẫn cấu hình Google Tag Manager và GA4](./docs/HUONG-DAN-CAU-HINH-GTM-GA4.md)
+- [Tổng quan measurement và các nền tảng quảng cáo](./docs/measurement-and-local-setup.md)
+
 Đây là phiên bản React.js của website Unitrux, được chuyển đổi từ HTML/CSS/JavaScript gốc.
 
 ## Tính năng

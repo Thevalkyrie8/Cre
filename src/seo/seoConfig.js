@@ -108,6 +108,10 @@ const productionFaqs = [
     question: 'Chi phí sản xuất video quảng cáo được tính như thế nào?',
     answer: 'Chi phí phụ thuộc vào số ngày quay, bối cảnh, thiết bị, nhân sự, người mẫu, đạo cụ, số phiên bản và mức độ hậu kỳ. Báo giá của Unitrux sẽ tách rõ từng phạm vi.',
   },
+  {
+    question: 'Quay video sản phẩm cần chuẩn bị gì trước ngày quay?',
+    answer: 'Nên xác định trước sản phẩm ưu tiên quay, số lượng cần có mặt trên set, kênh sẽ đăng nội dung và tỷ lệ khung hình cần dùng (ngang cho website, dọc cho TikTok/Reels). Unitrux có hướng dẫn chi tiết hơn về quy trình và checklist chuẩn bị trên trang Kiến thức Digital.',
+  },
 ];
 
 export const digitalSolutionsFaqs = [
@@ -272,10 +276,37 @@ export const webDevelopmentFaqs = [
   },
 ];
 
+export const mediaPricingFaqs = [
+  {
+    question: 'Giá trên đã bao gồm VAT chưa?',
+    answer: 'Chưa. Giá trên chưa bao gồm VAT (nếu áp dụng) — thuế và chứng từ sẽ được thể hiện rõ theo báo giá và hợp đồng chính thức.',
+    questionEn: 'Do these prices include VAT?',
+    answerEn: 'No. The prices above exclude VAT (where applicable) — tax and invoicing are stated clearly in the official quote and contract.',
+  },
+  {
+    question: 'Có thể kết hợp nhiều gói trong cùng một buổi quay không?',
+    answer: 'Có. Nhóm Combo Media (Photo + 3 Reels, Campaign Media Day) được thiết kế riêng để gộp ảnh và video trong cùng một buổi — tiết kiệm thời gian hơn đặt từng gói riêng lẻ.',
+    questionEn: 'Can multiple packages be combined in one shoot?',
+    answerEn: 'Yes. The Combo Media group (Photo + 3 Reels, Campaign Media Day) is built specifically to bundle photo and video in one session — faster than booking each separately.',
+  },
+  {
+    question: 'Chưa biết chọn gói nào thì sao?',
+    answer: 'Chia sẻ sản phẩm, không gian hoặc mục tiêu quay dựng — Unitrux sẽ đề xuất gói và concept phù hợp trước khi báo giá chính thức.',
+    questionEn: "What if I don't know which package to pick?",
+    answerEn: 'Share your product, space, or shoot goal — Unitrux will recommend a matching package and concept before the official quote.',
+  },
+  {
+    question: 'Cần thêm giờ quay hoặc hậu kỳ ngoài gói thì tính thế nào?',
+    answer: 'Xem bảng "Add-on Media" trên trang — mỗi hạng mục phát sinh (giờ quay thêm, hậu kỳ, tỷ lệ khung hình, vòng chỉnh sửa...) đều có giá tham khảo riêng.',
+    questionEn: 'How is extra time or post-production beyond a package priced?',
+    answerEn: 'See the "Media add-ons" table on the page — each extra item (additional hours, editing, aspect ratios, revision rounds...) has its own reference price.',
+  },
+];
+
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
-    description: 'Unitrux là đơn vị quay chụp sản phẩm, sản xuất video quảng cáo và triển khai trọn bộ 10 dịch vụ tăng trưởng số: thiết kế website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation và ứng dụng số cho doanh nghiệp.',
+    description: 'Unitrux quay chụp sản phẩm, sản xuất video quảng cáo và thiết kế website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, quảng cáo đa nền tảng cho doanh nghiệp.',
     heading: 'Giải pháp tăng trưởng số cho doanh nghiệp',
     summary: 'Quay chụp sản phẩm, sản xuất video quảng cáo, website, marketing, chatbot AI và tự động hóa được kết nối thành một hệ thống tăng trưởng rõ ràng.',
     type: 'WebPage',
@@ -522,11 +553,37 @@ export const seoPages = {
     },
   },
   '/packages': {
-    title: 'Bảng giá và gói dịch vụ Digital | Unitrux',
-    description: 'Tham khảo các gói website, marketing, E-commerce, hình ảnh, SEO và tư vấn phù hợp mục tiêu doanh nghiệp.',
-    heading: 'Gói dịch vụ Unitrux',
-    summary: 'Các gói triển khai linh hoạt theo phạm vi, mục tiêu và giai đoạn tăng trưởng của doanh nghiệp.',
+    title: 'Bảng giá dịch vụ Unitrux | 10 dịch vụ, 3 mức giá mỗi dịch vụ',
+    description: 'Bảng giá tham khảo cho 10 dịch vụ của Unitrux: website, marketing, chatbot AI, automation, SEO/AEO/GEO, video và quay chụp — mỗi dịch vụ 3 mức giá rõ ràng.',
+    heading: 'Bảng giá dịch vụ Unitrux',
+    summary: 'Mỗi dịch vụ có 3 mức giá tham khảo rõ ràng — từ gói khởi điểm đến gói mở rộng — cùng add-on chi phí phát sinh nếu cần.',
     type: 'CollectionPage',
+  },
+  '/media-pricing': {
+    title: 'Bảng giá quay chụp & sản xuất Media | Unitrux',
+    description: 'Bảng giá chi tiết quay chụp sản phẩm, không gian, thương hiệu và sản xuất video ngắn — 17 gói theo 8 nhóm dịch vụ, giá tham khảo rõ ràng.',
+    heading: 'Bảng giá quay chụp & sản xuất Media',
+    summary: 'Giá tham khảo cho chụp ảnh sản phẩm, F&B, không gian, brand, video short-form, video quảng cáo, combo media và setup livestream.',
+    type: 'Service',
+    serviceName: 'Bảng giá quay chụp & sản xuất Media',
+    faqs: mediaPricingFaqs,
+    schema: {
+      serviceType: 'Bảng giá quay chụp & sản xuất Media',
+      categories: ['Chụp ảnh sản phẩm', 'Chụp ảnh không gian', 'Video short-form', 'Video quảng cáo', 'Combo Media', 'Setup livestream'],
+      areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
+      audienceType: 'Doanh nghiệp cần tham khảo giá quay chụp sản phẩm, thương hiệu hoặc sản xuất video trước khi liên hệ',
+      offerCatalogName: 'Bảng giá quay chụp & Media',
+      offerCatalog: [
+        { name: 'Chụp ảnh sản phẩm — Từ 1.200.000đ/buổi' },
+        { name: 'Food & Beverage — Từ 2.000.000đ/buổi' },
+        { name: 'Không gian / Nội thất / Dịch vụ — Từ 2.000.000đ/buổi' },
+        { name: 'Brand / Nhân sự — Từ 2.800.000đ/buổi' },
+        { name: 'Video short-form — Từ 2.000.000đ/video' },
+        { name: 'Video quảng cáo — Từ 5.500.000đ/video' },
+        { name: 'Combo Media — Từ 7.100.000đ/gói' },
+        { name: 'Setup Livestream / Studio — Từ 5.500.000đ/dự án' },
+      ],
+    },
   },
   '/news': {
     title: 'Kiến thức Marketing, AI và E-commerce | Unitrux',
@@ -640,7 +697,7 @@ export const buildStructuredData = (pathname, overrides = {}) => {
       },
       foundingDate: '2025-10-06',
       url: `${SITE_URL}/`,
-      description: 'Unitrux là đơn vị quay chụp sản phẩm, sản xuất video quảng cáo và cung cấp trọn bộ 10 dịch vụ tăng trưởng số gồm website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation và ứng dụng số cho doanh nghiệp.',
+      description: 'Unitrux – Giải pháp marketing và công nghệ trọn gói cho SME. Triển khai trọn bộ 10 dịch vụ tăng trưởng số: gồm website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation và ứng dụng số cho doanh nghiệp.',
       logo: {
         '@type': 'ImageObject',
         url: DEFAULT_OG_IMAGE,
