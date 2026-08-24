@@ -1,4 +1,8 @@
-import { resolveAssetUrl } from '../api/client';
+import { createElement } from 'react';
+import { resolveAssetUrl } from '../api/client.js';
+
+// This file is imported by scripts/generate-seo-pages.mjs, which runs under
+// plain Node (no JSX transform) — use createElement, not JSX, here.
 
 // Article pages already render their own <h1> (the article title) above the
 // markdown body. CMS content sometimes repeats the title as a leading `#`
@@ -9,5 +13,5 @@ export const articleMarkdownComponents = {
   h1: 'h2',
   // The API returns API-relative image paths like "/api/media/file/:id" in
   // markdown content — resolve them against the API origin, not this site's.
-  img: ({ src, alt, ...props }) => <img src={resolveAssetUrl(src, src)} alt={alt || ''} {...props} />,
+  img: ({ src, alt, title }) => createElement('img', { src: resolveAssetUrl(src, src), alt: alt || '', title }),
 };
