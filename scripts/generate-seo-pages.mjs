@@ -131,7 +131,24 @@ const cmsServices = await loadServices();
 const buildSeoBlock = (path, page) => {
   const canonical = getCanonicalUrl(path);
   const socialImage = page.ogImage || DEFAULT_OG_IMAGE;
-  const schema = JSON.stringify(buildStructuredData(path)).replaceAll('<', '\\u003c');
+  const structuredData = buildStructuredData(path);
+  // The /news list is fetched client-side, so buildStructuredData() (a pure
+  // config-time function) has no article data to work with. This script
+  // already fetched newsArticles for the per-article static pages below, so
+  // splice an ItemList in here — the one place both are in scope.
+  if (path === '/news' && newsArticles.length && Array.isArray(structuredData['@graph'])) {
+    structuredData['@graph'].push({
+      '@type': 'ItemList',
+      '@id': `${canonical}#itemlist`,
+      itemListElement: newsArticles.map((article, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${SITE_URL}/news/${encodeURIComponent(article.slug)}/`,
+        name: article.title,
+      })),
+    });
+  }
+  const schema = JSON.stringify(structuredData).replaceAll('<', '\\u003c');
   return `<!-- SEO:START -->
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeHtml(page.description)}" />

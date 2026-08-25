@@ -242,8 +242,8 @@ const About = () => {
             <div className="timeline-item">
               <div className="timeline-year">2023</div>
               <div className="timeline-content">
-                <h3 data-vi="Đạt 15 dự án" data-en="15 Projects Milestone">Đạt 10 dự án</h3>
-                <p data-vi="Hoàn thành 15 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn." data-en="Completed 500 successful projects and became a trusted partner of many large businesses.">
+                <h3 data-vi="Đạt 15 dự án" data-en="15 Projects Milestone">Đạt 15 dự án</h3>
+                <p data-vi="Hoàn thành 15 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn." data-en="Completed 15 successful projects and became a trusted partner of many large businesses.">
                   Hoàn thành 15 dự án thành công và trở thành đối tác tin cậy của nhiều doanh nghiệp lớn.
                 </p>
               </div>

@@ -336,6 +336,9 @@ const Layout = ({ children }) => {
               <p data-vi="Chúng tôi cung cấp các giải pháp marketing toàn diện để giúp doanh nghiệp phát triển bền vững." data-en="We provide comprehensive marketing solutions to help businesses grow sustainably." data-default="en">
                 We provide comprehensive marketing solutions to help businesses grow sustainably.
               </p>
+              <p className="footer-legal-identity" data-vi="CÔNG TY TNHH UNITRUX · MST 0319201007 · 84/12 Đường An Phú Đông 03, Phường An Phú Đông, TP. Hồ Chí Minh" data-en="UNITRUX CO., LTD · Tax ID 0319201007 · 84/12 An Phu Dong 03 Street, An Phu Dong Ward, Ho Chi Minh City" data-default="vi">
+                CÔNG TY TNHH UNITRUX · MST 0319201007 · 84/12 Đường An Phú Đông 03, Phường An Phú Đông, TP. Hồ Chí Minh
+              </p>
             </div>
             <div className="footer-section">
               <h4 data-vi="Dịch vụ" data-en="Services" data-default="en">Services</h4>

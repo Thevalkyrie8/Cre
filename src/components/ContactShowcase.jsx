@@ -48,7 +48,7 @@ const ContactShowcase = () => {
 
   const details = [
     { type: 'email', label: 'Email', value: 'info@unitrux.com', href: 'mailto:info@unitrux.com' },
-    { type: 'phone', label: 'Phone', value: '+84 364 750 316', href: 'tel:+84364750316' },
+    { type: 'phone', label: 'Phone', value: '+84 938 695 186', href: 'tel:+84938695186' },
     { type: 'time', label: 'Working hours', value: 'Mon–Fri · 08:00–17:30 ICT' },
   ];
 

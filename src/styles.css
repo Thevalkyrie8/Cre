@@ -1600,6 +1600,7 @@ body .engine-main .packages-hub .packages-hub__hero {
 .packages-hub__intro nav a { color: var(--package-action); text-decoration: none; }
 .packages-hub__intro nav a:hover { text-decoration: underline; text-underline-offset: .25rem; }
 .packages-hub__label { margin: 0; color: var(--package-action) !important; font-size: .875rem; font-weight: 750; }
+.packages-hub__updated-note { margin: .5rem 0 0; color: var(--package-muted) !important; font-size: .8rem; }
 
 body .engine-main .packages-hub h1 {
   max-width: 14ch !important;
@@ -14348,6 +14349,13 @@ body .footer .footer-section p {
   line-height: 1.75 !important;
 }
 
+body .footer .footer-section p.footer-legal-identity {
+  margin-top: 0.6rem !important;
+  font-size: 0.8rem !important;
+  line-height: 1.6 !important;
+  opacity: 0.7;
+}
+
 body .footer .footer-section ul,
 body .footer .social-links {
   display: flex !important;
@@ -15704,6 +15712,25 @@ html body .engine-main .theme-synced-page.about-engine-page .about-final-cta__pa
 
   html body .floating-buttons .floating-buttons__conversion {
     margin-top: 2px !important;
+  }
+}
+
+/* Narrow-width phones (portrait, tall viewport): the utility+social+conversion
+   column can run tall enough to sit over in-flow text near the right edge.
+   Buttons stay visible (per the note above) but shrink further so the total
+   footprint is shorter. */
+@media (max-width: 380px) {
+  html body .floating-buttons {
+    --fab-size: 34px;
+    gap: 6px !important;
+  }
+
+  html body .floating-buttons :is(
+    .floating-buttons__utility,
+    .floating-buttons__social,
+    .floating-buttons__conversion
+  ) {
+    gap: 4px !important;
   }
 }
 
