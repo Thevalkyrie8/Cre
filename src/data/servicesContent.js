@@ -393,7 +393,7 @@ export const servicesContent = {
     eyebrow: { en: 'Service', vi: 'Dịch vụ' },
     title: {
       en: 'Product & Brand Photography',
-      vi: 'Quay chụp sản phẩm và thương hiệu',
+      vi: 'Chụp ảnh sản phẩm và thương hiệu',
     },
     intro: {
       en: 'Product photos, space photography and brand imagery for your website, marketplace listings and social profiles — shot to a consistent visual standard so every channel looks like it belongs to the same brand.',
@@ -458,7 +458,7 @@ export const servicesContent = {
     process: [
       { title: { en: 'Brief & shot list', vi: 'Lên brief & shot list' }, description: { en: 'Agree on products, spaces, angles and how each image will be used.', vi: 'Thống nhất sản phẩm, không gian, góc chụp và cách sử dụng từng ảnh.' } },
       { title: { en: 'Site survey', vi: 'Khảo sát thực tế' }, description: { en: 'Check lighting, space and operating hours before proposing equipment and crew.', vi: 'Kiểm tra ánh sáng, không gian và giờ hoạt động trước khi đề xuất thiết bị và nhân sự.' } },
-      { title: { en: 'Shoot day', vi: 'Ngày quay chụp' }, description: { en: 'Product, space and brand imagery captured to the agreed shot list.', vi: 'Ảnh sản phẩm, không gian và thương hiệu được chụp theo đúng shot list đã thống nhất.' } },
+      { title: { en: 'Shoot day', vi: 'Ngày chụp' }, description: { en: 'Product, space and brand imagery captured to the agreed shot list.', vi: 'Ảnh sản phẩm, không gian và thương hiệu được chụp theo đúng shot list đã thống nhất.' } },
       { title: { en: 'Edit & deliver', vi: 'Hậu kỳ & bàn giao' }, description: { en: 'Color-corrected, retouched and sized per channel, delivered with usage-ready files.', vi: 'Chỉnh màu, retouch và căn chỉnh kích thước theo từng kênh, bàn giao file sẵn sàng sử dụng.' } },
     ],
     deliverables: [
@@ -490,7 +490,7 @@ export const servicesContent = {
       },
     ],
     relatedServices: [
-      { path: '/media-pricing', label: { en: 'See detailed photo & video pricing', vi: 'Xem bảng giá chi tiết quay chụp' } },
+      { path: '/media-pricing', label: { en: 'See detailed photo & video pricing', vi: 'Xem bảng giá chi tiết chụp ảnh & video' } },
       { path: '/photography-video', label: { en: 'Advertising video production', vi: 'Sản xuất video quảng cáo' } },
       { path: '/content-creation', label: { en: 'Multi-channel content', vi: 'Nội dung đa kênh' } },
       { path: '/digital-marketing', label: { en: 'Multi-platform advertising', vi: 'Quảng cáo đa nền tảng' } },

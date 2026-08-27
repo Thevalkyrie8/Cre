@@ -70,9 +70,9 @@ export const services = [
     number: '09',
     to: '/product-photography',
     title: 'Product & brand photography',
-    titleVi: 'Quay chụp sản phẩm và thương hiệu',
-    description: 'Filming and photographing products, spaces and services for advertising, website, social media and brand communication.',
-    descriptionVi: 'Quay phim, chụp ảnh sản phẩm, không gian và dịch vụ phục vụ quảng cáo, website, mạng xã hội và truyền thông thương hiệu.',
+    titleVi: 'Chụp ảnh sản phẩm và thương hiệu',
+    description: 'Photographing products, spaces and brand imagery for website, marketplace listings, social media and brand communication.',
+    descriptionVi: 'Chụp ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử, mạng xã hội và truyền thông thương hiệu.',
   },
   {
     number: '10',

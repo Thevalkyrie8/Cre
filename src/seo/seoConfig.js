@@ -256,7 +256,7 @@ export const productPhotographyFaqs = [
   },
   {
     question: 'Chi phí chụp ảnh sản phẩm được tính như thế nào?',
-    answer: 'Chi phí phụ thuộc vào số sản phẩm/không gian cần chụp, địa điểm, thiết bị, số ngày quay và mức độ hậu kỳ. Báo giá của Unitrux sẽ tách rõ từng phạm vi.',
+    answer: 'Chi phí phụ thuộc vào số sản phẩm/không gian cần chụp, địa điểm, thiết bị, số buổi chụp và mức độ hậu kỳ. Báo giá của Unitrux sẽ tách rõ từng phạm vi.',
     questionEn: 'How is product photography priced?',
     answerEn: 'Cost depends on the number of products/spaces to shoot, location, equipment, shoot days and level of post-production. Unitrux\'s quote breaks each scope down clearly.',
   },
@@ -340,14 +340,14 @@ const mediaPricingOfferCatalog = [
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
-    description: 'Unitrux quay chụp sản phẩm, sản xuất video quảng cáo và thiết kế website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, quảng cáo đa nền tảng cho doanh nghiệp.',
+    description: 'Unitrux chụp ảnh sản phẩm, sản xuất video quảng cáo và thiết kế website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, quảng cáo đa nền tảng cho doanh nghiệp.',
     heading: 'Giải pháp tăng trưởng số cho doanh nghiệp',
-    summary: 'Quay chụp sản phẩm, sản xuất video quảng cáo, website, marketing, chatbot AI và tự động hóa được kết nối thành một hệ thống tăng trưởng rõ ràng.',
+    summary: 'Chụp ảnh sản phẩm, sản xuất video quảng cáo, website, marketing, chatbot AI và tự động hóa được kết nối thành một hệ thống tăng trưởng rõ ràng.',
     bullets: services.map((service) => service.titleVi),
     faqs: [
       {
         question: 'Unitrux cung cấp những dịch vụ gì?',
-        answer: '10 dịch vụ kết nối thành một hệ thống tăng trưởng: ứng dụng & giải pháp số, Fanpage, Chatbot AI, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation, SEO/AEO/GEO, sản xuất video quảng cáo, quay chụp sản phẩm và thiết kế website.',
+        answer: '10 dịch vụ kết nối thành một hệ thống tăng trưởng: ứng dụng & giải pháp số, Fanpage, Chatbot AI, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation, SEO/AEO/GEO, sản xuất video quảng cáo, chụp ảnh sản phẩm và thiết kế website.',
       },
       {
         question: 'Unitrux có trụ sở ở đâu?',
@@ -377,7 +377,7 @@ export const seoPages = {
       'Marketing Automation',
       'Dịch vụ SEO/AEO/GEO',
       'Sản xuất video quảng cáo',
-      'Quay chụp sản phẩm và thương hiệu',
+      'Chụp ảnh sản phẩm và thương hiệu',
       'Thiết kế website chuẩn UI/UX và SEO/AEO/GEO',
     ],
     type: 'CollectionPage',
@@ -578,13 +578,13 @@ export const seoPages = {
     },
   },
   '/product-photography': {
-    title: 'Quay chụp sản phẩm và thương hiệu | Unitrux',
-    description: 'Quay phim, chụp ảnh sản phẩm, không gian và dịch vụ phục vụ quảng cáo, website, mạng xã hội và truyền thông thương hiệu.',
-    heading: 'Quay chụp sản phẩm và thương hiệu',
+    title: 'Chụp ảnh sản phẩm và thương hiệu | Unitrux',
+    description: 'Chụp ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử, mạng xã hội và truyền thông thương hiệu — theo một tiêu chuẩn hình ảnh nhất quán.',
+    heading: 'Chụp ảnh sản phẩm và thương hiệu',
     summary: 'Ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử và mạng xã hội — chụp theo một tiêu chuẩn hình ảnh nhất quán.',
     faqs: productPhotographyFaqs,
     type: 'Service',
-    serviceName: 'Quay chụp sản phẩm và thương hiệu',
+    serviceName: 'Chụp ảnh sản phẩm và thương hiệu',
     schema: {
       serviceType: 'Chụp ảnh sản phẩm và thương hiệu',
       categories: ['Chụp ảnh sản phẩm', 'Chụp ảnh không gian', 'Hình ảnh thương hiệu'],
@@ -766,7 +766,7 @@ export const buildStructuredData = (pathname, overrides = {}) => {
       },
       isicV4: '7310',
       areaServed: { '@type': 'Country', name: 'Vietnam' },
-      knowsAbout: ['Quay chụp sản phẩm', 'Sản xuất video quảng cáo', 'Thiết kế website', 'SEO/AEO/GEO', 'Chatbot AI', 'Digital Marketing', 'Marketing Automation', 'E-commerce', 'Thiết kế UI/UX'],
+      knowsAbout: ['Chụp ảnh sản phẩm', 'Sản xuất video quảng cáo', 'Thiết kế website', 'SEO/AEO/GEO', 'Chatbot AI', 'Digital Marketing', 'Marketing Automation', 'E-commerce', 'Thiết kế UI/UX'],
       sameAs: [
         'https://www.facebook.com/UnitruxCreativeStudio',
         'https://www.linkedin.com/company/unitrux',
