@@ -174,6 +174,26 @@ export const buildServiceNode = ({
   });
 };
 
+export const buildServiceListNode = ({ services = [], siteUrl }) => {
+  const itemListElement = services
+    .filter((item) => item?.name && item?.url)
+    .map((item, index) => removeEmptySchemaValues({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: removeEmptySchemaValues({
+        '@type': 'Service',
+        name: item.name,
+        url: toAbsoluteUrl(item.url, siteUrl),
+      }),
+    }));
+
+  if (!itemListElement.length) return undefined;
+  return {
+    '@type': 'ItemList',
+    itemListElement,
+  };
+};
+
 export const buildPortfolioNodes = ({
   portfolio,
   canonical,

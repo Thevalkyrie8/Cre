@@ -1,18 +1,33 @@
 import { productionHeroVideo, productionPortfolio } from '../data/productionPortfolio.js';
 import { templateCount, templateGroups } from '../data/templateGroups.js';
+import { packageGroups } from '../data/packagesPricing.js';
+import { services } from '../data/services.js';
 import {
   buildFaqNode,
   buildPortfolioNodes,
+  buildServiceListNode,
   buildServiceNode,
   extractFaqFromMarkdown,
   normalizeCmsService,
   removeEmptySchemaValues,
 } from './schemaFactory.js';
 
+// Every /packages tier as a flat, machine-readable Offer — real VND prices
+// sourced from packagesPricing.js (same data the pricing page itself renders),
+// not duplicated as hand-typed literals.
+const packagesOfferItems = packageGroups.flatMap((group) => group.tiers.map((tier) => ({
+  id: `${group.to.replace('/', '')}-${tier.name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-')}`,
+  nameVi: `${group.titleVi} — ${tier.name}`,
+  descriptionVi: tier.audienceVi,
+  price: tier.price,
+  priceCurrency: 'VND',
+  isActive: true,
+})));
+
 export const SITE_URL = 'https://unitrux.com';
 export const SITE_NAME = 'Unitrux';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
-export const SEO_LAST_MODIFIED = '2026-07-25';
+export const SEO_LAST_MODIFIED = '2026-08-24';
 
 // Retired routes that now redirect to a merged/replacement page. Consumed by
 // scripts/generate-seo-pages.mjs to emit a meta-refresh + canonical redirect
@@ -111,6 +126,10 @@ const productionFaqs = [
   {
     question: 'Quay video sản phẩm cần chuẩn bị gì trước ngày quay?',
     answer: 'Nên xác định trước sản phẩm ưu tiên quay, số lượng cần có mặt trên set, kênh sẽ đăng nội dung và tỷ lệ khung hình cần dùng (ngang cho website, dọc cho TikTok/Reels). Unitrux có hướng dẫn chi tiết hơn về quy trình và checklist chuẩn bị trên trang Kiến thức Digital.',
+  },
+  {
+    question: 'Unitrux có quay video quảng cáo ngoài TPHCM không?',
+    answer: 'Có. Ekip đặt tại TPHCM và có thể di chuyển đến các tỉnh lân cận hoặc toàn quốc tuỳ dự án — chi phí di chuyển sẽ được báo riêng.',
   },
 ];
 
@@ -303,12 +322,38 @@ export const mediaPricingFaqs = [
   },
 ];
 
+// Single source for /media-pricing's 8 category starting prices — reused for
+// both the JSON-LD OfferCatalog and the prerendered <dl> facts, so raw
+// crawlable HTML (GPTBot, Perplexity...) states actual VND figures, not just
+// FAQ prose without numbers.
+const mediaPricingOfferCatalog = [
+  { name: 'Chụp ảnh sản phẩm — Từ 1.200.000đ/buổi' },
+  { name: 'Food & Beverage — Từ 2.000.000đ/buổi' },
+  { name: 'Không gian / Nội thất / Dịch vụ — Từ 2.000.000đ/buổi' },
+  { name: 'Brand / Nhân sự — Từ 2.800.000đ/buổi' },
+  { name: 'Video short-form — Từ 2.000.000đ/video' },
+  { name: 'Video quảng cáo — Từ 5.500.000đ/video' },
+  { name: 'Combo Media — Từ 7.100.000đ/gói' },
+  { name: 'Setup Livestream / Studio — Từ 5.500.000đ/dự án' },
+];
+
 export const seoPages = {
   '/': {
     title: 'Unitrux | Thiết kế Website, Digital Marketing & Chatbox AI',
     description: 'Unitrux quay chụp sản phẩm, sản xuất video quảng cáo và thiết kế website chuẩn SEO/AEO/GEO, Chatbot AI, Fanpage, quảng cáo đa nền tảng cho doanh nghiệp.',
     heading: 'Giải pháp tăng trưởng số cho doanh nghiệp',
     summary: 'Quay chụp sản phẩm, sản xuất video quảng cáo, website, marketing, chatbot AI và tự động hóa được kết nối thành một hệ thống tăng trưởng rõ ràng.',
+    bullets: services.map((service) => service.titleVi),
+    faqs: [
+      {
+        question: 'Unitrux cung cấp những dịch vụ gì?',
+        answer: '10 dịch vụ kết nối thành một hệ thống tăng trưởng: ứng dụng & giải pháp số, Fanpage, Chatbot AI, nội dung đa kênh, quảng cáo đa nền tảng, Marketing Automation, SEO/AEO/GEO, sản xuất video quảng cáo, quay chụp sản phẩm và thiết kế website.',
+      },
+      {
+        question: 'Unitrux có trụ sở ở đâu?',
+        answer: 'Unitrux đặt tại Thành phố Hồ Chí Minh và phục vụ khách hàng trên toàn Việt Nam.',
+      },
+    ],
     type: 'WebPage',
   },
   '/about': {
@@ -336,6 +381,7 @@ export const seoPages = {
       'Thiết kế website chuẩn UI/UX và SEO/AEO/GEO',
     ],
     type: 'CollectionPage',
+    serviceList: packageGroups.map((group) => ({ name: group.titleVi, url: group.to })),
   },
   '/templates': {
     title: `Thư viện ${templateCount} mẫu website thật | Unitrux`,
@@ -423,11 +469,11 @@ export const seoPages = {
     serviceName: 'Tự động hóa doanh nghiệp',
   },
   '/photography-video': {
-    title: 'Dịch vụ sản xuất Video quảng cáo | Unitrux',
-    description: 'Sản xuất video quảng cáo, Reels, TikTok và video sản phẩm cho Facebook, YouTube, website và sàn thương mại điện tử.',
+    title: 'Dịch vụ Quay Video Quảng Cáo TPHCM | Unitrux',
+    description: 'Quay và sản xuất video quảng cáo tại TPHCM — concept, quay, dựng, bàn giao đa định dạng cho Facebook, TikTok, YouTube, website và sàn thương mại điện tử.',
     ogImage: `${SITE_URL}${productionHeroVideo.thumbnail}`,
-    heading: 'Sản xuất Video quảng cáo',
-    summary: 'Từ concept, quay dựng đến bàn giao đa định dạng cho quảng cáo, mạng xã hội, website và thương mại điện tử.',
+    heading: 'Sản xuất Video quảng cáo TPHCM',
+    summary: 'Ekip và studio đặt tại TPHCM. Từ concept, quay dựng đến bàn giao đa định dạng cho quảng cáo, mạng xã hội, website và thương mại điện tử — có thể di chuyển đến các tỉnh lân cận.',
     faqs: productionFaqs,
     type: 'Service',
     serviceName: 'Sản xuất Video quảng cáo',
@@ -557,7 +603,16 @@ export const seoPages = {
     description: 'Bảng giá tham khảo cho 10 dịch vụ của Unitrux: website, marketing, chatbot AI, automation, SEO/AEO/GEO, video và quay chụp — mỗi dịch vụ 3 mức giá rõ ràng.',
     heading: 'Bảng giá dịch vụ Unitrux',
     summary: 'Mỗi dịch vụ có 3 mức giá tham khảo rõ ràng — từ gói khởi điểm đến gói mở rộng — cùng add-on chi phí phát sinh nếu cần.',
-    type: 'CollectionPage',
+    type: 'Service',
+    serviceName: 'Bảng giá dịch vụ Unitrux',
+    schema: {
+      serviceType: 'Bảng giá dịch vụ Unitrux',
+      categories: packageGroups.map((group) => group.titleVi),
+      areaServed: ['Việt Nam'],
+      audienceType: 'Doanh nghiệp cần tham khảo giá cho 10 dịch vụ tăng trưởng số trước khi liên hệ',
+      offerCatalogName: 'Bảng giá dịch vụ Unitrux',
+      packages: packagesOfferItems,
+    },
   },
   '/media-pricing': {
     title: 'Bảng giá quay chụp & sản xuất Media | Unitrux',
@@ -567,22 +622,17 @@ export const seoPages = {
     type: 'Service',
     serviceName: 'Bảng giá quay chụp & sản xuất Media',
     faqs: mediaPricingFaqs,
+    // Rendered into both the JSON-LD OfferCatalog and a plain <dl> of facts in
+    // the prerendered static HTML, so non-JS crawlers (GPTBot, Perplexity...)
+    // can read real starting prices, not just the FAQ prose.
+    facts: mediaPricingOfferCatalog.map(({ name }) => name.split(' — ')),
     schema: {
       serviceType: 'Bảng giá quay chụp & sản xuất Media',
       categories: ['Chụp ảnh sản phẩm', 'Chụp ảnh không gian', 'Video short-form', 'Video quảng cáo', 'Combo Media', 'Setup livestream'],
       areaServed: ['Việt Nam', 'Thành phố Hồ Chí Minh'],
       audienceType: 'Doanh nghiệp cần tham khảo giá quay chụp sản phẩm, thương hiệu hoặc sản xuất video trước khi liên hệ',
       offerCatalogName: 'Bảng giá quay chụp & Media',
-      offerCatalog: [
-        { name: 'Chụp ảnh sản phẩm — Từ 1.200.000đ/buổi' },
-        { name: 'Food & Beverage — Từ 2.000.000đ/buổi' },
-        { name: 'Không gian / Nội thất / Dịch vụ — Từ 2.000.000đ/buổi' },
-        { name: 'Brand / Nhân sự — Từ 2.800.000đ/buổi' },
-        { name: 'Video short-form — Từ 2.000.000đ/video' },
-        { name: 'Video quảng cáo — Từ 5.500.000đ/video' },
-        { name: 'Combo Media — Từ 7.100.000đ/gói' },
-        { name: 'Setup Livestream / Studio — Từ 5.500.000đ/dự án' },
-      ],
+      offerCatalog: mediaPricingOfferCatalog.map(({ name }) => ({ name })),
     },
   },
   '/news': {
@@ -715,14 +765,20 @@ export const buildStructuredData = (pathname, overrides = {}) => {
         addressCountry: 'VN',
       },
       isicV4: '7310',
-      areaServed: ['VN', 'Worldwide'],
-      knowsAbout: ['Product Photography', 'Advertising Video Production', 'Website Development', 'Search Engine Optimization', 'AI Chatbot', 'Digital Marketing', 'Marketing Automation', 'E-commerce', 'UI/UX Design'],
+      areaServed: { '@type': 'Country', name: 'Vietnam' },
+      knowsAbout: ['Quay chụp sản phẩm', 'Sản xuất video quảng cáo', 'Thiết kế website', 'SEO/AEO/GEO', 'Chatbot AI', 'Digital Marketing', 'Marketing Automation', 'E-commerce', 'Thiết kế UI/UX'],
       sameAs: [
         'https://www.facebook.com/UnitruxCreativeStudio',
         'https://www.linkedin.com/company/unitrux',
         'https://www.youtube.com/@UnitruxDigitalMarketing',
         'https://www.tiktok.com/@unitruxmarketing',
       ],
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '08:00',
+        closes: '17:30',
+      },
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer service',
@@ -761,7 +817,9 @@ export const buildStructuredData = (pathname, overrides = {}) => {
       isPartOf: { '@id': `${SITE_URL}/#website` },
       about: { '@id': organizationId },
       inLanguage: page.language || 'vi-VN',
-      mainEntity: page.type === 'Service' ? { '@id': `${canonical}#service` } : undefined,
+      mainEntity: page.type === 'Service'
+        ? { '@id': `${canonical}#service` }
+        : (page.serviceList ? buildServiceListNode({ services: page.serviceList, siteUrl: SITE_URL }) : undefined),
       breadcrumb: page.path !== '/' ? { '@id': `${canonical}#breadcrumb` } : undefined,
       hasPart: page.portfolio ? { '@id': `${canonical}#portfolio` } : undefined,
       datePublished: page.datePublished,

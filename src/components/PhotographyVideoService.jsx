@@ -72,6 +72,13 @@ const PhotographyVideoService = () => (
           >
             Unitrux develops the concept, shoots, edits and delivers each film for the behavior of its platform. One production can become multiple versions for Facebook, Instagram, TikTok, YouTube, websites and marketplaces.
           </p>
+          <p
+            className="production-hero__location"
+            data-vi="Ekip sản xuất và studio của Unitrux đặt tại Thành phố Hồ Chí Minh — có thể quay tại studio hoặc di chuyển đến địa điểm của bạn trong khu vực TPHCM và các tỉnh lân cận."
+            data-en="Unitrux's production crew and studio are based in Ho Chi Minh City — we can shoot in-studio or travel on-location within HCMC and nearby provinces."
+          >
+            Unitrux's production crew and studio are based in Ho Chi Minh City — we can shoot in-studio or travel on-location within HCMC and nearby provinces.
+          </p>
           <div className="production-actions">
             <a className="production-button production-button--primary" href="https://zalo.me/3299309778518905129">
               <span data-vi="Trao đổi concept" data-en="Discuss a concept">Discuss a concept</span>
@@ -354,6 +361,10 @@ const PhotographyVideoService = () => (
               </Link>
             </p>
           </details>
+          <details>
+            <summary data-vi="Unitrux có quay video quảng cáo ngoài TPHCM không?" data-en="Do you shoot advertising video outside Ho Chi Minh City?">Do you shoot advertising video outside Ho Chi Minh City?</summary>
+            <p data-vi="Có. Ekip đặt tại TPHCM và có thể di chuyển đến các tỉnh lân cận hoặc toàn quốc tuỳ dự án — chi phí di chuyển sẽ được báo riêng." data-en="Yes. Our crew is based in Ho Chi Minh City and can travel to nearby provinces or nationwide depending on the project — travel costs are quoted separately.">Yes. Our crew is based in Ho Chi Minh City and can travel to nearby provinces or nationwide depending on the project — travel costs are quoted separately.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -387,6 +398,11 @@ const PhotographyVideoService = () => (
         <p>
           <Link to="/media-pricing">
             <span data-vi="Xem bảng giá chi tiết quay chụp & media →" data-en="See detailed photography & media pricing →">See detailed photography & media pricing →</span>
+          </Link>
+        </p>
+        <p>
+          <Link to="/product-photography">
+            <span data-vi="Cần chụp ảnh sản phẩm thay vì video? Xem dịch vụ Quay chụp sản phẩm →" data-en="Need product photography instead of video? See the Product Photography service →">Need product photography instead of video? See the Product Photography service →</span>
           </Link>
         </p>
       </div>

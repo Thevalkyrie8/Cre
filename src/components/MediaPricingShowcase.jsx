@@ -2,6 +2,7 @@ import { createElement, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { mediaGroups, mediaOverview, mediaAddOns, mediaPricingCopy } from '../data/mediaPricing';
 import { productionBehindTheScenes } from '../data/productionPortfolio';
+import { SEO_LAST_MODIFIED } from '../seo/seoConfig';
 
 const Bilingual = ({ as = 'span', en, vi, children, ...props }) => (
   createElement(as, { 'data-en': en, 'data-vi': vi, 'data-default': 'vi', ...props }, children ?? vi)
@@ -162,6 +163,7 @@ const MediaPricingShowcase = () => {
             <Bilingual as="p" className="packages-hub__label" en="8 groups, 17 packages" vi="8 nhóm, 17 gói dịch vụ" />
             <Bilingual as="h1" id="media-pricing-title" en={mediaPricingCopy.titleEn} vi={mediaPricingCopy.titleVi} />
             <Bilingual as="p" className="packages-hub__lede" en={mediaPricingCopy.introEn} vi={mediaPricingCopy.introVi} />
+            <Bilingual as="p" className="packages-hub__updated-note" en={`Prices last reviewed ${SEO_LAST_MODIFIED}`} vi={`Giá cập nhật lần cuối ${SEO_LAST_MODIFIED}`} />
             <div className="packages-hub__hero-actions">
               <Link to="/contact" className="packages-hub__primary-action"><Bilingual en="Get a shoot quote" vi="Nhận báo giá quay chụp" /> <ArrowIcon /></Link>
               <a href="#media-groups"><Bilingual en="See every package" vi="Xem tất cả các gói" /></a>

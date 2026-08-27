@@ -585,6 +585,7 @@ export const servicesContent = {
     ],
     relatedServices: [
       { path: '/templates', label: { en: 'Browse template library', vi: 'Xem thư viện mẫu website' } },
+      { path: '/packages', label: { en: 'See website pricing', vi: 'Xem bảng giá thiết kế website' } },
       { path: '/seo-services', label: { en: 'SEO / AEO / GEO', vi: 'SEO/AEO/GEO' } },
       { path: '/ecommerce', label: { en: 'E-commerce & marketplace', vi: 'E-commerce & marketplace' } },
       { path: '/digital-solutions', label: { en: 'App & digital solutions', vi: 'Ứng dụng & giải pháp số' } },

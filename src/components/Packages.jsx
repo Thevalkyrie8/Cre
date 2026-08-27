@@ -284,12 +284,12 @@ const Packages = () => {
         <div className="phone-display-overlay" onClick={() => setShowPhone(false)}>
           <div className="phone-display-modal" onClick={(e) => e.stopPropagation()}>
             <h3 data-vi="Số điện thoại liên hệ" data-en="Contact Phone Number">Số điện thoại liên hệ</h3>
-            <div className="phone-number">+84 364 750 316</div>
-            <button 
+            <div className="phone-number">+84 938 695 186</div>
+            <button
               className="btn btn-primary"
               onClick={() => {
                 trackEvent('contact_click', { method: 'phone', placement: 'packages_modal' });
-                window.open('tel:+84364750316');
+                window.open('tel:+84938695186');
               }}
             >
               <span data-vi="Gọi ngay" data-en="Call Now">Gọi ngay</span>

@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 import { Link } from 'react-router-dom';
 import { packageGroups, addOns, pricingCopy } from '../data/packagesPricing';
+import { SEO_LAST_MODIFIED } from '../seo/seoConfig';
 
 const Bilingual = ({ as = 'span', en, vi, children, ...props }) => (
   createElement(as, { 'data-en': en, 'data-vi': vi, 'data-default': 'vi', ...props }, children ?? vi)
@@ -101,6 +102,7 @@ const PackagesShowcase = () => {
             <Bilingual as="p" className="packages-hub__label" en="10 services, one growth system" vi="10 dịch vụ, một hệ thống tăng trưởng" />
             <Bilingual as="h1" id="packages-title" en={pricingCopy.titleEn} vi={pricingCopy.titleVi} />
             <Bilingual as="p" className="packages-hub__lede" en={pricingCopy.introEn} vi={pricingCopy.introVi} />
+            <Bilingual as="p" className="packages-hub__updated-note" en={`Prices last reviewed ${SEO_LAST_MODIFIED}`} vi={`Giá cập nhật lần cuối ${SEO_LAST_MODIFIED}`} />
             <div className="packages-hub__hero-actions">
               <Link to="/contact" className="packages-hub__primary-action"><Bilingual en="Get a tailored quote" vi="Nhận báo giá" /> <ArrowIcon /></Link>
               <Bilingual as="a" href="#packages" en="Explore all pricing" vi="Xem tất cả bảng giá" />
