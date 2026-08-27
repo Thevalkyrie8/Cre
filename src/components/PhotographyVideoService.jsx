@@ -362,6 +362,10 @@ const PhotographyVideoService = () => (
             </p>
           </details>
           <details>
+            <summary data-vi="Video sản phẩm khác gì với video quảng cáo thương hiệu?" data-en="How is a product film different from a brand advertising film?">How is a product film different from a brand advertising film?</summary>
+            <p data-vi="Video sản phẩm tập trung trình diễn công dụng, chất liệu và cách dùng của một sản phẩm cụ thể cho website, landing page và sàn thương mại điện tử. Video quảng cáo thương hiệu kể câu chuyện, giá trị và định vị của cả thương hiệu. Hai loại có thể quay trong cùng một buổi nếu được lên kế hoạch từ bước concept." data-en="A product film focuses on demonstrating the features, materials and real use of one specific product for websites, landing pages and marketplaces. A brand advertising film tells the story, values and positioning of the whole brand. Both can be shot in one session when planned from the concept stage.">A product film focuses on demonstrating the features, materials and real use of one specific product for websites, landing pages and marketplaces. A brand advertising film tells the story, values and positioning of the whole brand. Both can be shot in one session when planned from the concept stage.</p>
+          </details>
+          <details>
             <summary data-vi="Unitrux có quay video quảng cáo ngoài TPHCM không?" data-en="Do you shoot advertising video outside Ho Chi Minh City?">Do you shoot advertising video outside Ho Chi Minh City?</summary>
             <p data-vi="Có. Ekip đặt tại TPHCM và có thể di chuyển đến các tỉnh lân cận hoặc toàn quốc tuỳ dự án — chi phí di chuyển sẽ được báo riêng." data-en="Yes. Our crew is based in Ho Chi Minh City and can travel to nearby provinces or nationwide depending on the project — travel costs are quoted separately.">Yes. Our crew is based in Ho Chi Minh City and can travel to nearby provinces or nationwide depending on the project — travel costs are quoted separately.</p>
           </details>
@@ -402,7 +406,7 @@ const PhotographyVideoService = () => (
         </p>
         <p>
           <Link to="/product-photography">
-            <span data-vi="Cần chụp ảnh sản phẩm thay vì video? Xem dịch vụ Quay chụp sản phẩm →" data-en="Need product photography instead of video? See the Product Photography service →">Need product photography instead of video? See the Product Photography service →</span>
+            <span data-vi="Cần chụp ảnh sản phẩm thay vì video? Xem dịch vụ Chụp ảnh sản phẩm và thương hiệu →" data-en="Need product photography instead of video? See the Product Photography service →">Need product photography instead of video? See the Product Photography service →</span>
           </Link>
         </p>
       </div>

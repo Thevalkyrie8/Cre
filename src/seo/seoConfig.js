@@ -128,6 +128,10 @@ const productionFaqs = [
     answer: 'Nên xác định trước sản phẩm ưu tiên quay, số lượng cần có mặt trên set, kênh sẽ đăng nội dung và tỷ lệ khung hình cần dùng (ngang cho website, dọc cho TikTok/Reels). Unitrux có hướng dẫn chi tiết hơn về quy trình và checklist chuẩn bị trên trang Kiến thức Digital.',
   },
   {
+    question: 'Video sản phẩm khác gì với video quảng cáo thương hiệu?',
+    answer: 'Video sản phẩm tập trung trình diễn công dụng, chất liệu và cách dùng của một sản phẩm cụ thể cho website, landing page và sàn thương mại điện tử. Video quảng cáo thương hiệu kể câu chuyện, giá trị và định vị của cả thương hiệu. Hai loại có thể quay trong cùng một buổi nếu được lên kế hoạch từ bước concept.',
+  },
+  {
     question: 'Unitrux có quay video quảng cáo ngoài TPHCM không?',
     answer: 'Có. Ekip đặt tại TPHCM và có thể di chuyển đến các tỉnh lân cận hoặc toàn quốc tuỳ dự án — chi phí di chuyển sẽ được báo riêng.',
   },
@@ -247,6 +251,12 @@ export const productPhotographyFaqs = [
     answer: 'Cả hai đều được. Sau khi khảo sát ánh sáng và không gian thực tế, Unitrux sẽ đề xuất phương án phù hợp — chụp tại chỗ hoặc mang về studio.',
     questionEn: 'Can you shoot at my store/salon, or do I need to bring products to a studio?',
     answerEn: 'Either works. After surveying the actual lighting and space, Unitrux will recommend the right option — on-location or in-studio.',
+  },
+  {
+    question: 'Unitrux nhận chụp ảnh sản phẩm ở khu vực nào?',
+    answer: 'Studio và ekip chụp ảnh của Unitrux đặt tại TP.HCM. Có thể chụp tại studio, tại cửa hàng hoặc showroom của bạn trong khu vực TP.HCM, hoặc di chuyển đến các tỉnh lân cận tùy dự án — chi phí di chuyển được báo riêng.',
+    questionEn: 'Which areas does Unitrux cover for product photography?',
+    answerEn: 'Unitrux\'s photography studio and crew are based in Ho Chi Minh City. Shoots can happen in the studio, at your store or showroom within HCMC, or on location in nearby provinces depending on the project — travel costs are quoted separately.',
   },
   {
     question: 'Một buổi chụp có thể dùng cho cả website lẫn sàn TMĐT không?',
@@ -470,7 +480,7 @@ export const seoPages = {
   },
   '/photography-video': {
     title: 'Dịch vụ Quay Video Quảng Cáo TPHCM | Unitrux',
-    description: 'Quay và sản xuất video quảng cáo tại TPHCM — concept, quay, dựng, bàn giao đa định dạng cho Facebook, TikTok, YouTube, website và sàn thương mại điện tử.',
+    description: 'Sản xuất video quảng cáo và quay video sản phẩm tại TPHCM — concept, quay, dựng, bàn giao đa định dạng cho Facebook, TikTok, YouTube, website và sàn thương mại điện tử.',
     ogImage: `${SITE_URL}${productionHeroVideo.thumbnail}`,
     heading: 'Sản xuất Video quảng cáo TPHCM',
     summary: 'Ekip và studio đặt tại TPHCM. Từ concept, quay dựng đến bàn giao đa định dạng cho quảng cáo, mạng xã hội, website và thương mại điện tử — có thể di chuyển đến các tỉnh lân cận.',
@@ -578,8 +588,8 @@ export const seoPages = {
     },
   },
   '/product-photography': {
-    title: 'Chụp ảnh sản phẩm và thương hiệu | Unitrux',
-    description: 'Chụp ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử, mạng xã hội và truyền thông thương hiệu — theo một tiêu chuẩn hình ảnh nhất quán.',
+    title: 'Chụp ảnh sản phẩm và thương hiệu TP.HCM | Unitrux',
+    description: 'Dịch vụ chụp ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu tại TP.HCM cho website, sàn thương mại điện tử, mạng xã hội và truyền thông thương hiệu — theo một tiêu chuẩn hình ảnh nhất quán.',
     heading: 'Chụp ảnh sản phẩm và thương hiệu',
     summary: 'Ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử và mạng xã hội — chụp theo một tiêu chuẩn hình ảnh nhất quán.',
     faqs: productPhotographyFaqs,

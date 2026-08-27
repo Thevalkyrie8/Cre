@@ -396,8 +396,8 @@ export const servicesContent = {
       vi: 'Chụp ảnh sản phẩm và thương hiệu',
     },
     intro: {
-      en: 'Product photos, space photography and brand imagery for your website, marketplace listings and social profiles — shot to a consistent visual standard so every channel looks like it belongs to the same brand.',
-      vi: 'Ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu cho website, sàn thương mại điện tử và các trang mạng xã hội — chụp theo một tiêu chuẩn hình ảnh nhất quán để mọi kênh đều mang cùng một nhận diện thương hiệu.',
+      en: 'Product photography, space photography and brand imagery in Ho Chi Minh City for your website, marketplace listings and social profiles — shot to a consistent visual standard so every channel looks like it belongs to the same brand.',
+      vi: 'Dịch vụ chụp ảnh sản phẩm, ảnh không gian và hình ảnh thương hiệu tại TP.HCM cho website, sàn thương mại điện tử và các trang mạng xã hội — chụp theo một tiêu chuẩn hình ảnh nhất quán để mọi kênh đều mang cùng một nhận diện thương hiệu.',
     },
     stats: [
       { value: '1', label: { en: 'visual standard applied across every channel', vi: 'tiêu chuẩn hình ảnh áp dụng trên mọi kênh' } },
@@ -429,8 +429,8 @@ export const servicesContent = {
       {
         title: { en: 'Product photography', vi: 'Chụp ảnh sản phẩm' },
         description: {
-          en: 'Studio or on-location product shots for website catalogs, marketplace listings and ads.',
-          vi: 'Chụp sản phẩm tại studio hoặc tại địa điểm thực tế cho danh mục website, gian hàng TMĐT và quảng cáo.',
+          en: 'White-background and concept product shots, in studio or on location, for website catalogs, marketplace listings and ads.',
+          vi: 'Chụp ảnh sản phẩm nền trắng và ảnh concept, tại studio hoặc tại địa điểm thực tế, cho danh mục website, gian hàng TMĐT và quảng cáo.',
         },
       },
       {
@@ -480,8 +480,8 @@ export const servicesContent = {
       },
       {
         src: '/images/img2.jpg',
-        labelEn: 'Crew checking lighting before a shoot',
-        labelVi: 'Ekip canh sáng trước khi quay',
+        labelEn: 'Unitrux crew setting up lighting for a shoot',
+        labelVi: 'Ekip Unitrux chuẩn bị ánh sáng cho buổi chụp',
       },
       {
         src: '/images/img3.jpg',
