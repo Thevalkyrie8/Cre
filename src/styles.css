@@ -13816,9 +13816,20 @@ body.dark-mode .home--flow .engine-surface-card:focus-within {
 }
 
 @media (max-width: 900px) {
-  .home--flow .unitrux-hero__visual { grid-template-columns: 1fr; }
-  .home--flow .growth-values { grid-template-columns: 1fr; }
+  /* the redesign's .home--flow-scoped grids (specificity 0,2,0) override the
+     generic @media collapse at ~line 13064 — re-collapse them here */
+  .home--flow .unitrux-hero__layout,
+  .home--flow .growth-system__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 3rem);
+  }
+  .home--flow .unitrux-hero__visual { grid-template-columns: 1fr 1fr; }
   .home--flow .growth-system__intro { position: static; }
+}
+
+@media (max-width: 560px) {
+  .home--flow .unitrux-hero__visual,
+  .home--flow .growth-values { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 620px) {
