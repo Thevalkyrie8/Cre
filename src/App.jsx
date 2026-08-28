@@ -66,8 +66,8 @@ class ErrorBoundary extends React.Component {
         <div style={{
           padding: '20px',
           textAlign: 'center',
-          color: '#0F172A',
-          backgroundColor: '#F8FAFC',
+          color: 'var(--u-ink, #0F172A)',
+          backgroundColor: 'var(--u-bg, #F8FAFC)',
           fontFamily: 'Segoe UI Variable, Segoe UI, Arial, sans-serif',
           minHeight: '100vh',
           display: 'flex',
@@ -81,8 +81,8 @@ class ErrorBoundary extends React.Component {
             onClick={() => window.location.reload()}
             style={{
               padding: '10px 20px',
-              backgroundColor: '#0284C7',
-              color: '#FFFFFF',
+              backgroundColor: 'var(--u-accent, #0284C7)',
+              color: 'var(--u-accent-ink, #FFFFFF)',
               border: 'none',
               borderRadius: '999px',
               fontSize: '19px',

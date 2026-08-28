@@ -1,8 +1,18 @@
 import { createElement, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { mediaGroups, mediaOverview, mediaAddOns, mediaPricingCopy } from '../data/mediaPricing';
+import {
+  mediaGroups, mediaAddOns, mediaPricingCopy,
+  mediaPriceInclusions, mediaBriefSteps, mediaQuoteExamples,
+  mediaMarketContext, mediaWorkflow, mediaValueProps, mediaCostFactors,
+} from '../data/mediaPricing';
 import { productionBehindTheScenes } from '../data/productionPortfolio';
 import { SEO_LAST_MODIFIED } from '../seo/seoConfig';
+import { DirectAnswer, ServiceProcess } from './service/ServiceSections';
+import RelatedContent from './service/RelatedContent';
+import PricingBriefForm from './PricingBriefForm';
+import './MediaPricingExtras.css';
+
+const fmtVnd = (n) => `${Number(n).toLocaleString('vi-VN')}đ`;
 
 const Bilingual = ({ as = 'span', en, vi, children, ...props }) => (
   createElement(as, { 'data-en': en, 'data-vi': vi, 'data-default': 'vi', ...props }, children ?? vi)
@@ -12,6 +22,132 @@ const ArrowIcon = () => (
   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M4 10h11M11 6l4 4-4 4" />
   </svg>
+);
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="m4 10.5 4 4 8-9" />
+  </svg>
+);
+
+// Line icons for the workflow / value / cost-factor cards.
+const stepIcons = [
+  <path key="1" d="M4 5h12M4 10h12M4 15h8" />,
+  <path key="2" d="M4 6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8l-4 3z" />,
+  <path key="3" d="M3 15V7l4-3 6 3 4-2v9l-4 2-6-3z M9 7v9" />,
+  <path key="4" d="M4 10a6 6 0 1 0 12 0 6 6 0 0 0-12 0z m3 0 2 2 4-4" />,
+];
+const factorIcons = [
+  <path key="a" d="M3 5h14M3 10h9M3 15h5" />,
+  <path key="b" d="M10 3c3 3 4.5 5.5 4.5 8a4.5 4.5 0 0 1-9 0C5.5 8.5 7 6 10 3z" />,
+  <path key="c" d="M4 4h12v12H4z M4 9h12 M9 4v12" />,
+  <path key="d" d="M6 4h8l2 3-6 9-6-9z" />,
+  <path key="e" d="M10 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6z M4 17c1-3 3.5-4.5 6-4.5S15 14 16 17" />,
+  <path key="f" d="M10 3v14M3 10h14M6 6l8 8M14 6l-8 8" />,
+];
+
+const IconTile = ({ paths }) => (
+  <span className="mp-tile" aria-hidden="true">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      {paths}
+    </svg>
+  </span>
+);
+
+const MarketContext = () => (
+  <section className="packages-hub__plans mp-extra" aria-labelledby="media-context-title">
+    <div className="packages-hub__container">
+      <div className="mp-context">
+        <Bilingual as="h2" id="media-context-title" en={mediaMarketContext.headingEn} vi={mediaMarketContext.headingVi} />
+        <ul className="mp-context__list">
+          {mediaMarketContext.items.map((item, i) => (
+            <li key={i}>
+              <span className="mp-context__mark" aria-hidden="true"><CheckIcon /></span>
+              <Bilingual as="span" en={item.en} vi={item.vi} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+);
+
+const Workflow = () => (
+  <section className="packages-hub__plans mp-extra" aria-labelledby="media-workflow-title">
+    <div className="packages-hub__container">
+      <header className="packages-hub__section-head">
+        <div>
+          <Bilingual as="h2" id="media-workflow-title" en={mediaWorkflow.headingEn} vi={mediaWorkflow.headingVi} />
+          <Bilingual as="p" en={mediaWorkflow.leadEn} vi={mediaWorkflow.leadVi} />
+        </div>
+      </header>
+      <div className="mp-flow">
+        {mediaWorkflow.steps.map((step, i) => (
+          <article className="mp-flow__card" key={i}>
+            <IconTile paths={stepIcons[i]} />
+            <Bilingual as="h3" en={step.titleEn} vi={step.titleVi} />
+            <Bilingual as="p" en={step.descEn} vi={step.descVi} />
+          </article>
+        ))}
+        <article className="mp-flow__card mp-flow__card--custom">
+          <Bilingual as="h3" en={mediaWorkflow.custom.titleEn} vi={mediaWorkflow.custom.titleVi} />
+          <Bilingual as="p" en={mediaWorkflow.custom.descEn} vi={mediaWorkflow.custom.descVi} />
+          <Link to="/contact" className="mp-flow__link">
+            <Bilingual en={mediaWorkflow.custom.ctaEn} vi={mediaWorkflow.custom.ctaVi} /> <ArrowIcon />
+          </Link>
+        </article>
+      </div>
+    </div>
+  </section>
+);
+
+const ValueProps = () => (
+  <section className="packages-hub__plans mp-extra" aria-labelledby="media-value-title">
+    <div className="packages-hub__container">
+      <header className="packages-hub__section-head">
+        <div>
+          <Bilingual as="h2" id="media-value-title" en={mediaValueProps.headingEn} vi={mediaValueProps.headingVi} />
+          <Bilingual as="p" en={mediaValueProps.leadEn} vi={mediaValueProps.leadVi} />
+        </div>
+      </header>
+      <div className="mp-value">
+        {mediaValueProps.items.map((item, i) => (
+          <article className="mp-value__card" key={i}>
+            <Bilingual as="h3" en={item.titleEn} vi={item.titleVi} />
+            <ul>
+              {item.pointsVi.map((vi, j) => (
+                <li key={j} data-vi={vi} data-en={item.pointsEn[j]}>{item.pointsEn[j]}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const CostFactorsGrid = () => (
+  <section className="packages-hub__plans mp-extra" aria-labelledby="media-factors-title">
+    <div className="packages-hub__container">
+      <header className="packages-hub__section-head">
+        <div>
+          <Bilingual as="h2" id="media-factors-title" en={mediaCostFactors.headingEn} vi={mediaCostFactors.headingVi} />
+          <Bilingual as="p" en={mediaCostFactors.leadEn} vi={mediaCostFactors.leadVi} />
+        </div>
+      </header>
+      <div className="mp-factors">
+        {mediaCostFactors.items.map((item, i) => (
+          <article className="mp-factors__card" key={i}>
+            <IconTile paths={factorIcons[i]} />
+            <div>
+              <Bilingual as="h3" en={item.titleEn} vi={item.titleVi} />
+              <Bilingual as="p" en={item.hintEn} vi={item.hintVi} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 );
 
 const contactHref = (groupTitle, packageName) => {
@@ -51,17 +187,6 @@ const faqs = [
   },
 ];
 
-const OverviewCard = ({ item }) => (
-  <article className="packages-hub__media-overview-card">
-    <Bilingual as="h3" en={item.titleEn} vi={item.titleVi} />
-    <Bilingual as="p" className="packages-hub__tier-price" en={mediaPricingCopy.priceLabelEn(item.price, item.unitEn)} vi={mediaPricingCopy.priceLabelVi(item.price, item.unit)} />
-    <Bilingual as="p" className="packages-hub__tier-audience" en={item.descEn} vi={item.descVi} />
-    <a href="#media-groups" className="packages-hub__tier-cta">
-      <Bilingual en={item.ctaEn} vi={item.ctaVi} /> <ArrowIcon />
-    </a>
-  </article>
-);
-
 const MediaPackageCard = ({ group, pkg, featured }) => (
   <article className={`packages-hub__tier-card packages-hub__media-card${featured ? ' packages-hub__tier-card--featured' : ''}`}>
     {featured && (
@@ -84,24 +209,37 @@ const MediaPackageCard = ({ group, pkg, featured }) => (
   </article>
 );
 
-const MediaGroupBlock = ({ group, registerRef }) => (
-  <section
-    ref={(el) => registerRef(group.id, el)}
-    className="packages-hub__service-block"
-    aria-labelledby={`media-group-${group.id}`}
-    id={`group-${group.id}`}
-    style={{ scrollMarginTop: '7rem' }}
-  >
-    <header className="packages-hub__service-head">
-      <Bilingual as="h3" id={`media-group-${group.id}`} en={group.titleEn} vi={group.titleVi} />
-    </header>
-    <div className="packages-hub__tier-grid">
-      {group.packages.map((pkg, index) => (
-        <MediaPackageCard key={pkg.name} group={group} pkg={pkg} featured={index === 0} />
-      ))}
-    </div>
-  </section>
-);
+const groupPriceRange = (group) => {
+  const prices = group.packages.map((p) => p.price).filter(Boolean);
+  return prices.length ? Math.min(...prices) : null;
+};
+
+const MediaGroupBlock = ({ group, registerRef }) => {
+  const low = groupPriceRange(group);
+  return (
+    <section
+      ref={(el) => registerRef(group.id, el)}
+      className="packages-hub__service-block"
+      aria-labelledby={`media-group-${group.id}`}
+      id={`group-${group.id}`}
+      style={{ scrollMarginTop: '7rem' }}
+    >
+      <header className="packages-hub__service-head">
+        <Bilingual as="h3" id={`media-group-${group.id}`} en={group.titleEn} vi={group.titleVi} />
+        {low && (
+          <span className="packages-hub__group-fold-meta">
+            <Bilingual en={`${group.packages.length} packages · from ${fmtVnd(low)}`} vi={`${group.packages.length} gói · từ ${fmtVnd(low)}`} />
+          </span>
+        )}
+      </header>
+      <div className="packages-hub__tier-grid">
+        {group.packages.map((pkg, index) => (
+          <MediaPackageCard key={pkg.name} group={group} pkg={pkg} featured={index === 0} />
+        ))}
+      </div>
+    </section>
+  );
+};
 
 const AddOnRow = ({ item }) => (
   <tr>
@@ -149,7 +287,7 @@ const MediaPricingShowcase = () => {
   }, []);
 
   return (
-    <main className="theme-synced-page packages-hub">
+    <main className="theme-synced-page packages-hub packages-hub--media">
       <section className="packages-hub__hero packages-hub__hero--media" aria-labelledby="media-pricing-title">
         <div className="packages-hub__container packages-hub__hero-grid">
           <div className="packages-hub__intro">
@@ -181,6 +319,15 @@ const MediaPricingShowcase = () => {
         </div>
       </section>
 
+      <MarketContext />
+
+      <DirectAnswer
+        questionVi="Giá quay video và chụp ảnh tại TP.HCM được tính như thế nào?"
+        questionEn="How is video and photography pricing worked out in Ho Chi Minh City?"
+        answerVi="Đây là bảng giá tham khảo để doanh nghiệp dự trù ngân sách quay video và chụp ảnh tại TP.HCM, không phải giá cố định. Giá chính thức của Unitrux phụ thuộc vào concept, số lượng sản phẩm, số ảnh và số video, thời lượng, số bối cảnh, việc có dùng studio, người mẫu, voice-over, motion graphics, mức độ hậu kỳ, số lần chỉnh sửa, tỷ lệ xuất file và deadline. Để nhận báo giá chính xác, gửi brief qua form bên dưới hoặc Zalo — Unitrux sẽ trả về báo giá tách rõ từng hạng mục."
+        answerEn="This is a reference price list for planning a video or photography budget in Ho Chi Minh City — not a fixed rate. Unitrux's official price depends on the concept, number of products, photo and video counts, duration, number of sets, whether a studio, models, voice-over or motion graphics are used, the level of post-production, revision rounds, exported aspect ratios and the deadline. For an exact quote, send a brief via the form below or on Zalo — Unitrux replies with an itemized quotation."
+      />
+
       <nav className="packages-hub__group-nav" aria-label="Jump to a package group">
         <div className="packages-hub__container packages-hub__group-nav-scroller">
           {mediaGroups.map((group) => (
@@ -195,28 +342,14 @@ const MediaPricingShowcase = () => {
         </div>
       </nav>
 
-      <section className="packages-hub__plans" aria-labelledby="media-overview-title">
-        <div className="packages-hub__container">
-          <header className="packages-hub__section-head">
-            <div>
-              <Bilingual as="h2" id="media-overview-title" en="Start here" vi="Bắt đầu từ đâu" />
-              <Bilingual as="p" en={mediaPricingCopy.conventionEn} vi={mediaPricingCopy.conventionVi} />
-            </div>
-          </header>
-          <div className="packages-hub__media-overview-grid">
-            {mediaOverview.map((item) => (
-              <OverviewCard key={item.titleVi} item={item} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <Workflow />
 
       <section className="packages-hub__plans" id="media-groups" aria-labelledby="media-groups-title">
         <div className="packages-hub__container">
           <header className="packages-hub__section-head">
             <div>
               <Bilingual as="h2" id="media-groups-title" en="Every package, by group" vi="Toàn bộ các gói, theo từng nhóm" />
-              <Bilingual as="p" en="17 packages across 8 groups — full detail, no hidden tiers." vi="17 gói trong 8 nhóm dịch vụ — hiển thị đầy đủ, không ẩn mức giá nào." />
+              <Bilingual as="p" en={mediaPricingCopy.conventionEn} vi={mediaPricingCopy.conventionVi} />
             </div>
             <button type="button" onClick={openChat}><Bilingual en="Ask Unitrux to help me choose" vi="Nhờ Unitrux tư vấn chọn gói" /></button>
           </header>
@@ -255,6 +388,96 @@ const MediaPricingShowcase = () => {
         </div>
       </section>
 
+      <ValueProps />
+
+      <section className="packages-hub__plans mp-extra" aria-labelledby="media-inclusions-title">
+        <div className="packages-hub__container">
+          <header className="packages-hub__section-head">
+            <div>
+              <Bilingual as="h2" id="media-inclusions-title" en="What every price includes — and what is quoted on top" vi="Chi phí đã bao gồm và chưa bao gồm những gì" />
+              <Bilingual as="p" en="Every package price already covers the items on the left. The items on the right are quoted separately when a project needs them." vi="Mỗi mức giá gói đã bao gồm các mục bên trái. Các mục bên phải được báo giá riêng khi dự án cần đến." />
+            </div>
+          </header>
+          <div className="mp-incl">
+            <div className="mp-incl__col">
+              <Bilingual as="h3" en="Included in the package price" vi="Đã bao gồm trong giá gói" />
+              <ul className="mp-incl__list mp-incl__list--yes">
+                {mediaPriceInclusions.includedVi.map((vi, i) => (
+                  <li key={i} data-vi={vi} data-en={mediaPriceInclusions.includedEn[i]}>{mediaPriceInclusions.includedEn[i]}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="mp-incl__col">
+              <Bilingual as="h3" en="Quoted separately" vi="Báo giá riêng" />
+              <ul className="mp-incl__list mp-incl__list--no">
+                {mediaPriceInclusions.excludedVi.map((vi, i) => (
+                  <li key={i} data-vi={vi} data-en={mediaPriceInclusions.excludedEn[i]}>{mediaPriceInclusions.excludedEn[i]}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="packages-hub__plans mp-extra" aria-labelledby="media-examples-title">
+        <div className="packages-hub__container">
+          <header className="packages-hub__section-head">
+            <div>
+              <Bilingual as="h2" id="media-examples-title" en="How a quote comes together — worked examples" vi="Ví dụ cách hình thành một báo giá" />
+              <Bilingual as="p" en="Each example combines a published package with published add-on lines so the arithmetic is transparent. These are illustrations, not price commitments." vi="Mỗi ví dụ ghép một gói và các dòng add-on đã công bố để bạn thấy rõ cách cộng. Đây là ví dụ minh hoạ, không phải báo giá cam kết." />
+            </div>
+          </header>
+          <div className="mp-examples">
+            {mediaQuoteExamples.map((ex, i) => {
+              const total = ex.lines.reduce((s, l) => s + l.amount, 0);
+              return (
+                <article className="mp-example" key={i}>
+                  <Bilingual as="h3" en={ex.titleEn} vi={ex.titleVi} />
+                  <table className="mp-example__table">
+                    <tbody>
+                      {ex.lines.map((line, j) => (
+                        <tr key={j}>
+                          <td data-vi={line.labelVi} data-en={line.labelEn}>{line.labelEn}</td>
+                          <td className="mp-example__amt">{fmtVnd(line.amount)}</td>
+                        </tr>
+                      ))}
+                      <tr className="mp-example__total">
+                        <td><Bilingual en="Illustrative subtotal" vi="Tạm tính minh hoạ" /></td>
+                        <td className="mp-example__amt">{fmtVnd(total)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Bilingual as="p" className="mp-example__note" en={ex.disclaimerEn} vi={ex.disclaimerVi} />
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <CostFactorsGrid />
+
+      <ServiceProcess
+        id="media-brief-steps"
+        titleVi="Quy trình sản xuất – minh bạch"
+        titleEn="A transparent production process"
+        leadVi="Đơn giản – Rõ ràng – Hiệu quả."
+        leadEn="Simple, clear, effective."
+        steps={mediaBriefSteps}
+      />
+
+      <section className="packages-hub__plans mp-extra" aria-labelledby="media-brief-form-title">
+        <div className="packages-hub__container">
+          <header className="packages-hub__section-head">
+            <div>
+              <Bilingual as="h2" id="media-brief-form-title" en="Send a brief to get a detailed quote" vi="Gửi brief để nhận báo giá chi tiết" />
+              <Bilingual as="p" en="Share what you need and Unitrux will reply with an itemized quotation matched to your scope and deadline." vi="Chia sẻ nhu cầu và Unitrux sẽ trả về báo giá tách hạng mục theo đúng phạm vi và deadline của bạn." />
+            </div>
+          </header>
+          <PricingBriefForm />
+        </div>
+      </section>
+
       <section className="packages-hub__notes" aria-labelledby="media-faq-title">
         <div className="packages-hub__container">
           <Bilingual as="h2" id="media-faq-title" en="Frequently asked questions" vi="Câu hỏi thường gặp" />
@@ -268,6 +491,8 @@ const MediaPricingShowcase = () => {
           </div>
         </div>
       </section>
+
+      <RelatedContent path="/media-pricing" />
 
       <section className="packages-hub__cta" aria-labelledby="media-cta-title">
         <div className="packages-hub__container">

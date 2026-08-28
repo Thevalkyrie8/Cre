@@ -235,7 +235,7 @@ const PrivacyPolicy = () => {
       </p>
 
       <p style={{ marginTop: '32px' }}>
-        <Link to="/" style={{ color: '#007bff', textDecoration: 'none' }}>&larr; Back to Home</Link>
+        <Link to="/" style={{ color: 'var(--u-accent)', textDecoration: 'none' }}>&larr; Back to Home</Link>
       </p>
     </div>
   );

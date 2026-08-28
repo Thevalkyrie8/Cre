@@ -1,14 +1,14 @@
 .service-editorial-detail--chatbox {
-  --chatbox-page-bg: #f8fafc;
+  --chatbox-page-bg: var(--u-surface);
   --chatbox-surface: #ffffff;
-  --chatbox-ink: #0f172a;
-  --chatbox-muted: #475569;
-  --chatbox-border: #e2e8f0;
-  --chatbox-accent: #0284c7;
+  --chatbox-ink: var(--u-ink);
+  --chatbox-muted: var(--u-ink);
+  --chatbox-border: var(--u-line);
+  --chatbox-accent: var(--u-accent);
   --chatbox-accent-ink: #ffffff;
-  --chatbox-dark: #0f172a;
-  --chatbox-dark-copy: #cbd5e1;
-  --chatbox-highlight: #fbbf24;
+  --chatbox-dark: var(--u-dark);
+  --chatbox-dark-copy: var(--u-subtle);
+  --chatbox-highlight: var(--u-secondary);
 
   background-color: var(--chatbox-page-bg) !important;
   color: var(--chatbox-ink) !important;
@@ -16,15 +16,15 @@
 }
 
 body.dark-mode .service-editorial-detail--chatbox {
-  --chatbox-page-bg: #0f172a;
-  --chatbox-surface: #1e293b;
+  --chatbox-page-bg: var(--u-dark);
+  --chatbox-surface: var(--u-dark);
   --chatbox-ink: #ffffff;
-  --chatbox-muted: #94a3b8;
-  --chatbox-border: #334155;
-  --chatbox-accent: #22d3ee;
-  --chatbox-accent-ink: #0f172a;
-  --chatbox-dark: #080f1e;
-  --chatbox-dark-copy: #94a3b8;
+  --chatbox-muted: var(--u-muted);
+  --chatbox-border: var(--u-line);
+  --chatbox-accent: var(--u-accent);
+  --chatbox-accent-ink: var(--u-ink);
+  --chatbox-dark: var(--u-dark);
+  --chatbox-dark-copy: var(--u-subtle);
 
   color-scheme: dark;
 }
@@ -34,17 +34,17 @@ body.dark-mode .service-editorial-detail--chatbox {
 }
 
 .service-editorial-detail--chatbox :is(
-  [class*="tw-bg-[#FEF7EA]"],
-  [class*="tw-bg-[#E7EFE9]"],
-  [class*="tw-bg-[#E8F0EB]"],
-  [class*="tw-bg-[#F2EDE5]"]
+  [class*="tw-bg-[var(--u-surface)]"],
+  [class*="tw-bg-[var(--u-surface)]"],
+  [class*="tw-bg-[var(--u-surface)]"],
+  [class*="tw-bg-[var(--u-surface)]"]
 ) {
   background-color: var(--chatbox-surface) !important;
 }
 
 .service-editorial-detail--chatbox :is(
-  [class*="tw-border-[#0D5E4D]"],
-  [class*="tw-border-[#FFF9F1]"]
+  [class*="tw-border-[var(--u-accent)]"],
+  [class*="tw-border-[var(--u-line)]"]
 ) {
   border-color: var(--chatbox-border) !important;
 }
@@ -58,29 +58,29 @@ body.dark-mode .service-editorial-detail--chatbox {
 }
 
 .service-editorial-detail--chatbox :is(
-  [class*="tw-text-[#0D5E4D]"],
-  [class*="tw-text-[#263B35]"]
+  [class*="tw-text-[var(--u-accent)]"],
+  [class*="tw-text-[var(--u-dark)]"]
 ) {
   color: var(--chatbox-ink) !important;
 }
 
 .service-editorial-detail--chatbox :is(
-  [class*="tw-text-[#315248]"],
-  [class*="tw-text-[#49635A]"],
-  [class*="tw-text-[#50675F]"],
-  [class*="tw-text-[#61756F]"]
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-dark-muted)]"],
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-subtle)]"]
 ) {
   color: var(--chatbox-muted) !important;
 }
 
 .service-editorial-detail--chatbox :is(
-  [class*="tw-text-[#E68C23]"],
-  [class*="tw-text-[#C5751E]"]
+  [class*="tw-text-[var(--u-secondary)]"],
+  [class*="tw-text-[var(--u-secondary)]"]
 ) {
   color: var(--chatbox-accent) !important;
 }
 
-.service-editorial-detail--chatbox [class*="tw-bg-[#E68C23]"] {
+.service-editorial-detail--chatbox [class*="tw-bg-[var(--u-secondary)]"] {
   background-color: var(--chatbox-accent) !important;
   color: var(--chatbox-accent-ink) !important;
 }
@@ -99,26 +99,26 @@ body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .servic
 }
 
 body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(
-  [class*="tw-text-[#F5BC72]"],
-  [class*="tw-text-[#F6BD73]"],
-  [class*="tw-text-[#E68C23]"]
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-secondary)]"]
 ) {
   color: var(--chatbox-highlight) !important;
 }
 
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[#FFF9F1]"] {
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[var(--u-surface)]"] {
   color: #ffffff !important;
 }
 
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[#D8E6DF]"] {
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[var(--u-subtle)]"] {
   color: var(--chatbox-dark-copy) !important;
 }
 
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [stroke="#F5BC72"] {
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [stroke="var(--u-subtle)"] {
   stroke: var(--chatbox-highlight);
 }
 
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [fill="#0D5E4D"] {
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [fill="var(--u-accent)"] {
   fill: var(--chatbox-dark);
 }
 
@@ -145,37 +145,37 @@ body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editori
 }
 
 body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(p, li) {
-  color: #cbd5e1 !important;
+  color: var(--u-dark-muted) !important;
 }
 
 body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(
-  [class*="tw-text-[#F5BC72]"],
-  [class*="tw-text-[#F6BD73]"],
-  [class*="tw-text-[#E68C23]"]
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-secondary)]"]
 ):not(.master-magnetic) {
-  color: #fbbf24 !important;
+  color: var(--u-secondary) !important;
 }
 
 /* :not(.master-magnetic) keeps this off the "Get consultation"-style CTA
-   button, which carries tw-text-[#FFF9F1] too but has its own dedicated
+   button, which carries tw-text-[var(--u-surface)] too but has its own dedicated
    light-on-dark / dark-on-light pairing (styles.css ~13809) that this
    broader override would otherwise clobber. */
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[#FFF9F1]"]:not(.master-magnetic) {
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[var(--u-surface)]"]:not(.master-magnetic) {
   color: #ffffff !important;
 }
 
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[#D8E6DF]"]:not(.master-magnetic) {
-  color: #cbd5e1 !important;
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[var(--u-subtle)]"]:not(.master-magnetic) {
+  color: var(--u-dark-muted) !important;
 }
 
-/* The sitewide "tw-bg-[#FFF9F1]" card normalizer (styles.css ~13649) matches
+/* The sitewide "tw-bg-[var(--u-surface)]" card normalizer (styles.css ~13649) matches
    by substring, so it also catches the opacity-modifier utility
-   tw-bg-[#FFF9F1]/[.07] used for the translucent metric panel inside this
+   tw-bg-[var(--u-surface)]/[.07] used for the translucent metric panel inside this
    dark band, forcing it to a solid opaque white card. That turns the
    light-on-dark badge/metric text sitting on it invisible. Restore the
    intended translucent tint here. */
-body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-bg-[#FFF9F1]/"] {
-  background-color: rgba(255, 249, 241, 0.07) !important;
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-bg-[var(--u-surface)]/"] {
+  background-color: rgb(from var(--u-surface) r g b / 0.07) !important;
 }
 
 body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface a[href="/packages"] {

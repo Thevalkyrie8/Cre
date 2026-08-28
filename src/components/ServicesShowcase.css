@@ -1,22 +1,22 @@
 .services-map {
-  --services-bg: #f8fafc;
+  --services-bg: var(--u-surface);
   --services-surface: #ffffff;
-  --services-ink: #0f172a;
-  --services-muted: #475569;
-  --services-line: #e2e8f0;
-  --services-accent: #0284c7;
+  --services-ink: var(--u-ink);
+  --services-muted: var(--u-ink);
+  --services-line: var(--u-line);
+  --services-accent: var(--u-accent);
   overflow: clip;
   color: var(--services-ink);
   background: var(--services-bg);
 }
 
 body.dark-mode .services-map {
-  --services-bg: #0f172a;
-  --services-surface: #1e293b;
+  --services-bg: var(--u-dark);
+  --services-surface: var(--u-dark);
   --services-ink: #ffffff;
-  --services-muted: #94a3b8;
-  --services-line: #334155;
-  --services-accent: #22d3ee;
+  --services-muted: var(--u-muted);
+  --services-line: var(--u-line);
+  --services-accent: var(--u-accent);
 }
 
 .services-map *,
@@ -110,7 +110,7 @@ body.dark-mode .services-map {
 }
 
 body.dark-mode .services-map__button--primary {
-  color: #0f172a !important;
+  color: var(--u-accent-ink) !important;
 }
 
 .services-map__button--primary:hover {
@@ -146,7 +146,7 @@ body.dark-mode .services-map__button--primary {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
-  background: #0f172a;
+  background: var(--u-dark);
   object-fit: cover;
 }
 
@@ -233,7 +233,7 @@ body.dark-mode .services-map__button--primary {
 }
 
 .services-map__catalog-number {
-  color: #0369a1;
+  color: var(--u-accent-hover);
   font-size: 1.1rem;
   font-weight: 700;
 }
@@ -280,7 +280,7 @@ body.dark-mode .services-map__catalog-number {
 }
 
 body.dark-mode .services-map__catalog-card:hover .services-map__arrow {
-  color: #0f172a;
+  color: var(--u-ink);
 }
 
 .services-map__decision h2 {
@@ -301,7 +301,7 @@ body.dark-mode .services-map__catalog-card:hover .services-map__arrow {
 .services-map__decision {
   padding: clamp(72px, 9vw, 112px) 0;
   color: #ffffff;
-  background: #0f172a;
+  background: var(--u-dark);
 }
 
 .services-map__decision-layout {
@@ -318,7 +318,7 @@ body.dark-mode .services-map__catalog-card:hover .services-map__arrow {
 }
 
 .services-map__decision.services-map__decision p {
-  color: #94a3b8 !important;
+  color: var(--u-dark-muted) !important;
 }
 
 .services-map__text-link {
@@ -333,7 +333,7 @@ body.dark-mode .services-map__catalog-card:hover .services-map__arrow {
 }
 
 .services-map__text-link:hover {
-  color: #22d3ee !important;
+  color: var(--u-accent) !important;
 }
 
 @media (max-width: 920px) {

@@ -1,0 +1,110 @@
+/* Case study section — extends serviceSections.css (.svc) tokens.
+   Text colour inherits from the host page; this file owns structure only. */
+
+.cs-card {
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  border: 1px solid var(--svc-line);
+  border-radius: 1rem;
+  background: var(--svc-surface);
+}
+
+.cs-card + .cs-card {
+  margin-top: 1.25rem;
+}
+
+.cs-card .cs-card__title {
+  margin: 0 0 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.cs-fields {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0 0 1.3rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.cs-field {
+  margin: 0;
+}
+
+.cs-field .cs-field__label {
+  margin: 0 0 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.cs-field .cs-field__value {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  opacity: 0.9;
+}
+
+.cs .cs-subhead {
+  margin: 1.3rem 0 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.cs-process,
+.cs-deliverables {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.cs-process li,
+.cs-deliverables li {
+  font-size: 0.93rem;
+  line-height: 1.55;
+  opacity: 0.9;
+}
+
+.cs .cs-result {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  opacity: 0.92;
+}
+
+.cs-media {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.cs-media__item {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  background: var(--u-dark);
+}
+
+.cs-media__item img,
+.cs-media__video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cs-media__video {
+  aspect-ratio: var(--cs-ratio, 16 / 9);
+  object-fit: cover;
+}
+
+.cs-media__item figcaption {
+  padding: 0.6rem 0.8rem;
+  color: var(--u-dark-muted);
+  font-size: 0.78rem;
+}
+
+.cs-card__cta {
+  margin: 1.3rem 0 0;
+}

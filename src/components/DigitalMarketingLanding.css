@@ -1,20 +1,20 @@
 .ads-landing {
-  --ads-bg: #0f172a;
-  --ads-surface: #1e293b;
-  --ads-surface-strong: #0f172a;
+  --ads-bg: var(--u-bg);
+  --ads-surface: var(--u-dark);
+  --ads-surface-strong: var(--u-dark);
   --ads-ink: #ffffff;
-  --ads-muted: #94a3b8;
-  --ads-line: #334155;
-  --ads-action: #22d3ee;
-  --ads-action-ink: #0f172a;
-  --ads-warm: #fbbf24;
-  --ads-canvas: #1e293b;
-  --ads-soft: #0f172a;
+  --ads-muted: var(--u-muted);
+  --ads-line: var(--u-line);
+  --ads-action: var(--u-accent);
+  --ads-action-ink: var(--u-accent-ink);
+  --ads-warm: var(--u-secondary);
+  --ads-canvas: var(--u-dark);
+  --ads-soft: var(--u-dark);
   --ads-day-ink: #ffffff;
-  --ads-day-muted: #94a3b8;
-  --ads-commit: #0f172a;
-  --ads-commit-muted: #94a3b8;
-  --ads-commit-action: #22d3ee;
+  --ads-day-muted: var(--u-muted);
+  --ads-commit: var(--u-dark);
+  --ads-commit-muted: var(--u-muted);
+  --ads-commit-action: var(--u-accent);
   color: var(--ads-ink);
   background: var(--ads-bg);
   font-family: "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
@@ -22,22 +22,24 @@
 }
 
 body:not(.dark-mode) .ads-landing {
-  --ads-bg: #f8fafc;
+  --ads-bg: var(--u-surface);
   --ads-surface: #ffffff;
-  --ads-surface-strong: #f8fafc;
-  --ads-ink: #0f172a;
-  --ads-muted: #475569;
-  --ads-line: #e2e8f0;
-  --ads-action: #0284c7;
+  --ads-surface-strong: var(--u-surface);
+  --ads-ink: var(--u-ink);
+  --ads-muted: var(--u-ink);
+  --ads-line: var(--u-line);
+  --ads-action: var(--u-accent);
   --ads-action-ink: #ffffff;
-  --ads-warm: #ea580c;
+  --ads-warm: var(--u-secondary);
   --ads-canvas: #ffffff;
-  --ads-soft: #f8fafc;
-  --ads-day-ink: #0f172a;
-  --ads-day-muted: #475569;
-  --ads-commit: #0f172a;
-  --ads-commit-muted: #94a3b8;
-  --ads-commit-action: #22d3ee;
+  --ads-soft: var(--u-surface);
+  --ads-day-ink: var(--u-ink);
+  --ads-day-muted: var(--u-ink);
+  /* "commit" = the closing dark band, dark in both themes: keep its text on the
+     always-dark ink tokens so the light-mode ink/accent don't wash out on it. */
+  --ads-commit: var(--u-dark);
+  --ads-commit-muted: var(--u-dark-muted);
+  --ads-commit-action: var(--u-accent-soft);
 }
 
 .ads-shell {
@@ -506,7 +508,7 @@ body:not(.dark-mode) .ads-landing {
   width: 100%;
   aspect-ratio: 16 / 10;
   border-radius: 16px;
-  background: #0f172a;
+  background: var(--u-dark);
   object-fit: cover;
 }
 
@@ -517,7 +519,7 @@ body:not(.dark-mode) .ads-landing {
   padding: 0.6rem 0.8rem;
   border-radius: 8px;
   color: #ffffff;
-  background: rgba(15, 23, 42, 0.92);
+  background: rgb(from var(--u-dark) r g b / 0.92);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -631,7 +633,7 @@ body:not(.dark-mode) .ads-landing {
 .ads-deliverables__list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  border-top: 1px solid rgb(from var(--u-line) r g b / 0.22);
 }
 
 .ads-deliverables__list > div {
@@ -639,7 +641,7 @@ body:not(.dark-mode) .ads-landing {
   grid-template-columns: 3rem 1fr;
   gap: 1rem;
   padding: 1.35rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid rgb(from var(--u-line) r g b / 0.22);
 }
 
 .ads-deliverables__list > div:nth-child(odd) {
@@ -648,7 +650,7 @@ body:not(.dark-mode) .ads-landing {
 
 .ads-deliverables__list > div:nth-child(even) {
   padding-left: 2rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 1px solid rgb(from var(--u-line) r g b / 0.22);
 }
 
 .ads-deliverables__list span {

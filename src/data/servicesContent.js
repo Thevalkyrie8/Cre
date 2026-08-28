@@ -392,8 +392,8 @@ export const servicesContent = {
   'product-photography': {
     eyebrow: { en: 'Service', vi: 'Dịch vụ' },
     title: {
-      en: 'Product & Brand Photography',
-      vi: 'Chụp ảnh sản phẩm và thương hiệu',
+      en: 'Professional Product Photography in Ho Chi Minh City',
+      vi: 'Dịch vụ chụp ảnh sản phẩm chuyên nghiệp tại TP.HCM',
     },
     intro: {
       en: 'Product photography, space photography and brand imagery in Ho Chi Minh City for your website, marketplace listings and social profiles — shot to a consistent visual standard so every channel looks like it belongs to the same brand.',
@@ -467,6 +467,135 @@ export const servicesContent = {
       { en: 'Brand / lifestyle photo set', vi: 'Bộ ảnh thương hiệu / lifestyle' },
       { en: 'Channel-ready file sizes (website, marketplace, social)', vi: 'File đã căn chỉnh kích thước theo từng kênh (website, TMĐT, mạng xã hội)' },
     ],
+
+    // ---- Cluster F deep sections (rendered by ServiceLanding via the shared
+    // src/components/service/ library). Flat vi/en shape matching those
+    // components' props. Photo-only per CANN-01 — no video-production language.
+    directAnswer: {
+      questionVi: 'Unitrux cung cấp dịch vụ chụp ảnh sản phẩm gì?',
+      questionEn: 'What does Unitrux offer for product photography?',
+      answerVi: 'Unitrux là đơn vị chụp ảnh sản phẩm chuyên nghiệp tại TP.HCM, phục vụ doanh nghiệp cần hình ảnh cho website, sàn thương mại điện tử và mạng xã hội. Dịch vụ gồm ảnh sản phẩm nền trắng, ảnh concept quảng cáo, ảnh lifestyle, ảnh cùng người mẫu và hình ảnh thương hiệu. Quy trình đi từ brief và shot list, khảo sát, buổi chụp tại studio hoặc tại cửa hàng, đến hậu kỳ và bàn giao file theo đúng tỷ lệ của từng kênh.',
+      answerEn: 'Unitrux is a professional product photography studio in Ho Chi Minh City, working with businesses that need imagery for their website, marketplace listings and social profiles. The service covers white-background product shots, advertising concept images, lifestyle photos, shots with a model and brand imagery. The process runs from brief and shot list, through a site survey and the shoot — in studio or at your store — to post-production and files delivered at the right ratio for each channel.',
+    },
+    serviceTypes: {
+      titleVi: 'Các hình thức chụp ảnh sản phẩm',
+      titleEn: 'Product photography styles',
+      leadVi: 'Mỗi hình thức phục vụ một mục đích khác nhau. Một buổi chụp có thể kết hợp nhiều hình thức khi được lên kế hoạch từ bước brief.',
+      leadEn: 'Each style serves a different purpose. One shoot can combine several styles when planned from the brief stage.',
+      items: [
+        { titleVi: 'Ảnh nền trắng / nền đơn sắc', titleEn: 'White / solid-colour background', bodyVi: 'Ảnh sạch, đúng màu, nhiều góc — chuẩn cho danh mục website và gian hàng trên sàn thương mại điện tử.', bodyEn: 'Clean, colour-accurate, multi-angle shots — the standard for website catalogs and marketplace listings.' },
+        { titleVi: 'Ảnh concept quảng cáo', titleEn: 'Advertising concept', bodyVi: 'Bối cảnh, đạo cụ và ánh sáng được dựng theo một ý tưởng cụ thể để dùng cho key visual và quảng cáo.', bodyEn: 'Set, props and lighting built around a specific idea, for key visuals and ad creative.' },
+        { titleVi: 'Ảnh lifestyle', titleEn: 'Lifestyle', bodyVi: 'Sản phẩm trong ngữ cảnh sử dụng thực tế, giúp khách hình dung sản phẩm trong đời sống.', bodyEn: 'The product in a real-use context, so customers can picture it in their life.' },
+        { titleVi: 'Ảnh cùng người mẫu', titleEn: 'With a model', bodyVi: 'Sản phẩm mặc/đeo/cầm bởi người mẫu — phù hợp thời trang, phụ kiện, mỹ phẩm.', bodyEn: 'The product worn, held or used by a model — for fashion, accessories and cosmetics.' },
+        { titleVi: 'Ảnh chuẩn sàn thương mại điện tử', titleEn: 'Marketplace-ready', bodyVi: 'Ảnh đúng kích thước, tỷ lệ và quy định hiển thị của Shopee, Lazada, TikTok Shop.', bodyEn: 'Images sized and cropped to Shopee, Lazada and TikTok Shop display rules.' },
+        { titleVi: 'Hình ảnh thương hiệu', titleEn: 'Brand imagery', bodyVi: 'Ảnh đội ngũ, không gian và quy trình để dùng cho website, hồ sơ năng lực và truyền thông thương hiệu.', bodyEn: 'Team, space and process photos for the website, company profile and brand communications.' },
+      ],
+    },
+    whoItsFor: {
+      titleVi: 'Ngành hàng phù hợp',
+      titleEn: 'Industries this fits',
+      leadVi: 'Dịch vụ chụp ảnh sản phẩm của Unitrux phù hợp nhất với các ngành hàng mà hình ảnh ảnh hưởng trực tiếp đến quyết định mua.',
+      leadEn: 'Unitrux product photography fits industries where imagery directly drives the buying decision.',
+      items: [
+        { vi: 'Mỹ phẩm, skincare, chăm sóc cá nhân', en: 'Cosmetics, skincare, personal care' },
+        { vi: 'Thời trang và phụ kiện', en: 'Fashion and accessories' },
+        { vi: 'Trang sức, đồng hồ, sản phẩm giá trị cao', en: 'Jewellery, watches, high-value items' },
+        { vi: 'F&B đóng gói, đặc sản, quà tặng', en: 'Packaged F&B, specialty foods, gift sets' },
+        { vi: 'Đồ gia dụng và nội thất nhỏ', en: 'Homeware and small furniture' },
+        { vi: 'Sản phẩm công nghệ và thiết bị', en: 'Tech products and devices' },
+      ],
+    },
+    clientPrep: {
+      titleVi: 'Khách hàng cần chuẩn bị gì trước buổi chụp',
+      titleEn: 'What to prepare before the shoot',
+      leadVi: 'Chuẩn bị tốt trước buổi chụp giúp buổi chụp tập trung, giảm chỉnh sửa và giữ đúng ngân sách. Dưới đây là những gì Unitrux đề nghị khách chuẩn bị.',
+      leadEn: 'Good preparation keeps the shoot focused, cuts revisions and holds the budget. Here is what Unitrux asks clients to prepare.',
+      groups: [
+        {
+          headingVi: 'Về sản phẩm',
+          headingEn: 'The products',
+          items: [
+            { vi: 'Sản phẩm sạch, không trầy xước, tem nhãn dán thẳng và là bản bao bì cuối cùng (final packaging).', en: 'Products that are clean, unscratched, with labels applied straight, in final packaging.' },
+            { vi: 'Mỗi mẫu nên có 1–2 sản phẩm dự phòng phòng khi hỏng hoặc lỗi trong lúc set up.', en: '1–2 backup units per item in case of damage or a defect during setup.' },
+            { vi: 'Nếu sản phẩm có nhiều màu / phiên bản, ghi rõ phiên bản nào cần chụp và ưu tiên chụp trước.', en: 'If a product has colour/version variants, note which to shoot and which comes first.' },
+          ],
+        },
+        {
+          headingVi: 'Về định hướng hình ảnh',
+          headingEn: 'The visual direction',
+          items: [
+            { vi: 'Moodboard hoặc 3–5 ảnh tham chiếu (reference) cho phong cách mong muốn — kể cả ảnh của thương hiệu khác.', en: 'A moodboard or 3–5 reference images for the style you want — competitor images are fine.' },
+            { vi: 'Màu thương hiệu, font và logo bản vector nếu cần ghép vào ảnh.', en: 'Brand colours, fonts and a vector logo if any needs to go into the images.' },
+            { vi: 'Ghi rõ có cần chừa khoảng trống (negative space) để chèn chữ về sau không.', en: 'Note whether images need negative space for text to be added later.' },
+          ],
+        },
+        {
+          headingVi: 'Về mục đích sử dụng',
+          headingEn: 'How the images will be used',
+          items: [
+            { vi: 'Chốt trước ảnh dùng cho kênh nào: website, Shopee/Lazada/TikTok Shop, quảng cáo Meta, hồ sơ năng lực…', en: 'Decide upfront which channels the images serve: website, Shopee/Lazada/TikTok Shop, Meta ads, company profile…' },
+            { vi: 'Số lượng ảnh cần cho mỗi sản phẩm (ví dụ: 1 hero + 3 góc + 1 lifestyle).', en: 'How many images per product (e.g. 1 hero + 3 angles + 1 lifestyle).' },
+            { vi: 'Deadline thực tế cần nhận file để kịp lịch đăng bán hoặc chạy quảng cáo.', en: 'The real deadline for receiving files to hit your launch or ad schedule.' },
+          ],
+        },
+        {
+          headingVi: 'Về buổi chụp',
+          headingEn: 'On the day',
+          items: [
+            { vi: 'Một người của doanh nghiệp nắm rõ sản phẩm có mặt hoặc trực điện thoại để duyệt nhanh.', en: 'Someone from your team who knows the products on site or on call to approve quickly.' },
+            { vi: 'Nếu chụp tại cửa hàng/showroom: dọn khu vực chụp và báo trước khung giờ ít khách.', en: 'If shooting at your store/showroom: clear the shooting area and pick a low-traffic time slot.' },
+          ],
+        },
+      ],
+    },
+    productReqs: {
+      titleVi: 'Yêu cầu về sản phẩm và thông tin cần cung cấp',
+      titleEn: 'Product and information requirements',
+      items: [
+        { vi: 'Kích thước thực của sản phẩm (để chuẩn bị ống kính, set và cách dàn bố cục).', en: 'Actual product dimensions (for lens choice, set size and layout).' },
+        { vi: 'Chất liệu bề mặt: bóng, mờ, kim loại, thủy tinh hay trong suốt — ảnh hưởng cách đánh sáng.', en: 'Surface material: glossy, matte, metallic, glass or transparent — this changes the lighting.' },
+        { vi: 'Màu sắc cần giữ đúng tuyệt đối (ví dụ mã màu son, màu vải) — nêu rõ để căn màu.', en: 'Colours that must be reproduced exactly (e.g. a lipstick shade, a fabric colour) — flag these for colour matching.' },
+        { vi: 'Reference cho từng nhóm sản phẩm nếu phong cách khác nhau.', en: 'A reference per product group if styles differ.' },
+        { vi: 'Mục đích sử dụng cuối cùng của mỗi ảnh (bán hàng, thương hiệu, quảng cáo).', en: 'The final use of each image (sales, brand, advertising).' },
+      ],
+    },
+    aspectRatios: {
+      titleVi: 'Các tỷ lệ ảnh bàn giao',
+      titleEn: 'Delivered aspect ratios',
+      leadVi: 'Nguồn ảnh gốc dùng chung, nhưng mỗi kênh cần một tỷ lệ riêng. Các tỷ lệ trong phạm vi bàn giao được thống nhất từ đầu; tỷ lệ phát sinh thêm tính theo bảng add-on.',
+      leadEn: 'The source images are shared, but each channel needs its own ratio. The ratios in scope are agreed upfront; extra ratios are billed per the add-on table.',
+      items: [
+        { vi: '1:1 — gian hàng Shopee, Lazada, TikTok Shop', en: '1:1 — Shopee, Lazada, TikTok Shop listings' },
+        { vi: '4:5 — bài feed Facebook và Instagram', en: '4:5 — Facebook and Instagram feed posts' },
+        { vi: '3:2 hoặc 16:9 — banner và ảnh trên website', en: '3:2 or 16:9 — website banners and imagery' },
+        { vi: '9:16 — Reels, Stories, TikTok', en: '9:16 — Reels, Stories, TikTok' },
+      ],
+    },
+    postProduction: {
+      titleVi: 'Quy trình hậu kỳ',
+      titleEn: 'The post-production process',
+      items: [
+        { vi: 'Cân màu để ảnh nhất quán trong cả bộ và đúng màu sản phẩm thật.', en: 'Colour grading so the set stays consistent and matches the real product colour.' },
+        { vi: 'Tách nền và dựng nền trắng chuẩn hiển thị của sàn thương mại điện tử.', en: 'Background removal and clean white backgrounds to marketplace display specs.' },
+        { vi: 'Retouch tiêu chuẩn: bụi, vết xước nhẹ, phản chiếu không mong muốn.', en: 'Standard retouching: dust, light scratches, unwanted reflections.' },
+        { vi: 'Retouch nâng cao khi cần: compositing, chỉnh chi tiết sâu (tính theo add-on).', en: 'Advanced retouching when needed: compositing, deep detail work (billed as an add-on).' },
+        { vi: 'Xuất file theo từng tỷ lệ và kích thước đã thống nhất.', en: 'Export per the agreed ratios and sizes.' },
+      ],
+    },
+    costFactors: {
+      titleVi: 'Các yếu tố ảnh hưởng đến giá chụp ảnh sản phẩm',
+      titleEn: 'What affects the price of product photography',
+      items: [
+        { vi: 'Số lượng sản phẩm và số ảnh hậu kỳ cần cho mỗi sản phẩm', en: 'Number of products and edited photos needed per product' },
+        { vi: 'Địa điểm chụp: studio, tại cửa hàng, hay on-location', en: 'Shoot location: studio, at your store, or on location' },
+        { vi: 'Độ phức tạp của concept, số setup ánh sáng và số bối cảnh', en: 'Concept complexity, number of lighting setups and sets' },
+        { vi: 'Người mẫu, makeup, stylist và đạo cụ đặc thù', en: 'Model, makeup, stylist and specialty props' },
+        { vi: 'Mức độ hậu kỳ: retouch tiêu chuẩn hay nâng cao', en: 'Retouching level: standard or advanced' },
+        { vi: 'Số tỷ lệ khung hình xuất file và số vòng chỉnh sửa', en: 'Number of exported aspect ratios and revision rounds' },
+        { vi: 'Deadline: triển khai gấp có phụ phí', en: 'Deadline: rush turnaround carries a surcharge' },
+      ],
+    },
+
     gallery: [
       {
         src: '/images/img4.jpg',
@@ -490,8 +619,8 @@ export const servicesContent = {
       },
     ],
     relatedServices: [
-      { path: '/media-pricing', label: { en: 'See detailed photo & video pricing', vi: 'Xem bảng giá chi tiết chụp ảnh & video' } },
-      { path: '/photography-video', label: { en: 'Advertising video production', vi: 'Sản xuất video quảng cáo' } },
+      { path: '/photography-video', label: { en: 'Advertising video production in Ho Chi Minh City', vi: 'Dịch vụ quay video quảng cáo tại TP.HCM' } },
+      { path: '/media-pricing', label: { en: 'Video and photography pricing', vi: 'Bảng giá quay video và chụp ảnh' } },
       { path: '/content-creation', label: { en: 'Multi-channel content', vi: 'Nội dung đa kênh' } },
       { path: '/digital-marketing', label: { en: 'Multi-platform advertising', vi: 'Quảng cáo đa nền tảng' } },
     ],

@@ -64,10 +64,10 @@ const ServicesShowcase = () => (
           <p className="services-map__kicker">The connected growth system</p>
           <h1
             id="services-map-title"
-            data-vi="Không phải mười dịch vụ rời rạc. Là một hệ thống tăng trưởng được kết nối."
-            data-en="Not ten isolated services. One connected growth system."
+            data-vi="Unitrux kết nối công nghệ, nội dung và truyền thông thành một hệ thống tăng trưởng duy nhất cho doanh nghiệp."
+            data-en="Unitrux connects technology, content, and communications into one unified growth system for businesses."
           >
-            Not ten isolated services. One connected growth system.
+            Unitrux connects technology, content, and communications into one unified growth system for businesses.
           </h1>
           <p
             className="services-map__lead"

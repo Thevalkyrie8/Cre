@@ -1,23 +1,15 @@
+/* Every colour resolves to src/styles/palette.css — --u-* switches light/dark. */
 .production-page {
-  --production-bg: #f8fafc;
-  --production-surface: #ffffff;
-  --production-ink: #0f172a;
-  --production-muted: #475569;
-  --production-line: #e2e8f0;
-  --production-accent: #0284c7;
+  --production-bg: var(--u-bg);
+  --production-surface: var(--u-surface);
+  --production-ink: var(--u-ink);
+  --production-muted: var(--u-body);
+  --production-line: var(--u-line);
+  --production-accent: var(--u-accent);
   position: relative;
   overflow: clip;
   color: var(--production-ink);
   background: var(--production-bg);
-}
-
-body.dark-mode .production-page {
-  --production-bg: #0f172a;
-  --production-surface: #1e293b;
-  --production-ink: #ffffff;
-  --production-muted: #94a3b8;
-  --production-line: #334155;
-  --production-accent: #22d3ee;
 }
 
 .production-page *,
@@ -129,7 +121,7 @@ body.dark-mode .production-page {
 }
 
 body.dark-mode .production-button--primary {
-  color: #0f172a !important;
+  color: var(--u-accent-ink) !important;
 }
 
 .production-button--primary:hover {
@@ -180,7 +172,7 @@ body.dark-mode .production-button--primary {
   width: 100%;
   aspect-ratio: 4 / 5;
   border-radius: 16px;
-  background: #020617;
+  background: var(--u-dark);
   object-fit: cover;
 }
 
@@ -195,7 +187,7 @@ body.dark-mode .production-button--primary {
   padding: 1rem 1.1rem;
   border-radius: 10px 0 16px 0;
   color: #ffffff;
-  background: rgba(2, 6, 23, 0.9);
+  background: rgb(from var(--u-dark) r g b / 0.9);
   font-size: 0.78rem;
 }
 
@@ -204,7 +196,7 @@ body.dark-mode .production-button--primary {
 }
 
 .production-hero__media figcaption span:last-child {
-  color: #94a3b8;
+  color: var(--u-dark-muted);
 }
 
 .production-channel-strip {
@@ -279,7 +271,7 @@ body.dark-mode .production-button--primary {
   margin: 0 0 1rem;
   overflow: hidden;
   border-radius: 16px;
-  background: #020617;
+  background: var(--u-dark);
   break-inside: avoid;
 }
 
@@ -302,7 +294,7 @@ body.dark-mode .production-button--primary {
   left: 0;
   padding: 3rem 1.15rem 1rem;
   color: #ffffff;
-  background: linear-gradient(to top, rgba(2, 6, 23, 0.86), transparent);
+  background: linear-gradient(to top, rgb(from var(--u-dark) r g b / 0.86), transparent);
   font-size: 0.78rem;
   font-weight: 720;
 }
@@ -324,7 +316,7 @@ body.dark-mode .production-button--primary {
   margin: 0 0 1rem;
   overflow: hidden;
   border-radius: 16px;
-  background: #020617;
+  background: var(--u-dark);
   break-inside: avoid;
 }
 
@@ -346,7 +338,7 @@ body.dark-mode .production-button--primary {
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
   color: #ffffff;
-  background: rgba(2, 6, 23, 0.68);
+  background: rgb(from var(--u-dark) r g b / 0.68);
   backdrop-filter: blur(6px);
   font-size: 0.68rem;
   font-weight: 720;
@@ -361,7 +353,7 @@ body.dark-mode .production-button--primary {
   left: 0;
   padding: 3rem 1.1rem 0.9rem;
   color: #ffffff;
-  background: linear-gradient(to top, rgba(2, 6, 23, 0.86), transparent);
+  background: linear-gradient(to top, rgb(from var(--u-dark) r g b / 0.86), transparent);
   font-size: 0.78rem;
   font-weight: 720;
 }
@@ -419,11 +411,11 @@ body.dark-mode .production-button--primary {
 .production-delivery {
   padding: clamp(5.5rem, 9vw, 8rem) 0;
   color: #ffffff;
-  background: #0284c7;
+  background: var(--u-accent);
 }
 
 body.dark-mode .production-delivery {
-  background: #1e293b;
+  background: var(--u-dark);
 }
 
 .production-delivery :is(h2, p) {
@@ -456,7 +448,7 @@ body.dark-mode .production-delivery {
   justify-content: center;
   gap: 0.35rem;
   padding: 1rem 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  border: 1px solid rgb(from var(--u-line) r g b / 0.65);
   color: #ffffff;
   background: transparent;
 }
@@ -569,7 +561,7 @@ body.dark-mode .production-delivery {
 
 .production-final {
   padding: clamp(4.5rem, 8vw, 7rem) 0;
-  background: #0f172a;
+  background: var(--u-dark);
 }
 
 .production-final__panel {
@@ -587,13 +579,13 @@ body.dark-mode .production-delivery {
 .production-final p {
   max-width: 60ch;
   margin: 1.25rem 0 0;
-  color: #94a3b8 !important;
+  color: var(--u-muted) !important;
   line-height: 1.7;
 }
 
 .production-final .production-button--secondary {
   color: #ffffff !important;
-  border-color: #334155;
+  border-color: var(--u-line);
 }
 
 @media (max-width: 960px) {

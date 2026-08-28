@@ -2,44 +2,26 @@
    theming via local CSS variables (same pattern as ServicesShowcase.css), so it
    doesn't depend on the Tailwind-arbitrary-value dark-mode hack other pages use. */
 
+/* Every colour resolves to src/styles/palette.css — --u-* switches light/dark,
+   so this needs no dark-mode block. */
 .service-landing {
-  --service-bg: #FAF8F5;
-  --service-surface: #FEF7EA;
-  --service-raised: #ffffff;
-  --service-ink: #0D4537;
-  --service-body: #4D625A;
-  --service-muted: #61756F;
-  --service-accent: #C5751E;
-  --service-accent-text: #8F5015;
-  --service-accent-strong: #0D5E4D;
-  --service-on-accent-strong: #fff9f1;
-  --service-cta-bg: #0D5E4D;
-  --service-cta-ink: #fff9f1;
-  --service-line: rgba(13, 94, 77, 0.14);
+  --service-bg: var(--u-bg);
+  --service-surface: var(--u-subtle);
+  --service-raised: var(--u-surface);
+  --service-ink: var(--u-ink);
+  --service-body: var(--u-body);
+  --service-muted: var(--u-muted);
+  --service-accent: var(--u-accent);
+  --service-accent-text: var(--u-accent);
+  --service-accent-strong: var(--u-accent);
+  --service-on-accent-strong: var(--u-accent-ink);
+  --service-cta-bg: var(--u-accent);
+  --service-cta-ink: var(--u-accent-ink);
+  --service-line: var(--u-line);
   overflow: clip;
   color: var(--service-body);
   background: var(--service-bg);
   transition: background-color 260ms ease, color 260ms ease;
-}
-
-body.dark-mode .service-landing {
-  --service-bg: #020B1F;
-  --service-surface: rgba(9, 34, 78, 0.78);
-  --service-raised: rgba(9, 34, 78, 0.55);
-  --service-ink: #ffffff;
-  --service-body: #C9D7F2;
-  --service-muted: #8fa3c4;
-  --service-accent: #19D9FF;
-  --service-accent-text: #19D9FF;
-  --service-accent-strong: #67B8F3;
-  --service-on-accent-strong: #020B1F;
-  /* CTA band stays a dark, raised surface in dark mode instead of inverting
-     to the bright accent color — matches how every other CTA band on the
-     site (packages-hub__cta, production-final) treats dark mode: a dark
-     surface with light text, not a glaring light block on a dark page. */
-  --service-cta-bg: #0B2454;
-  --service-cta-ink: #F4F8FF;
-  --service-line: rgba(103, 184, 243, 0.22);
 }
 
 .service-landing *,
@@ -292,7 +274,7 @@ body.dark-mode .service-landing {
   left: 0;
   padding: 2.5rem 1rem 0.85rem;
   color: #ffffff;
-  background: linear-gradient(to top, rgba(2, 6, 23, 0.82), transparent);
+  background: linear-gradient(to top, rgb(from var(--u-dark) r g b / 0.82), transparent);
   font-size: 0.82rem;
   font-weight: 650;
 }

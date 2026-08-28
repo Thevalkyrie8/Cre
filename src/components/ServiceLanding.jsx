@@ -8,6 +8,21 @@ import {
   seoServicesFaqs,
   webDevelopmentFaqs,
 } from '../seo/seoConfig';
+import { getServiceTrust } from '../data/serviceTrust';
+import { getServiceExpert } from '../data/serviceExperts';
+import {
+  DirectAnswer,
+  TrustSignals,
+  ServiceTypes,
+  WhoItsFor,
+  ClientPrep,
+  SpecList,
+  CostFactors,
+  ExpertAuthor,
+} from './service/ServiceSections';
+import PricingPreview from './service/PricingPreview';
+import CaseStudySection from './service/CaseStudySection';
+import RelatedContent from './service/RelatedContent';
 import './ServiceLanding.css';
 
 const faqsByKey = {
@@ -19,6 +34,12 @@ const faqsByKey = {
   'web-development': webDevelopmentFaqs,
 };
 
+// The Cluster F money pages (currently just /product-photography) opt into the
+// shared deep-section library. Other ServiceLanding routes are unaffected —
+// their servicesContent entry has none of these keys and the data helpers
+// (serviceTrust/serviceExperts/relatedContent) return null for their path.
+const clusterFPricingLink = { to: '/media-pricing', anchorVi: 'Xem bảng giá quay video và chụp ảnh tại TP.HCM', anchorEn: 'See video and photography pricing' };
+
 const Bilingual = ({ as: Tag = 'span', value, ...rest }) => (
   <Tag data-en={value.en} data-vi={value.vi} {...rest}>{value.en}</Tag>
 );
@@ -28,8 +49,12 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
   const serviceKey = propServiceKey || params.serviceKey;
   const content = getServiceContent(serviceKey);
   const faqs = faqsByKey[serviceKey] || [];
+  const path = `/${serviceKey}`;
 
   if (!content) return null;
+
+  const trust = getServiceTrust(path);
+  const expert = getServiceExpert(path);
 
   return (
     <div className="service-landing">
@@ -69,6 +94,17 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
         </div>
       </header>
 
+      {content.directAnswer && (
+        <DirectAnswer
+          questionVi={content.directAnswer.questionVi}
+          questionEn={content.directAnswer.questionEn}
+          answerVi={content.directAnswer.answerVi}
+          answerEn={content.directAnswer.answerEn}
+        />
+      )}
+
+      {trust && <TrustSignals data={trust} />}
+
       {content.problem && (
         <section className="service-landing__section service-landing__problem" aria-labelledby="service-problem-title">
           <div className="service-landing__shell">
@@ -85,6 +121,16 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
         </section>
       )}
 
+      {content.serviceTypes && (
+        <ServiceTypes
+          titleVi={content.serviceTypes.titleVi}
+          titleEn={content.serviceTypes.titleEn}
+          leadVi={content.serviceTypes.leadVi}
+          leadEn={content.serviceTypes.leadEn}
+          items={content.serviceTypes.items}
+        />
+      )}
+
       {content.capabilities?.length > 0 && (
         <section className="service-landing__section service-landing__capabilities" aria-labelledby="service-capabilities-title">
           <div className="service-landing__shell">
@@ -99,6 +145,16 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
             </div>
           </div>
         </section>
+      )}
+
+      {content.whoItsFor && (
+        <WhoItsFor
+          titleVi={content.whoItsFor.titleVi}
+          titleEn={content.whoItsFor.titleEn}
+          leadVi={content.whoItsFor.leadVi}
+          leadEn={content.whoItsFor.leadEn}
+          items={content.whoItsFor.items}
+        />
       )}
 
       {content.gallery?.length > 0 && (
@@ -149,6 +205,63 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
         </section>
       )}
 
+      {content.clientPrep && (
+        <ClientPrep
+          titleVi={content.clientPrep.titleVi}
+          titleEn={content.clientPrep.titleEn}
+          leadVi={content.clientPrep.leadVi}
+          leadEn={content.clientPrep.leadEn}
+          groups={content.clientPrep.groups}
+        />
+      )}
+
+      {content.productReqs && (
+        <SpecList
+          id="service-product-reqs"
+          titleVi={content.productReqs.titleVi}
+          titleEn={content.productReqs.titleEn}
+          items={content.productReqs.items}
+        />
+      )}
+
+      {content.aspectRatios && (
+        <SpecList
+          id="service-aspect-ratios"
+          titleVi={content.aspectRatios.titleVi}
+          titleEn={content.aspectRatios.titleEn}
+          leadVi={content.aspectRatios.leadVi}
+          leadEn={content.aspectRatios.leadEn}
+          items={content.aspectRatios.items}
+        />
+      )}
+
+      {content.postProduction && (
+        <SpecList
+          id="service-post-production"
+          titleVi={content.postProduction.titleVi}
+          titleEn={content.postProduction.titleEn}
+          items={content.postProduction.items}
+          check
+        />
+      )}
+
+      {content.costFactors && (
+        <CostFactors
+          titleVi={content.costFactors.titleVi}
+          titleEn={content.costFactors.titleEn}
+          leadVi={content.costFactors.leadVi}
+          leadEn={content.costFactors.leadEn}
+          items={content.costFactors.items}
+          pricingLink={clusterFPricingLink}
+        />
+      )}
+
+      {relatedContentHasPricing(path) && <PricingPreview />}
+
+      <CaseStudySection money={path} />
+
+      {expert && <ExpertAuthor data={expert} />}
+
       {faqs.length > 0 && (
         <section className="service-landing__section service-landing__faq" aria-labelledby="service-faq-title">
           <div className="service-landing__shell">
@@ -181,6 +294,8 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
         </section>
       )}
 
+      <RelatedContent path={path} />
+
       <section className="service-landing__cta" aria-labelledby="service-cta-title">
         <div className="service-landing__shell service-landing__cta-layout">
           <div>
@@ -203,5 +318,11 @@ const ServiceLanding = ({ serviceKey: propServiceKey }) => {
     </div>
   );
 };
+
+// Show the pricing teaser only on money pages that actually funnel to
+// /media-pricing (their relatedContent entry carries a /media-pricing link).
+function relatedContentHasPricing(path) {
+  return path === '/product-photography';
+}
 
 export default ServiceLanding;

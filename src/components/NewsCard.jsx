@@ -54,10 +54,10 @@ const NewsCard = ({ article, index = 0 }) => {
               loading={isLead ? 'eager' : 'lazy'}
             />
           ) : (
-            <div className="tw-h-full tw-w-full tw-bg-[radial-gradient(circle_at_25%_20%,rgba(56,189,248,0.25),transparent_34%),linear-gradient(145deg,#111827,#05070c)]" />
+            <div className="tw-h-full tw-w-full tw-bg-[radial-gradient(circle_at_25%_20%,color-mix(in_srgb,var(--u-accent)_25%,transparent),transparent_34%),linear-gradient(145deg,var(--u-surface),var(--u-dark))]" />
           )}
-          <div className="tw-absolute tw-inset-0 tw-bg-gradient-to-t tw-from-[#080b12]/80 tw-via-transparent tw-to-white/[0.04]" />
-          <span className="tw-absolute tw-bottom-4 tw-left-4 tw-rounded-full tw-border tw-border-white/15 tw-bg-[#080b12]/75 tw-px-3 tw-py-1 tw-text-[0.68rem] tw-font-bold tw-uppercase tw-tracking-[0.16em] tw-text-sky-100 tw-backdrop-blur-md">
+          <div className="tw-absolute tw-inset-0 tw-bg-gradient-to-t tw-from-[var(--u-dark)]/80 tw-via-transparent tw-to-white/[0.04]" />
+          <span className="tw-absolute tw-bottom-4 tw-left-4 tw-rounded-full tw-border tw-border-white/15 tw-bg-[var(--u-dark)]/75 tw-px-3 tw-py-1 tw-text-[0.68rem] tw-font-bold tw-uppercase tw-tracking-[0.16em] tw-text-[var(--u-dark-ink)] tw-backdrop-blur-md">
             {article.category}
           </span>
         </div>

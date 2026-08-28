@@ -148,9 +148,9 @@ const NewsSection = ({ compact = false }) => {
     <section
       aria-labelledby={compact ? undefined : 'news-insights-title'}
       aria-label={compact ? t.title : undefined}
-      className="news-insights-section tw-relative tw-isolate tw-overflow-hidden tw-bg-[#090b10] tw-pb-24 tw-pt-8 sm:tw-pb-28 sm:tw-pt-10"
+      className="news-insights-section tw-relative tw-isolate tw-overflow-hidden tw-bg-[var(--u-dark)] tw-pb-24 tw-pt-8 sm:tw-pb-28 sm:tw-pt-10"
     >
-      <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_14%_18%,rgba(56,189,248,0.10),transparent_28%),radial-gradient(circle_at_88%_76%,rgba(99,102,241,0.10),transparent_31%)]" />
+      <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_14%_18%,color-mix(in_srgb,var(--u-accent)_10%,transparent),transparent_28%),radial-gradient(circle_at_88%_76%,color-mix(in_srgb,var(--u-secondary)_10%,transparent),transparent_31%)]" />
       <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-opacity-[0.025] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:64px_64px]" />
 
       <div className="tw-mx-auto tw-w-[min(100%-2rem,76rem)]">

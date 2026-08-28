@@ -1,0 +1,352 @@
+/* /media-pricing runs the one palette from src/styles/palette.css. The doubled
+   class beats the base .packages-hub declaration in styles.css; the /packages
+   page (also .packages-hub, no --media) is untouched. --u-* switches light/dark
+   on its own, so no dark-mode block is needed. */
+.packages-hub.packages-hub--media {
+  --package-bg: var(--u-bg);
+  --package-surface: var(--u-surface);
+  --package-subtle: var(--u-subtle);
+  --package-ink: var(--u-ink);
+  --package-muted: var(--u-body);
+  --package-border: var(--u-line);
+  --package-action: var(--u-accent);
+  --package-action-ink: var(--u-accent-ink);
+}
+
+/* Included / excluded columns and worked quote examples. */
+.mp-extra {
+  --mp-surface: var(--package-surface);
+  --mp-line: var(--package-border);
+  --mp-accent: var(--package-action);
+  --mp-pos: var(--u-success);
+  --mp-neg: var(--u-secondary);
+}
+
+.mp-incl {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.mp-incl__col {
+  padding: 1.4rem;
+  border: 1px solid var(--mp-line);
+  border-radius: 0.75rem;
+  background: var(--mp-surface);
+}
+
+.mp-incl__col h3 {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.mp-incl__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.mp-incl__list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.91rem;
+  line-height: 1.55;
+}
+
+.mp-incl__list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  font-weight: 700;
+}
+
+.mp-incl__list--yes li::before {
+  content: '\2713';
+  color: var(--mp-pos);
+}
+
+.mp-incl__list--no li::before {
+  content: '+';
+  color: var(--mp-neg);
+}
+
+.mp-examples {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.mp-example {
+  padding: 1.4rem;
+  border: 1px solid var(--mp-line);
+  border-radius: 0.75rem;
+  background: var(--mp-surface);
+}
+
+.mp-example h3 {
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.mp-example__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mp-example__table td {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--mp-line);
+  font-size: 0.89rem;
+  line-height: 1.45;
+  vertical-align: top;
+}
+
+.mp-example__amt {
+  white-space: nowrap;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding-left: 1rem;
+}
+
+.mp-example__total td {
+  border-bottom: 0;
+  padding-top: 0.65rem;
+  font-weight: 700;
+  color: var(--mp-accent);
+}
+
+.mp-example__note {
+  margin: 0.85rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.72;
+}
+
+/* ---------------------------------------------------------------------------
+   Redesign sections (2026-08-28): market context, workflow, value props,
+   cost factors. Card language matches .packages-hub (--package-* tokens).
+   --------------------------------------------------------------------------- */
+
+.mp-tile {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: 0 0 auto;
+  border-radius: 0.7rem;
+  border: 1px solid rgb(from var(--package-action) r g b / 0.28);
+  background: rgb(from var(--package-action) r g b / 0.12);
+  color: var(--package-action);
+}
+.mp-tile svg { width: 1.15rem; height: 1.15rem; }
+
+/* Market context — one dark panel with a checked list */
+.mp-context {
+  padding: clamp(1.6rem, 4vw, 2.6rem);
+  border: 1px solid var(--u-line);
+  border-radius: 1rem;
+  background: var(--u-dark);
+  color: var(--u-dark-ink);
+}
+.mp-context h2 {
+  margin: 0 0 1.2rem;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem) !important;
+  font-weight: 700 !important;
+  color: var(--u-dark-ink) !important;
+}
+.mp-context__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+}
+.mp-context__list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--u-dark-muted);
+}
+.mp-context__mark {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: 0 0 auto;
+  margin-top: 0.1rem;
+  border-radius: 50%;
+  background: rgb(from var(--u-accent) r g b / 0.16);
+  color: var(--u-accent-soft);
+}
+.mp-context__mark svg { width: 0.85rem; height: 0.85rem; }
+
+/* Workflow — 4 numbered-feel cards + 1 custom card */
+.mp-flow {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+.mp-flow__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.4rem;
+  border: 1px solid var(--package-border);
+  border-radius: 0.9rem;
+  background: var(--package-surface);
+}
+.mp-flow__card h3 {
+  margin: 0;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+.mp-flow__card p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--package-muted);
+}
+.mp-flow__card--custom {
+  border-style: dashed;
+  border-color: rgb(from var(--package-action) r g b / 0.5);
+  background: rgb(from var(--package-action) r g b / 0.06);
+}
+.mp-flow__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  color: var(--package-action) !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.mp-flow__link svg { width: 1rem; height: 1rem; }
+
+/* Value props — 2 wide cards with a checked list */
+.mp-value {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+.mp-value__card {
+  padding: 1.5rem;
+  border: 1px solid var(--package-border);
+  border-radius: 0.9rem;
+  background: var(--package-surface);
+}
+.mp-value__card h3 {
+  margin: 0 0 0.9rem;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+}
+.mp-value__card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+.mp-value__card li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--package-muted);
+}
+.mp-value__card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--package-action);
+}
+
+/* Cost factors — 6 icon cards */
+.mp-factors {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.mp-factors__card {
+  display: flex;
+  gap: 0.9rem;
+  padding: 1.3rem;
+  border: 1px solid var(--package-border);
+  border-radius: 0.9rem;
+  background: var(--package-surface);
+}
+.mp-factors__card h3 {
+  margin: 0 0 0.3rem;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+}
+.mp-factors__card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--package-muted);
+}
+
+@media (max-width: 600px) {
+  .mp-flow, .mp-value, .mp-factors { grid-template-columns: 1fr; }
+}
+/* ---------------------------------------------------------------------------
+   Tight vertical rhythm for /media-pricing (scoped to --media, /packages
+   keeps its airier spacing). The page has ~15 sections — pull them close.
+   --------------------------------------------------------------------------- */
+body .engine-main .packages-hub.packages-hub--media .packages-hub__plans,
+body .engine-main .packages-hub.packages-hub--media .packages-hub__addons,
+body .engine-main .packages-hub.packages-hub--media .packages-hub__notes {
+  padding: clamp(1rem, 1.8vw, 1.5rem) 0 !important;
+}
+body .engine-main .packages-hub.packages-hub--media .packages-hub__cta {
+  padding: clamp(2.2rem, 3.5vw, 3rem) 0 !important;
+}
+.packages-hub--media .svc-sec { padding: clamp(1rem, 1.8vw, 1.5rem) 0 !important; }
+.packages-hub--media .packages-hub__hero--media { padding-bottom: clamp(2rem, 3.5vw, 2.8rem); }
+
+.packages-hub--media .packages-hub__section-head { margin-bottom: 1rem; }
+.packages-hub--media .svc-sec .svc-sec__title { margin-bottom: .5rem; }
+.packages-hub--media .svc-sec .svc-sec__lead { margin-top: .35rem; }
+
+/* pricing group blocks — all expanded, tight gap between the 8 */
+.packages-hub--media .packages-hub__service-block { padding-top: clamp(1.4rem, 2.4vw, 2rem); }
+.packages-hub--media .packages-hub__service-head { margin-bottom: .9rem; }
+.packages-hub--media .packages-hub__group-fold-meta {
+  color: var(--package-muted);
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+/* compact the 17 package cards */
+.packages-hub--media .packages-hub__media-card { padding: 1.25rem; }
+.packages-hub--media .packages-hub__media-card header { padding-bottom: .7rem; }
+.packages-hub--media .packages-hub__tier-price { margin-top: .35rem; font-size: 1.18rem; }
+.packages-hub--media .packages-hub__media-meta { margin-top: .65rem; gap: .4rem; }
+.packages-hub--media .packages-hub__tier-audience { margin-top: .65rem; }
+.packages-hub--media .packages-hub__media-includes { margin-top: .5rem; }
+.packages-hub--media .packages-hub__tier-excludes { margin-top: .45rem; }
+.packages-hub--media .packages-hub__tier-cta { margin-top: .8rem; padding-top: .8rem; }
+
+/* new sections */
+.packages-hub--media .mp-flow__card,
+.packages-hub--media .mp-factors__card { padding: 1.1rem; }
+.packages-hub--media .mp-value__card { padding: 1.2rem; }
+.packages-hub--media .mp-context { padding: clamp(1.2rem, 2.6vw, 1.7rem); }
+.packages-hub--media .mp-context h2 { margin-bottom: .8rem; }
+.packages-hub--media .mp-context__list { gap: .65rem; }
+
+/* kill the double-padding where the market-context panel meets the direct answer */
+.packages-hub--media .mp-extra { padding-top: clamp(1rem, 1.8vw, 1.5rem) !important; padding-bottom: clamp(1rem, 1.8vw, 1.5rem) !important; }
+.packages-hub--media .svc-sec--flush { padding-top: clamp(1rem, 1.8vw, 1.5rem) !important; }
+.packages-hub--media .svc-sec { padding: clamp(1rem, 1.8vw, 1.5rem) 0 !important; }

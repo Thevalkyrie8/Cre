@@ -55,6 +55,18 @@
   <meta name="google-site-verification" content="Mh8AT6kbN6RAdcBYcqpuEjE87-VHs0GQoDT1kMwJ5Ho" />
   </head>
   <body>
+    <script>
+      // Apply saved theme before first paint so the page never flashes the
+      // wrong palette (Layout.jsx re-applies the same logic on mount).
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t !== 'light') document.body.classList.add('dark-mode');
+        } catch (e) {
+          document.body.classList.add('dark-mode');
+        }
+      })();
+    </script>
     <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NNLZW545"

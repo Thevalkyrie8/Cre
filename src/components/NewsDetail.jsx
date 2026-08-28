@@ -188,17 +188,17 @@ const NewsDetail = () => {
     <div className="news-detail-page article-page">
       <style>{`
         .article-page {
-          --article-bg: #020817;
-          --article-panel: rgba(7, 20, 48, 0.78);
-          --article-line: rgba(77, 150, 255, 0.22);
-          --article-muted: #a9badb;
-          --article-accent: #19D9FF;
+          --article-bg: var(--u-dark);
+          --article-panel: rgb(from var(--u-dark) r g b / 0.78);
+          --article-line: rgb(from var(--u-accent) r g b / 0.22);
+          --article-muted: var(--u-muted);
+          --article-accent: var(--u-accent-soft);
           min-height: 100vh;
-          color: #f7fbff;
+          color: var(--u-dark-ink);
           background:
-            radial-gradient(circle at 16% 0%, rgba(25, 217, 255, 0.2), transparent 30rem),
-            radial-gradient(circle at 88% 12%, rgba(11, 99, 255, 0.18), transparent 28rem),
-            linear-gradient(180deg, #020817 0%, #061229 52%, #020817 100%);
+            radial-gradient(circle at 16% 0%, rgb(from var(--u-accent) r g b / 0.2), transparent 30rem),
+            radial-gradient(circle at 88% 12%, rgb(from var(--u-accent) r g b / 0.18), transparent 28rem),
+            linear-gradient(180deg, var(--u-dark) 0%, var(--u-dark) 52%, var(--u-dark) 100%);
           position: relative;
           isolation: isolate;
         }
@@ -207,10 +207,10 @@ const NewsDetail = () => {
           position: absolute;
           inset: 0;
           background-image:
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            linear-gradient(rgb(from var(--u-surface) r g b / 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(from var(--u-surface) r g b / 0.03) 1px, transparent 1px);
           background-size: 72px 72px;
-          mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 58%);
+          mask-image: linear-gradient(180deg, rgb(from var(--u-dark) r g b / 0.6), transparent 58%);
           pointer-events: none;
           z-index: -1;
         }
@@ -233,7 +233,7 @@ const NewsDetail = () => {
           margin: 0;
         }
         .article-breadcrumbs a {
-          color: #dbe8ff;
+          color: var(--u-dark-ink);
           text-decoration: none;
         }
         .article-breadcrumbs a:hover {
@@ -260,7 +260,7 @@ const NewsDetail = () => {
           width: 100%;
           overflow: hidden;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.08);
+          background: rgb(from var(--u-surface) r g b / 0.08);
           margin-top: 18px;
         }
         .article-loader span {
@@ -288,7 +288,7 @@ const NewsDetail = () => {
           padding: 0 18px;
           border-radius: 8px;
           border: 0;
-          color: #021126;
+          color: var(--u-ink);
           background: var(--article-accent);
           font-weight: 900;
           text-decoration: none;
@@ -323,7 +323,7 @@ const NewsDetail = () => {
         .article-excerpt {
           max-width: 780px;
           margin: 22px 0 0;
-          color: #bfd0ef;
+          color: var(--u-dark-muted);
           font-size: clamp(17px, 2vw, 21px);
           line-height: 1.65;
         }
@@ -342,14 +342,14 @@ const NewsDetail = () => {
           overflow: hidden;
           border: 1px solid var(--article-line);
           border-radius: 8px;
-          background: #061126;
+          background: var(--u-dark);
           box-shadow: 0 30px 100px rgba(0, 0, 0, 0.28);
         }
         .article-cover::after {
           content: "";
           position: absolute;
           inset: 14px;
-          border: 1px solid rgba(255,255,255,0.08);
+          border: 1px solid rgb(from var(--u-line) r g b / 0.08);
           border-radius: 6px;
           pointer-events: none;
         }
@@ -360,13 +360,13 @@ const NewsDetail = () => {
           min-height: 280px;
           object-fit: contain;
           background:
-            radial-gradient(circle at 20% 18%, rgba(25, 217, 255, 0.12), transparent 18rem),
-            #061126;
+            radial-gradient(circle at 20% 18%, rgb(from var(--u-accent) r g b / 0.12), transparent 18rem),
+            var(--u-dark);
         }
         .article-cover.is-logo {
           background:
-            radial-gradient(circle at 20% 18%, rgba(25, 217, 255, 0.16), transparent 18rem),
-            #061126;
+            radial-gradient(circle at 20% 18%, rgb(from var(--u-accent) r g b / 0.16), transparent 18rem),
+            var(--u-dark);
         }
         .article-cover.is-logo img {
           object-fit: contain;
@@ -386,8 +386,8 @@ const NewsDetail = () => {
           border: 1px solid var(--article-line);
           border-radius: 8px;
           background:
-            linear-gradient(180deg, rgba(25, 217, 255, 0.1), rgba(7, 20, 48, 0.62)),
-            rgba(7, 20, 48, 0.62);
+            linear-gradient(180deg, rgb(from var(--u-accent) r g b / 0.1), rgb(from var(--u-dark) r g b / 0.62)),
+            rgb(from var(--u-dark) r g b / 0.62);
         }
         .article-aside h2 {
           margin: 8px 0 10px;
@@ -403,14 +403,14 @@ const NewsDetail = () => {
         }
         .article-body {
           min-width: 0;
-          color: #d8e4fa;
+          color: var(--u-dark-ink);
           font-size: 18px;
           line-height: 1.85;
           padding: 10px 0 0;
         }
         .article-body > *:first-child {
           margin-top: 0;
-          color: #eef6ff;
+          color: var(--u-dark-ink);
           font-size: 22px;
           line-height: 1.65;
         }
@@ -453,8 +453,8 @@ const NewsDetail = () => {
           padding: 22px 24px;
           border-left: 4px solid var(--article-accent);
           border-radius: 8px;
-          background: rgba(25, 217, 255, 0.08);
-          color: #eef6ff;
+          background: rgb(from var(--u-accent) r g b / 0.08);
+          color: var(--u-dark-ink);
         }
         .article-related {
           width: min(1060px, calc(100% - 40px));
@@ -477,22 +477,22 @@ const NewsDetail = () => {
           border: 1px solid var(--article-line);
           border-radius: 8px;
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.045), transparent 34%),
-            rgba(7, 20, 48, 0.72);
+            linear-gradient(180deg, rgb(from var(--u-surface) r g b / 0.045), transparent 34%),
+            rgb(from var(--u-dark) r g b / 0.72);
           cursor: pointer;
           transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
         }
         .article-related-card:hover {
           transform: translateY(-4px);
-          border-color: rgba(25, 217, 255, 0.55);
-          box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+          border-color: rgb(from var(--u-accent) r g b / 0.55);
+          box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
         }
         .article-related-card img {
           width: 100%;
           aspect-ratio: 16 / 9;
           object-fit: cover;
           display: block;
-          background: #061126;
+          background: var(--u-dark);
         }
         .article-related-card.is-logo img {
           object-fit: contain;
@@ -525,14 +525,14 @@ const NewsDetail = () => {
           padding: 2px 6px;
           border-radius: 6px;
           color: #fff;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgb(from var(--u-surface) r g b / 0.1);
         }
         .article-body pre {
           overflow-x: auto;
           padding: 18px;
           border-radius: 8px;
           border: 1px solid var(--article-line);
-          background: #030b1a;
+          background: var(--u-dark);
         }
         .article-body pre code {
           padding: 0;

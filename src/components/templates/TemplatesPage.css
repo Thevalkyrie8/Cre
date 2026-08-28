@@ -14,19 +14,19 @@
    even though this is also `!important`, since among tied-important rules
    specificity still decides, not just source order. */
 .tpl-showroom.tpl-showroom {
-  --tpl-bg-0: #07101f;
-  --tpl-bg-1: #091426;
-  --tpl-bg-2: #0c182b;
-  --tpl-bg-3: #101e33;
-  --tpl-surface: rgba(255, 255, 255, 0.04);
-  --tpl-surface-2: rgba(255, 255, 255, 0.07);
-  --tpl-border: rgba(255, 255, 255, 0.09);
-  --tpl-border-strong: rgba(255, 255, 255, 0.16);
-  --tpl-text-primary: #f4f7fb;
-  --tpl-text-secondary: rgba(244, 247, 251, 0.68);
-  --tpl-text-muted: rgba(244, 247, 251, 0.45);
-  --tpl-accent: #22d3ee;
-  --tpl-accent-ink: #07101f;
+  --tpl-bg-0: var(--u-dark);
+  --tpl-bg-1: var(--u-dark);
+  --tpl-bg-2: var(--u-dark);
+  --tpl-bg-3: var(--u-dark);
+  --tpl-surface: rgb(from var(--u-surface) r g b / 0.04);
+  --tpl-surface-2: rgb(from var(--u-surface) r g b / 0.07);
+  --tpl-border: rgb(from var(--u-line) r g b / 0.09);
+  --tpl-border-strong: rgb(from var(--u-line) r g b / 0.16);
+  --tpl-text-primary: var(--u-dark-ink);
+  --tpl-text-secondary: rgb(from var(--u-dark-ink) r g b / 0.68);
+  --tpl-text-muted: rgb(from var(--u-dark-ink) r g b / 0.45);
+  --tpl-accent: var(--u-accent);
+  --tpl-accent-ink: var(--u-ink);
   --tpl-radius-sm: 10px;
   --tpl-radius-md: 16px;
   --tpl-radius-lg: 26px;
@@ -37,7 +37,7 @@
 
   overflow: clip;
   /* !important: a sitewide fallback rule (`body.dark-mode main { background:
-     #0f172a !important; color: #fff !important; }`) otherwise wins over this
+     var(--u-dark) !important; color: #fff !important; }`) otherwise wins over this
      scoped root background/color since it targets the bare <main> tag. */
   background: var(--tpl-bg-0) !important;
   color: var(--tpl-text-primary) !important;
@@ -105,7 +105,7 @@
 
 .tpl-button--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px -18px rgba(34, 211, 238, 0.55);
+  box-shadow: 0 18px 40px -18px rgb(from var(--u-accent) r g b / 0.55);
 }
 
 .tpl-hero__secondary-link {
@@ -138,7 +138,7 @@
   z-index: 0;
   background:
     radial-gradient(60rem 40rem at 82% 8%, color-mix(in srgb, var(--tpl-accent) 12%, transparent), transparent 60%),
-    radial-gradient(50rem 36rem at 6% 60%, color-mix(in srgb, #3b82f6 10%, transparent), transparent 55%);
+    radial-gradient(50rem 36rem at 6% 60%, color-mix(in srgb, var(--u-accent) 10%, transparent), transparent 55%);
   pointer-events: none;
 }
 

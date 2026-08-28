@@ -56,7 +56,7 @@ const Products = () => {
 				<div className="products-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
 					{products.map((p) => (
 						<div key={p.id} className="product-card">
-							<div className="product-media" style={{ aspectRatio: '16 / 9', background: '#0f0f0f', borderRadius: 12, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+							<div className="product-media" style={{ aspectRatio: '16 / 9', background: 'var(--u-dark)', borderRadius: 12, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 								{p.image ? (
 									<img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 								) : (

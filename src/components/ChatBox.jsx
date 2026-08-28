@@ -173,13 +173,13 @@ const GrowthChatIcon = ({ size = 30, className = '' }) => (
     />
     <path
       d="M43.5 15.5 52 7m0 0v7.2M52 7h-7.2"
-      stroke="var(--chat-mark-accent, #22d3ee)"
+      stroke="var(--chat-mark-accent, var(--u-accent))"
       strokeWidth="4.2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <circle cx="27" cy="30" r="3.5" fill="var(--chat-mark-accent, #22d3ee)" />
-    <circle cx="41" cy="30" r="3.5" fill="var(--chat-mark-accent, #22d3ee)" />
+    <circle cx="27" cy="30" r="3.5" fill="var(--chat-mark-accent, var(--u-accent))" />
+    <circle cx="41" cy="30" r="3.5" fill="var(--chat-mark-accent, var(--u-accent))" />
   </svg>
 );
 

@@ -1,0 +1,163 @@
+/* Pricing brief form — used inside /media-pricing (.packages-hub). Colours come
+   from that page's token system; no separate palette, no !important. */
+
+.pricing-brief {
+  --pb-surface: var(--package-surface);
+  --pb-field: var(--package-subtle);
+  --pb-line: var(--package-border);
+  --pb-accent: var(--package-action);
+  --pb-accent-ink: var(--package-action-ink);
+  border: 1px solid var(--pb-line);
+  border-radius: 0.9rem;
+  background: var(--pb-surface);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.pricing-brief * {
+  box-sizing: border-box;
+}
+
+.pricing-brief__form {
+  display: grid;
+  gap: 1rem;
+}
+
+.pricing-brief__row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pricing-brief__row--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pricing-brief__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pricing-brief__field > span,
+.pricing-brief__fieldset legend {
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.pricing-brief__field input,
+.pricing-brief__field select,
+.pricing-brief__field textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--pb-line);
+  border-radius: 0.5rem;
+  background: var(--pb-field);
+  color: inherit;
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+.pricing-brief__field textarea {
+  resize: vertical;
+}
+
+.pricing-brief__field input:focus,
+.pricing-brief__field select:focus,
+.pricing-brief__field textarea:focus {
+  outline: 2px solid var(--pb-accent);
+  outline-offset: 1px;
+}
+
+.pricing-brief__fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pricing-brief__fieldset legend {
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.pricing-brief__checks {
+  display: grid;
+  gap: 0.45rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+
+.pricing-brief__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  opacity: 0.9;
+}
+
+.pricing-brief__check input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--pb-accent);
+}
+
+.pricing-brief__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pricing-brief__submit {
+  min-height: 2.9rem;
+  padding: 0 1.5rem;
+  border: 1px solid var(--pb-accent);
+  border-radius: 999px;
+  background: var(--pb-accent);
+  color: var(--pb-accent-ink);
+  font-size: 0.85rem;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.pricing-brief__submit:hover:not(:disabled) {
+  background: transparent;
+  color: var(--pb-accent);
+}
+
+.pricing-brief__submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.pricing-brief__alert {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.5;
+}
+
+.pricing-brief__alert--ok { color: var(--u-success); }
+.pricing-brief__alert--err { color: var(--u-danger); }
+
+.pricing-brief__hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.72;
+}
+
+@media (max-width: 640px) {
+  .pricing-brief__row,
+  .pricing-brief__row--three {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-brief__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .pricing-brief__submit {
+    width: 100%;
+  }
+}

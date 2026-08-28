@@ -31,20 +31,15 @@ const PartnerMarquee = () => (
     className="partner-marquee"
     aria-labelledby="partner-marquee-title"
   >
-    <header className="home-shell partner-marquee__header">
+    <header className="home-shell partner-marquee__header" data-reveal>
+      <p className="home-kicker" data-en="Partners & trust" data-vi="Đồng hành & tin tưởng">Partners &amp; trust</p>
       <h2
         id="partner-marquee-title"
-        data-en="Good work travels further together."
-        data-vi="Công việc tốt đi xa hơn khi có người đồng hành đúng."
+        data-en="Businesses and partners already working with Unitrux."
+        data-vi="Cùng nhiều đối tác & khách hàng đã sử dụng dịch vụ tại Unitrux."
       >
-        Good work travels further together.
+        Businesses and partners already working with Unitrux.
       </h2>
-      <p
-        data-en="A growing circle of teams who trust Unitrux to turn ideas into work that moves."
-        data-vi="Những đối tác tin tưởng Unitrux cùng biến ý tưởng thành giá trị thực tế."
-      >
-        A growing circle of teams who trust Unitrux to turn ideas into work that moves.
-      </p>
     </header>
 
     <div className="partner-marquee__stage">

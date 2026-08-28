@@ -99,9 +99,9 @@ const DeferredVideo = ({ project, featured = false }) => {
 const PortfolioProof = () => (
   <section id="selected-work" className="portfolio-proof" aria-labelledby="portfolio-proof-title">
     <div className="home-shell">
-      <header className="portfolio-proof__header">
+      <header className="portfolio-proof__header" data-reveal>
         <div>
-          <p className="home-kicker" data-en="Selected creative work" data-vi="Một số sản phẩm sáng tạo">Selected creative work</p>
+          <p className="home-kicker" data-en="Featured projects" data-vi="Dự án tiêu biểu">Featured projects</p>
           <h2 id="portfolio-proof-title" data-en="See the craft. Add the business context next." data-vi="Xem chất lượng thực thi. Case study thực tế sẽ được bổ sung tiếp theo.">
             See the craft. Add the business context next.
           </h2>

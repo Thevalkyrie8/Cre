@@ -1,0 +1,94 @@
+/* =============================================================================
+   Unitrux palette — SINGLE SOURCE OF TRUTH for colour.
+   "Deep Teal" — the approved option from the palette pitch:
+   one hue (the logo's turquoise arrow-tip, saturation pulled down so it holds
+   on both grounds), cool neutrals with a faint teal bias, warm amber for the
+   negative/price signal. Values below are the artifact's spec verbatim.
+
+   Change a value here and it changes everywhere. Every other token system
+   (--engine-*, --news-*, --package-*, --production-*, --service-*, --home-*,
+   --chat-*, --svc-*, --ads-*) and every previously hard-coded brand colour
+   resolves to a --u-*.
+
+   Theme model — the app defaults to dark and toggles a single `.dark-mode`
+   class on <body> (Layout.jsx). No OS-preference logic.
+     • default / .dark-mode present ...... DARK  (:root — <html> + first paint)
+     • .dark-mode absent (light toggle) .. LIGHT (body:not(.dark-mode))
+
+   Rules:
+   - Never hard-code a brand hex in a component. Use var(--u-*).
+   - Translucent accent, plain CSS:  rgb(from var(--u-accent) r g b / <a>)
+   - Translucent accent, Tailwind arbitrary value:
+       color-mix(in_srgb,var(--u-accent)_<n>%,transparent)
+   ========================================================================== */
+
+/* ---- DARK (default — :root) ------------------------------------------- */
+:root {
+  --u-bg:        #070f0e;   /* Ground — dark: spec #0b1413 dropped a notch so
+                              cards (--u-surface) read as clearly raised */
+  --u-surface:   #18231f;   /* Surface — dark: spec #17211f nudged up a hair */
+  --u-raised:    #1e2b27;
+  --u-subtle:    #12201b;   /* tint — dark */
+
+  --u-ink:       #eaf1ef;   /* spec */
+  --u-body:      #c3d0cd;   /* spec */
+  --u-muted:     #8fa5a1;   /* spec */
+
+  --u-line:      #38504a;   /* line — dark: lifted from spec #2a3835 so card
+                              outlines read clearly on the darker #070f0e ground */
+
+  --u-accent:        #3fb9ac;   /* Accent — dark (spec): ~35pts less saturated than the old cyan */
+  --u-accent-hover:  #5ccabd;   /* spec link tint */
+  --u-accent-soft:   #7fdccf;
+  --u-accent-ink:    #04201d;   /* spec */
+
+  --u-secondary:      #3fb9ac;   /* one hue — secondary == accent */
+  --u-secondary-ink:  #04201d;
+
+  /* "always-dark" band token (news system card, packages CTA band, phone-icon
+     circle, video posters). In DARK mode it is just the surface — a panel on
+     the already-dark page, not a separate black block. */
+  --u-dark:      #18231f;
+  --u-dark-ink:  #eaf1ef;
+  --u-dark-muted:#8fa5a1;
+
+  --u-success:  #6ee7a0;   /* pos — dark (spec) */
+  --u-danger:   #ec9a7a;   /* warm terracotta — reads as error without a cold red clashing the teal */
+}
+
+/* ---- LIGHT (.dark-mode removed) ------------------------------------- */
+body:not(.dark-mode) {
+  --u-bg:        #f7faf9;   /* Ground — light (spec) */
+  --u-surface:   #ffffff;   /* spec */
+  --u-raised:    #ffffff;
+  --u-subtle:    #eef5f3;   /* tint — light  (spec) */
+
+  --u-ink:       #0c1a18;   /* spec */
+  --u-body:      #3f524f;   /* spec */
+  --u-muted:     #5a6d68;   /* spec's #66807b darkened to clear 4.5:1 as body text on white */
+
+  --u-line:      #d5e0dc;   /* line — light: spec #e0e8e6 slightly stronger so
+                              card outlines separate from the off-white ground */
+
+  --u-accent:        #0f766e;   /* Accent — light (spec): deep enough to carry white text ~4.9:1 */
+  --u-accent-hover:  #0b5f58;
+  --u-accent-soft:   #14a89a;
+  --u-accent-ink:    #ffffff;   /* spec */
+
+  --u-secondary:      #0f766e;
+  --u-secondary-ink:  #ffffff;
+
+  /* "always-dark" band in LIGHT mode → a deep Deep-Teal panel (NOT black,
+     NOT a heavy charcoal). On-brand, calm, white text ~5.8:1. */
+  --u-dark:      #0e6058;
+  --u-dark-ink:  #f2f6f5;
+  --u-dark-muted:#c2d3cf;
+
+  --u-success:  #367f51;   /* spec's #3f8f5c nudged darker to clear 4.5:1 as a text label */
+  --u-danger:   #b0472e;   /* warm terracotta — error signal that stays out of the cold-red zone */
+}
+
+/* <html>/#root/.app resolve --u-bg for their own background (set by the
+   html,body,#root,.app rules in styles.css). #root/.app sit inside <body> and
+   pick up light in light mode; bare <html> keeps :root dark, visible only on
+   overscroll behind an opaque <body>. */

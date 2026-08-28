@@ -7,9 +7,9 @@ const featured = templateGroups.map((group) => ({ ...group.items[0], groupLabelE
 const TemplateShowcase = () => (
   <section id="templates" className="template-showcase" aria-labelledby="template-showcase-title">
     <div className="home-shell">
-      <header className="template-showcase__header">
+      <header className="template-showcase__header" data-reveal>
         <div>
-          <p className="home-kicker" data-en="Ready-made template" data-vi="Mẫu website dựng sẵn">Ready-made template</p>
+          <p className="home-kicker" data-en="Featured website templates" data-vi="Mẫu website nổi bật">Featured website templates</p>
           <h2 id="template-showcase-title" data-en="Starting from a carefully selected website template, we refine every detail to create a unique version that reflects your brand’s identity." data-vi="Từ mẫu website được tuyển chọn, chúng tôi tinh chỉnh từng chi tiết để tạo nên phiên bản mang dấu ấn riêng của doanh nghiệp bạn.">
             Starting from a carefully selected website template, we refine every detail to create a unique version that reflects your brand’s identity.
           </h2>
