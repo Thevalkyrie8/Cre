@@ -468,13 +468,7 @@ const MediaPricingShowcase = () => {
 
       <section className="packages-hub__plans mp-extra" aria-labelledby="media-brief-form-title">
         <div className="packages-hub__container">
-          <header className="packages-hub__section-head">
-            <div>
-              <Bilingual as="h2" id="media-brief-form-title" en="Send a brief to get a detailed quote" vi="Gửi brief để nhận báo giá chi tiết" />
-              <Bilingual as="p" en="Share what you need and Unitrux will reply with an itemized quotation matched to your scope and deadline." vi="Chia sẻ nhu cầu và Unitrux sẽ trả về báo giá tách hạng mục theo đúng phạm vi và deadline của bạn." />
-            </div>
-          </header>
-          <PricingBriefForm />
+          <PricingBriefForm headingId="media-brief-form-title" />
         </div>
       </section>
 
