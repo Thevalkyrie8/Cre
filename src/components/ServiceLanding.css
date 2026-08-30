@@ -15,8 +15,10 @@
   --service-accent-text: var(--u-accent);
   --service-accent-strong: var(--u-accent);
   --service-on-accent-strong: var(--u-accent-ink);
-  --service-cta-bg: var(--u-accent);
-  --service-cta-ink: var(--u-accent-ink);
+  /* CTA band = the site's shared "always-dark panel" token (a raised surface in
+     dark, a deep-teal panel in light) — not a full-bleed bright-accent slab */
+  --service-cta-bg: var(--u-dark);
+  --service-cta-ink: var(--u-dark-ink);
   --service-line: var(--u-line);
   overflow: clip;
   color: var(--service-body);
@@ -459,8 +461,9 @@
 }
 
 .service-landing__cta .service-landing__button--primary {
-  color: var(--service-cta-bg) !important;
-  background: var(--service-cta-ink);
+  color: var(--u-accent-ink) !important;
+  background: var(--u-accent);
+  border-color: var(--u-accent);
 }
 
 .service-landing__cta .service-landing__button--primary:hover {
