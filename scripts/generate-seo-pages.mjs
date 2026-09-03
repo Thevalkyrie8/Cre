@@ -16,6 +16,14 @@ import {
   SITE_NAME,
   SITE_URL,
 } from '../src/seo/seoConfig.js';
+import {
+  buildRobotsContent,
+  fetchNewsSeoMap,
+  fetchRouteSeoMap,
+  fetchServiceSeoMap,
+  mergeStructuredData,
+  resolveRemoteSeo,
+} from '../src/seo/seoRemote.js';
 import { productionPortfolio } from '../src/data/productionPortfolio.js';
 import { toAbsoluteUrl } from '../src/seo/schemaFactory.js';
 import { getNewsSlug } from '../src/utils/newsSlug.js';
@@ -128,10 +136,58 @@ const loadNewsArticles = async () => {
 const newsArticles = await loadNewsArticles();
 const cmsServices = await loadServices();
 
+// Admin-managed SEO overrides (backend table `seo_metadata`). Empty maps on failure.
+const [routeSeoMap, newsSeoMap, serviceSeoMap] = await Promise.all([
+  fetchRouteSeoMap(),
+  fetchNewsSeoMap(),
+  fetchServiceSeoMap(),
+]);
+
+const applyMeta = (block, override) => {
+  if (!override) return block;
+  let next = block;
+  if (override.seoTitle) {
+    next = next.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(override.seoTitle)}</title>`);
+  }
+  if (override.metaDescription) {
+    const desc = escapeHtml(override.metaDescription);
+    next = next
+      .replace(/<meta name="description" content="[\s\S]*?" \/>/, `<meta name="description" content="${desc}" />`)
+      .replace(/<meta property="og:description" content="[\s\S]*?" \/>/, `<meta property="og:description" content="${desc}" />`)
+      .replace(/<meta name="twitter:description" content="[\s\S]*?" \/>/, `<meta name="twitter:description" content="${desc}" />`);
+  }
+  if (override.ogTitle) {
+    const t = escapeHtml(override.ogTitle);
+    next = next
+      .replace(/<meta property="og:title" content="[\s\S]*?" \/>/, `<meta property="og:title" content="${t}" />`)
+      .replace(/<meta name="twitter:title" content="[\s\S]*?" \/>/, `<meta name="twitter:title" content="${t}" />`);
+  }
+  if (override.ogImage) {
+    const img = escapeHtml(override.ogImage);
+    next = next
+      .replace(/<meta property="og:image" content="[\s\S]*?" \/>/, `<meta property="og:image" content="${img}" />`)
+      .replace(/<meta name="twitter:image" content="[\s\S]*?" \/>/, `<meta name="twitter:image" content="${img}" />`);
+  }
+  if (override.canonicalUrl) {
+    const c = escapeHtml(override.canonicalUrl);
+    next = next
+      .replace(/<link rel="canonical" href="[\s\S]*?" \/>/, `<link rel="canonical" href="${c}" />`)
+      .replace(/<meta property="og:url" content="[\s\S]*?" \/>/, `<meta property="og:url" content="${c}" />`);
+  }
+  if (override.robotsIndex === false || override.robotsFollow === false) {
+    next = next.replace(
+      /<meta name="robots" content="[\s\S]*?" \/>/,
+      `<meta name="robots" content="${buildRobotsContent(override.robotsIndex, override.robotsFollow)}" />`,
+    );
+  }
+  return next;
+};
+
 const buildSeoBlock = (path, page) => {
   const canonical = getCanonicalUrl(path);
   const socialImage = page.ogImage || DEFAULT_OG_IMAGE;
-  const structuredData = buildStructuredData(path);
+  const override = resolveRemoteSeo(routeSeoMap, path, 'vi');
+  const structuredData = mergeStructuredData(buildStructuredData(path), override?.schemaJson);
   // The /news list is fetched client-side, so buildStructuredData() (a pure
   // config-time function) has no article data to work with. This script
   // already fetched newsArticles for the per-article static pages below, so
@@ -149,7 +205,7 @@ const buildSeoBlock = (path, page) => {
     });
   }
   const schema = JSON.stringify(structuredData).replaceAll('<', '\\u003c');
-  return `<!-- SEO:START -->
+  return applyMeta(`<!-- SEO:START -->
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeHtml(page.description)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -168,7 +224,7 @@ const buildSeoBlock = (path, page) => {
     <meta name="twitter:image" content="${escapeHtml(socialImage)}" />
     <script id="seo-static-schema" type="application/ld+json">${schema}</script>
     <style>#root>.seo-static-content{max-width:960px;margin:0 auto;padding:140px 24px 80px;font-family:Arial,sans-serif;line-height:1.7}#root>.seo-static-content h1{font-size:clamp(2rem,6vw,4.5rem);line-height:1.05}#root>.seo-static-content p,#root>.seo-static-content li{font-size:1.05rem}</style>
-    <!-- SEO:END -->`;
+    <!-- SEO:END -->`, override);
 };
 
 const buildArticleSeoBlock = (article) => {
@@ -176,7 +232,8 @@ const buildArticleSeoBlock = (article) => {
   const canonical = getCanonicalUrl(path);
   const datePublished = toIsoDate(article.createdAt);
   const dateModified = toIsoDate(article.updatedAt || article.createdAt);
-  const schema = JSON.stringify(buildArticleStructuredData({
+  const override = resolveRemoteSeo(newsSeoMap, article.id, 'vi');
+  const schema = JSON.stringify(mergeStructuredData(buildArticleStructuredData({
     path,
     title: article.title,
     description: article.excerpt,
@@ -187,9 +244,9 @@ const buildArticleSeoBlock = (article) => {
     content: article.content,
     datePublished,
     dateModified,
-  })).replaceAll('<', '\\u003c');
+  }), override?.schemaJson)).replaceAll('<', '\\u003c');
   const dates = `${datePublished ? `<meta property="article:published_time" content="${datePublished}" />` : ''}${dateModified ? `<meta property="article:modified_time" content="${dateModified}" />` : ''}`;
-  return `<!-- SEO:START -->
+  return applyMeta(`<!-- SEO:START -->
     <title>${escapeHtml(buildPageTitle(article.title, SITE_NAME))}</title>
     <meta name="description" content="${escapeHtml(article.excerpt)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -209,7 +266,7 @@ const buildArticleSeoBlock = (article) => {
     <meta name="twitter:image" content="${escapeHtml(article.image)}" />
     <script id="seo-static-schema" type="application/ld+json">${schema}</script>
     <style>#root>.seo-static-content{max-width:960px;margin:0 auto;padding:140px 24px 80px;font-family:Arial,sans-serif;line-height:1.7}#root>.seo-static-content h1{font-size:clamp(2rem,6vw,4.5rem);line-height:1.05}#root>.seo-static-content img{width:100%;height:auto}#root>.seo-static-content p,#root>.seo-static-content li{font-size:1.05rem}</style>
-    <!-- SEO:END -->`;
+    <!-- SEO:END -->`, override);
 };
 
 const buildCmsServiceSeoBlock = (service) => {
@@ -217,13 +274,14 @@ const buildCmsServiceSeoBlock = (service) => {
   const canonical = getCanonicalUrl(path);
   const name = service.nameVi || service.name;
   const description = service.descriptionVi || service.description || '';
-  const schema = JSON.stringify(buildCmsServiceStructuredData({
+  const override = resolveRemoteSeo(serviceSeoMap, String(service.id), 'vi');
+  const schema = JSON.stringify(mergeStructuredData(buildCmsServiceStructuredData({
     service,
     pathname: path,
     language: 'vi',
-  })).replaceAll('<', '\\u003c');
+  }), override?.schemaJson)).replaceAll('<', '\\u003c');
 
-  return `<!-- SEO:START -->
+  return applyMeta(`<!-- SEO:START -->
     <title>${escapeHtml(name)} | ${SITE_NAME}</title>
     <meta name="description" content="${escapeHtml(description)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -241,7 +299,7 @@ const buildCmsServiceSeoBlock = (service) => {
     <meta name="twitter:image" content="${DEFAULT_OG_IMAGE}" />
     <script id="seo-static-schema" type="application/ld+json">${schema}</script>
     <style>#root>.seo-static-content{max-width:960px;margin:0 auto;padding:140px 24px 80px;font-family:Arial,sans-serif;line-height:1.7}#root>.seo-static-content h1{font-size:clamp(2rem,6vw,4.5rem);line-height:1.05}#root>.seo-static-content p,#root>.seo-static-content li{font-size:1.05rem}</style>
-    <!-- SEO:END -->`;
+    <!-- SEO:END -->`, override);
 };
 
 const buildStaticContent = (page, path) => {
@@ -353,25 +411,34 @@ const buildVideoSitemapMarkup = (path) => {
     </video:video>`).join('');
 };
 
-const staticSitemapUrls = Object.keys(seoPages).map((path) => {
-  const loc = getCanonicalUrl(path);
-  const videos = buildVideoSitemapMarkup(path);
-  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${SEO_LAST_MODIFIED}</lastmod>${videos}\n  </url>`;
-});
-const articleSitemapUrls = newsArticles.map((article) => {
-  const lastModified = article.updatedAt || article.createdAt;
-  const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
-    ? new Date(lastModified).toISOString().slice(0, 10)
-    : SEO_LAST_MODIFIED;
-  return `  <url>\n    <loc>${getCanonicalUrl(`/news/${article.slug}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
-});
-const serviceSitemapUrls = cmsServices.map((service) => {
-  const lastModified = service.updatedAt || service.createdAt;
-  const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
-    ? new Date(lastModified).toISOString().slice(0, 10)
-    : SEO_LAST_MODIFIED;
-  return `  <url>\n    <loc>${getCanonicalUrl(`/services/${service.id}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
-});
+// A route/entity flagged noindex in the Admin must not appear in the sitemap.
+const isRemoteNoindex = (map, ref) => resolveRemoteSeo(map, ref, 'vi')?.robotsIndex === false;
+
+const staticSitemapUrls = Object.keys(seoPages)
+  .filter((path) => !isRemoteNoindex(routeSeoMap, path))
+  .map((path) => {
+    const loc = getCanonicalUrl(path);
+    const videos = buildVideoSitemapMarkup(path);
+    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${SEO_LAST_MODIFIED}</lastmod>${videos}\n  </url>`;
+  });
+const articleSitemapUrls = newsArticles
+  .filter((article) => !isRemoteNoindex(newsSeoMap, article.id))
+  .map((article) => {
+    const lastModified = article.updatedAt || article.createdAt;
+    const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
+      ? new Date(lastModified).toISOString().slice(0, 10)
+      : SEO_LAST_MODIFIED;
+    return `  <url>\n    <loc>${getCanonicalUrl(`/news/${article.slug}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+  });
+const serviceSitemapUrls = cmsServices
+  .filter((service) => !isRemoteNoindex(serviceSeoMap, String(service.id)))
+  .map((service) => {
+    const lastModified = service.updatedAt || service.createdAt;
+    const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
+      ? new Date(lastModified).toISOString().slice(0, 10)
+      : SEO_LAST_MODIFIED;
+    return `  <url>\n    <loc>${getCanonicalUrl(`/services/${service.id}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+  });
 const sitemapUrls = [...staticSitemapUrls, ...articleSitemapUrls, ...serviceSitemapUrls].join('\n');
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
