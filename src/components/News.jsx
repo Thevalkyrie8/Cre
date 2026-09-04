@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getNews, getFeaturedNews, resolveAssetUrl } from '../api/client';
+import { getNewsSlug } from '../utils/newsSlug';
 
 const getCurrentLanguage = () => {
   try {
@@ -100,6 +101,7 @@ const normalizeNewsItem = (item, language) => {
 
   return {
     id: item.id,
+    slug: getNewsSlug(item),
     title,
     category: item.category || 'news',
     excerpt: excerpt.length === 170 ? `${excerpt}...` : excerpt,
@@ -117,7 +119,7 @@ const NewsCard = ({ article, language, onOpen }) => {
   const t = copy[language];
 
   return (
-    <article className="journal-card" onClick={() => onOpen(article.id)}>
+    <article className="journal-card" onClick={() => onOpen(article.slug)}>
       <div className={`journal-card-image ${article.isLogoImage ? 'is-logo' : ''}`}>
         <img src={article.image} alt={article.title} loading="lazy" />
       </div>
@@ -234,19 +236,19 @@ const News = () => {
     <div className="news-page journal-page">
       <style>{`
         .journal-page {
-          --journal-bg: #020817;
-          --journal-panel: rgba(7, 20, 48, 0.76);
-          --journal-panel-strong: rgba(9, 26, 61, 0.9);
-          --journal-line: rgba(77, 150, 255, 0.22);
-          --journal-muted: #9fb2d6;
-          --journal-text: #f7fbff;
-          --journal-accent: #19D9FF;
+          --journal-bg: var(--u-dark);
+          --journal-panel: rgb(from var(--u-dark) r g b / 0.76);
+          --journal-panel-strong: rgb(from var(--u-dark) r g b / 0.9);
+          --journal-line: rgb(from var(--u-accent) r g b / 0.22);
+          --journal-muted: var(--u-accent-soft);
+          --journal-text: var(--u-dark-ink);
+          --journal-accent: var(--u-accent-soft);
           min-height: 100vh;
           color: var(--journal-text);
           background:
-            radial-gradient(circle at 8% 8%, rgba(25, 217, 255, 0.2), transparent 32rem),
-            radial-gradient(circle at 95% 6%, rgba(11, 99, 255, 0.18), transparent 28rem),
-            linear-gradient(180deg, #020817 0%, #051126 54%, #020817 100%);
+            radial-gradient(circle at 8% 8%, rgb(from var(--u-accent) r g b / 0.2), transparent 32rem),
+            radial-gradient(circle at 95% 6%, rgb(from var(--u-accent) r g b / 0.18), transparent 28rem),
+            linear-gradient(180deg, var(--u-dark) 0%, var(--u-dark) 54%, var(--u-dark) 100%);
           position: relative;
           isolation: isolate;
         }
@@ -255,10 +257,10 @@ const News = () => {
           position: absolute;
           inset: 0;
           background-image:
-            linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            linear-gradient(rgb(from var(--u-surface) r g b / 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgb(from var(--u-surface) r g b / 0.035) 1px, transparent 1px);
           background-size: 64px 64px;
-          mask-image: linear-gradient(180deg, rgba(0,0,0,0.68), transparent 62%);
+          mask-image: linear-gradient(180deg, rgb(from var(--u-dark) r g b / 0.68), transparent 62%);
           pointer-events: none;
           z-index: -1;
         }
@@ -280,7 +282,7 @@ const News = () => {
           margin: 0;
         }
         .journal-breadcrumbs a {
-          color: #dbe8ff;
+          color: var(--u-dark-ink);
           text-decoration: none;
         }
         .journal-hero {
@@ -300,7 +302,7 @@ const News = () => {
           border: 1px solid var(--journal-line);
           border-radius: 999px;
           color: var(--journal-accent);
-          background: rgba(25, 217, 255, 0.07);
+          background: rgb(from var(--u-accent) r g b / 0.07);
           font-size: 13px;
           font-weight: 700;
           letter-spacing: 0.02em;
@@ -316,7 +318,7 @@ const News = () => {
         .journal-hero p {
           max-width: 650px;
           margin: 0;
-          color: #bfd0ef;
+          color: var(--u-dark-muted);
           font-size: clamp(16px, 2vw, 19px);
           line-height: 1.7;
         }
@@ -326,14 +328,14 @@ const News = () => {
           padding: 22px;
           border: 1px solid var(--journal-line);
           border-radius: 8px;
-          background: linear-gradient(180deg, rgba(9, 31, 72, 0.84), rgba(6, 17, 39, 0.76));
+          background: linear-gradient(180deg, rgb(from var(--u-dark) r g b / 0.84), rgb(from var(--u-dark) r g b / 0.76));
           box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
         }
         .journal-search-panel::before {
           content: "";
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 42%);
+          background: linear-gradient(135deg, rgb(from var(--u-surface) r g b / 0.08), transparent 42%);
           pointer-events: none;
         }
         .journal-search-panel > * {
@@ -343,19 +345,19 @@ const News = () => {
           width: 100%;
           min-height: 54px;
           padding: 0 18px;
-          border: 1px solid rgba(159, 178, 214, 0.26);
+          border: 1px solid rgb(from var(--u-accent) r g b / 0.26);
           border-radius: 8px;
           color: #fff;
-          background: rgba(255, 255, 255, 0.06);
+          background: rgb(from var(--u-surface) r g b / 0.06);
           font-size: 15px;
           outline: none;
         }
         .journal-search-panel input:focus {
           border-color: var(--journal-accent);
-          box-shadow: 0 0 0 4px rgba(25, 217, 255, 0.11);
+          box-shadow: 0 0 0 4px rgb(from var(--u-accent) r g b / 0.11);
         }
         .journal-search-panel input::placeholder {
-          color: #7f91b2;
+          color: var(--u-muted);
         }
         .journal-tabs {
           display: flex;
@@ -375,17 +377,17 @@ const News = () => {
           min-height: 38px;
           padding: 0 14px;
           border-radius: 999px;
-          color: #c8d7f2;
-          background: rgba(255, 255, 255, 0.07);
-          border: 1px solid rgba(159, 178, 214, 0.2);
+          color: var(--u-dark-muted);
+          background: rgb(from var(--u-surface) r g b / 0.07);
+          border: 1px solid rgb(from var(--u-accent) r g b / 0.2);
           transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
         }
         .journal-tabs button:hover {
           transform: translateY(-1px);
-          border-color: rgba(25, 217, 255, 0.45);
+          border-color: rgb(from var(--u-accent) r g b / 0.45);
         }
         .journal-tabs button.active {
-          color: #021126;
+          color: var(--u-ink);
           background: var(--journal-accent);
           border-color: var(--journal-accent);
           font-weight: 800;
@@ -405,8 +407,8 @@ const News = () => {
           min-height: 112px;
           padding: 20px;
           background:
-            linear-gradient(135deg, rgba(25, 217, 255, 0.08), transparent 50%),
-            rgba(7, 20, 48, 0.82);
+            linear-gradient(135deg, rgb(from var(--u-accent) r g b / 0.08), transparent 50%),
+            rgb(from var(--u-dark) r g b / 0.82);
         }
         .journal-issue-cell span {
           display: block;
@@ -438,13 +440,13 @@ const News = () => {
           content: "";
           position: absolute;
           inset: 16px;
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          border: 1px solid rgb(from var(--u-line) r g b / 0.06);
           border-radius: 6px;
           pointer-events: none;
         }
         .journal-featured-media {
           min-height: 430px;
-          background: #061126;
+          background: var(--u-dark);
         }
         .journal-featured-media img {
           width: 100%;
@@ -455,8 +457,8 @@ const News = () => {
         .journal-featured-media.is-logo,
         .journal-card-image.is-logo {
           background:
-            radial-gradient(circle at 20% 18%, rgba(25, 217, 255, 0.16), transparent 18rem),
-            #061126;
+            radial-gradient(circle at 20% 18%, rgb(from var(--u-accent) r g b / 0.16), transparent 18rem),
+            var(--u-dark);
         }
         .journal-featured-media.is-logo img,
         .journal-card-image.is-logo img {
@@ -484,7 +486,7 @@ const News = () => {
         }
         .journal-featured p {
           margin: 0 0 22px;
-          color: #bfd0ef;
+          color: var(--u-dark-muted);
           font-size: 17px;
           line-height: 1.7;
         }
@@ -501,7 +503,7 @@ const News = () => {
           min-height: 48px;
           padding: 0 20px;
           border-radius: 8px;
-          color: #021126;
+          color: var(--u-ink);
           background: #fff;
           font-weight: 800;
           transition: transform 180ms ease, background 180ms ease;
@@ -548,8 +550,8 @@ const News = () => {
           border: 1px solid var(--journal-line);
           border-radius: 8px;
           background:
-            linear-gradient(180deg, rgba(25, 217, 255, 0.1), rgba(7, 20, 48, 0.72)),
-            rgba(7, 20, 48, 0.72);
+            linear-gradient(180deg, rgb(from var(--u-accent) r g b / 0.1), rgb(from var(--u-dark) r g b / 0.72)),
+            rgb(from var(--u-dark) r g b / 0.72);
           padding: 20px;
         }
         .journal-editor-note h3 {
@@ -560,7 +562,7 @@ const News = () => {
         }
         .journal-editor-note p {
           margin: 0 0 18px;
-          color: #b8c8e8;
+          color: var(--u-dark-muted);
           line-height: 1.65;
           font-size: 14px;
         }
@@ -571,17 +573,17 @@ const News = () => {
         .journal-note-list button {
           width: 100%;
           min-height: 40px;
-          border: 1px solid rgba(159, 178, 214, 0.2);
+          border: 1px solid rgb(from var(--u-accent) r g b / 0.2);
           border-radius: 8px;
-          color: #dbe8ff;
-          background: rgba(255,255,255,0.06);
+          color: var(--u-dark-ink);
+          background: rgb(from var(--u-surface) r g b / 0.06);
           text-align: left;
           padding: 0 12px;
           cursor: pointer;
           text-transform: capitalize;
         }
         .journal-note-list button:hover {
-          color: #021126;
+          color: var(--u-ink);
           background: var(--journal-accent);
           border-color: var(--journal-accent);
         }
@@ -591,23 +593,23 @@ const News = () => {
           flex-direction: column;
           min-height: 100%;
           overflow: hidden;
-          border: 1px solid rgba(77, 150, 255, 0.2);
+          border: 1px solid rgb(from var(--u-accent) r g b / 0.2);
           border-radius: 8px;
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.045), transparent 34%),
-            rgba(7, 20, 48, 0.72);
+            linear-gradient(180deg, rgb(from var(--u-surface) r g b / 0.045), transparent 34%),
+            rgb(from var(--u-dark) r g b / 0.72);
           transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
         }
         .journal-card:hover {
           transform: translateY(-5px);
-          border-color: rgba(25, 217, 255, 0.55);
-          background: rgba(10, 31, 70, 0.86);
+          border-color: rgb(from var(--u-accent) r g b / 0.55);
+          background: rgb(from var(--u-dark) r g b / 0.86);
           box-shadow: 0 26px 70px rgba(0, 0, 0, 0.28);
         }
         .journal-card-image {
           aspect-ratio: 16 / 10;
           overflow: hidden;
-          background: #061126;
+          background: var(--u-dark);
         }
         .journal-card-image img {
           width: 100%;
@@ -643,7 +645,7 @@ const News = () => {
         }
         .journal-card p {
           margin: 0;
-          color: #b8c8e8;
+          color: var(--u-dark-muted);
           line-height: 1.65;
           font-size: 14px;
         }
@@ -662,12 +664,12 @@ const News = () => {
           padding: 0 14px;
           border-radius: 8px;
           color: #fff;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgb(from var(--u-surface) r g b / 0.1);
           font-weight: 800;
         }
         .journal-card-footer button:hover {
           background: var(--journal-accent);
-          color: #021126;
+          color: var(--u-ink);
         }
         .journal-state {
           min-height: 280px;
@@ -675,7 +677,7 @@ const News = () => {
           place-items: center;
           border: 1px solid var(--journal-line);
           border-radius: 8px;
-          background: rgba(7, 20, 48, 0.58);
+          background: rgb(from var(--u-dark) r g b / 0.58);
           color: var(--journal-muted);
           text-align: center;
           padding: 28px;
@@ -693,8 +695,8 @@ const News = () => {
         .journal-skeleton-card {
           height: 350px;
           border-radius: 8px;
-          border: 1px solid rgba(77, 150, 255, 0.16);
-          background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.11), rgba(255,255,255,0.05));
+          border: 1px solid rgb(from var(--u-accent) r g b / 0.16);
+          background: linear-gradient(90deg, rgb(from var(--u-surface) r g b / 0.05), rgb(from var(--u-surface) r g b / 0.11), rgb(from var(--u-surface) r g b / 0.05));
           background-size: 220% 100%;
           animation: journalPulse 1.2s ease-in-out infinite;
         }
@@ -706,7 +708,7 @@ const News = () => {
           margin-top: 70px;
           padding: 46px;
           border-top: 1px solid var(--journal-line);
-          background: linear-gradient(90deg, rgba(25, 217, 255, 0.1), rgba(11, 99, 255, 0.08), transparent);
+          background: linear-gradient(90deg, rgb(from var(--u-accent) r g b / 0.1), rgb(from var(--u-accent) r g b / 0.08), transparent);
         }
         .journal-newsletter-grid {
           display: grid;
@@ -722,7 +724,7 @@ const News = () => {
         }
         .journal-newsletter p {
           margin: 0;
-          color: #bfd0ef;
+          color: var(--u-dark-muted);
           line-height: 1.7;
         }
         .journal-newsletter form {
@@ -735,20 +737,20 @@ const News = () => {
           min-height: 52px;
           padding: 0 16px;
           border-radius: 8px;
-          border: 1px solid rgba(159, 178, 214, 0.28);
+          border: 1px solid rgb(from var(--u-accent) r g b / 0.28);
           color: #fff;
-          background: rgba(255, 255, 255, 0.07);
+          background: rgb(from var(--u-surface) r g b / 0.07);
           outline: none;
         }
         .journal-newsletter input:focus {
           border-color: var(--journal-accent);
-          box-shadow: 0 0 0 4px rgba(25, 217, 255, 0.11);
+          box-shadow: 0 0 0 4px rgb(from var(--u-accent) r g b / 0.11);
         }
         .journal-newsletter button {
           min-height: 52px;
           padding: 0 18px;
           border-radius: 8px;
-          color: #021126;
+          color: var(--u-ink);
           background: var(--journal-accent);
           font-weight: 900;
         }
@@ -901,7 +903,7 @@ const News = () => {
                 {leadArticle.dateLabel && <span>{leadArticle.dateLabel}</span>}
                 <span>{leadArticle.readingTime} {t.minRead}</span>
               </div>
-              <button type="button" onClick={() => navigate(`/news/${leadArticle.id}`)}>
+              <button type="button" onClick={() => navigate(`/news/${leadArticle.slug}`)}>
                 {t.read}
               </button>
             </div>
@@ -928,7 +930,7 @@ const News = () => {
                     key={article.id}
                     article={article}
                     language={language}
-                    onOpen={(id) => navigate(`/news/${id}`)}
+                    onOpen={(slug) => navigate(`/news/${slug}`)}
                   />
                 ))}
               </div>

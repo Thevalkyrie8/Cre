@@ -1,0 +1,256 @@
+import { Link } from 'react-router-dom';
+import { chatboxFaqs } from '../seo/seoConfig';
+import './ServiceEditorialDetail.css';
+
+const serviceDetails = {
+  ecommerce: {
+    index: '02',
+    eyebrow: 'E-commerce',
+    eyebrowVi: 'Thương mại điện tử',
+    title: 'Commerce designed as a living system—not a catalogue.',
+    titleVi: 'Thương mại được thiết kế như một hệ thống sống, không chỉ là danh mục sản phẩm.',
+    intro: 'We connect storefront experience, product content, marketplace operations, fulfillment, and retention into one coherent buying journey.',
+    introVi: 'Chúng tôi kết nối trải nghiệm cửa hàng, nội dung sản phẩm, vận hành marketplace, hoàn tất đơn và giữ chân khách hàng thành một hành trình thống nhất.',
+    promise: 'Every improvement is tied to a commercial moment: discovery, trust, checkout, fulfillment, or return purchase.',
+    metrics: [['↓', 'Checkout friction'], ['360°', 'Commerce operations'], ['1:1', 'Product clarity']],
+    challengeTitle: 'The challenge',
+    challenge: 'Revenue leaks rarely live in one place. A confusing listing, missing trust cue, slow workflow, or disconnected follow-up can each undermine the same order.',
+    capabilities: [
+      ['Storefront experience', 'Navigation, product discovery, product detail, bundles, trust, checkout, and mobile commerce.'],
+      ['Marketplace operations', 'Amazon, Etsy, and channel-ready listings, media standards, catalog structure, and optimization.'],
+      ['Connected operations', 'Inventory, orders, payments, shipping, CRM, and reporting connected to reduce repetitive work.'],
+      ['Retention loops', 'Email flows, remarketing audiences, post-purchase care, review systems, and repeat-order strategy.'],
+    ],
+    process: ['Commerce audit', 'Journey redesign', 'System connection', 'Optimize revenue'],
+    deliverables: ['Store and catalog architecture', 'Conversion-ready product system', 'Operations integrations', 'Growth measurement plan'],
+  },
+  marketing: {
+    index: '03',
+    eyebrow: 'Digital Marketing',
+    eyebrowVi: 'Tiếp thị số',
+    title: 'Make every channel tell one measurable growth story.',
+    titleVi: 'Để mọi kênh cùng kể một câu chuyện tăng trưởng có thể đo lường.',
+    intro: 'We align search, paid media, social content, landing experiences, and automation around the same audience truth and commercial target.',
+    introVi: 'Chúng tôi đồng bộ tìm kiếm, quảng cáo, nội dung xã hội, landing page và automation quanh cùng một sự thật khách hàng và mục tiêu kinh doanh.',
+    promise: 'Creative judgment and clean measurement work together—so momentum never depends on vanity metrics.',
+    metrics: [['GA4', 'Measurement ready'], ['30–90', 'Day roadmap'], ['ROAS', 'Commercial focus']],
+    challengeTitle: 'The challenge',
+    challenge: 'Channels often work in isolation: content says one thing, ads promise another, and the landing experience breaks continuity. We design the system between them.',
+    capabilities: [
+      ['Search demand', 'Technical SEO, topic architecture, local visibility, and useful content aligned with real intent.'],
+      ['Performance media', 'Google, Meta, and TikTok campaigns structured around funnel stage, testing, and cost control.'],
+      ['Content system', 'A practical editorial rhythm for campaigns, organic channels, short-form video, and brand authority.'],
+      ['Measurement & automation', 'GA4, GSC, UTM governance, dashboards, lead nurturing, reminders, and post-purchase flows.'],
+    ],
+    process: ['Audit the signals', 'Shape the strategy', 'Launch & learn', 'Scale what works'],
+    deliverables: ['30–60–90 day roadmap', 'Campaign and content system', 'Tracking and live dashboard', 'Optimization cadence'],
+  },
+  chatbox: {
+    index: '06',
+    eyebrow: 'AI Chatbot Integration',
+    eyebrowVi: 'Tích hợp Chatbot AI',
+    title: 'AI chatbot for Facebook Fanpage, Zalo OA, and your website.',
+    titleVi: 'Chatbot AI cho Fanpage, Zalo OA và website.',
+    intro: 'We connect an AI chatbot to Facebook Fanpage, Zalo OA, and your website to answer questions, guide customers, capture leads, and transfer conversations to staff.',
+    introVi: 'Chatbot AI dùng dữ liệu doanh nghiệp để trả lời câu hỏi, tư vấn sản phẩm, thu thông tin lead và chuyển hội thoại cho nhân viên trên Facebook Fanpage, Zalo OA và website.',
+    promise: 'Answer common questions, qualify leads, collect customer information, and hand complex conversations to your team at the right moment.',
+    metrics: [['24/7', 'Instant support'], ['3-in-1', 'Connected channels'], ['AI', 'Smart qualification']],
+    challengeTitle: 'The challenge',
+    challenge: 'Customers message businesses across different channels and expect an immediate answer. Disconnected inboxes create slow responses, repeated work, and lost sales opportunities.',
+    capabilities: [
+      ['Facebook Fanpage', 'Automated Messenger responses, lead capture, product guidance, and seamless transfer to a human advisor.'],
+      ['Zalo OA', 'Structured consultation flows, customer information collection, reminders, and Vietnamese-first support.'],
+      ['Website assistant', 'A branded AI chat experience trained around your services, policies, FAQs, and conversion goals.'],
+      ['Unified automation', 'Shared conversation logic, CRM-ready data, reporting, and escalation rules across all connected channels.'],
+    ],
+    process: ['Map conversations', 'Prepare knowledge', 'Connect channels', 'Train & optimize'],
+    deliverables: ['Conversation and lead-flow design', 'Fanpage, Zalo OA, and website setup', 'AI knowledge base and guardrails', 'Analytics, training, and handover'],
+  },
+};
+
+const relatedServices = {
+  ecommerce: [
+    ['/web-development', 'Thiết kế website bán hàng'],
+    ['/digital-marketing', 'Digital Marketing'],
+    ['/automation', 'Tự động hóa vận hành'],
+  ],
+  marketing: [
+    ['/web-development', 'Thiết kế website chuẩn SEO'],
+    ['/chatbox-ai', 'Chatbot AI đa kênh'],
+    ['/photography-video', 'Sản xuất hình ảnh và video'],
+  ],
+  chatbox: [
+    ['/automation', 'Tự động hóa chăm sóc khách hàng'],
+    ['/web-development', 'Tích hợp Chatbot vào website'],
+    ['/digital-marketing', 'Digital Marketing và thu lead'],
+  ],
+};
+
+const DetailIcon = () => (
+  <svg viewBox="0 0 64 64" className="tw-h-16 tw-w-16" fill="none" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" aria-hidden="true">
+    <circle cx="32" cy="32" r="23" /><circle cx="32" cy="32" r="13" /><path d="M32 2v8M32 54v8M2 32h8M54 32h8" /><path d="m23 33 6 6 13-15" />
+  </svg>
+);
+
+const ServiceEditorialDetail = ({ type }) => {
+  const service = serviceDetails[type];
+
+  return (
+  <div className={`theme-synced-page service-editorial-detail service-editorial-detail--${type} tw-bg-[var(--u-surface)] tw-text-[var(--u-dark)]`}>
+    <section data-reveal className="tw-relative tw-isolate tw-overflow-hidden tw-pb-20 tw-pt-36 sm:tw-pb-28 sm:tw-pt-44">
+      <div className="tw-pointer-events-none tw-absolute tw-inset-0 -tw-z-10 tw-bg-[radial-gradient(circle_at_12%_10%,color-mix(in_srgb,var(--u-accent)_11%,transparent),transparent_27%),radial-gradient(circle_at_90%_35%,color-mix(in_srgb,var(--u-secondary)_10%,transparent),transparent_24%)]" />
+      <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-14 lg:tw-grid-cols-[1.45fr_.55fr] lg:tw-items-end">
+        <div>
+          <Link to="/services" className="tw-inline-flex tw-items-center tw-gap-2 tw-text-xs tw-font-bold tw-uppercase tw-tracking-[.18em] tw-text-[var(--u-accent)] tw-no-underline"><span aria-hidden="true">←</span> All services</Link>
+          <p className="tw-mb-5 tw-mt-12 tw-text-[.7rem] tw-font-extrabold tw-uppercase tw-tracking-[.28em] tw-text-[var(--u-secondary)]" data-en={service.eyebrow} data-vi={service.eyebrowVi}>{service.eyebrow}</p>
+          <h1 data-title-reveal className="master-title tw-m-0 tw-max-w-[58rem] tw-font-editorial tw-text-[clamp(3.8rem,7.4vw,7.8rem)] tw-font-semibold tw-leading-[.82] tw-tracking-[-.067em] tw-text-[var(--u-accent)]" data-en={service.title} data-vi={service.titleVi}>{service.title}</h1>
+          <p className="tw-mt-9 tw-max-w-[48rem] tw-text-lg tw-leading-8 tw-text-[var(--u-dark-muted)]" data-en={service.intro} data-vi={service.introVi}>{service.intro}</p>
+        </div>
+        <aside className="tw-relative tw-overflow-hidden tw-rounded-[2rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_15%,transparent)] tw-bg-[var(--u-line)] tw-p-7 tw-shadow-[0_30px_70px_-48px_color-mix(in_srgb,var(--u-accent)_50%,transparent)]">
+          <span className="tw-absolute tw-right-5 tw-top-3 tw-font-editorial tw-text-8xl tw-font-semibold tw-text-[var(--u-accent)]/[.06]">{service.index}</span>
+          <span className="tw-text-[var(--u-accent)]"><DetailIcon /></span>
+          <p className="tw-relative tw-mb-0 tw-mt-10 tw-text-sm tw-leading-6 tw-text-[var(--u-dark-muted)]">{service.promise}</p>
+        </aside>
+      </div>
+    </section>
+
+    <section className="tw-border-y tw-border-[color-mix(in_srgb,var(--u-accent)_10%,transparent)] tw-bg-[var(--u-line)] tw-py-10">
+      <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-grid-cols-1 tw-gap-6 sm:tw-grid-cols-3">
+        {service.metrics.map(([value, label]) => <div key={label} className="tw-border-l tw-border-[color-mix(in_srgb,var(--u-accent)_20%,transparent)] tw-pl-5"><strong className="tw-block tw-font-editorial tw-text-4xl tw-font-semibold tw-text-[var(--u-accent)]">{value}</strong><span className="tw-text-xs tw-font-bold tw-uppercase tw-tracking-[.12em] tw-text-[var(--u-subtle)]">{label}</span></div>)}
+      </div>
+    </section>
+
+    {type === 'chatbox' && (
+      <section data-reveal className="tw-py-20 sm:tw-py-24" aria-labelledby="chatbot-ai-definition">
+        <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-10 lg:tw-grid-cols-[.8fr_1.2fr] lg:tw-gap-16">
+          <div>
+            <p className="tw-m-0 tw-text-[.68rem] tw-font-black tw-uppercase tw-tracking-[.24em] tw-text-[var(--u-secondary)]" data-en="Quick answer" data-vi="Câu trả lời ngắn">Quick answer</p>
+            <h2 id="chatbot-ai-definition" className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-[clamp(2.35rem,5vw,4.25rem)] tw-font-semibold tw-leading-[.95] tw-text-[var(--u-accent)]" data-en="What is an AI chatbot for Facebook Fanpage?" data-vi="Chatbot AI cho Fanpage là gì?">What is an AI chatbot for Facebook Fanpage?</h2>
+            <p className="tw-mb-0 tw-mt-6 tw-text-lg tw-leading-8 tw-text-[var(--u-dark-muted)]" data-en="It is an automated Messenger assistant that uses approved business information to answer questions, guide product discovery, collect lead details, and transfer conversations to staff when needed." data-vi="Đây là trợ lý tự động trong Messenger, dùng dữ liệu đã được doanh nghiệp duyệt để trả lời câu hỏi, tư vấn sản phẩm, thu thông tin khách hàng và chuyển hội thoại cho nhân viên khi cần.">It is an automated Messenger assistant that uses approved business information to answer questions, guide product discovery, collect lead details, and transfer conversations to staff when needed.</p>
+          </div>
+          <dl className="tw-m-0 tw-grid tw-gap-3 sm:tw-grid-cols-2">
+            {[
+              ['Service', 'Dịch vụ', 'Multi-channel AI chatbot integration', 'Tích hợp Chatbot AI đa kênh'],
+              ['Supported channels', 'Kênh hỗ trợ', 'Facebook Fanpage, Zalo OA, and website', 'Facebook Fanpage, Zalo OA và website'],
+              ['Core functions', 'Chức năng chính', 'Automated answers, consultation, lead capture, and staff handover', 'Tự động trả lời, tư vấn, thu lead và chuyển nhân viên'],
+              ['Knowledge source', 'Dữ liệu chuẩn bị', 'Products, services, pricing, policies, and FAQs', 'Sản phẩm, dịch vụ, bảng giá, chính sách và câu hỏi thường gặp'],
+            ].map(([labelEn, labelVi, valueEn, valueVi]) => (
+              <div key={labelEn} className="tw-rounded-2xl tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_14%,transparent)] tw-bg-[var(--u-line)] tw-p-5">
+                <dt className="tw-text-xs tw-font-black tw-uppercase tw-tracking-[.12em] tw-text-[var(--u-secondary)]" data-en={labelEn} data-vi={labelVi}>{labelEn}</dt>
+                <dd className="tw-m-0 tw-mt-3 tw-text-sm tw-font-semibold tw-leading-6 tw-text-[var(--u-subtle)]" data-en={valueEn} data-vi={valueVi}>{valueEn}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )}
+
+    <section data-reveal className="tw-py-24 sm:tw-py-32">
+      <div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))]">
+        <div className="tw-grid tw-gap-10 lg:tw-grid-cols-[.7fr_1.3fr] lg:tw-gap-20">
+          <h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-[.9] tw-text-[var(--u-accent)]">{service.challengeTitle}</h2>
+          <p className="tw-m-0 tw-max-w-[48rem] tw-text-xl tw-leading-9 tw-text-[var(--u-dark-muted)]">{service.challenge}</p>
+        </div>
+
+        <div className="tw-mt-20 tw-grid tw-grid-cols-1 tw-gap-5 md:tw-grid-cols-2 lg:tw-grid-cols-12">
+          {service.capabilities.map(([title, description], index) => (
+            <article key={title} className={`tw-group tw-relative tw-overflow-hidden tw-rounded-[1.7rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_15%,transparent)] tw-p-7 tw-transition tw-duration-500 hover:-tw-translate-y-2 hover:tw-border-[color-mix(in_srgb,var(--u-secondary)_45%,transparent)] ${index === 0 || index === 3 ? 'lg:tw-col-span-7 tw-bg-[var(--u-surface)]' : 'lg:tw-col-span-5 tw-bg-[var(--u-surface)]'} ${index === 1 ? 'lg:tw-mt-12' : ''}`}>
+              <span className="tw-text-xs tw-font-bold tw-text-[var(--u-secondary)]">0{index + 1}</span>
+              <h3 className="tw-mb-0 tw-mt-10 tw-font-editorial tw-text-4xl tw-font-semibold tw-leading-none tw-text-[var(--u-accent)]">{title}</h3>
+              <p className="tw-mb-0 tw-mt-4 tw-text-sm tw-leading-7 tw-text-[var(--u-subtle)]">{description}</p>
+              <i className="tw-absolute tw-bottom-6 tw-right-7 tw-h-px tw-w-8 tw-bg-[var(--u-secondary)] tw-transition-all tw-duration-500 group-hover:tw-w-16" />
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section data-reveal className="tw-bg-[var(--u-surface)] tw-py-24">
+      <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-14 lg:tw-grid-cols-2">
+        <div>
+          <p className="tw-text-[.68rem] tw-font-extrabold tw-uppercase tw-tracking-[.25em] tw-text-[var(--u-secondary)]">How we work</p>
+          <h2 className="tw-m-0 tw-max-w-md tw-font-editorial tw-text-6xl tw-font-semibold tw-leading-[.88] tw-text-[var(--u-accent)]">A clear path from ambiguity to momentum.</h2>
+        </div>
+        <ol className="tw-m-0 tw-list-none tw-p-0">
+          {service.process.map((step, index) => <li key={step} className="tw-grid tw-grid-cols-[3rem_1fr] tw-gap-4 tw-border-b tw-border-[color-mix(in_srgb,var(--u-accent)_12%,transparent)] tw-py-5"><span className="tw-text-xs tw-font-bold tw-text-[var(--u-secondary)]">0{index + 1}</span><strong className="tw-font-editorial tw-text-2xl tw-font-semibold tw-text-[var(--u-accent)]">{step}</strong></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section data-reveal className="service-editorial-dark-surface tw-relative tw-overflow-hidden tw-bg-[var(--u-accent)] tw-py-24 tw-text-[var(--u-surface)]">
+      <div className="tw-pointer-events-none tw-absolute -tw-right-32 -tw-top-32 tw-h-96 tw-w-96 tw-rounded-full tw-border tw-border-[var(--u-line)]/10" />
+      <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.75fr_1.25fr] lg:tw-items-end">
+        <div><p className="tw-m-0 tw-text-[.68rem] tw-font-extrabold tw-uppercase tw-tracking-[.25em] tw-text-[var(--u-subtle)]">Case-study model</p><h2 className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-6xl tw-font-semibold tw-leading-[.86] tw-text-[var(--u-surface)]">Measure the system, not the decoration.</h2><p className="tw-mb-0 tw-mt-7 tw-max-w-md tw-text-sm tw-leading-7 tw-text-[var(--u-subtle)]">A representative launch dashboard showing how experience quality, speed, and conversion signals are reviewed together. Indexed values are illustrative—not client performance claims.</p></div>
+        <div className="tw-rounded-[2rem] tw-border tw-border-[var(--u-line)]/14 tw-bg-[var(--u-surface)]/[.07] tw-p-5 tw-backdrop-blur sm:tw-p-7">
+          <div className="tw-flex tw-items-center tw-justify-between tw-gap-4"><span className="tw-text-xs tw-font-bold tw-uppercase tw-tracking-[.15em] tw-text-[var(--u-subtle)]">Transformation index</span><span className="tw-rounded-full tw-border tw-border-[var(--u-line)]/16 tw-px-3 tw-py-1 tw-text-[.65rem] tw-text-[var(--u-subtle)]">Prototype benchmark</span></div>
+          <svg viewBox="0 0 680 300" className="tw-mt-7 tw-w-full" fill="none" aria-label="Illustrative market trend graph">
+            {[55,105,155,205,255].map((y) => <path key={y} d={`M44 ${y}H650`} stroke="var(--u-dark-ink)" strokeOpacity=".09" />)}
+            <path d="M50 240C122 226 143 204 198 210s92-70 148-55 85-48 136-36 88-57 158-69" stroke="var(--u-accent)" strokeWidth="4" strokeLinecap="round" />
+            <path d="M50 240C122 226 143 204 198 210s92-70 148-55 85-48 136-36 88-57 158-69V270H50Z" fill="url(#trendFill)" />
+            {[['50','240'],['198','210'],['346','155'],['482','119'],['640','50']].map(([x,y]) => <g key={x}><circle cx={x} cy={y} r="8" fill="var(--u-accent)" stroke="var(--u-subtle)" strokeWidth="3"/><circle cx={x} cy={y} r="18" stroke="var(--u-accent)" strokeOpacity=".2"/></g>)}
+            <defs><linearGradient id="trendFill" x1="340" y1="40" x2="340" y2="270" gradientUnits="userSpaceOnUse"><stop stopColor="var(--u-secondary)" stopOpacity=".28"/><stop offset="1" stopColor="var(--u-secondary)" stopOpacity="0"/></linearGradient></defs>
+          </svg>
+          <div className="tw-grid tw-grid-cols-3 tw-gap-3">{[['+48', 'Conversion index'], ['94', 'Experience score'], ['1.4s', 'Load-time target']].map(([value,label]) => <div key={label} className="tw-rounded-xl tw-bg-[var(--u-surface)]/[.06] tw-p-3"><strong className="tw-block tw-font-editorial tw-text-2xl tw-text-[var(--u-subtle)]">{value}</strong><span className="tw-text-[.62rem] tw-font-bold tw-uppercase tw-tracking-[.1em] tw-text-[var(--u-subtle)]">{label}</span></div>)}</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-reveal className="tw-py-24 sm:tw-py-32">
+      <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-12 lg:tw-items-center">
+        <div className="tw-relative lg:tw-col-span-7">
+          <div className="tw-overflow-hidden tw-rounded-[2.2rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_14%,transparent)] tw-bg-[var(--u-line)] tw-shadow-[0_38px_85px_-55px_color-mix(in_srgb,var(--u-accent)_60%,transparent)]"><video className="tw-aspect-[16/10] tw-h-full tw-w-full tw-object-cover" src="/President.mp4" poster="/logo.jpg" autoPlay muted loop playsInline aria-label="Unitrux real-world production footage" /></div>
+          <div className="tw-absolute -tw-bottom-7 tw-right-5 tw-rounded-[1.4rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_14%,transparent)] tw-bg-[var(--u-line)]/95 tw-p-5 tw-shadow-[0_24px_52px_-38px_color-mix(in_srgb,var(--u-accent)_60%,transparent)] tw-backdrop-blur sm:tw-right-10"><span className="tw-text-[.65rem] tw-font-black tw-uppercase tw-tracking-[.17em] tw-text-[var(--u-secondary)]">Real project media</span><p className="tw-mb-0 tw-mt-2 tw-font-editorial tw-text-xl tw-font-semibold tw-text-[var(--u-accent)]">Strategy, craft, and delivery in one room.</p></div>
+        </div>
+        <div className="lg:tw-col-span-4 lg:tw-col-start-9"><p className="tw-m-0 tw-text-[.68rem] tw-font-black tw-uppercase tw-tracking-[.24em] tw-text-[var(--u-secondary)]">The working team</p><h2 className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-6xl tw-font-semibold tw-leading-[.86] tw-text-[var(--u-accent)]">Senior eyes on the work that matters.</h2><p className="tw-mb-0 tw-mt-7 tw-text-sm tw-leading-7 tw-text-[var(--u-subtle)]">A compact cross-disciplinary team keeps product thinking, interface craft, engineering, and measurement connected from kickoff through improvement.</p><div className="tw-mt-8 tw-flex tw-flex-wrap tw-gap-2">{['Strategy', 'Experience', 'Engineering', 'Growth'].map((role) => <span key={role} className="tw-rounded-full tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_16%,transparent)] tw-bg-[var(--u-line)] tw-px-4 tw-py-2 tw-text-xs tw-font-bold tw-text-[var(--u-accent)]">{role}</span>)}</div></div>
+      </div>
+    </section>
+
+    <section data-reveal className="tw-py-24">
+      <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.8fr_1.2fr]">
+        <h2 className="tw-m-0 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-none tw-text-[var(--u-accent)]">What you leave with</h2>
+        <div className="tw-grid tw-gap-4 sm:tw-grid-cols-2">{service.deliverables.map((item, index) => <div key={item} className="tw-rounded-2xl tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_14%,transparent)] tw-bg-[var(--u-line)] tw-p-5"><span className="tw-text-xs tw-font-bold tw-text-[var(--u-secondary)]">0{index + 1}</span><p className="tw-mb-0 tw-mt-5 tw-font-semibold tw-text-[var(--u-subtle)]">{item}</p></div>)}</div>
+      </div>
+    </section>
+
+    <section className="tw-pb-24" aria-labelledby="related-services-title">
+      <div className="tw-mx-auto tw-w-[min(76rem,calc(100%_-_2rem))] tw-rounded-[2rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_14%,transparent)] tw-bg-[var(--u-line)] tw-p-7 sm:tw-p-10">
+        <h2 id="related-services-title" className="tw-m-0 tw-font-editorial tw-text-4xl tw-font-semibold tw-text-[var(--u-accent)]" data-en="Related services" data-vi="Dịch vụ liên quan">Related services</h2>
+        <nav className="tw-mt-6 tw-flex tw-flex-wrap tw-gap-3" aria-label="Related services">
+          {relatedServices[type].map(([to, label]) => (
+            <Link key={to} to={to} className="tw-rounded-full tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_20%,transparent)] tw-bg-[var(--u-line)] tw-px-5 tw-py-3 tw-text-sm tw-font-bold tw-text-[var(--u-accent)] tw-no-underline tw-transition hover:tw-border-[var(--u-secondary)] hover:tw-text-[var(--u-secondary)]">{label}</Link>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    {type === 'chatbox' && (
+      <section data-reveal className="tw-bg-[var(--u-surface)] tw-py-24" aria-labelledby="chatbox-faq-title">
+        <div className="tw-mx-auto tw-grid tw-w-[min(76rem,calc(100%_-_2rem))] tw-gap-12 lg:tw-grid-cols-[.7fr_1.3fr]">
+          <div>
+            <p className="tw-m-0 tw-text-[.68rem] tw-font-black tw-uppercase tw-tracking-[.24em] tw-text-[var(--u-secondary)]" data-en="Frequently asked questions" data-vi="Câu hỏi thường gặp">Frequently asked questions</p>
+            <h2 id="chatbox-faq-title" className="tw-mb-0 tw-mt-5 tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-none tw-text-[var(--u-accent)]" data-en="AI chatbot integration, explained clearly." data-vi="Giải đáp về Chatbot AI cho Fanpage.">AI chatbot integration, explained clearly.</h2>
+            <p className="tw-mb-0 tw-mt-6 tw-max-w-md tw-text-sm tw-leading-7 tw-text-[var(--u-subtle)]" data-en="Practical answers about Facebook Fanpage, Zalo OA, website deployment, handover, data, and project scope." data-vi="Thông tin thực tế về triển khai trên Facebook Fanpage, Zalo OA, website, chuyển nhân viên, dữ liệu và phạm vi dự án.">Practical answers about Facebook Fanpage, Zalo OA, website deployment, handover, data, and project scope.</p>
+          </div>
+          <div className="tw-space-y-3">
+            {chatboxFaqs.map((faq) => (
+              <details key={faq.question} className="tw-group tw-rounded-2xl tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_14%,transparent)] tw-bg-[var(--u-line)] tw-px-5 tw-py-4">
+                <summary className="tw-cursor-pointer tw-list-none tw-pr-8 tw-font-editorial tw-text-xl tw-font-semibold tw-text-[var(--u-accent)]" data-en={faq.questionEn} data-vi={faq.question}>{faq.questionEn}</summary>
+                <p className="tw-mb-1 tw-mt-4 tw-text-sm tw-leading-7 tw-text-[var(--u-subtle)]" data-en={faq.answerEn} data-vi={faq.answer}>{faq.answerEn}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section className="tw-pb-28">
+      <div className="service-editorial-dark-surface tw-mx-auto tw-flex tw-w-[min(76rem,calc(100%_-_2rem))] tw-flex-col tw-items-start tw-justify-between tw-gap-8 tw-rounded-[2rem] tw-bg-[var(--u-accent)] tw-p-8 sm:tw-p-12 lg:tw-flex-row lg:tw-items-end">
+        <div><p className="tw-m-0 tw-text-xs tw-font-bold tw-uppercase tw-tracking-[.2em] tw-text-[var(--u-subtle)]">Start a useful conversation</p><h2 className="tw-mb-0 tw-mt-5 tw-max-w-2xl tw-font-editorial tw-text-5xl tw-font-semibold tw-leading-[.9] tw-text-[var(--u-surface)]">Bring the challenge. We’ll shape the right path.</h2></div>
+        <div className="tw-flex tw-flex-wrap tw-gap-3"><Link to="/contact" data-magnetic data-ripple className="master-magnetic tw-relative tw-overflow-hidden tw-rounded-full tw-bg-[var(--u-secondary)] tw-px-6 tw-py-3 tw-text-sm tw-font-bold tw-text-[var(--u-surface)] tw-no-underline tw-transition-colors hover:tw-bg-[var(--u-surface)] hover:tw-text-[var(--u-accent)]">Get consultation</Link><Link to="/packages" className="tw-rounded-full tw-border tw-border-[var(--u-line)]/35 tw-px-6 tw-py-3 tw-text-sm tw-font-bold tw-text-[var(--u-surface)] tw-no-underline tw-transition hover:tw-bg-[var(--u-surface)]/10">View packages</Link></div>
+      </div>
+    </section>
+  </div>
+  );
+};
+
+export default ServiceEditorialDetail;

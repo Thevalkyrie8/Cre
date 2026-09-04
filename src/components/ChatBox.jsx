@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { sendUnitruxChat } from '../api/client';
+import { trackEvent } from '../analytics/tracking';
 
 const QUICK_REPLIES = {
   MENU_MAIN: [
@@ -144,44 +145,41 @@ const readApiReply = (data) => ({
   quickReplies: data?.quickReplies || data?.quick_replies || []
 });
 
-const BotMascotIcon = ({ size = 30 }) => (
+const renderMessageText = (text = '') => text
+  .split(/(\*\*[^*]+\*\*)/g)
+  .filter(Boolean)
+  .map((part, index) => (
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={`${part}-${index}`}>{part.slice(2, -2)}</strong>
+      : part
+  ));
+
+const GrowthChatIcon = ({ size = 30, className = '' }) => (
   <svg
+    className={className}
     width={size}
     height={size}
-    viewBox="0 0 120 120"
+    viewBox="0 0 64 64"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
   >
     <path
-      d="M18 49c-7 4.8-11 12.6-11 22 0 10.4 5 19.3 13.6 23.5C18.4 86 18 78.6 18 70V49Z"
-      fill="#0B63FF"
-    />
-    <path
-      d="M102 49c7 4.8 11 12.6 11 22 0 10.4-5 19.3-13.6 23.5 2.2-8.5 2.6-15.9 2.6-24.5V49Z"
-      fill="#0B63FF"
-    />
-    <rect x="4" y="28" width="8" height="37" rx="4" fill="#0B63FF" />
-    <rect x="108" y="28" width="8" height="37" rx="4" fill="#0B63FF" />
-    <path
-      d="M60 18c29.8 0 50 19.9 50 48.4 0 28.8-20.2 47.2-50 47.2-8.6 0-16.4-1.5-23.1-4.4l-13.7 6.9 4.6-12.1C16.5 96 10 83.2 10 66.4 10 37.9 30.2 18 60 18Z"
-      fill="#0B63FF"
-    />
-    <rect x="24" y="39" width="72" height="50" rx="18" fill="white" />
-    <path
-      d="M36.5 62.8c3.5-6.8 15.8-6.8 19.3 0 1.5 2.9-.7 6.1-3.9 5.4-4.1-.9-7.2-.9-11.4 0-3.2.7-5.5-2.5-4-5.4Z"
-      fill="#0B63FF"
-    />
-    <path
-      d="M64.2 62.8c3.5-6.8 15.8-6.8 19.3 0 1.5 2.9-.8 6.1-4 5.4-4.1-.9-7.2-.9-11.3 0-3.2.7-5.5-2.5-4-5.4Z"
-      fill="#0B63FF"
-    />
-    <path
-      d="M51.4 77.8c4.7 6.3 12.5 6.3 17.2 0"
-      stroke="#0B63FF"
-      strokeWidth="6"
+      d="M11 30.5C11 20.8 18.8 14 29.6 14h9.1C49.6 14 57 20.5 57 30.1c0 9.7-7.7 16.4-18.4 16.4H27.9L17 53V44.4c-3.8-2.9-6-7.8-6-13.9Z"
+      stroke="currentColor"
+      strokeWidth="4.6"
       strokeLinecap="round"
+      strokeLinejoin="round"
     />
+    <path
+      d="M43.5 15.5 52 7m0 0v7.2M52 7h-7.2"
+      stroke="var(--chat-mark-accent, var(--u-accent))"
+      strokeWidth="4.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle cx="27" cy="30" r="3.5" fill="var(--chat-mark-accent, var(--u-accent))" />
+    <circle cx="41" cy="30" r="3.5" fill="var(--chat-mark-accent, var(--u-accent))" />
   </svg>
 );
 
@@ -193,6 +191,8 @@ const ChatBox = () => {
   const [leadState, setLeadState] = useState({ awaitingContact: false, awaitingNeed: false });
   const sessionId = useMemo(getSessionId, []);
   const endRef = useRef(null);
+  const chatStartedRef = useRef(false);
+  const leadTrackedRef = useRef(false);
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
@@ -205,6 +205,19 @@ const ChatBox = () => {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    const handleExternalOpen = (event) => {
+      setIsOpen(true);
+      setShowNudge(false);
+      trackEvent('chat_open', {
+        placement: event.detail?.placement || 'external_cta',
+      });
+    };
+
+    window.addEventListener('unitrux:open-chat', handleExternalOpen);
+    return () => window.removeEventListener('unitrux:open-chat', handleExternalOpen);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -239,6 +252,15 @@ const ChatBox = () => {
   const sendMessage = async (message, options = {}) => {
     const trimmed = message.trim();
     if (!trimmed || isLoading) return;
+
+    if (!chatStartedRef.current) {
+      chatStartedRef.current = true;
+      trackEvent('chat_start', { method: 'website_chatbox' });
+    }
+    if (hasContact(trimmed) && !leadTrackedRef.current) {
+      leadTrackedRef.current = true;
+      trackEvent('generate_lead', { method: 'website_chatbox' });
+    }
 
     setMessages((current) => [
       ...current,
@@ -303,11 +325,11 @@ const ChatBox = () => {
         <header className="chatbox-header">
           <div className="chatbox-agent">
             <div className="chatbox-avatar" aria-hidden="true">
-              <BotMascotIcon size={34} />
+              <GrowthChatIcon size={32} className="chatbox-brand-mark" />
             </div>
             <div>
               <h3>Unitrux Assistant</h3>
-              <p>Sẵn sàng tư vấn</p>
+              <p><span className="chatbox-status-dot" aria-hidden="true" />Sẵn sàng tư vấn</p>
             </div>
           </div>
           <button type="button" className="chatbox-close" onClick={() => setIsOpen(false)} aria-label="Close chat">
@@ -320,7 +342,7 @@ const ChatBox = () => {
         <div className="chatbox-body">
           {messages.map((message) => (
             <div key={message.id} className={`chat-message ${message.role}`}>
-              <p>{message.text}</p>
+              <p>{renderMessageText(message.text)}</p>
             </div>
           ))}
           {isLoading && (
@@ -364,12 +386,14 @@ const ChatBox = () => {
         onClick={() => {
           setShowNudge(false);
           setIsOpen((value) => !value);
+          if (!isOpen) trackEvent('chat_open', { placement: 'floating_launcher' });
         }}
-        aria-label="Open chat"
+        aria-label={!isOpen && showNudge ? 'Unitrux có thể giúp gì? Mở trò chuyện' : (isOpen ? 'Đóng trò chuyện' : 'Mở trò chuyện')}
         aria-expanded={isOpen}
       >
-        {!isOpen && showNudge && <span className="chatbox-nudge">Can I help you?</span>}
-        <BotMascotIcon size={38} />
+        {!isOpen && showNudge && <span className="chatbox-nudge">Unitrux có thể giúp gì?</span>}
+        <GrowthChatIcon size={34} className="chatbox-launcher-mark" />
+        <span className="chatbox-online-dot" aria-hidden="true" />
       </button>
     </div>
   );

@@ -1,0 +1,191 @@
+.service-editorial-detail--chatbox {
+  --chatbox-page-bg: var(--u-surface);
+  --chatbox-surface: #ffffff;
+  --chatbox-ink: var(--u-ink);
+  --chatbox-muted: var(--u-ink);
+  --chatbox-border: var(--u-line);
+  --chatbox-accent: var(--u-accent);
+  --chatbox-accent-ink: #ffffff;
+  --chatbox-dark: var(--u-dark);
+  --chatbox-dark-copy: var(--u-subtle);
+  --chatbox-highlight: var(--u-secondary);
+
+  background-color: var(--chatbox-page-bg) !important;
+  color: var(--chatbox-ink) !important;
+  color-scheme: light;
+}
+
+body.dark-mode .service-editorial-detail--chatbox {
+  --chatbox-page-bg: var(--u-dark);
+  --chatbox-surface: var(--u-dark);
+  --chatbox-ink: #ffffff;
+  --chatbox-muted: var(--u-muted);
+  --chatbox-border: var(--u-line);
+  --chatbox-accent: var(--u-accent);
+  --chatbox-accent-ink: var(--u-ink);
+  --chatbox-dark: var(--u-dark);
+  --chatbox-dark-copy: var(--u-subtle);
+
+  color-scheme: dark;
+}
+
+.service-editorial-detail--chatbox > section {
+  background-color: var(--chatbox-page-bg) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-bg-[var(--u-surface)]"],
+  [class*="tw-bg-[var(--u-surface)]"],
+  [class*="tw-bg-[var(--u-surface)]"],
+  [class*="tw-bg-[var(--u-surface)]"]
+) {
+  background-color: var(--chatbox-surface) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-border-[var(--u-accent)]"],
+  [class*="tw-border-[var(--u-line)]"]
+) {
+  border-color: var(--chatbox-border) !important;
+}
+
+.service-editorial-detail--chatbox :is(h1, h2, h3, strong, summary, dt, dd) {
+  color: var(--chatbox-ink) !important;
+}
+
+.service-editorial-detail--chatbox :is(p, li) {
+  color: var(--chatbox-muted) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-text-[var(--u-accent)]"],
+  [class*="tw-text-[var(--u-dark)]"]
+) {
+  color: var(--chatbox-ink) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-dark-muted)]"],
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-subtle)]"]
+) {
+  color: var(--chatbox-muted) !important;
+}
+
+.service-editorial-detail--chatbox :is(
+  [class*="tw-text-[var(--u-secondary)]"],
+  [class*="tw-text-[var(--u-secondary)]"]
+) {
+  color: var(--chatbox-accent) !important;
+}
+
+.service-editorial-detail--chatbox [class*="tw-bg-[var(--u-secondary)]"] {
+  background-color: var(--chatbox-accent) !important;
+  color: var(--chatbox-accent-ink) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface {
+  background-color: var(--chatbox-dark) !important;
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(h1, h2, h3, strong, summary, dt, dd) {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(p, li) {
+  color: var(--chatbox-dark-copy) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface :is(
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-secondary)]"]
+) {
+  color: var(--chatbox-highlight) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[var(--u-surface)]"] {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [class*="tw-text-[var(--u-subtle)]"] {
+  color: var(--chatbox-dark-copy) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [stroke="var(--u-subtle)"] {
+  stroke: var(--chatbox-highlight);
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface [fill="var(--u-accent)"] {
+  fill: var(--chatbox-dark);
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail--chatbox .service-editorial-dark-surface a[href="/packages"] {
+  background-color: transparent !important;
+  border-color: color-mix(in srgb, #ffffff 36%, transparent) !important;
+  color: #ffffff !important;
+}
+
+/* All other service-editorial types (ecommerce, digital-marketing, automation,
+   digital-solutions, fanpage-management, content-creation, seo-services, ...)
+   share the same .service-editorial-dark-surface band but never got the
+   chatbox-only protection above. The sitewide h1-h3/p/li ink-color rules in
+   styles.css (~14022, ~11695) force dark text onto this deliberately-dark
+   surface, making it invisible. Re-apply the same fix generically; the
+   doubled class keeps specificity safely above those sitewide rules
+   regardless of stylesheet order. */
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(h1, h2, h3, strong, summary, dt, dd) {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(p, li) {
+  color: var(--u-dark-muted) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface :is(
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-subtle)]"],
+  [class*="tw-text-[var(--u-secondary)]"]
+):not(.master-magnetic) {
+  color: var(--u-secondary) !important;
+}
+
+/* :not(.master-magnetic) keeps this off the "Get consultation"-style CTA
+   button, which carries tw-text-[var(--u-surface)] too but has its own dedicated
+   light-on-dark / dark-on-light pairing (styles.css ~13809) that this
+   broader override would otherwise clobber. */
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[var(--u-surface)]"]:not(.master-magnetic) {
+  color: #ffffff !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-text-[var(--u-subtle)]"]:not(.master-magnetic) {
+  color: var(--u-dark-muted) !important;
+}
+
+/* The sitewide "tw-bg-[var(--u-surface)]" card normalizer (styles.css ~13649) matches
+   by substring, so it also catches the opacity-modifier utility
+   tw-bg-[var(--u-surface)]/[.07] used for the translucent metric panel inside this
+   dark band, forcing it to a solid opaque white card. That turns the
+   light-on-dark badge/metric text sitting on it invisible. Restore the
+   intended translucent tint here. */
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface [class*="tw-bg-[var(--u-surface)]/"] {
+  background-color: rgb(from var(--u-surface) r g b / 0.07) !important;
+}
+
+body:is(:not(.dark-mode), .dark-mode) .service-editorial-detail .service-editorial-dark-surface.service-editorial-dark-surface a[href="/packages"] {
+  background-color: transparent !important;
+  border-color: color-mix(in srgb, #ffffff 36%, transparent) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 767px) {
+  .service-editorial-detail--chatbox > section {
+    border-color: var(--chatbox-border) !important;
+  }
+}

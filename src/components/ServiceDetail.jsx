@@ -7,9 +7,9 @@ import remarkGfm from 'remark-gfm';
 // Helper function to get current language
 const getCurrentLanguage = () => {
   try {
-    return localStorage.getItem('language') || 'en';
+    return localStorage.getItem('language') === 'en' ? 'en' : 'vi';
   } catch {
-    return 'en';
+    return 'vi';
   }
 };
 
@@ -50,6 +50,17 @@ const ServiceDetail = () => {
     return () => window.removeEventListener('languageChange', handleLanguageChange);
   }, []);
 
+  useEffect(() => {
+    if (!service || !id) return;
+    window.dispatchEvent(new CustomEvent('seo:service', {
+      detail: {
+        service,
+        pathname: `/services/${id}`,
+        language: lang,
+      },
+    }));
+  }, [id, lang, service]);
+
   if (loading) {
     return (
       <div className="service-detail-page">
@@ -67,13 +78,13 @@ const ServiceDetail = () => {
             left: 0;
             width: 100%;
             height: 4px;
-            background: #333;
+            background: var(--u-dark);
             z-index: 1000;
             overflow: hidden;
           }
           .loading-progress-fill {
             height: 100%;
-            background: #0B63FF;
+            background: var(--u-accent);
             width: 30%;
             animation: loadingProgress 1.5s ease-in-out infinite;
           }
@@ -84,8 +95,8 @@ const ServiceDetail = () => {
           .loading-spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid #333;
-            border-top: 4px solid #0B63FF;
+            border: 4px solid var(--u-line);
+            border-top: 4px solid var(--u-accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
           }
@@ -109,8 +120,8 @@ const ServiceDetail = () => {
             style={{
               marginTop: '20px',
               padding: '10px 20px',
-              background: '#0B63FF',
-              color: '#0b0b0b',
+              background: 'var(--u-accent)',
+              color: 'var(--u-ink)',
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer'
@@ -126,7 +137,6 @@ const ServiceDetail = () => {
   const title = lang === 'vi' ? (service.nameVi || service.name || 'Untitled') : (service.name || service.nameVi || 'Untitled');
   const description = lang === 'vi' ? (service.descriptionVi || service.description || '') : (service.description || service.descriptionVi || '');
   const features = lang === 'vi' ? (service.featuresVi || service.features || []) : (service.features || service.featuresVi || []);
-  const image = service.icon ? service.icon : '/logo-unitrux.jpg';
   const category = service.category || 'service';
   const date = service.createdAt ? new Date(service.createdAt).toLocaleDateString('vi-VN') : '';
   const author = service.author || 'Unitrux Team';
@@ -146,13 +156,13 @@ const ServiceDetail = () => {
       <style>{`
         .service-detail-page {
           min-height: 100vh;
-          background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+          background: linear-gradient(135deg, var(--u-dark) 0%, var(--u-dark) 100%);
           color: #fff;
         }
         .breadcrumbs {
           padding: 20px 0;
-          background: #0a0a0a;
-          border-bottom: 1px solid #333;
+          background: var(--u-dark);
+          border-bottom: 1px solid var(--u-line);
         }
         .breadcrumbs .container {
           max-width: 1200px;
@@ -164,22 +174,22 @@ const ServiceDetail = () => {
           gap: 8px;
           align-items: center;
           font-size: 14px;
-          color: #ccc;
+          color: var(--u-muted);
         }
         .breadcrumb-link {
-          color: #0B63FF;
+          color: var(--u-accent);
           text-decoration: none;
           transition: color 0.3s ease;
         }
         .breadcrumb-link:hover {
-          color: #19D9FF;
+          color: var(--u-accent-soft);
         }
         .breadcrumb-separator {
-          color: #666;
+          color: var(--u-muted);
         }
         .service-detail-hero {
           padding: 60px 0 40px;
-          background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+          background: linear-gradient(135deg, var(--u-dark) 0%, var(--u-dark) 100%);
         }
         .service-detail-hero .container {
           max-width: 1200px;
@@ -191,7 +201,7 @@ const ServiceDetail = () => {
           font-size: 42px;
           line-height: 1.2;
           margin: 0 0 20px;
-          background: linear-gradient(135deg, #0B63FF 0%, #19D9FF 100%);
+          background: linear-gradient(135deg, var(--u-accent) 0%, var(--u-accent-soft) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -203,7 +213,7 @@ const ServiceDetail = () => {
           gap: 20px;
           align-items: center;
           font-size: 16px;
-          color: #ccc;
+          color: var(--u-muted);
           margin-bottom: 30px;
         }
         .service-detail-meta span {
@@ -219,7 +229,7 @@ const ServiceDetail = () => {
           border-radius: 16px;
           margin: 0 auto 40px;
           display: block;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         .service-detail-content {
           max-width: 800px;
@@ -227,16 +237,16 @@ const ServiceDetail = () => {
           padding: 0 20px 60px;
           line-height: 1.8;
           font-size: 18px;
-          color: #e0e0e0;
+          color: var(--u-dark-muted);
         }
         .service-detail-content h2 {
-          color: #0B63FF;
+          color: var(--u-accent);
           margin: 40px 0 20px;
           font-size: 28px;
           font-weight: 600;
         }
         .service-detail-content h3 {
-          color: #0B63FF;
+          color: var(--u-accent);
           margin: 30px 0 15px;
           font-size: 24px;
           font-weight: 600;
@@ -255,8 +265,8 @@ const ServiceDetail = () => {
           display: inline-block;
           margin-bottom: 40px;
           padding: 12px 24px;
-          background: linear-gradient(135deg, #0B63FF, #19D9FF);
-          color: #0b0b0b;
+          background: linear-gradient(135deg, var(--u-accent), var(--u-accent-soft));
+          color: var(--u-ink);
           text-decoration: none;
           border-radius: 8px;
           font-weight: 600;
@@ -264,7 +274,7 @@ const ServiceDetail = () => {
         }
         .back-button:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(11, 99, 255, 0.3);
+          box-shadow: 0 8px 25px color-mix(in_srgb,var(--u-accent)_30%,transparent);
         }
         @media (max-width: 768px) {
           .service-detail-title {
@@ -316,7 +326,7 @@ const ServiceDetail = () => {
           fontSize: '120px',
           textAlign: 'center',
           marginBottom: '40px',
-          filter: 'drop-shadow(0 0 20px rgba(11, 99, 255, 0.3))'
+          filter: 'drop-shadow(0 0 20px color-mix(in_srgb,var(--u-accent)_30%,transparent))'
         }}>
           {service.icon || '✨'}
         </div>

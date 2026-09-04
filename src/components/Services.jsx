@@ -86,7 +86,7 @@ const Services = () => {
         margin-top: 40px;
       }
       .service-card {
-        background: #111218;
+        background: var(--u-dark);
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 16px;
         padding: 28px 22px;
@@ -131,7 +131,7 @@ const Services = () => {
       }
       .service-card ul li::before {
         content: '✔';
-        color: #00e676;
+        color: var(--u-accent-soft);
         font-size: 0.9rem;
         margin-right: 8px;
       }

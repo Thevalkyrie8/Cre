@@ -5,20 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   // Deploying to a root custom domain like https://unitrux.com
   // so assets should be loaded from the root path.
-  base: './',
+  base: '/',
   plugins: [react()],
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name].[ext]'
-      },
-    },
   },
   server: {
     port: 5173,
@@ -44,7 +36,4 @@ export default defineConfig({
     include: /src\/.*\.[jt]sx?$/,
     exclude: []
   },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify('development')
-  }
 })

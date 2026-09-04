@@ -1,0 +1,540 @@
+{
+  "meta": {
+    "site": "unitrux.com",
+    "language": "vi (bilingual EN/VI, VI is the primary blog language)",
+    "generated": "2026-08-24",
+    "method": "SERP-overlap clustering (hub-and-spoke) cross-referenced against live route table, seoConfig.js keyword ownership map, servicesContent.js relatedServices, and docs/seo/SEO-AEO-PLAYBOOK.md §5/§8/§11/§13",
+    "data_sources": [
+      "https://unitrux.com/news (live listing, 29 articles fetched 2026-08-24)",
+      "src/seo/seoConfig.js (title/description per route)",
+      "src/data/servicesContent.js (relatedServices link data)",
+      "src/App.jsx (route table incl. /media-pricing)",
+      "docs/seo/SEO-AEO-PLAYBOOK.md (existing keyword ownership map, §8; cannibalization rules, §11)",
+      "docs/seo/CONTENT-BRIEFS + PUBLISH-READY/quay-video-san-pham.md (one already-approved but not-yet-published brief)",
+      "WebSearch SERP sampling for 8 Vietnamese query pairs (see serp_overlap_samples)"
+    ],
+    "caveat": "No Search Console / keyword-tool volume data exists in this repo (same caveat the Playbook itself states in §8). Priority below is ordered by cannibalization risk + funnel gap severity, not verified search volume. Full pairwise top-10 URL-level SERP overlap across all 40+ keyword variants was not exhaustively scraped (WebSearch returns a blended AI-summarized result set, not a raw 10-blue-links SERP); overlap scores below are derived from the actual domain sets returned for the queries that were run (see serp_overlap_samples), and extrapolated by topical distance for the remainder — flagged accordingly per pair."
+  },
+
+  "current_state_audit": {
+    "live_blog_post_count": 29,
+    "topic_distribution": {
+      "website_design_cro_analytics": 15,
+      "seo_aeo_geo": "counted within website_design bucket above (5, GEO/SEO, URL structure, search-intent checklist, case-study format)",
+      "digital_marketing_ads_fanpage_content": 6,
+      "photography_video_production": 2,
+      "marketing_automation": 2,
+      "chatbot_ai": 1,
+      "brand_general": 1,
+      "spa_vertical_promo": 1
+    },
+    "finding": "Coverage is heavily skewed to Website/UX/CRO/Analytics (≈50% of all posts) despite that being only 1 of 11 Money Pages. Chatbot AI and Automation — 2 of the 5 areas this audit was asked to cover — have essentially no informational (TOFU/MOFU) support: 1 post and 2 posts respectively, and in both cases the post is itself a service-pitch duplicate of the Money Page rather than genuine supporting content.",
+    "orphan_risk": "None of the 29 posts are structurally orphaned (global /news index + nav links to /news), but 6 of them are 'service pitch' posts (title starts with 'Dịch vụ ...') that duplicate a Money Page's own primary keyword and framing rather than supporting it â€” see cannibalization_findings."
+  },
+
+  "cannibalization_findings": [
+    {
+      "id": "CANN-01",
+      "severity": "HIGH",
+      "cluster": "F. Product Photography & Video Production",
+      "competing_urls": ["/photography-video", "/product-photography", "/media-pricing", "news:\"Dịch vụ quay chụp sản phẩm chuyên nghiệp\"", "news:\"Quay Video, chụp hình làm nội dung chuyên nghiệp...\""],
+      "keyword_overlap": "quay chụp sản phẩm / quay video sản phẩm / chụp ảnh sản phẩm / sản xuất video quảng cáo / bảng giá quay chụp",
+      "root_cause": "/product-photography's own live title+description ('Quay chụp sản phẩm và thương hiệu' / 'Quay phim, chụp ảnh sản phẩm, không gian...') already claims video production language that belongs to /photography-video ('sản xuất video quảng cáo'). /media-pricing then adds a third URL selling 17 packages across 8 groups spanning both photo AND video ('Bảng giá quay chụp & sản xuất Media'). Two live blog posts duplicate this again at the informational layer: post #1 is a generic 'video + photo' overview, post #13 ('Dịch vụ quay chụp sản phẩm chuyên nghiệp') near-exactly restates /product-photography's own primary keyword with a 'Dịch vụ' (service-pitch) framing — i.e. a blog post competing head-to-head with its own Money Page.",
+      "serp_evidence": "Real WebSearch sampling (2026-08-24) shows the Vietnamese market itself treats 'quay video sản phẩm' and 'chụp ảnh sản phẩm' as two distinct SERP clusters (different ranking domains: mona.media/dich-vu-quay-video-san-pham, viet-power.vn, sanxuattvc.vn for video vs. mona.media/chup-anh-san-pham, sikido.vn, sotagroup.vn for photo) — only mona.media ranks for both, via two SEPARATE URLs. The combined query 'quay chụp sản phẩm và thương hiệu bảng giá' pulls a third, distinct set (M&M Communications combo packages, Haravan/DU Agency bundle listing) — confirming a genuine 'combo/bundle' search intent exists, but it is its OWN cluster, not a merge of the other two.",
+      "recommendation": "Do not merge /photography-video and /product-photography (real, distinct SERP intents per the sampling above). Instead: (1) re-scope /product-photography's own title/H1/meta to drop video-production language and own only 'chụp ảnh sản phẩm và thương hiệu' (photography-only), (2) keep /media-pricing strictly as the shared Level-4 commercial pricing hub that both Money Pages link OUT to (not a keyword-owning page itself — target only 'bảng giá quay chụp' + 'bảng giá sản xuất video', which is genuinely distinct commercial-investigation intent), (3) rewrite blog post #13 to a process/checklist angle ('Quy trình chụp ảnh sản phẩm chuyên nghiệp: từng bước') instead of a service pitch, or fold it into /product-photography as on-page content and 410/redirect the post, (4) retitle blog post #1 as an explicit comparison spoke ('Chụp ảnh hay quay video sản phẩm: nên chọn gì?') that legitimately links to both pillars instead of vaguely covering both."
+    },
+    {
+      "id": "CANN-02",
+      "severity": "HIGH",
+      "cluster": "C. Chatbot AI",
+      "competing_urls": ["/chatbox-ai", "news:\"Dịch vụ Chatbot AI thông minh cho doanh nghiệp\""],
+      "keyword_overlap": "chatbot ai cho doanh nghiệp / chatbot ai cho fanpage",
+      "root_cause": "The only blog post in this topic space is titled and framed exactly like a second Money Page ('Dịch vụ Chatbot AI thông minh cho doanh nghiệp'), duplicating /chatbox-ai's own primary keyword ('chatbot ai cho fanpage') with no differentiated informational angle.",
+      "recommendation": "Rewrite as a genuine TOFU/MOFU spoke (e.g. 'Chatbot AI Zalo OA vs Fanpage: nên chọn nền tảng nào?' or 'Chatbot AI trả lời sai bao nhiêu % thì cần con người tiếp quản?') that links down-funnel to /chatbox-ai rather than restating it."
+    },
+    {
+      "id": "CANN-03",
+      "severity": "HIGH",
+      "cluster": "D. Digital Marketing & Ads",
+      "competing_urls": ["/digital-marketing", "news:\"Dịch vụ chạy Ads đa kênh: Xây hệ thống tạo khách hàng, không chỉ tạo lượt click\""],
+      "keyword_overlap": "dịch vụ chạy quảng cáo đa nền tảng / dịch vụ chạy ads đa kênh",
+      "root_cause": "Service-pitch blog post restates /digital-marketing's owned keyword and framing almost verbatim.",
+      "recommendation": "Retarget the post to a specific fanned-out sub-query per Playbook §23 query fan-out (e.g. budget allocation across Google/Meta/TikTok, or a channel-selection framework) and link down-funnel to /digital-marketing."
+    },
+    {
+      "id": "CANN-04",
+      "severity": "MEDIUM",
+      "cluster": "D. Digital Marketing & Ads",
+      "competing_urls": ["/fanpage-management", "news:\"Dịch vụ xây dựng Facebook Fanpage chuyên nghiệp: Không chỉ đẹp mà còn phải tạo ra khách hàng\""],
+      "keyword_overlap": "xây dựng fanpage chuyên nghiệp",
+      "root_cause": "Same service-pitch pattern as CANN-02/03, one level down in priority since /fanpage-management is a lower commercial-priority Money Page per Playbook §8.",
+      "recommendation": "Same fix pattern — retarget to a specific angle (fanpage content pillar structure, or a 'trước/sau' fanpage audit format) rather than restating the service."
+    },
+    {
+      "id": "CANN-05",
+      "severity": "LOW",
+      "cluster": "A. Website Design & CRO",
+      "competing_urls": ["/web-development", "news:\"Dịch vụ thiết kế website chuẩn UI/UX và SEO: Đẹp, dễ dùng và tạo khách hàng\""],
+      "keyword_overlap": "thiết kế website chuẩn seo",
+      "root_cause": "Same service-pitch pattern, but severity is lower here because this cluster otherwise has 9+ genuinely differentiated informational posts (Core Web Vitals, URL structure, information architecture, hero sections, search-intent checklist) that already interlink well and dilute the single duplicate post's practical ranking impact.",
+      "recommendation": "Lowest-priority fix of the five — retarget to a pricing/'what's included' commercial-investigation angle (Level 4 per Playbook §6) distinct from the Money Page's own transactional framing."
+    },
+    {
+      "id": "CANN-06",
+      "severity": "WATCH",
+      "cluster": "D. Digital Marketing & Ads",
+      "competing_urls": ["news:\"Dịch vụ Marketing Spa trọn gói\"", "/digital-marketing", "/fanpage-management"],
+      "keyword_overlap": "marketing spa trọn gói (vertical-specific, no exact Money Page match today)",
+      "root_cause": "Not a direct duplicate — no Money Page targets the Spa vertical specifically — but it sits ambiguously between /digital-marketing and /fanpage-management with no relatedServices-style link to either.",
+      "recommendation": "Not urgent. If Unitrux wants a repeatable vertical-landing pattern (Spa, F&B, etc.), formalize it as an intentional Level-4 vertical spoke that links to both parent Money Pages; otherwise leave as-is but add the two missing internal links."
+    }
+  ],
+
+  "serp_overlap_samples": [
+    {
+      "pair": ["quay video sản phẩm giá bao nhiêu", "bảng giá chụp ảnh sản phẩm quay video quảng cáo"],
+      "shared_domains_observed": ["mona.media"],
+      "distinct_domains": {
+        "video_query_only": ["viet-power.vn", "sanxuattvc.vn", "mediawinwin.vn/dich-vu-quay-video-san-pham", "producer.vn", "shopvideo.vn"],
+        "photo_query_only": ["sikido.vn", "sotagroup.vn", "mediawinwin.vn/bang-bao-gia-chup-anh-san-pham", "techfilm.vn", "adsnetwork.com.vn"]
+      },
+      "estimated_overlap_score": "1-2 of 10 (SEPARATE per methodology thresholds)",
+      "implication": "Confirms /photography-video and /product-photography should stay separate Money Pages targeting separate primary keywords — the cannibalization problem is Unitrux's own on-page keyword bleed (CANN-01), not a false cluster merge."
+    },
+    {
+      "pair": ["quay chụp sản phẩm và thương hiệu bảng giá", "quay video sản phẩm giá bao nhiêu"],
+      "shared_domains_observed": ["mona.media", "viet-power.vn", "mediawinwin.vn"],
+      "estimated_overlap_score": "3-4 of 10 (INTERLINK-to-SAME-CLUSTER boundary)",
+      "implication": "This is exactly the /media-pricing keyword space — a genuine commercial 'combo' intent that partially overlaps the video-only query. Confirms /media-pricing should interlink both pillars rather than compete for either one's exact-match keyword."
+    },
+    {
+      "pair": ["thiết kế website chuẩn seo giá bao nhiêu", "marketing automation là gì quy trình triển khai"],
+      "shared_domains_observed": [],
+      "estimated_overlap_score": "0 of 10 (SEPARATE)",
+      "implication": "Confirms Website/SEO and Automation are correctly modeled as separate clusters/pillars."
+    },
+    {
+      "pair": ["dịch vụ chatbot ai cho doanh nghiệp", "chatbot ai zalo oa cho fanpage giá"],
+      "shared_domains_observed": ["fpt.ai (fpt digital / fpt.ai overlap)"],
+      "estimated_overlap_score": "2-3 of 10 (INTERLINK)",
+      "implication": "'Chatbot AI cho doanh nghiệp' (broad/pillar) and 'chatbot AI Zalo OA' (platform-specific spoke) are related but distinct enough to be separate spokes under one pillar, not the same post."
+    }
+  ],
+
+  "clusters": [
+    {
+      "id": "A",
+      "name_vi": "Thiết kế Website & CRO",
+      "name_en": "Website Design & CRO",
+      "requested_area": "website/SEO",
+      "priority_rank": 6,
+      "pillar": {
+        "url": "/web-development",
+        "primary_keyword": "thiết kế website chuẩn seo",
+        "intent": "Transactional",
+        "template": "Money Page (ServiceLanding)",
+        "word_count_target": "N/A — existing Money Page, not being rebuilt",
+        "status": "existing"
+      },
+      "spokes": [
+        {
+          "title": "Core Web Vitals Và Chuyển Đổi",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "word_count_target": "1200-1800 (existing, not re-scoped)",
+          "link_up_to_pillar": "mandatory (verify present)"
+        },
+        {
+          "title": "Cấu Trúc URL & Internal Link Chuẩn SEO",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "link_up_to_pillar": "mandatory (verify present)"
+        },
+        {
+          "title": "Kiến Trúc Thông Tin Cho Website Agency",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "link_up_to_pillar": "mandatory (verify present)"
+        },
+        {
+          "title": "Hero Website Tạo Niềm Tin Trong 3 Giây",
+          "status": "existing",
+          "intent": "Commercial",
+          "template": "Supporting Article (Level 5)",
+          "link_up_to_pillar": "mandatory (verify present)"
+        }
+      ],
+      "flagged_for_rewrite": ["CANN-05: 'Dịch vụ thiết kế website chuẩn UI/UX và SEO'"],
+      "cross_cluster_optional_links": ["B (SEO/AEO/GEO pillar /seo-services)"]
+    },
+
+    {
+      "id": "B",
+      "name_vi": "SEO / AEO / GEO",
+      "name_en": "SEO / AEO / GEO",
+      "requested_area": "website/SEO",
+      "priority_rank": 5,
+      "pillar": {
+        "url": "/seo-services",
+        "primary_keyword": "dịch vụ seo/aeo/geo",
+        "intent": "Commercial",
+        "template": "Money Page (ServiceLanding)",
+        "status": "existing"
+      },
+      "spokes": [
+        {
+          "title": "Phân Biệt GEO Và SEO: 7 Lỗi Mất Dữ Liệu & Chiến Lược Tối Ưu",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)"
+        },
+        {
+          "title": "Checklist Search Intent Khách Mua Website A-Z (2026)",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)"
+        },
+        {
+          "title": "Bản Đồ Sự Kiện GA4 Cho Website Agency: 7 Lỗi Âm Thầm Khiến Bạn Mất Dữ Liệu Và Khách Hàng",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5) — technical/analytics angle, legitimately adjacent to AEO/GEO measurement"
+        },
+        {
+          "title": "Làm Chủ Google Tag Manager: Bộ Khung Triển Khai, Phân Quyền Và Đo Lường Hiệu Quả",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)"
+        }
+      ],
+      "flagged_for_rewrite": [],
+      "note": "This cluster currently has NO structured relatedServices-style link-out to /seo-services in the CMS (Playbook §7/§13: /news has no cluster/relatedService field at all). Highest-leverage low-cost fix in this whole plan: manually add 'link up to /seo-services' + 'link sideways to peers' to these 4 already-published articles.",
+      "cross_cluster_optional_links": ["A (Website Design pillar /web-development)"]
+    },
+
+    {
+      "id": "C",
+      "name_vi": "Chatbot AI",
+      "name_en": "Chatbot AI",
+      "requested_area": "chatbot AI",
+      "priority_rank": 2,
+      "pillar": {
+        "url": "/chatbox-ai",
+        "primary_keyword": "chatbot ai cho fanpage",
+        "intent": "Transactional",
+        "template": "Money Page (ThemedServiceDetail type=chatbox)",
+        "status": "existing"
+      },
+      "spokes": [
+        {
+          "title": "Chatbot AI Zalo OA vs Fanpage Facebook: Nên Chọn Nền Tảng Nào Trước?",
+          "status": "NEW — fills real gap",
+          "intent": "Commercial",
+          "template": "Supporting Article (Level 5/4 hybrid — comparison)",
+          "word_count_target": "1200-1800",
+          "primary_keyword": "chatbot ai zalo oa vs fanpage",
+          "serp_note": "sampled 2026-08-24 — moderate overlap (2-3/10) with the broad pillar query, i.e. interlink not merge"
+        },
+        {
+          "title": "Chatbot AI Trả Lời Sai Bao Nhiêu % Thì Cần Con Người Tiếp Quản? (Human Handoff)",
+          "status": "NEW — fills real gap; reuses the site's own existing AI+human hybrid angle already explored informally in posts #8/#9",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "word_count_target": "1200-1800"
+        },
+        {
+          "title": "Chi Phí Triển Khai Chatbot AI Cho Doanh Nghiệp Vừa Và Nhỏ: Các Yếu Tố Ảnh Hưởng Giá",
+          "status": "NEW — fills real gap; also the correct home for CANN-02's rewrite direction",
+          "intent": "Commercial",
+          "template": "Supporting Article (Level 4)",
+          "word_count_target": "1200-1800"
+        }
+      ],
+      "flagged_for_rewrite": ["CANN-02: 'Dịch vụ Chatbot AI thông minh cho doanh nghiệp' — either merge its useful content into the new pricing/cost spoke above, or fully retarget away from the pillar's exact keyword"],
+      "cross_cluster_optional_links": ["D (Digital Marketing — chatbot as a lead-capture channel)"]
+    },
+
+    {
+      "id": "D",
+      "name_vi": "Marketing & Quảng cáo đa nền tảng",
+      "name_en": "Digital Marketing & Ads",
+      "requested_area": "digital marketing/ads",
+      "priority_rank": 4,
+      "pillar": {
+        "url": "/digital-marketing",
+        "primary_keyword": "dịch vụ chạy quảng cáo đa nền tảng",
+        "intent": "Transactional",
+        "template": "Money Page (DigitalMarketingLanding)",
+        "status": "existing"
+      },
+      "co_pillars": [
+        { "url": "/fanpage-management", "primary_keyword": "xây dựng fanpage chuyên nghiệp", "intent": "Commercial" },
+        { "url": "/content-creation", "primary_keyword": "sáng tạo nội dung đa kênh", "intent": "Commercial" }
+      ],
+      "spokes": [
+        {
+          "title": "Tốn Hàng Trăm Triệu Tiền Marketing Nhưng Không Ra Khách? Lỗi Ở Thông Điệp Hay Landing Page?",
+          "status": "existing",
+          "intent": "Informational/Commercial",
+          "template": "Supporting Article (Level 5)"
+        },
+        {
+          "title": "Sáng Tạo Nội Dung Đa Kênh: Quy Trình Triển Khai Và Cách Đo Hiệu Quả",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "link_up_to_pillar": "/content-creation (mandatory) + /digital-marketing (recommended)"
+        },
+        {
+          "title": "Đo Lường Ngọn Và Đo Lường Gốc: SME Nên Đo Gì Để Tạo Doanh Thu?",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)"
+        },
+        {
+          "title": "[Case Study Thực Tế] Cách Vận Hành Buổi Duyệt Chỉ Số Tuần Gọn Nhẹ Cho Mảng Dịch Vụ",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Case Study (Level 6)"
+        }
+      ],
+      "flagged_for_rewrite": ["CANN-03: 'Dịch vụ chạy Ads đa kênh...'", "CANN-04: 'Dịch vụ xây dựng Facebook Fanpage chuyên nghiệp...'"],
+      "watch": ["CANN-06: 'Dịch vụ Marketing Spa trọn gói' — orphaned vertical, add links to /digital-marketing and /fanpage-management"],
+      "cross_cluster_optional_links": ["C (Chatbot AI as an ads lead-capture channel)"]
+    },
+
+    {
+      "id": "E",
+      "name_vi": "Tự động hóa Marketing",
+      "name_en": "Marketing Automation",
+      "requested_area": "automation",
+      "priority_rank": 3,
+      "pillar": {
+        "url": "/automation",
+        "primary_keyword": "tự động hóa quy trình doanh nghiệp",
+        "intent": "Commercial",
+        "template": "Money Page (AutomationService)",
+        "status": "existing",
+        "schema_gap": "Playbook §20 confirms /automation currently emits ZERO FAQPage nodes — recommend adding real FAQs before/alongside this cluster build."
+      },
+      "spokes": [
+        {
+          "title": "Marketing Automation Là Gì? Quy Trình Triển Khai, Cách Đo Hiệu Quả Và Những Sai Lầm Thường Gặp",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "note": "Only genuinely dedicated automation post on the site today; verify it links up to /automation."
+        },
+        {
+          "title": "Quy Trình Phân Loại Data Chất Lượng Cao: Tối Ưu Hóa Chuyển Đổi, Bùng Nổ Doanh Thu",
+          "status": "existing",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5) — lead-scoring/data-hygiene angle, legitimately CRM-automation-adjacent"
+        },
+        {
+          "title": "Chi Phí Triển Khai Marketing Automation / CRM Tại Việt Nam: Các Yếu Tố Ảnh Hưởng Giá",
+          "status": "NEW — fills real gap (SERP sampling shows this exact commercial-investigation query returns a clean, distinct result set with real VND pricing ranges quoted by competitors — a genuine ranking opportunity)",
+          "intent": "Commercial",
+          "template": "Supporting Article (Level 4)",
+          "word_count_target": "1200-1800"
+        },
+        {
+          "title": "5 Dấu Hiệu Doanh Nghiệp Nhỏ Cần Tự Động Hóa Marketing Ngay (Không Cần Đội Ngũ Lớn)",
+          "status": "NEW — fills real gap",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "word_count_target": "1200-1800"
+        }
+      ],
+      "flagged_for_rewrite": [],
+      "cross_cluster_optional_links": ["C (Chatbot AI — automation + AI overlap)", "A (Website Design — automation triggers on form submissions)"]
+    },
+
+    {
+      "id": "F",
+      "name_vi": "Quay chụp sản phẩm & Sản xuất Video",
+      "name_en": "Product Photography & Video Production",
+      "requested_area": "product photography/video",
+      "priority_rank": 1,
+      "note": "PRIORITY 1 — this is the cluster with the cannibalization risk explicitly flagged by the audit request (CANN-01). Structured as two co-pillars sharing one commercial pricing hub, per the on-page-scope fix recommended in CANN-01.",
+      "co_pillars": [
+        {
+          "url": "/photography-video",
+          "primary_keyword": "sản xuất video quảng cáo",
+          "secondary_keyword": "quay video sản phẩm",
+          "intent": "Transactional",
+          "template": "Money Page (PhotographyVideoService) — only page on the site with live VideoObject schema (9 real client videos)",
+          "status": "existing",
+          "scope_fix_needed": "none — this page's own copy is already correctly video-scoped"
+        },
+        {
+          "url": "/product-photography",
+          "primary_keyword": "chụp ảnh sản phẩm và thương hiệu",
+          "intent": "Transactional",
+          "template": "Money Page (ServiceLanding serviceKey=product-photography)",
+          "status": "existing",
+          "scope_fix_needed": "YES — retitle/re-scope away from video-production language ('Quay chụp sản phẩm và thương hiệu' → photography-only framing) per CANN-01"
+        }
+      ],
+      "commercial_hub": {
+        "url": "/media-pricing",
+        "primary_keyword": "bảng giá quay chụp sản phẩm và sản xuất media",
+        "intent": "Commercial",
+        "template": "Level-4 Commercial/Pricing Collection (17 packages / 8 groups)",
+        "status": "existing (recently added — not yet in SEO-AEO-PLAYBOOK.md's audited route table, needs a playbook update per its own §33 changelog rule)",
+        "role": "Shared pricing utility linked FROM both co-pillars, does not compete with either for its own transactional keyword — must not duplicate either pillar's H1/title framing 1:1."
+      },
+      "spokes": [
+        {
+          "title": "Chụp Ảnh Hay Quay Video Sản Phẩm: Nên Chọn Gì Cho Từng Mục Tiêu?",
+          "status": "REWRITE of existing post #1 ('Quay Video, chụp hình làm nội dung chuyên nghiệp...')",
+          "intent": "Commercial",
+          "template": "Comparison Supporting Article (Level 5/4 hybrid)",
+          "link_up_to_pillar": "mandatory — BOTH /photography-video and /product-photography",
+          "serp_note": "The generic combined query sampled 2026-08-24 pulled a genuine 'combo/bundle' competitor set distinct from either single-service query — this comparison framing legitimately owns that space instead of vaguely restating both services."
+        },
+        {
+          "title": "Quy Trình Chụp Ảnh Sản Phẩm Chuyên Nghiệp: Từng Bước, Từ Chuẩn Bị Đến Giao File",
+          "status": "REWRITE of existing post #13 ('Dịch vụ quay chụp sản phẩm chuyên nghiệp')",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "link_up_to_pillar": "/product-photography (mandatory)"
+        },
+        {
+          "title": "Quay Video Sản Phẩm Cần Chuẩn Bị Gì? Quy Trình Và Chi Phí Thực Tế",
+          "status": "READY TO PUBLISH — already exists as an approved CMS-ready brief at docs/seo/PUBLISH-READY/quay-video-san-pham.md, not yet live per that file. Publish this first; it already correctly link-DOWN-FUNNELs to /photography-video.",
+          "intent": "Commercial",
+          "template": "Supporting Article (Level 5), pairs with the /media-pricing hub for the cost portion",
+          "link_up_to_pillar": "/photography-video (mandatory, already specified in the brief)"
+        },
+        {
+          "title": "Ánh Sáng, Phông Nền Và Concept Chụp Ảnh Sản Phẩm: Hướng Dẫn Cho Doanh Nghiệp SME",
+          "status": "NEW — fills real gap; owns the photography-only entity terms already listed in Playbook §24 (lighting, composition, background, lifestyle photography) that currently have zero dedicated content",
+          "intent": "Informational",
+          "template": "Supporting Article (Level 5)",
+          "link_up_to_pillar": "/product-photography (mandatory)"
+        }
+      ],
+      "flagged_for_rewrite": ["CANN-01 (all sub-items)"],
+      "cross_cluster_optional_links": ["D (Digital Marketing — photo/video assets feed ad creative)"]
+    }
+  ],
+
+  "internal_link_matrix": {
+    "legend": "M = mandatory (spoke<->pillar, bidirectional), R = recommended (spoke<->spoke, same cluster), O = optional (cross-cluster)",
+    "cluster_A_web_development": {
+      "mandatory": [
+        ["Core Web Vitals Và Chuyển Đổi", "/web-development"],
+        ["Cấu Trúc URL & Internal Link Chuẩn SEO", "/web-development"],
+        ["Kiến Trúc Thông Tin Cho Website Agency", "/web-development"],
+        ["Hero Website Tạo Niềm Tin Trong 3 Giây", "/web-development"]
+      ],
+      "recommended_spoke_to_spoke": [
+        ["Core Web Vitals Và Chuyển Đổi", "Cấu Trúc URL & Internal Link Chuẩn SEO"],
+        ["Kiến Trúc Thông Tin Cho Website Agency", "Hero Website Tạo Niềm Tin Trong 3 Giây"]
+      ],
+      "optional_cross_cluster": [["/web-development", "/seo-services"]]
+    },
+    "cluster_B_seo_services": {
+      "mandatory": [
+        ["Phân Biệt GEO Và SEO", "/seo-services"],
+        ["Checklist Search Intent Khách Mua Website A-Z", "/seo-services"],
+        ["Bản Đồ Sự Kiện GA4 Cho Website Agency", "/seo-services"],
+        ["Làm Chủ Google Tag Manager", "/seo-services"]
+      ],
+      "recommended_spoke_to_spoke": [
+        ["Bản Đồ Sự Kiện GA4 Cho Website Agency", "Làm Chủ Google Tag Manager"],
+        ["Phân Biệt GEO Và SEO", "Checklist Search Intent Khách Mua Website A-Z"]
+      ],
+      "optional_cross_cluster": [["/seo-services", "/web-development"]]
+    },
+    "cluster_C_chatbox_ai": {
+      "mandatory": [
+        ["Chatbot AI Zalo OA vs Fanpage Facebook", "/chatbox-ai"],
+        ["Chatbot AI Trả Lời Sai Bao Nhiêu % Thì Cần Con Người Tiếp Quản", "/chatbox-ai"],
+        ["Chi Phí Triển Khai Chatbot AI Cho SME", "/chatbox-ai"]
+      ],
+      "recommended_spoke_to_spoke": [
+        ["Chatbot AI Zalo OA vs Fanpage Facebook", "Chi Phí Triển Khai Chatbot AI Cho SME"],
+        ["Chatbot AI Trả Lời Sai Bao Nhiêu %", "Chi Phí Triển Khai Chatbot AI Cho SME"]
+      ],
+      "optional_cross_cluster": [["/chatbox-ai", "/digital-marketing"], ["/chatbox-ai", "/automation"]]
+    },
+    "cluster_D_digital_marketing": {
+      "mandatory": [
+        ["Tốn Hàng Trăm Triệu Tiền Marketing Nhưng Không Ra Khách", "/digital-marketing"],
+        ["Sáng Tạo Nội Dung Đa Kênh", "/content-creation"],
+        ["Đo Lường Ngọn Và Đo Lường Gốc", "/digital-marketing"],
+        ["[Case Study] Vận Hành Buổi Duyệt Chỉ Số Tuần", "/digital-marketing"]
+      ],
+      "recommended_spoke_to_spoke": [
+        ["Sáng Tạo Nội Dung Đa Kênh", "Tốn Hàng Trăm Triệu Tiền Marketing Nhưng Không Ra Khách"],
+        ["Đo Lường Ngọn Và Đo Lường Gốc", "[Case Study] Vận Hành Buổi Duyệt Chỉ Số Tuần"]
+      ],
+      "optional_cross_cluster": [["/digital-marketing", "/fanpage-management"], ["/digital-marketing", "/chatbox-ai"]]
+    },
+    "cluster_E_automation": {
+      "mandatory": [
+        ["Marketing Automation Là Gì", "/automation"],
+        ["Quy Trình Phân Loại Data Chất Lượng Cao", "/automation"],
+        ["Chi Phí Triển Khai Marketing Automation/CRM Tại Việt Nam", "/automation"],
+        ["5 Dấu Hiệu Doanh Nghiệp Nhỏ Cần Tự Động Hóa Marketing Ngay", "/automation"]
+      ],
+      "recommended_spoke_to_spoke": [
+        ["Marketing Automation Là Gì", "5 Dấu Hiệu Doanh Nghiệp Nhỏ Cần Tự Động Hóa"],
+        ["Quy Trình Phân Loại Data Chất Lượng Cao", "Chi Phí Triển Khai Marketing Automation/CRM"]
+      ],
+      "optional_cross_cluster": [["/automation", "/chatbox-ai"], ["/automation", "/web-development"]]
+    },
+    "cluster_F_photography_video": {
+      "mandatory": [
+        ["Chụp Ảnh Hay Quay Video Sản Phẩm: Nên Chọn Gì", "/photography-video"],
+        ["Chụp Ảnh Hay Quay Video Sản Phẩm: Nên Chọn Gì", "/product-photography"],
+        ["Quy Trình Chụp Ảnh Sản Phẩm Chuyên Nghiệp", "/product-photography"],
+        ["Quay Video Sản Phẩm Cần Chuẩn Bị Gì", "/photography-video"],
+        ["Ánh Sáng, Phông Nền Và Concept Chụp Ảnh Sản Phẩm", "/product-photography"],
+        ["/photography-video", "/media-pricing"],
+        ["/product-photography", "/media-pricing"]
+      ],
+      "recommended_spoke_to_spoke": [
+        ["Chụp Ảnh Hay Quay Video Sản Phẩm: Nên Chọn Gì", "Quay Video Sản Phẩm Cần Chuẩn Bị Gì"],
+        ["Chụp Ảnh Hay Quay Video Sản Phẩm: Nên Chọn Gì", "Quy Trình Chụp Ảnh Sản Phẩm Chuyên Nghiệp"],
+        ["Quy Trình Chụp Ảnh Sản Phẩm Chuyên Nghiệp", "Ánh Sáng, Phông Nền Và Concept Chụp Ảnh Sản Phẩm"]
+      ],
+      "optional_cross_cluster": [["/product-photography", "/digital-marketing"], ["/photography-video", "/content-creation"]]
+    },
+    "orphan_check": "PASS — every spoke above has >=3 incoming links once mandatory+recommended are implemented (pillar link + 1-2 sideways spoke links); every co-pillar links to /media-pricing and receives links from all its own spokes."
+  },
+
+  "template_selection": {
+    "Money Page": "ServiceLanding / bespoke component (existing, no template change proposed)",
+    "Commercial/Pricing Supporting Article": "CMS news article, includes a pricing table or cost-driver breakdown, Level 4",
+    "Informational Supporting Article": "CMS news article, how-to/checklist/definition shape, Level 5, Question→Direct Answer→Explanation→Evidence per Playbook §20 AEO standard",
+    "Comparison Supporting Article": "CMS news article, side-by-side framing, links to 2 pillars (used only in Cluster F and Cluster C's Zalo-vs-Fanpage spoke)",
+    "Case Study": "Level 6, Context→Problem→Objective→Approach→Result per Playbook §7 — only used where Unitrux has a real project to reference (do not fabricate per §18 E-E-A-T)"
+  },
+
+  "pre_delivery_validation": {
+    "no_duplicate_primary_keywords": "PASS after CANN-01..05 rewrites are applied; FAIL today (6 posts duplicate a Money Page keyword)",
+    "every_spoke_3plus_incoming_links": "PASS once link matrix above is implemented",
+    "every_spoke_links_to_pillar": "PASS by design (mandatory column)",
+    "every_pillar_links_to_spokes": "NEEDS VERIFICATION IN CMS — Playbook §7/§13 confirms /news has no relatedService/cluster field today, so pillar→spoke links back are not structurally enforced anywhere in code; must be added manually per article, or (RECOMMENDATION carried over from Playbook §26/§33) add a relatedService field to the news CMS schema",
+    "no_orphan_pages": "PASS — /news is globally linked, no route is unreachable",
+    "template_matches_intent": "PASS — see template_selection",
+    "word_count_targets": "Pillar 2500-4000 (existing Money Pages not being resized in this pass) / Spoke 1200-1800 (applied to all NEW and REWRITE spokes above)",
+    "cluster_count_and_size": "6 clusters total across the 5 requested areas (Website/SEO split into 2 pillars — /web-development and /seo-services — because the codebase already treats them as 2 distinct Money Pages; Photography/Video kept as 1 cluster with 2 co-pillars to directly address the cannibalization ask). Each cluster has 3-4 spokes, within the 2-4 spec.",
+    "serp_overlap_supports_grouping": "Supported for the 4 sampled pairs (see serp_overlap_samples); remaining pairs are grounded in the existing, code-verified keyword ownership map (Playbook §8) rather than fresh scraping — flagged as a follow-up if GSC/keyword-tool access becomes available (Playbook §30/§50)."
+  },
+
+  "priority_order": [
+    { "rank": 1, "cluster": "F. Product Photography & Video Production", "reason": "Explicit cannibalization ask (3 Money Pages + 2 blog posts overlapping); real production assets (9 VideoObject videos, BTS gallery) already exist to support new spokes with zero net-new photography needed; approved-but-unpublished brief already sitting in the repo ready to ship." },
+    { "rank": 2, "cluster": "C. Chatbot AI", "reason": "Zero genuine informational support today, single existing post is itself cannibalizing; high commercial-intent service line with no funnel above the Money Page." },
+    { "rank": 3, "cluster": "E. Marketing Automation", "reason": "Thin support (1 dedicated + 1 adjacent post); Money Page has a known FAQPage schema gap (§20) that should be fixed alongside the content build; real Vietnamese competitor pricing data found during sampling (300k-2M VND/month) gives a concrete, differentiated pricing spoke opportunity." },
+    { "rank": 4, "cluster": "D. Digital Marketing & Ads", "reason": "2 cannibalizing service-pitch posts to fix; otherwise reasonably well-supported (4 genuine spokes already live) — mostly a cleanup + relink pass, not new-content-heavy." },
+    { "rank": 5, "cluster": "B. SEO / AEO / GEO", "reason": "Content already exists and is strong; the only real gap is missing structured link-up to /seo-services (a manual/CMS-field fix, not new writing)." },
+    { "rank": 6, "cluster": "A. Website Design & CRO", "reason": "Best-supported cluster on the site already (9+ posts); only action item is the single CANN-05 rewrite, lowest severity of the six findings." }
+  ]
+}

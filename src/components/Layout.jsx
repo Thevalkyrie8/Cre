@@ -1,18 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import ChatBox from './ChatBox';
+import useMasterInteractions from '../hooks/useMasterInteractions';
+import SEO from './SEO';
+import AnalyticsTracker from './AnalyticsTracker';
+
+const ChatBox = lazy(() => import('./ChatBox'));
+
+const PRIMARY_SERVICE_PATHS = [
+  '/digital-solutions',
+  '/fanpage-management',
+  '/chatbox-ai',
+  '/content-creation',
+  '/digital-marketing',
+  '/automation',
+  '/seo-services',
+  '/photography-video',
+  '/product-photography',
+  '/web-development',
+  '/ecommerce',
+];
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const currentPath = location.pathname.replace(/\/+$/, '') || '/';
+  const isActivePath = (path) => (
+    path === '/'
+      ? currentPath === '/'
+      : currentPath === path
+        || currentPath.startsWith(`${path}/`)
+        || (path === '/services' && PRIMARY_SERVICE_PATHS.some((servicePath) => currentPath === servicePath))
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('vi');
   const [theme, setTheme] = useState('dark');
+  const navigationRef = useRef(null);
+  useMasterInteractions(`${location.pathname}:${theme}`);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const closeMenuOnEscape = (event) => {
+      if (event.key === 'Escape') setIsMenuOpen(false);
+    };
+    const closeMenuOutside = (event) => {
+      if (navigationRef.current && !navigationRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    const closeMenuOnDesktop = () => {
+      if (window.innerWidth > 1240) setIsMenuOpen(false);
+    };
+
+    document.addEventListener('keydown', closeMenuOnEscape);
+    document.addEventListener('pointerdown', closeMenuOutside);
+    window.addEventListener('resize', closeMenuOnDesktop);
+
+    return () => {
+      document.removeEventListener('keydown', closeMenuOnEscape);
+      document.removeEventListener('pointerdown', closeMenuOutside);
+      window.removeEventListener('resize', closeMenuOnDesktop);
+    };
+  }, []);
 
   useEffect(() => {
     try {
       // Load saved language and theme
-      const savedLanguage = localStorage.getItem('language') || 'en';
+      const savedLanguage = localStorage.getItem('language') || 'vi';
       const savedTheme = localStorage.getItem('theme') || 'dark';
       setLanguage(savedLanguage);
       setTheme(savedTheme);
@@ -29,7 +85,7 @@ const Layout = ({ children }) => {
     } catch (error) {
       console.error('Error loading saved preferences:', error);
       // Set defaults if localStorage fails
-      setLanguage('en');
+      setLanguage('vi');
       setTheme('dark');
     }
   }, []);
@@ -43,9 +99,27 @@ const Layout = ({ children }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
   // Apply language when language state changes
   useEffect(() => {
     applyLanguage(language);
+
+    const contentRoot = document.querySelector('.engine-main');
+    if (!contentRoot) return undefined;
+
+    const observer = new MutationObserver(() => {
+      applyLanguage(language);
+    });
+
+    observer.observe(contentRoot, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
   }, [language, location.pathname]);
 
   const toggleLanguage = () => {
@@ -62,42 +136,37 @@ const Layout = ({ children }) => {
   };
 
   const applyLanguage = (lang) => {
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
+    if (document.documentElement.lang !== lang) {
       document.documentElement.lang = lang;
+    }
 
-      // Translate page content
-      const elements = document.querySelectorAll('[data-vi], [data-en]');
-      elements.forEach(element => {
-        const viText = element.getAttribute('data-vi');
-        const enText = element.getAttribute('data-en');
-        const defaultLang = element.getAttribute('data-default') || 'en';
-        
-        if (lang === 'vi' && viText) {
-          element.textContent = viText;
-        } else if (lang === 'en' && enText) {
-          element.textContent = enText;
-        } else if (defaultLang === 'vi' && viText) {
-          element.textContent = viText;
-        } else if (defaultLang === 'en' && enText) {
-          element.textContent = enText;
-        } else if (enText) {
-          // Fallback to English if no default is set
-          element.textContent = enText;
+    const elements = document.querySelectorAll('[data-vi], [data-en]');
+    elements.forEach(element => {
+      const viText = element.getAttribute('data-vi');
+      const enText = element.getAttribute('data-en');
+      const defaultLang = element.getAttribute('data-default') || 'en';
+      const nextText = lang === 'vi'
+        ? viText || (defaultLang === 'en' ? enText : viText)
+        : enText || (defaultLang === 'vi' ? viText : enText);
+
+      if (nextText && element.textContent !== nextText) {
+        element.textContent = nextText;
+      }
+    });
+
+    const localizedAttributes = [
+      ['placeholder', 'data-placeholder-vi', 'data-placeholder-en'],
+      ['aria-label', 'data-aria-label-vi', 'data-aria-label-en'],
+    ];
+
+    localizedAttributes.forEach(([attribute, viAttribute, enAttribute]) => {
+      document.querySelectorAll(`[${viAttribute}], [${enAttribute}]`).forEach(element => {
+        const nextValue = element.getAttribute(lang === 'vi' ? viAttribute : enAttribute);
+        if (nextValue && element.getAttribute(attribute) !== nextValue) {
+          element.setAttribute(attribute, nextValue);
         }
       });
-
-      const placeholderElements = document.querySelectorAll('[data-placeholder-vi], [data-placeholder-en]');
-      placeholderElements.forEach(element => {
-        const viPlaceholder = element.getAttribute('data-placeholder-vi');
-        const enPlaceholder = element.getAttribute('data-placeholder-en');
-        const nextPlaceholder = lang === 'vi' ? viPlaceholder : enPlaceholder;
-
-        if (nextPlaceholder) {
-          element.setAttribute('placeholder', nextPlaceholder);
-        }
-      });
-    }, 50);
+    });
   };
 
   const toggleTheme = () => {
@@ -105,6 +174,9 @@ const Layout = ({ children }) => {
       const newTheme = theme === 'light' ? 'dark' : 'light';
       setTheme(newTheme);
       localStorage.setItem('theme', newTheme);
+      window.dispatchEvent(new CustomEvent('themeChange', {
+        detail: { theme: newTheme }
+      }));
       
       if (newTheme === 'dark') {
         document.body.classList.add('dark-mode');
@@ -121,7 +193,9 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="app">
+    <div className={`app ${location.pathname === '/' ? 'app--home' : ''}`}>
+      <SEO />
+      <AnalyticsTracker />
       {/* Background */}
       <div className="bg-container">
         <div className="earth-bg"></div>
@@ -130,52 +204,115 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Navigation */}
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav ref={navigationRef} className={`navbar ${location.pathname === '/' ? 'homepage-navbar' : ''} ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
-          <Link to="/" className="nav-logo">
+          <Link to="/" className="nav-logo" aria-label="Unitrux - Trang chủ">
             <div className="logo-unitrux"></div>
           </Link>
           
-          <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-            <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0054\u0072\u0061\u006e\u0067\u0020\u0063\u0068\u1ee7"} data-en="Home" data-default="en">Home</span>
+          <div id="primary-navigation" className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
+            <Link to="/services" className={`nav-link ${isActivePath('/services') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Giải pháp" data-en="Solutions" data-default="en">Solutions</span>
             </Link>
-            <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0044\u1ecb\u0063\u0068\u0020\u0076\u1ee5"} data-en="Services" data-default="en">Services</span>
+            <Link to="/packages" className={`nav-link ${isActivePath('/packages') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Gói dịch vụ" data-en="Service plans" data-default="en">Service plans</span>
             </Link>
-            <Link to="/packages" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0047\u00f3\u0069"} data-en="Packages" data-default="en">Packages</span>
+            <Link to="/about" className={`nav-link ${isActivePath('/about') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Về Unitrux" data-en="About Unitrux" data-default="en">About Unitrux</span>
             </Link>
-            <Link to="/about" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0056\u1ec1"} data-en="About" data-default="en">About</span>
+            <Link to="/news" className={`nav-link ${isActivePath('/news') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Góc tăng trưởng" data-en="Growth insights" data-default="en">Growth insights</span>
             </Link>
-            <Link to="/news" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0054\u0069\u006e\u0020\u0074\u1ee9\u0063"} data-en="News" data-default="en">News</span>
+            <Link to="/media-pricing" className={`nav-link ${isActivePath('/media-pricing') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Quay chụp & Video" data-en="Photo & Video" data-default="vi">Quay chụp & Video</span>
             </Link>
-            <Link to="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u004c\u0069\u00ea\u006e\u0020\u0068\u1ec7"} data-en="Contact" data-default="en">Contact</span>
-            </Link>
-            <Link to="/privacy-policy" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0042\u1ea3\u006f\u0020\u006d\u1ead\u0074"} data-en="Privacy" data-default="en">Privacy</span>
-            </Link>
-            <Link to="/terms" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0110\u0069\u1ec1\u0075\u0020\u006b\u0068\u006f\u1ea3\u006e"} data-en="Terms" data-default="en">Terms</span>
-            </Link>
-            <Link to="/delete-data" className="nav-link" onClick={() => setIsMenuOpen(false)}>
-              <span data-vi={"\u0058\u00f3\u0061"} data-en="Delete" data-default="en">Delete</span>
+            <a
+              href="tel:+84938695186"
+              className="nav-link nav-link--mobile-hotline"
+              onClick={() => setIsMenuOpen(false)}
+              aria-label="Gọi hotline Unitrux 0938 695 186"
+            >
+              <span className="nav-hotline-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M7.2 3.8 9.7 7a1.4 1.4 0 0 1-.1 1.8L8.2 10a14.7 14.7 0 0 0 5.8 5.8l1.2-1.4a1.4 1.4 0 0 1 1.8-.1l3.2 2.5a1.4 1.4 0 0 1 .4 1.7l-.7 1.6a2.5 2.5 0 0 1-2.6 1.4A17.2 17.2 0 0 1 2.5 6.7 2.5 2.5 0 0 1 3.9 4l1.6-.7a1.4 1.4 0 0 1 1.7.5Z" />
+                </svg>
+              </span>
+              <span>Hotline: 0938 695 186</span>
+            </a>
+            <Link to="/contact" className={`nav-link nav-link--mobile-cta ${isActivePath('/contact') ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+              <span data-vi="Bắt đầu dự án" data-en="Start a project" data-default="en">Start a project</span>
             </Link>
           </div>
 
           <div className="nav-actions">
-            <button className="theme-toggle" onClick={toggleTheme}>
-              {theme === 'light' ? '🌙' : '☀️'}
+            <a
+              href="tel:+84938695186"
+              className="nav-hotline"
+              aria-label="Gọi hotline Unitrux 0938 695 186"
+              title="Gọi 0938 695 186"
+            >
+              <span className="nav-hotline-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M7.2 3.8 9.7 7a1.4 1.4 0 0 1-.1 1.8L8.2 10a14.7 14.7 0 0 0 5.8 5.8l1.2-1.4a1.4 1.4 0 0 1 1.8-.1l3.2 2.5a1.4 1.4 0 0 1 .4 1.7l-.7 1.6a2.5 2.5 0 0 1-2.6 1.4A17.2 17.2 0 0 1 2.5 6.7 2.5 2.5 0 0 1 3.9 4l1.6-.7a1.4 1.4 0 0 1 1.7.5Z" />
+                </svg>
+              </span>
+              <span
+                className="nav-hotline-nudge"
+                aria-hidden="true"
+              >
+                <span
+                  className="nav-hotline-nudge__label"
+                  data-vi="Gọi ngay"
+                  data-en="Call now"
+                  data-default="en"
+                >
+                  Call now
+                </span>
+                <strong>0938 695 186</strong>
+                <span className="nav-hotline-nudge__scan" aria-hidden="true" />
+              </span>
+            </a>
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            >
+              {theme === 'dark' ? (
+                <svg className="theme-toggle-icon theme-toggle-icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3.75" />
+                  <path d="M12 2.25v2M12 19.75v2M2.25 12h2M19.75 12h2M5.1 5.1l1.42 1.42M17.48 17.48l1.42 1.42M18.9 5.1l-1.42 1.42M6.52 17.48 5.1 18.9" />
+                </svg>
+              ) : (
+                <svg className="theme-toggle-icon theme-toggle-icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.2 15.35A8.65 8.65 0 0 1 8.65 3.8 8.7 8.7 0 1 0 20.2 15.35Z" />
+                </svg>
+              )}
             </button>
-            <button className="language-toggle" onClick={toggleLanguage}>
+            <button
+              className="language-toggle"
+              onClick={toggleLanguage}
+              aria-label={language === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt'}
+              title={language === 'vi' ? 'English' : 'Tiếng Việt'}
+            >
               {language === 'vi' ? 'EN' : 'VI'}
             </button>
+            <Link
+              to="/contact"
+              className={`nav-contact-cta ${isActivePath('/contact') ? 'active' : ''}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span data-vi="Bắt đầu dự án" data-en="Start a project" data-default="en">Start a project</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h11M11 6l4 4-4 4" />
+              </svg>
+            </Link>
             <button 
-              className="nav-toggle" 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`nav-toggle ${isMenuOpen ? 'active' : ''}`}
+              onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+              aria-label={isMenuOpen ? 'Đóng menu điều hướng' : 'Mở menu điều hướng'}
+              aria-expanded={isMenuOpen}
+              aria-controls="primary-navigation"
             >
               <span></span>
               <span></span>
@@ -186,7 +323,7 @@ const Layout = ({ children }) => {
       </nav>
 
       {/* Main Content */}
-      <main>
+      <main className="engine-main">
         {children}
       </main>
 
@@ -199,20 +336,31 @@ const Layout = ({ children }) => {
               <p data-vi="Chúng tôi cung cấp các giải pháp marketing toàn diện để giúp doanh nghiệp phát triển bền vững." data-en="We provide comprehensive marketing solutions to help businesses grow sustainably." data-default="en">
                 We provide comprehensive marketing solutions to help businesses grow sustainably.
               </p>
+              <p className="footer-legal-identity" data-vi="CÔNG TY TNHH UNITRUX · MST 0319201007 · 84/12 Đường An Phú Đông 03, Phường An Phú Đông, TP. Hồ Chí Minh" data-en="UNITRUX CO., LTD · Tax ID 0319201007 · 84/12 An Phu Dong 03 Street, An Phu Dong Ward, Ho Chi Minh City" data-default="vi">
+                CÔNG TY TNHH UNITRUX · MST 0319201007 · 84/12 Đường An Phú Đông 03, Phường An Phú Đông, TP. Hồ Chí Minh
+              </p>
             </div>
             <div className="footer-section">
               <h4 data-vi="Dịch vụ" data-en="Services" data-default="en">Services</h4>
               <ul>
-                <li><Link to="/services">Digital Marketing</Link></li>
-                <li><Link to="/services">Branding</Link></li>
-                <li><Link to="/services">Web Development</Link></li>
-                <li><Link to="/services">SEO</Link></li>
-                <li><Link to="/services">E-commerce</Link></li>
+                <li><Link to="/digital-solutions"><span data-vi="Ứng dụng & giải pháp số" data-en="App & digital solutions" data-default="en">App & digital solutions</span></Link></li>
+                <li><Link to="/fanpage-management"><span data-vi="Xây dựng Fanpage" data-en="Fanpage setup" data-default="en">Fanpage setup</span></Link></li>
+                <li><Link to="/chatbox-ai"><span data-vi="Chatbot AI" data-en="AI chatbot" data-default="en">AI chatbot</span></Link></li>
+                <li><Link to="/content-creation"><span data-vi="Nội dung đa kênh" data-en="Multi-channel content" data-default="en">Multi-channel content</span></Link></li>
+                <li><Link to="/digital-marketing"><span data-vi="Quảng cáo đa nền tảng" data-en="Multi-platform advertising" data-default="en">Multi-platform advertising</span></Link></li>
+                <li><Link to="/automation"><span data-vi="Marketing Automation" data-en="Marketing automation" data-default="en">Marketing automation</span></Link></li>
+                <li><Link to="/seo-services"><span data-vi="SEO/AEO/GEO" data-en="SEO/AEO/GEO" data-default="en">SEO/AEO/GEO</span></Link></li>
+                <li><Link to="/photography-video"><span data-vi="Video quảng cáo" data-en="Advertising video" data-default="en">Advertising video</span></Link></li>
+                <li><Link to="/product-photography"><span data-vi="Chụp ảnh sản phẩm" data-en="Product photography" data-default="en">Product photography</span></Link></li>
+                <li><Link to="/web-development"><span data-vi="Thiết kế website" data-en="Website design" data-default="en">Website design</span></Link></li>
+                <li><Link to="/templates"><span data-vi="Thư viện mẫu website" data-en="Template library" data-default="en">Template library</span></Link></li>
+                <li><Link to="/ecommerce"><span data-vi="E-commerce" data-en="E-commerce" data-default="en">E-commerce</span></Link></li>
               </ul>
             </div>
             <div className="footer-section">
               <h4 data-vi="Thông tin pháp lý" data-en="Legal" data-default="en">Legal</h4>
               <ul>
+                <li><Link to="/content-standards">Content Standards</Link></li>
                 <li><Link to="/terms">Terms of Service</Link></li>
                 <li><Link to="/privacy-policy">Privacy Policy</Link></li>
                 <li><Link to="/delete-data">Delete Data</Link></li>
@@ -273,28 +421,38 @@ const Layout = ({ children }) => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Unitrux. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Unitrux. All rights reserved.</p>
           </div>
         </div>
       </footer>
       {/* Floating Buttons */}
       <div className="floating-buttons">
-        <ChatBox />
-        <button className="scroll-to-top" onClick={scrollToTop} title="Scroll to top">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        <a href="https://www.youtube.com/@UnitruxDigitalMarketing" target="_blank" rel="noopener noreferrer" className="youtube-fab" title="YouTube Channel">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-        </a>
-        <a href="https://www.tiktok.com/@unitruxmarketing" target="_blank" rel="noopener noreferrer" className="tiktok-fab" title="TikTok Channel">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-          </svg>
-        </a>
+        <div className="floating-buttons__utility">
+          <button className="scroll-to-top" onClick={scrollToTop} title="Scroll to top" aria-label="Scroll to top">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 14L12 9L17 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div className="floating-buttons__social">
+          <a href="https://www.youtube.com/@UnitruxDigitalMarketing" target="_blank" rel="noopener noreferrer" className="youtube-fab" title="YouTube Channel" aria-label="Visit Unitrux on YouTube">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@unitruxmarketing" target="_blank" rel="noopener noreferrer" className="tiktok-fab" title="TikTok Channel" aria-label="Visit Unitrux on TikTok">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </a>
+        </div>
+        <div className="floating-buttons__conversion">
+          <a href="https://zalo.me/3299309778518905129" target="_blank" rel="noopener noreferrer" className="zalo-fab" aria-label="Liên hệ qua Zalo">
+            <span className="zalo-fab__wordmark" aria-hidden="true">Zalo</span>
+            <span className="zalo-fab__tooltip" aria-hidden="true">Liên hệ qua Zalo</span>
+          </a>
+          <Suspense fallback={null}><ChatBox /></Suspense>
+        </div>
       </div>
     </div>
   );
