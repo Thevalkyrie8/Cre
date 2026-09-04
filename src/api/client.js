@@ -87,6 +87,16 @@ export function resolveAssetUrl(value, fallback = '/logo-unitrux.jpg') {
 	return url;
 }
 
+// SEO metadata (Search Intelligence). Reads are public; used for the article
+// table-of-contents toggle. Returns [] on any failure so callers can fall back.
+export function getSeoMetadata(params = {}) {
+	const query = new URLSearchParams(params).toString();
+	const qs = query ? `?${query}` : '';
+	return fetchJson(`/seo/metadata${qs}`)
+		.then((payload) => (Array.isArray(payload) ? payload : payload?.data || []))
+		.catch(() => []);
+}
+
 export function getFeaturedNews(params = {}) {
 	const query = new URLSearchParams(params).toString();
 	const qs = query ? `?${query}` : '';
