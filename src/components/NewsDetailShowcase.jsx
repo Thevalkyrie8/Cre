@@ -7,7 +7,7 @@ import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unw
 import { services as unitruxServices } from '../data/services';
 import { trackEvent } from '../analytics/tracking';
 import { articleMarkdownComponents } from '../utils/markdownComponents';
-import { buildToc, createHeadingSlugger, dedupeHeadings, shouldShowToc } from '../utils/articleToc';
+import { buildToc, dedupeHeadings, shouldShowToc, slugifyHeading } from '../utils/articleToc';
 import { truncateAtWordBoundary } from '../utils/text';
 
 const copy = {
@@ -16,6 +16,15 @@ const copy = {
 };
 
 const stripMarkdown = (value = '') => String(value).replace(/[#*_>`~[\]()]/g, '').replace(/\s+/g, ' ').trim();
+
+// Flatten a React-Markdown heading's children (strings, arrays, <strong> …) to text.
+const nodeText = (node) => {
+  if (node == null || node === false) return '';
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(nodeText).join('');
+  if (node.props?.children) return nodeText(node.props.children);
+  return '';
+};
 const normalizeUnicode = (value = '') => String(value).normalize('NFC');
 const normalizeTags = (value) => {
   const tags = Array.isArray(value)
@@ -79,11 +88,24 @@ const NewsDetailShowcase = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [tocEnabled, setTocEnabled] = useState(null);
+  const [activeSlug, setActiveSlug] = useState('');
   const bodyRef = useRef(null);
   const t = copy[language] || copy.en;
   const article = useMemo(() => rawArticle ? normalizeArticle(rawArticle, language) : null, [rawArticle, language]);
   const toc = useMemo(() => dedupeHeadings(buildToc(article?.content || '')), [article?.content]);
   const showToc = shouldShowToc(tocEnabled, toc);
+
+  // Assign heading ids at render time so nav links always resolve. Uses a plain
+  // (stateless) slug of the heading text — matches the first-occurrence slug the
+  // de-duped TOC links to; repeated headings simply share an id (jumps to first).
+  const mdComponents = useMemo(() => {
+    const withId = (Tag) => {
+      const Heading = ({ children }) => <Tag id={slugifyHeading(nodeText(children))}>{children}</Tag>;
+      Heading.displayName = `Heading(${Tag})`;
+      return Heading;
+    };
+    return { ...articleMarkdownComponents, h2: withId('h2'), h3: withId('h3') };
+  }, []);
 
   useEffect(() => {
     const change = (event) => setLanguage(event.detail?.language === 'vi' ? 'vi' : 'en');
@@ -182,15 +204,28 @@ const NewsDetailShowcase = () => {
     };
   }, [rawArticle?.id, language]);
 
-  // Give the rendered headings stable ids so the TOC (and #hash links) can jump
-  // to them. Uses the same de-duping slugger as buildToc().
+  // Track which heading is in view to highlight it in the nav. Ids are assigned
+  // at render time by mdComponents above.
   useEffect(() => {
     const el = bodyRef.current;
-    if (!el) return;
-    const slug = createHeadingSlugger();
-    el.querySelectorAll('h2, h3').forEach((heading) => {
-      heading.id = slug(heading.textContent || '');
-    });
+    if (!el) return undefined;
+    const headings = [...el.querySelectorAll('h2[id], h3[id]')];
+    if (!headings.length || typeof IntersectionObserver === 'undefined') return undefined;
+
+    const visible = new Set();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        });
+        const current = headings.find((h) => visible.has(h.id));
+        if (current) setActiveSlug(current.id);
+      },
+      { rootMargin: '-96px 0px -66% 0px' },
+    );
+    headings.forEach((h) => observer.observe(h));
+    return () => observer.disconnect();
   }, [article?.content]);
 
   const scrollToHeading = (slug) => (event) => {
@@ -267,16 +302,17 @@ const NewsDetailShowcase = () => {
           <dl className="tw-mb-0 tw-mt-9 tw-space-y-4 tw-text-xs tw-text-[var(--u-subtle)]"><div className="tw-flex tw-gap-3"><dt>▱</dt><dd className="tw-m-0">{article.category}</dd></div>{article.publishedLabel && <div className="tw-flex tw-gap-3"><dt>▦</dt><dd className="tw-m-0">{t.published}: <time dateTime={article.datePublished}>{article.publishedLabel}</time></dd></div>}{article.updatedLabel && article.dateModified !== article.datePublished && <div className="tw-flex tw-gap-3"><dt>↻</dt><dd className="tw-m-0">{t.updated}: <time dateTime={article.dateModified}>{article.updatedLabel}</time></dd></div>}<div className="tw-flex tw-gap-3"><dt>◷</dt><dd className="tw-m-0">{article.minutes} {t.min}</dd></div></dl>
           {showToc && toc.length > 0 && (
             <nav className="article-toc tw-mt-8" aria-label={language === 'vi' ? 'Mục lục' : 'Table of contents'}>
-              <h2 className="tw-mb-3 tw-mt-0 tw-font-editorial tw-text-lg tw-font-medium tw-not-italic tw-text-[var(--u-dark)]">
+              <p className="tw-m-0 tw-flex tw-items-baseline tw-gap-2 tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.18em] tw-text-[var(--u-secondary)]">
                 {language === 'vi' ? 'Mục lục' : 'On this page'}
-              </h2>
-              <ol className="tw-m-0 tw-list-none tw-space-y-1.5 tw-p-0 tw-text-sm">
+                <span className="tw-font-semibold tw-tracking-normal tw-text-[var(--u-subtle)]">{toc.length}</span>
+              </p>
+              <ol className="article-toc-list tw-mt-3 tw-mb-0 tw-list-none tw-p-0">
                 {toc.map((item) => (
-                  <li key={item.slug} className={item.level === 3 ? 'tw-pl-4' : ''}>
+                  <li key={item.slug} data-level={item.level}>
                     <a
                       href={`#${item.slug}`}
                       onClick={scrollToHeading(item.slug)}
-                      className="tw-text-[var(--u-subtle)] tw-no-underline hover:tw-text-[var(--u-accent)]"
+                      aria-current={activeSlug === item.slug ? 'location' : undefined}
                     >
                       {item.text}
                     </a>
@@ -288,7 +324,7 @@ const NewsDetailShowcase = () => {
           <Link to="/content-standards#editorial-process" className="tw-mt-7 tw-inline-flex tw-font-bold tw-text-[var(--u-accent)] tw-underline-offset-4 hover:tw-underline">{t.standards} →</Link>
           <Link to="/news" className="tw-mt-9 tw-inline-flex tw-items-center tw-gap-3 tw-font-bold tw-text-[var(--u-secondary)] tw-no-underline">← {t.back}</Link>
         </aside>
-        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body" ref={bodyRef}><ReactMarkdown remarkPlugins={[remarkGfm]} components={articleMarkdownComponents}>{article.content}</ReactMarkdown></div></div>
+        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body" ref={bodyRef}><ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>{article.content}</ReactMarkdown></div></div>
         <aside className="tw-hidden tw-pt-20 lg:tw-col-span-2 lg:tw-block"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.18em] tw-text-[var(--u-secondary)]">{t.trend}</span><div className="tw-mt-4 tw-grid tw-h-28 tw-w-28 tw-place-items-center tw-rounded-full tw-border tw-border-[var(--u-line)] tw-font-editorial tw-text-xl tw-text-[var(--u-dark)]">{new Date(article.createdAt || Date.now()).getFullYear()} →</div></aside>
       </section>
 
