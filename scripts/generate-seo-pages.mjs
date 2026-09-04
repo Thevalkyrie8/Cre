@@ -20,6 +20,7 @@ import { productionPortfolio } from '../src/data/productionPortfolio.js';
 import { toAbsoluteUrl } from '../src/seo/schemaFactory.js';
 import { getNewsSlug } from '../src/utils/newsSlug.js';
 import { articleMarkdownComponents } from '../src/utils/markdownComponents.js';
+import { buildToc, dedupeHeadings, injectHeadingIds, shouldShowToc } from '../src/utils/articleToc.js';
 import { buildPageTitle, truncateAtWordBoundary } from '../src/utils/text.js';
 
 const distDir = join(process.cwd(), 'dist');
@@ -125,8 +126,34 @@ const loadNewsArticles = async () => {
   }
 };
 
+// SEO metadata rows for news, keyed by entityRef (article id). Used only to
+// read the per-article `tocEnabled` toggle; falls back to a heading-count
+// heuristic when the API (or the backend migration) is not available yet.
+const loadNewsSeo = async () => {
+  try {
+    const response = await fetch(process.env.SEO_METADATA_API_URL || 'https://be.unitrux.site/api/seo/metadata?entityType=news', {
+      headers: { Accept: 'application/json' },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    const rows = Array.isArray(payload) ? payload : payload?.data || [];
+    const byRef = new Map();
+    for (const row of rows) {
+      const current = byRef.get(row.entityRef);
+      // Prefer a concrete `vi` row over the `*` fallback.
+      if (!current || (current.locale === '*' && row.locale === 'vi')) byRef.set(row.entityRef, row);
+    }
+    return byRef;
+  } catch (error) {
+    console.warn(`SEO metadata API unavailable; TOC falls back to heading count: ${error.message}`);
+    return new Map();
+  }
+};
+
 const newsArticles = await loadNewsArticles();
 const cmsServices = await loadServices();
+const newsSeoByRef = await loadNewsSeo();
 
 const buildSeoBlock = (path, page) => {
   const canonical = getCanonicalUrl(path);
@@ -310,12 +337,20 @@ for (const [from, to] of Object.entries(legacyRedirects)) {
 }
 
 for (const article of newsArticles) {
-  const markdown = renderToStaticMarkup(createElement(ReactMarkdown, { remarkPlugins: [remarkGfm], components: articleMarkdownComponents }, article.content));
+  const markdown = injectHeadingIds(
+    renderToStaticMarkup(createElement(ReactMarkdown, { remarkPlugins: [remarkGfm], components: articleMarkdownComponents }, article.content)),
+  );
   const published = article.createdAt ? `<time datetime="${escapeHtml(article.createdAt)}">${escapeHtml(new Date(article.createdAt).toLocaleDateString('vi-VN'))}</time>` : '';
   const tags = article.tags.length
     ? `<ul aria-label="Chủ đề bài viết">${article.tags.map((tag) => `<li>#${escapeHtml(tag)}</li>`).join('')}</ul>`
     : '';
-  const content = `<div id="root"><main class="seo-static-content"><article><header><p>${escapeHtml(article.category)}</p><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.excerpt)}</p><p>Tác giả: <a href="/content-standards/">${escapeHtml(article.author)}</a>${published ? ` · ${published}` : ''}</p>${tags}</header><img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}" width="1600" height="900" /><div>${markdown}</div></article><p><a href="/news/">Xem tất cả bài viết</a></p></main></div>`;
+  const toc = dedupeHeadings(buildToc(article.content));
+  const seoRow = newsSeoByRef.get(article.id);
+  const tocEnabled = seoRow && typeof seoRow.tocEnabled === 'boolean' ? seoRow.tocEnabled : null;
+  const tocNav = shouldShowToc(tocEnabled, toc) && toc.length
+    ? `<nav aria-label="Mục lục"><h2>Mục lục</h2><ol>${toc.map((item) => `<li><a href="#${item.slug}">${escapeHtml(item.text)}</a></li>`).join('')}</ol></nav>`
+    : '';
+  const content = `<div id="root"><main class="seo-static-content"><article><header><p>${escapeHtml(article.category)}</p><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.excerpt)}</p><p>Tác giả: <a href="/content-standards/">${escapeHtml(article.author)}</a>${published ? ` · ${published}` : ''}</p>${tags}</header><img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}" width="1600" height="900" />${tocNav}<div>${markdown}</div></article><p><a href="/news/">Xem tất cả bài viết</a></p></main></div>`;
   const html = template
     .replace(/<!-- SEO:START -->[\s\S]*?<!-- SEO:END -->/, buildArticleSeoBlock(article))
     .replace('<div id="root"></div>', content);

@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
+import { getNews, getNewsById, getSeoMetadata, resolveAssetUrl } from '../api/client';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { services as unitruxServices } from '../data/services';
 import { trackEvent } from '../analytics/tracking';
 import { articleMarkdownComponents } from '../utils/markdownComponents';
+import { buildToc, createHeadingSlugger, dedupeHeadings, shouldShowToc } from '../utils/articleToc';
 import { truncateAtWordBoundary } from '../utils/text';
 
 const copy = {
@@ -77,8 +78,12 @@ const NewsDetailShowcase = () => {
   const [relatedServices, setRelatedServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [tocEnabled, setTocEnabled] = useState(null);
+  const bodyRef = useRef(null);
   const t = copy[language] || copy.en;
   const article = useMemo(() => rawArticle ? normalizeArticle(rawArticle, language) : null, [rawArticle, language]);
+  const toc = useMemo(() => dedupeHeadings(buildToc(article?.content || '')), [article?.content]);
+  const showToc = shouldShowToc(tocEnabled, toc);
 
   useEffect(() => {
     const change = (event) => setLanguage(event.detail?.language === 'vi' ? 'vi' : 'en');
@@ -158,6 +163,46 @@ const NewsDetailShowcase = () => {
     }));
   }, [article, language]);
 
+  // Whether the CMS turned the table of contents on for this article.
+  useEffect(() => {
+    const id = rawArticle?.id;
+    if (!id) return undefined;
+    let active = true;
+    setTocEnabled(null);
+    getSeoMetadata({ entityType: 'news', entityRef: id }).then((rows) => {
+      if (!active) return;
+      const row =
+        rows.find((r) => r.locale === language) ||
+        rows.find((r) => r.locale === '*') ||
+        rows[0];
+      setTocEnabled(row && typeof row.tocEnabled === 'boolean' ? row.tocEnabled : null);
+    });
+    return () => {
+      active = false;
+    };
+  }, [rawArticle?.id, language]);
+
+  // Give the rendered headings stable ids so the TOC (and #hash links) can jump
+  // to them. Uses the same de-duping slugger as buildToc().
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el) return;
+    const slug = createHeadingSlugger();
+    el.querySelectorAll('h2, h3').forEach((heading) => {
+      heading.id = slug(heading.textContent || '');
+    });
+  }, [article?.content]);
+
+  const scrollToHeading = (slug) => (event) => {
+    const target = bodyRef.current?.querySelector(`#${CSS.escape(slug)}`);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.history?.replaceState) {
+      window.history.replaceState(null, '', `#${slug}`);
+    }
+  };
+
   if (loading) return <div className="tw-min-h-screen tw-bg-[var(--u-surface)] tw-px-4 tw-pb-24 tw-pt-40"><div className="tw-mx-auto tw-w-[min(74rem,100%)] tw-space-y-7"><div className="tw-h-10 tw-w-48 tw-animate-pulse tw-rounded-full tw-bg-[var(--u-subtle)]"/><div className="tw-h-44 tw-max-w-4xl tw-animate-pulse tw-rounded-[2rem] tw-bg-[var(--u-subtle)]"/><div className="tw-h-[34rem] tw-animate-pulse tw-rounded-[2rem] tw-bg-[var(--u-subtle)]"/><p className="tw-text-sm tw-text-[var(--u-subtle)]">{t.loading}</p></div></div>;
   if (error || !article) return <div className="tw-grid tw-min-h-screen tw-place-items-center tw-bg-[var(--u-surface)] tw-p-6"><div className="tw-rounded-[2rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_15%,transparent)] tw-bg-[var(--u-line)] tw-p-10 tw-text-center"><h1 className="tw-font-editorial tw-text-5xl tw-text-[var(--u-accent)]">{error || t.error}</h1><Link to="/news" className="tw-mt-5 tw-inline-block tw-rounded-full tw-bg-[var(--u-accent)] tw-px-6 tw-py-3 tw-font-bold tw-text-[var(--u-surface)] tw-no-underline">{t.back}</Link></div></div>;
 
@@ -220,10 +265,30 @@ const NewsDetailShowcase = () => {
           <span className="tw-absolute -tw-top-5 tw-left-7 tw-h-12 tw-w-3 tw-rotate-[-8deg] tw-rounded-full tw-border-2 tw-border-[var(--u-line)]"/>
           <h2 className="tw-mb-0 tw-mt-4 tw-font-editorial tw-text-3xl tw-font-medium tw-italic tw-text-[var(--u-dark)]">{t.note}</h2><i className="tw-mt-5 tw-block tw-h-0.5 tw-w-8 tw-bg-[var(--u-secondary)]"/><p className="tw-mb-0 tw-mt-6 tw-font-editorial tw-text-lg tw-leading-8 tw-text-[var(--u-subtle)]">{t.noteBody}</p>
           <dl className="tw-mb-0 tw-mt-9 tw-space-y-4 tw-text-xs tw-text-[var(--u-subtle)]"><div className="tw-flex tw-gap-3"><dt>▱</dt><dd className="tw-m-0">{article.category}</dd></div>{article.publishedLabel && <div className="tw-flex tw-gap-3"><dt>▦</dt><dd className="tw-m-0">{t.published}: <time dateTime={article.datePublished}>{article.publishedLabel}</time></dd></div>}{article.updatedLabel && article.dateModified !== article.datePublished && <div className="tw-flex tw-gap-3"><dt>↻</dt><dd className="tw-m-0">{t.updated}: <time dateTime={article.dateModified}>{article.updatedLabel}</time></dd></div>}<div className="tw-flex tw-gap-3"><dt>◷</dt><dd className="tw-m-0">{article.minutes} {t.min}</dd></div></dl>
+          {showToc && toc.length > 0 && (
+            <nav className="article-toc tw-mt-8" aria-label={language === 'vi' ? 'Mục lục' : 'Table of contents'}>
+              <h2 className="tw-mb-3 tw-mt-0 tw-font-editorial tw-text-lg tw-font-medium tw-not-italic tw-text-[var(--u-dark)]">
+                {language === 'vi' ? 'Mục lục' : 'On this page'}
+              </h2>
+              <ol className="tw-m-0 tw-list-none tw-space-y-1.5 tw-p-0 tw-text-sm">
+                {toc.map((item) => (
+                  <li key={item.slug} className={item.level === 3 ? 'tw-pl-4' : ''}>
+                    <a
+                      href={`#${item.slug}`}
+                      onClick={scrollToHeading(item.slug)}
+                      className="tw-text-[var(--u-subtle)] tw-no-underline hover:tw-text-[var(--u-accent)]"
+                    >
+                      {item.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
           <Link to="/content-standards#editorial-process" className="tw-mt-7 tw-inline-flex tw-font-bold tw-text-[var(--u-accent)] tw-underline-offset-4 hover:tw-underline">{t.standards} →</Link>
           <Link to="/news" className="tw-mt-9 tw-inline-flex tw-items-center tw-gap-3 tw-font-bold tw-text-[var(--u-secondary)] tw-no-underline">← {t.back}</Link>
         </aside>
-        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={articleMarkdownComponents}>{article.content}</ReactMarkdown></div></div>
+        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body" ref={bodyRef}><ReactMarkdown remarkPlugins={[remarkGfm]} components={articleMarkdownComponents}>{article.content}</ReactMarkdown></div></div>
         <aside className="tw-hidden tw-pt-20 lg:tw-col-span-2 lg:tw-block"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.18em] tw-text-[var(--u-secondary)]">{t.trend}</span><div className="tw-mt-4 tw-grid tw-h-28 tw-w-28 tw-place-items-center tw-rounded-full tw-border tw-border-[var(--u-line)] tw-font-editorial tw-text-xl tw-text-[var(--u-dark)]">{new Date(article.createdAt || Date.now()).getFullYear()} →</div></aside>
       </section>
 

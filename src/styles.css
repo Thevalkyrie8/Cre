@@ -11243,6 +11243,14 @@ body:not(.dark-mode) .journal-featured-image-frame {
 
 .article-editorial-body h2 { margin: 2.2em 0 .6em; font-size: 2.6rem; }
 .article-editorial-body h3 { margin: 1.8em 0 .5em; font-size: 1.9rem; }
+
+/* Offset for the fixed site header when jumping to a heading from the TOC. */
+.article-editorial-body h2,
+.article-editorial-body h3 { scroll-margin-top: 7rem; }
+
+.article-toc ol ol,
+.article-toc ol { margin: 0; padding: 0; list-style: none; }
+.article-toc a { transition: color 140ms ease; }
 .article-editorial-body p { margin: 0 0 1.45em; }
 .article-editorial-body ul,
 .article-editorial-body ol {
