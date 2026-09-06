@@ -20,25 +20,13 @@ export const slugifyHeading = (text = '') =>
     .replace(/^-|-$/g, '')
     .slice(0, 80) || 'section';
 
-/**
- * A stateful slugger that appends `-2`, `-3`… to repeated slugs, matching the
- * admin editor's `parseToc()` de-dupe so nav links and heading ids stay aligned.
- */
-export const createHeadingSlugger = () => {
-  const seen = new Map();
-  return (text) => {
-    const base = slugifyHeading(text);
-    const n = seen.get(base) ?? 0;
-    seen.set(base, n + 1);
-    return n === 0 ? base : `${base}-${n + 1}`;
-  };
-};
-
 const stripInline = (value = '') =>
   String(value)
     .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/[*_`~]/g, '')
+    // Markdown backslash escapes: `1\.` → `1.`, `\(` → `(` …
+    .replace(/\\([^\w\s])/g, '$1')
     .replace(/\s+/g, ' ')
     .trim();
 
@@ -48,7 +36,6 @@ const stripInline = (value = '') =>
  */
 export const buildToc = (markdown = '') => {
   const lines = String(markdown).split(/\r?\n/);
-  const slug = createHeadingSlugger();
   const items = [];
   let inFence = false;
   for (const line of lines) {
@@ -60,25 +47,23 @@ export const buildToc = (markdown = '') => {
     const match = line.match(/^(#{2,3})\s+(.+?)\s*#*\s*$/);
     if (!match) continue;
     const text = stripInline(match[2]);
-    if (text) items.push({ level: match[1].length, text, slug: slug(text) });
+    if (text) items.push({ level: match[1].length, text, slug: slugifyHeading(text) });
   }
   return items;
 };
 
 /**
- * Collapse repeated headings (same text) to their first occurrence — keeps the
- * nav usable when CMS content was accidentally pasted twice.
+ * Collapse repeated headings (same slug) to their first occurrence — keeps the
+ * nav usable when CMS content was accidentally pasted twice, and guarantees
+ * every nav link resolves (heading ids are the plain, non-suffixed slug).
  */
 export const dedupeHeadings = (toc = []) =>
-  toc.filter(
-    (item, i, arr) =>
-      arr.findIndex((other) => other.text.toLowerCase() === item.text.toLowerCase()) === i,
-  );
+  toc.filter((item, i, arr) => arr.findIndex((other) => other.slug === item.slug) === i);
 
 /**
- * Inject `id=""` into the `<h2>` / `<h3>` tags of a rendered-HTML string, in
- * document order, using the same de-duping slugger — for the static prerender
- * output where there is no DOM to walk.
+ * Inject `id=""` into the `<h2>` / `<h3>` tags of a rendered-HTML string — for
+ * the static prerender output where there is no DOM to walk. Same plain slug as
+ * the browser; repeated headings share an id (the browser jumps to the first).
  */
 const decodeEntities = (value = '') =>
   String(value)
@@ -89,9 +74,8 @@ const decodeEntities = (value = '') =>
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&');
 
-export const injectHeadingIds = (html = '') => {
-  const slug = createHeadingSlugger();
-  return String(html).replace(
+export const injectHeadingIds = (html = '') =>
+  String(html).replace(
     /<(h[23])((?:[^>]*))>([\s\S]*?)<\/\1>/g,
     (full, tag, attrs, inner) => {
       if (/\sid=/.test(attrs)) return full;
@@ -99,10 +83,9 @@ export const injectHeadingIds = (html = '') => {
         .replace(/\s+/g, ' ')
         .trim();
       if (!text) return full;
-      return `<${tag}${attrs} id="${slug(text)}">${inner}</${tag}>`;
+      return `<${tag}${attrs} id="${slugifyHeading(text)}">${inner}</${tag}>`;
     },
   );
-};
 
 /**
  * Whether to show the TOC. `tocEnabled` comes from `seo_metadata.tocEnabled`:

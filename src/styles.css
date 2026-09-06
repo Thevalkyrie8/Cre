@@ -11248,9 +11248,49 @@ body:not(.dark-mode) .journal-featured-image-frame {
 .article-editorial-body h2,
 .article-editorial-body h3 { scroll-margin-top: 7rem; }
 
-.article-toc ol ol,
-.article-toc ol { margin: 0; padding: 0; list-style: none; }
-.article-toc a { transition: color 140ms ease; }
+.article-toc-list {
+    max-height: 26rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-left: 1px solid color-mix(in srgb, var(--u-accent) 16%, transparent);
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--u-accent) 30%, transparent) transparent;
+}
+
+.article-toc-list::-webkit-scrollbar { width: 4px; }
+.article-toc-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--u-accent) 30%, transparent);
+}
+
+.article-toc-list li[data-level="3"] a { padding-left: 1.6rem; font-size: 12.5px; }
+
+.article-toc-list a {
+    display: block;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    padding: 0.3rem 0 0.3rem 0.75rem;
+    font-size: 13px;
+    line-height: 1.4;
+    text-decoration: none;
+    opacity: 0.62;
+    transition: opacity 0.14s ease, border-color 0.14s ease, background-color 0.14s ease;
+}
+
+.article-toc-list a:hover {
+    opacity: 1;
+    border-left-color: color-mix(in srgb, var(--u-accent) 45%, transparent);
+}
+
+.article-toc-list a[aria-current] {
+    opacity: 1;
+    font-weight: 600;
+    border-left-color: var(--u-accent);
+    background: color-mix(in srgb, var(--u-accent) 10%, transparent);
+}
 .article-editorial-body p { margin: 0 0 1.45em; }
 .article-editorial-body ul,
 .article-editorial-body ol {
