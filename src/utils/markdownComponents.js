@@ -1,6 +1,16 @@
 import { createElement } from 'react';
 import { resolveAssetUrl } from '../api/client.js';
 
+// URL sanitizer to prevent XSS (javascript:, data:text/html, vbscript:)
+export const safeUrlTransform = (url) => {
+  if (!url) return '';
+  const trimmed = String(url).trim();
+  if (/^(javascript|vbscript|data:text\/html)/i.test(trimmed)) {
+    return '';
+  }
+  return trimmed;
+};
+
 // This file is imported by scripts/generate-seo-pages.mjs, which runs under
 // plain Node (no JSX transform) — use createElement, not JSX, here.
 
@@ -14,4 +24,8 @@ export const articleMarkdownComponents = {
   // The API returns API-relative image paths like "/api/media/file/:id" in
   // markdown content — resolve them against the API origin, not this site's.
   img: ({ src, alt, title }) => createElement('img', { src: resolveAssetUrl(src, src), alt: alt || '', title }),
+  a: ({ href, children, ...props }) => {
+    const safeHref = safeUrlTransform(href) || '#';
+    return createElement('a', { ...props, href: safeHref, rel: 'noopener noreferrer' }, children);
+  },
 };
