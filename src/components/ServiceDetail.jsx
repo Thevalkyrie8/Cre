@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getServiceById } from '../api/client';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { safeUrlTransform } from '../utils/markdownComponents.js';
 
 // Helper function to get current language
 const getCurrentLanguage = () => {
@@ -330,7 +331,7 @@ const ServiceDetail = () => {
         }}>
           {service.icon || '✨'}
         </div>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} urlTransform={safeUrlTransform}>{content}</ReactMarkdown>
       </section>
     </div>
   );

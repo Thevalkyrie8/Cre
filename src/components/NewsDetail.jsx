@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { safeUrlTransform } from '../utils/markdownComponents.js';
 import { getNewsSlug, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 
 const getCurrentLanguage = () => {
@@ -656,7 +657,7 @@ const NewsDetail = () => {
             </aside>
 
             <article className="article-body">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{news.content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} urlTransform={safeUrlTransform}>{news.content}</ReactMarkdown>
             </article>
           </main>
 

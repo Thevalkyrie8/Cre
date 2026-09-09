@@ -6,7 +6,7 @@ import { getNews, getNewsById, resolveAssetUrl } from '../api/client';
 import { getLocalizedNewsFields, getNewsSlug, getStoredLanguage, isNewsUuid, unwrapNewsList } from '../utils/newsSlug';
 import { services as unitruxServices } from '../data/services';
 import { trackEvent } from '../analytics/tracking';
-import { articleMarkdownComponents } from '../utils/markdownComponents';
+import { articleMarkdownComponents, safeUrlTransform } from '../utils/markdownComponents';
 import { truncateAtWordBoundary } from '../utils/text';
 
 const copy = {
@@ -223,7 +223,7 @@ const NewsDetailShowcase = () => {
           <Link to="/content-standards#editorial-process" className="tw-mt-7 tw-inline-flex tw-font-bold tw-text-[var(--u-accent)] tw-underline-offset-4 hover:tw-underline">{t.standards} →</Link>
           <Link to="/news" className="tw-mt-9 tw-inline-flex tw-items-center tw-gap-3 tw-font-bold tw-text-[var(--u-secondary)] tw-no-underline">← {t.back}</Link>
         </aside>
-        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={articleMarkdownComponents}>{article.content}</ReactMarkdown></div></div>
+        <div className="tw-relative tw-pt-16 lg:tw-col-span-7 lg:tw-col-start-5 lg:tw-pt-14" data-reveal><div className="article-editorial-body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={articleMarkdownComponents} urlTransform={safeUrlTransform}>{article.content}</ReactMarkdown></div></div>
         <aside className="tw-hidden tw-pt-20 lg:tw-col-span-2 lg:tw-block"><span className="tw-text-[.62rem] tw-font-black tw-uppercase tw-tracking-[.18em] tw-text-[var(--u-secondary)]">{t.trend}</span><div className="tw-mt-4 tw-grid tw-h-28 tw-w-28 tw-place-items-center tw-rounded-full tw-border tw-border-[var(--u-line)] tw-font-editorial tw-text-xl tw-text-[var(--u-dark)]">{new Date(article.createdAt || Date.now()).getFullYear()} →</div></aside>
       </section>
 
