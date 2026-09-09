@@ -193,6 +193,7 @@ const ChatBox = () => {
   const endRef = useRef(null);
   const chatStartedRef = useRef(false);
   const leadTrackedRef = useRef(false);
+  const lastSendTimeRef = useRef(0);
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
@@ -252,6 +253,21 @@ const ChatBox = () => {
   const sendMessage = async (message, options = {}) => {
     const trimmed = message.trim();
     if (!trimmed || isLoading) return;
+
+    // 1. Chặn tin nhắn quá dài (> 800 ký tự) để chống tràn token AI
+    if (trimmed.length > 800) {
+      addBotMessage({
+        text: 'Tin nhắn của bạn hơi dài (tối đa 800 ký tự). Bạn vui lòng tóm tắt ngắn gọn để Unitrux hỗ trợ nhanh nhất nhé!'
+      });
+      return;
+    }
+
+    // 2. Chống spam click / flood tin nhắn (tối thiểu 1.5 giây giữa các tin nhắn)
+    const now = Date.now();
+    if (now - lastSendTimeRef.current < 1500) {
+      return;
+    }
+    lastSendTimeRef.current = now;
 
     if (!chatStartedRef.current) {
       chatStartedRef.current = true;
@@ -367,6 +383,7 @@ const ChatBox = () => {
           <input
             type="text"
             value={inputValue}
+            maxLength={800}
             onChange={(event) => setInputValue(event.target.value)}
             placeholder="Nhập tin nhắn..."
             data-placeholder-vi="Nhập tin nhắn..."

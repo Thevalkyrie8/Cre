@@ -96,6 +96,7 @@ const Field = ({ icon, labelVi, labelEn, children, className = '' }) => (
 
 const PricingBriefForm = ({ headingId = 'pricing-brief-title' }) => {
   const [form, setForm] = useState(EMPTY);
+  const [honeypot, setHoneypot] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
   const [language, setLanguage] = useState(getInitialLanguage);
@@ -143,6 +144,14 @@ const PricingBriefForm = ({ headingId = 'pricing-brief-title' }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (honeypot) {
+      console.warn('Bot brief submission blocked via honeypot.');
+      setStatus('success');
+      setForm(EMPTY);
+      return;
+    }
+
     setSubmitting(true);
     setStatus(null);
     try {
@@ -195,6 +204,18 @@ const PricingBriefForm = ({ headingId = 'pricing-brief-title' }) => {
       </div>
 
       <form className="pricing-brief__form" onSubmit={handleSubmit}>
+        {/* Honeypot field - hidden from legitimate human users */}
+        <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
+          <input
+            type="text"
+            name="client_company_fax"
+            tabIndex="-1"
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
+
         <div className="pricing-brief__row">
           <Field icon="user" labelVi="Họ và tên" labelEn="Full name">
             <input type="text" name="name" value={form.name} onChange={handleChange}
