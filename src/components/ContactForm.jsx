@@ -12,6 +12,7 @@ const getInitialLanguage = () => {
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [honeypot, setHoneypot] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [language, setLanguage] = useState(getInitialLanguage);
@@ -32,6 +33,14 @@ const ContactForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (honeypot) {
+      console.warn('Bot submission blocked via honeypot.');
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
@@ -51,6 +60,18 @@ const ContactForm = () => {
   return (
     <div className="contact-form-container engine-surface-card">
       <form className="contact-form" onSubmit={handleSubmit}>
+        {/* Honeypot field - hidden from legitimate human users */}
+        <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
+          <input
+            type="text"
+            name="website_feedback_url"
+            tabIndex="-1"
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
+
         <header className="contact-form__intro">
           <div>
             <h3 data-en="A quick project brief" data-vi="Chia sẻ về dự án của bạn">A quick project brief</h3>
