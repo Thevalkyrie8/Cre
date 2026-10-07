@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "vite",
     "test:schema": "node scripts/validate-schema.mjs",
-    "build": "npm run test:schema && vite build && node scripts/generate-seo-pages.mjs",
+    "build": "npm run test:schema && npm run test:seo && vite build && node scripts/generate-seo-pages.mjs",
     "build:prod": "npm run build",
     "lint": "eslint .",
     "preview": "vite preview",
     "serve": "vite preview --port 4173",
-    "deploy": "npm run build && git add dist && git commit -m 'Deploy to GitHub Pages' && git push origin main"
+    "deploy": "npm run build && git add dist && git commit -m 'Deploy to GitHub Pages' && git push origin main",
+    "test:seo": "node --test tests/seo.test.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",

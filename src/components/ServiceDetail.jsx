@@ -1,3 +1,4 @@
+import { publishEntitySeo } from '../seo/entitySeoStore.js';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getServiceById } from '../api/client';
@@ -52,15 +53,9 @@ const ServiceDetail = () => {
   }, []);
 
   useEffect(() => {
-    if (!service || !id) return;
-    window.dispatchEvent(new CustomEvent('seo:service', {
-      detail: {
-        service,
-        pathname: `/services/${id}`,
-        language: lang,
-      },
-    }));
-  }, [id, lang, service]);
+    if (!service || loading || error || String(service.id) !== id) return;
+    publishEntitySeo('service', { service, pathname: `/services/${id}`, language: lang });
+  }, [id, lang, service, loading, error]);
 
   if (loading) {
     return (

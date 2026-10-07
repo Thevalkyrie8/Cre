@@ -32,20 +32,22 @@ const resolveBaseUrl = () => {
 
 const EMPTY_MAP = Object.freeze({});
 
-const fetchBulk = async (entityType) => {
+const fetchBulk = async (entityType, { strict = false } = {}) => {
   try {
     const base = resolveBaseUrl();
     const query = entityType ? `?entityType=${entityType}` : '';
     const response = await fetch(`${base}/seo/metadata/bulk${query}`, {
       headers: { Accept: 'application/json' },
       signal: typeof AbortSignal !== 'undefined' && AbortSignal.timeout
-        ? AbortSignal.timeout(8000)
+        ? AbortSignal.timeout(30000)
         : undefined,
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    return data && typeof data === 'object' ? data : EMPTY_MAP;
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid SEO metadata response');
+    return data;
   } catch (error) {
+    if (strict) throw error;
     const message = error && error.message ? error.message : error;
     if (typeof console !== 'undefined') {
       console.warn(`[seoRemote] ${entityType} overrides unavailable: ${message}`);
@@ -55,11 +57,11 @@ const fetchBulk = async (entityType) => {
 };
 
 /** `{ '/web-development': { '*': {...}, vi: {...} }, ... }` keyed by route path. */
-export const fetchRouteSeoMap = () => fetchBulk('route');
+export const fetchRouteSeoMap = (options) => fetchBulk('route', options);
 
 /** Keyed by entity UUID. */
-export const fetchNewsSeoMap = () => fetchBulk('news');
-export const fetchServiceSeoMap = () => fetchBulk('service');
+export const fetchNewsSeoMap = (options) => fetchBulk('news', options);
+export const fetchServiceSeoMap = (options) => fetchBulk('service', options);
 export const fetchProductSeoMap = () => fetchBulk('product');
 
 /**
@@ -151,13 +153,14 @@ export const mergeStructuredData = (structuredData, schemaJson) => {
     ...structuredData,
     '@graph': Array.isArray(structuredData['@graph']) ? [...structuredData['@graph']] : [],
   };
-  if (Array.isArray(schemaJson['@graph'])) {
-    next['@graph'].push(...schemaJson['@graph']);
-    return next;
+  const incoming = Array.isArray(schemaJson['@graph']) ? schemaJson['@graph']
+    : schemaJson['@type'] ? [schemaJson] : null;
+  if (!incoming) return { ...next, ...schemaJson };
+  for (const node of incoming) {
+    if (!node || typeof node !== 'object') continue;
+    const existing = node['@id'] ? next['@graph'].findIndex((item) => item['@id'] === node['@id']) : -1;
+    if (existing >= 0) next['@graph'][existing] = { ...next['@graph'][existing], ...node };
+    else next['@graph'].push(node);
   }
-  if (schemaJson['@type']) {
-    next['@graph'].push(schemaJson);
-    return next;
-  }
-  return { ...next, ...schemaJson };
+  return next;
 };

@@ -1,3 +1,4 @@
+import { publishEntitySeo } from '../seo/entitySeoStore.js';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -139,10 +140,10 @@ const NewsDetailShowcase = () => {
   }, [routeId, language, navigate, t.error]);
 
   useEffect(() => {
-    if (!article) return;
+    if (!article || loading || error || article.slug !== routeId) return;
     trackEvent('view_content', { content_type: 'article', content_id: article.slug, content_name: article.title });
-    window.dispatchEvent(new CustomEvent('seo:article', {
-      detail: {
+    publishEntitySeo('article', {
+        id: article.id,
         path: `/news/${article.slug}`,
         title: article.title,
         description: truncateAtWordBoundary(article.excerpt || stripMarkdown(article.content), 160),
@@ -154,9 +155,8 @@ const NewsDetailShowcase = () => {
         datePublished: article.datePublished,
         dateModified: article.dateModified,
         language,
-      },
-    }));
-  }, [article, language]);
+    });
+  }, [article, language, loading, error, routeId]);
 
   if (loading) return <div className="tw-min-h-screen tw-bg-[var(--u-surface)] tw-px-4 tw-pb-24 tw-pt-40"><div className="tw-mx-auto tw-w-[min(74rem,100%)] tw-space-y-7"><div className="tw-h-10 tw-w-48 tw-animate-pulse tw-rounded-full tw-bg-[var(--u-subtle)]"/><div className="tw-h-44 tw-max-w-4xl tw-animate-pulse tw-rounded-[2rem] tw-bg-[var(--u-subtle)]"/><div className="tw-h-[34rem] tw-animate-pulse tw-rounded-[2rem] tw-bg-[var(--u-subtle)]"/><p className="tw-text-sm tw-text-[var(--u-subtle)]">{t.loading}</p></div></div>;
   if (error || !article) return <div className="tw-grid tw-min-h-screen tw-place-items-center tw-bg-[var(--u-surface)] tw-p-6"><div className="tw-rounded-[2rem] tw-border tw-border-[color-mix(in_srgb,var(--u-accent)_15%,transparent)] tw-bg-[var(--u-line)] tw-p-10 tw-text-center"><h1 className="tw-font-editorial tw-text-5xl tw-text-[var(--u-accent)]">{error || t.error}</h1><Link to="/news" className="tw-mt-5 tw-inline-block tw-rounded-full tw-bg-[var(--u-accent)] tw-px-6 tw-py-3 tw-font-bold tw-text-[var(--u-surface)] tw-no-underline">{t.back}</Link></div></div>;

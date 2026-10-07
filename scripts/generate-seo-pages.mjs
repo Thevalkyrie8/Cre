@@ -1,3 +1,4 @@
+import { applyStaticMeta, isSitemapIndexable } from '../src/seo/staticSeo.js';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { createElement } from 'react';
@@ -30,6 +31,7 @@ import { getNewsSlug } from '../src/utils/newsSlug.js';
 import { articleMarkdownComponents } from '../src/utils/markdownComponents.js';
 import { buildPageTitle, truncateAtWordBoundary } from '../src/utils/text.js';
 
+const strict = process.env.SEO_ALLOW_OFFLINE_BUILD !== 'true';
 const distDir = join(process.cwd(), 'dist');
 const template = await readFile(join(distDir, 'index.html'), 'utf8');
 
@@ -91,12 +93,13 @@ const loadServices = async () => {
   try {
     const response = await fetch(process.env.SERVICES_API_URL || 'https://be.unitrux.site/api/services', {
       headers: { Accept: 'application/json' },
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(30000),
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return unwrapServices(await response.json())
       .filter((service) => service?.id && service.isActive !== false);
   } catch (error) {
+    if (strict) throw error;
     console.warn(`Services API unavailable; no CMS service pages will be prerendered: ${error.message}`);
     return [];
   }
@@ -106,7 +109,7 @@ const loadNewsArticles = async () => {
   try {
     const response = await fetch(process.env.NEWS_API_URL || 'https://be.unitrux.site/api/news?lang=vi', {
       headers: { Accept: 'application/json' },
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(30000),
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const items = unwrapNews(await response.json());
@@ -128,6 +131,7 @@ const loadNewsArticles = async () => {
       };
     }).filter((item) => item.slug && item.title && item.content);
   } catch (error) {
+    if (strict) throw error;
     console.warn(`News API unavailable; no news pages will be prerendered: ${error.message}`);
     return [];
   }
@@ -136,52 +140,12 @@ const loadNewsArticles = async () => {
 const newsArticles = await loadNewsArticles();
 const cmsServices = await loadServices();
 
-// Admin-managed SEO overrides (backend table `seo_metadata`). Empty maps on failure.
+// Deployment must retain the last good site if CMS/metadata cannot be fetched.
 const [routeSeoMap, newsSeoMap, serviceSeoMap] = await Promise.all([
-  fetchRouteSeoMap(),
-  fetchNewsSeoMap(),
-  fetchServiceSeoMap(),
+  fetchRouteSeoMap({ strict }),
+  fetchNewsSeoMap({ strict }),
+  fetchServiceSeoMap({ strict }),
 ]);
-
-const applyMeta = (block, override) => {
-  if (!override) return block;
-  let next = block;
-  if (override.seoTitle) {
-    next = next.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(override.seoTitle)}</title>`);
-  }
-  if (override.metaDescription) {
-    const desc = escapeHtml(override.metaDescription);
-    next = next
-      .replace(/<meta name="description" content="[\s\S]*?" \/>/, `<meta name="description" content="${desc}" />`)
-      .replace(/<meta property="og:description" content="[\s\S]*?" \/>/, `<meta property="og:description" content="${desc}" />`)
-      .replace(/<meta name="twitter:description" content="[\s\S]*?" \/>/, `<meta name="twitter:description" content="${desc}" />`);
-  }
-  if (override.ogTitle) {
-    const t = escapeHtml(override.ogTitle);
-    next = next
-      .replace(/<meta property="og:title" content="[\s\S]*?" \/>/, `<meta property="og:title" content="${t}" />`)
-      .replace(/<meta name="twitter:title" content="[\s\S]*?" \/>/, `<meta name="twitter:title" content="${t}" />`);
-  }
-  if (override.ogImage) {
-    const img = escapeHtml(override.ogImage);
-    next = next
-      .replace(/<meta property="og:image" content="[\s\S]*?" \/>/, `<meta property="og:image" content="${img}" />`)
-      .replace(/<meta name="twitter:image" content="[\s\S]*?" \/>/, `<meta name="twitter:image" content="${img}" />`);
-  }
-  if (override.canonicalUrl) {
-    const c = escapeHtml(override.canonicalUrl);
-    next = next
-      .replace(/<link rel="canonical" href="[\s\S]*?" \/>/, `<link rel="canonical" href="${c}" />`)
-      .replace(/<meta property="og:url" content="[\s\S]*?" \/>/, `<meta property="og:url" content="${c}" />`);
-  }
-  if (override.robotsIndex === false || override.robotsFollow === false) {
-    next = next.replace(
-      /<meta name="robots" content="[\s\S]*?" \/>/,
-      `<meta name="robots" content="${buildRobotsContent(override.robotsIndex, override.robotsFollow)}" />`,
-    );
-  }
-  return next;
-};
 
 const buildSeoBlock = (path, page) => {
   const canonical = getCanonicalUrl(path);
@@ -205,10 +169,10 @@ const buildSeoBlock = (path, page) => {
     });
   }
   const schema = JSON.stringify(structuredData).replaceAll('<', '\\u003c');
-  return applyMeta(`<!-- SEO:START -->
+  return applyStaticMeta(`<!-- SEO:START -->
     <title>${escapeHtml(page.title)}</title>
     <meta name="description" content="${escapeHtml(page.description)}" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="robots" content="${buildRobotsContent(!page.noindex, !page.nofollow)}" />
     <link rel="canonical" href="${canonical}" />
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
@@ -246,7 +210,7 @@ const buildArticleSeoBlock = (article) => {
     dateModified,
   }), override?.schemaJson)).replaceAll('<', '\\u003c');
   const dates = `${datePublished ? `<meta property="article:published_time" content="${datePublished}" />` : ''}${dateModified ? `<meta property="article:modified_time" content="${dateModified}" />` : ''}`;
-  return applyMeta(`<!-- SEO:START -->
+  return applyStaticMeta(`<!-- SEO:START -->
     <title>${escapeHtml(buildPageTitle(article.title, SITE_NAME))}</title>
     <meta name="description" content="${escapeHtml(article.excerpt)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -281,7 +245,7 @@ const buildCmsServiceSeoBlock = (service) => {
     language: 'vi',
   }), override?.schemaJson)).replaceAll('<', '\\u003c');
 
-  return applyMeta(`<!-- SEO:START -->
+  return applyStaticMeta(`<!-- SEO:START -->
     <title>${escapeHtml(name)} | ${SITE_NAME}</title>
     <meta name="description" content="${escapeHtml(description)}" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -323,15 +287,23 @@ const buildStaticContent = (page, path) => {
     ['/news/', 'Kiến thức Digital'],
     ['/content-standards/', 'Tiêu chuẩn nội dung'],
     ['/contact/', 'Liên hệ tư vấn'],
+    ['/about/', 'Về Unitrux'], ['/templates/', 'Thư viện mẫu website'],
+    ['/packages/', 'Gói dịch vụ'], ['/media-pricing/', 'Bảng giá quay chụp'],
+    ['/privacy-policy/', 'Chính sách bảo mật'], ['/terms/', 'Điều khoản'], ['/delete-data/', 'Yêu cầu xóa dữ liệu'],
+    ...Object.entries(seoPages).filter(([path, entry]) => entry.type === 'Service' && !['/chatbox-ai', '/web-development', '/digital-marketing', '/ecommerce', '/automation'].includes(path))
+      .map(([path, entry]) => [getCanonicalUrl(path), entry.serviceName || entry.heading]),
   ];
   const navigation = `<nav aria-label="Dịch vụ và nội dung chính"><h2>Khám phá Unitrux</h2><ul>${primaryLinks.map(([href, label]) => `<li><a href="${href}">${label}</a></li>`).join('')}</ul></nav>`;
+  const serviceLinks = path === '/services' && cmsServices.length
+    ? `<section><h2>Chi tiết dịch vụ</h2><ul>${cmsServices.map((service) => `<li><a href="/services/${encodeURIComponent(service.id)}/">${escapeHtml(service.nameVi || service.name)}</a></li>`).join('')}</ul></section>`
+    : '';
   const newsLinks = path === '/news' && newsArticles.length
     ? `<section><h2>Bài viết mới</h2><ul>${newsArticles.map((article) => `<li><a href="/news/${encodeURIComponent(article.slug)}/">${escapeHtml(article.title)}</a></li>`).join('')}</ul></section>`
     : '';
   const portfolioVideos = path === productionPortfolio.path
     ? `<section><h2>Portfolio video quảng cáo</h2>${productionPortfolio.items.map((video) => `<figure><video controls muted playsinline preload="metadata" poster="${escapeHtml(video.thumbnail)}" width="${video.width}" height="${video.height}" aria-label="${escapeHtml(video.titleVi || video.title)}"><source src="${escapeHtml(video.src)}" type="${escapeHtml(video.mimeType)}" /></video><figcaption><strong>${escapeHtml(video.titleVi || video.title)}</strong><p>${escapeHtml(video.descriptionVi || video.description)}</p></figcaption></figure>`).join('')}</section>`
     : '';
-  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${facts}${faqs}${portfolioVideos}${newsLinks}${navigation}</main></div>`;
+  return `<div id="root"><main class="seo-static-content"><h1>${escapeHtml(page.heading)}</h1><p>${escapeHtml(page.summary)}</p>${bullets}${facts}${faqs}${portfolioVideos}${newsLinks}${serviceLinks}${navigation}</main></div>`;
 };
 
 for (const [path, page] of Object.entries(seoPages)) {
@@ -412,17 +384,17 @@ const buildVideoSitemapMarkup = (path) => {
 };
 
 // A route/entity flagged noindex in the Admin must not appear in the sitemap.
-const isRemoteNoindex = (map, ref) => resolveRemoteSeo(map, ref, 'vi')?.robotsIndex === false;
+const includeInSitemap = (path, map, ref, noindex = false) => isSitemapIndexable(getCanonicalUrl(path), resolveRemoteSeo(map, ref, 'vi'), noindex);
 
 const staticSitemapUrls = Object.keys(seoPages)
-  .filter((path) => !isRemoteNoindex(routeSeoMap, path))
+  .filter((path) => includeInSitemap(path, routeSeoMap, path, seoPages[path].noindex))
   .map((path) => {
     const loc = getCanonicalUrl(path);
     const videos = buildVideoSitemapMarkup(path);
     return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${SEO_LAST_MODIFIED}</lastmod>${videos}\n  </url>`;
   });
 const articleSitemapUrls = newsArticles
-  .filter((article) => !isRemoteNoindex(newsSeoMap, article.id))
+  .filter((article) => includeInSitemap(`/news/${article.slug}`, newsSeoMap, article.id))
   .map((article) => {
     const lastModified = article.updatedAt || article.createdAt;
     const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
@@ -431,7 +403,7 @@ const articleSitemapUrls = newsArticles
     return `  <url>\n    <loc>${getCanonicalUrl(`/news/${article.slug}`)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
   });
 const serviceSitemapUrls = cmsServices
-  .filter((service) => !isRemoteNoindex(serviceSeoMap, String(service.id)))
+  .filter((service) => includeInSitemap(`/services/${service.id}`, serviceSeoMap, String(service.id)))
   .map((service) => {
     const lastModified = service.updatedAt || service.createdAt;
     const lastmod = lastModified && !Number.isNaN(new Date(lastModified).getTime())
